@@ -1,13 +1,13 @@
 {
-  "startedAt": "2026-07-11T14:16:54.437Z",
-  "finishedAt": "2026-07-11T14:16:54.468Z",
-  "durationMs": 31,
+  "startedAt": "2026-07-11T14:56:45.405Z",
+  "finishedAt": "2026-07-11T14:56:45.480Z",
+  "durationMs": 76,
   "inputSeed": 20,
-  "inputStaging": 50,
-  "inputTotal": 70,
-  "published": 63,
+  "inputStaging": 544,
+  "inputTotal": 564,
+  "published": 451,
   "quarantine": 0,
-  "droppedExam": 1,
-  "deduped": 6,
-  "sourcesMonitored": 12
+  "droppedExam": 17,
+  "deduped": 96,
+  "sourcesMonitored": 200
 }

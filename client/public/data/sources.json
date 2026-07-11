@@ -200,7 +200,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 11,
       "lastScrape": null
     },
     {
@@ -235,7 +235,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 29,
       "lastScrape": null
     },
     {
@@ -270,7 +270,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 22,
       "lastScrape": null
     },
     {
@@ -305,7 +305,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 2,
       "lastScrape": null
     },
     {
@@ -340,7 +340,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 11,
       "lastScrape": null
     },
     {
@@ -550,7 +550,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 22,
       "lastScrape": null
     },
     {
@@ -585,7 +585,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 30,
       "lastScrape": null
     },
     {
@@ -655,7 +655,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -725,7 +725,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 16,
       "lastScrape": null
     },
     {
@@ -795,7 +795,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 50,
       "lastScrape": null
     },
     {
@@ -830,7 +830,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -970,7 +970,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -1110,7 +1110,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -1145,7 +1145,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 15,
       "lastScrape": null
     },
     {
@@ -1180,7 +1180,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 23,
       "lastScrape": null
     },
     {
@@ -1215,7 +1215,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 10,
       "lastScrape": null
     },
     {
@@ -1250,7 +1250,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 5,
       "lastScrape": null
     },
     {
@@ -1320,7 +1320,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 10,
       "lastScrape": null
     },
     {
@@ -1355,7 +1355,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 3,
       "lastScrape": null
     },
     {
@@ -1390,7 +1390,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 5,
       "lastScrape": null
     },
     {
@@ -1460,7 +1460,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 17,
       "lastScrape": null
     },
     {
@@ -1565,7 +1565,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 12,
       "lastScrape": null
     },
     {
@@ -1600,7 +1600,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -1635,7 +1635,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 4,
       "lastScrape": null
     },
     {
@@ -1670,7 +1670,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 46,
       "lastScrape": null
     },
     {

@@ -93,3 +93,23 @@ If a host asks for email verification (Render, Netlify, etc.), any Gmail works.
 - `/jobs` lists openings
 - `/sources` lists PSU/gov URLs
 - Job detail “Official site” opens external career page
+
+## Live URLs (this project)
+
+| What | URL |
+|------|-----|
+| **Public website** | https://timus97.github.io/GovtJobsPortal/ |
+| **Jobs** | https://timus97.github.io/GovtJobsPortal/jobs |
+| **Sources** | https://timus97.github.io/GovtJobsPortal/sources |
+| **GitHub repo** | https://github.com/timus97/GovtJobsPortal |
+| **Static jobs data** | https://timus97.github.io/GovtJobsPortal/data/jobs.json |
+
+## QA reports
+
+After deploy, run:
+
+```bash
+npm.cmd run qa:e2e
+```
+
+Reports are written to `reports/qa-report.md` and `reports/qa-report.json`.

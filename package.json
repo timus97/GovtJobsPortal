@@ -13,6 +13,7 @@
     "alert:email": "node scripts/alerts/emailNewJobs.js",
     "qa:schema": "node scripts/qa/schemaCheck.js",
     "qa:sample": "node scripts/qa/sampleJobs.js",
+    "qa:e2e": "node scripts/qa/e2eAndPerf.js",
     "pipeline": "npm run process && npm run qa:schema",
     "pipeline:daily": "npm run collect:daily && npm run process && npm run qa:schema && npm run alert:email && npm run snapshot:prev",
     "server": "node server/src/index.js",
