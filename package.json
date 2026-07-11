@@ -5,6 +5,7 @@
   "description": "Indian government & PSU jobs without written exam — collect, process, publish",
   "scripts": {
     "process": "node scripts/process/buildJobs.js",
+    "collect:rebuild-report": "node scripts/process/rebuildCollectReport.js",
     "snapshot:prev": "node scripts/process/snapshotPrev.js",
     "collect:manual": "node scripts/collect/manualImport.js",
     "collect:daily": "node scripts/collect/runDaily.js",

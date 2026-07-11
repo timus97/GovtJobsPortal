@@ -1,6 +1,6 @@
 {
   "updatedAt": "2026-07-11",
-  "lastCollectAt": "2026-07-11T14:16:54.350Z",
+  "lastCollectAt": "2026-07-11T15:00:02.475Z",
   "sources": [
     {
       "sourceId": "seed_manual",
@@ -41,11 +41,10 @@
         "ok": true,
         "written": 26,
         "errors": [],
-        "durationMs": 7325,
+        "durationMs": 0,
         "metrics": {
-          "method": "playwright",
-          "links": 28,
-          "written": 26
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
         }
       }
     },
@@ -70,16 +69,11 @@
       "lastScrape": {
         "ok": true,
         "written": 0,
-        "errors": [
-          {
-            "url": "https://www.employmentnews.gov.in/",
-            "message": "HTTP 404 for https://www.employmentnews.gov.in/"
-          }
-        ],
-        "durationMs": 5226,
+        "errors": [],
+        "durationMs": 0,
         "metrics": {
-          "links": 0,
-          "written": 0
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
         }
       }
     },
@@ -105,11 +99,10 @@
         "ok": true,
         "written": 6,
         "errors": [],
-        "durationMs": 2576,
+        "durationMs": 0,
         "metrics": {
-          "listUrls": 1,
-          "links": 6,
-          "written": 6
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
         }
       }
     },
@@ -166,7 +159,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 12,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_bhel",
@@ -201,7 +203,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 11,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 11,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_bpcl",
@@ -236,7 +247,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 29,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 37,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cil",
@@ -271,7 +291,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 27,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_gail",
@@ -306,7 +335,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 2,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 2,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_hpcl",
@@ -341,7 +379,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 11,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 11,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_iocl",
@@ -376,7 +423,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ntpc",
@@ -411,7 +467,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil",
@@ -446,7 +511,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_pfc",
@@ -481,7 +555,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rec",
@@ -516,7 +599,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_sail",
@@ -551,7 +643,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 22,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 22,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_oil",
@@ -586,7 +687,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 30,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 30,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_hal",
@@ -621,7 +731,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_bel",
@@ -656,7 +775,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_concor",
@@ -691,7 +819,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_eil",
@@ -726,7 +863,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 16,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 16,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_mtnl",
@@ -761,7 +907,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nalco",
@@ -796,7 +951,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 50,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 50,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nbcc",
@@ -831,7 +995,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nmdc",
@@ -866,7 +1039,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nlc",
@@ -901,7 +1083,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rinl",
@@ -936,7 +1127,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_sci",
@@ -971,7 +1171,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rvnl",
@@ -1006,7 +1215,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ovl",
@@ -1041,7 +1259,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 12,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rcf",
@@ -1076,7 +1303,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ircon",
@@ -1111,7 +1347,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rites",
@@ -1146,7 +1391,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 15,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 15,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nfl",
@@ -1181,7 +1435,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 23,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 23,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_hudco",
@@ -1216,7 +1479,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 10,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 10,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ireda",
@@ -1251,7 +1523,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 5,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 5,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cwc",
@@ -1286,7 +1567,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_mdl",
@@ -1321,7 +1611,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 10,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 10,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_rcil",
@@ -1356,7 +1655,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 27,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_sjvn",
@@ -1391,7 +1699,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 5,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 5,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nhpc",
@@ -1426,7 +1743,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_seci",
@@ -1461,7 +1787,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 17,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 17,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_irctc",
@@ -1496,7 +1831,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_irfc",
@@ -1531,7 +1875,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_nrl",
@@ -1566,7 +1919,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 12,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 12,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cpcl",
@@ -1601,7 +1963,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_grse",
@@ -1636,7 +2007,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 4,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 5,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_aai",
@@ -1671,7 +2051,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 46,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 46,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ongc_2",
@@ -1706,7 +2095,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 12,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_antrix",
@@ -1741,7 +2139,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_balmer_lawrie",
@@ -1776,7 +2183,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_braithwaite_and_co",
@@ -1829,7 +2245,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 13,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 13,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_bdl",
@@ -1864,7 +2289,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 17,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 17,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_beml",
@@ -1899,7 +2333,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 20,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 20,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_bsnl",
@@ -1934,7 +2377,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 4,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 4,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_b_and_r",
@@ -1969,7 +2421,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 11,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 12,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cel",
@@ -2004,7 +2465,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 9,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ccl",
@@ -2039,7 +2509,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cel_2",
@@ -2074,7 +2553,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_midhani",
@@ -2109,7 +2597,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 31,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 31,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cpcl_2",
@@ -2144,7 +2641,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 9,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_csl",
@@ -2179,7 +2685,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 25,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 25,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_ccil",
@@ -2214,7 +2729,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 25,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 27,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_cil_2",
@@ -2249,7 +2773,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 27,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_grse_2",
@@ -2284,7 +2817,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 46,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 50,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_gsl",
@@ -2319,7 +2861,16 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "fromStaging": true,
+          "runFile": "2026-07-11T14-47-43-078Z.json"
+        }
+      }
     },
     {
       "sourceId": "psu_hcl",
@@ -2354,7 +2905,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hll",
@@ -2389,7 +2948,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hindustan_newsprint",
@@ -2442,7 +3009,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hindustan_steelworks_construction_ltd",
@@ -2495,7 +3070,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_itdc",
@@ -2530,7 +3113,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ire",
@@ -2565,7 +3156,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_itpo",
@@ -2600,7 +3199,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_kiocl",
@@ -2635,7 +3242,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mcl",
@@ -2670,7 +3285,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_moil",
@@ -2705,7 +3328,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mrpl",
@@ -2740,7 +3371,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mecl",
@@ -2775,7 +3414,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_midhani_2",
@@ -2810,7 +3457,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mmtc",
@@ -2845,7 +3500,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mstc",
@@ -2880,7 +3543,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nfl_2",
@@ -2915,7 +3586,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsic",
@@ -2950,7 +3629,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsic_2",
@@ -2985,7 +3672,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsc",
@@ -3020,7 +3715,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ncl",
@@ -3055,7 +3758,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_neepcl",
@@ -3090,7 +3801,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pawan_hans",
@@ -3125,7 +3844,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pdil",
@@ -3160,7 +3887,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_rcf_2",
@@ -3195,7 +3930,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_spmcil",
@@ -3230,7 +3973,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_secl",
@@ -3265,7 +4016,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_tcil",
@@ -3300,7 +4059,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_thdc",
@@ -3335,7 +4102,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_wcl",
@@ -3370,7 +4145,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_wapcos",
@@ -3405,7 +4188,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_2",
@@ -3440,7 +4231,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_becil",
@@ -3475,7 +4274,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_epi",
@@ -3510,7 +4317,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_fci",
@@ -3545,7 +4360,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hmt_international_limited",
@@ -3598,7 +4421,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_fsnl",
@@ -3633,7 +4464,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mecon",
@@ -3668,7 +4507,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nfdc",
@@ -3703,7 +4550,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_cel_3",
@@ -3738,7 +4593,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_advanced_weapons_and_equipment_india",
@@ -3809,7 +4672,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_mtnl_2",
@@ -3844,7 +4715,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pfc_4",
@@ -3879,7 +4758,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_armoured_vehicles_nigam",
@@ -3968,7 +4855,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bcgcl",
@@ -4003,7 +4898,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bhel_2",
@@ -4038,7 +4941,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bharat_immunologicals_and_biologicals_corporatio",
@@ -4091,7 +5002,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bharat_wagon_and_engineering",
@@ -4180,7 +5099,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_eml",
@@ -4215,7 +5142,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_kpl",
@@ -4250,7 +5185,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_gail_4",
@@ -4285,7 +5228,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bvfcl",
@@ -4320,7 +5271,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_brahmaputra_cracker_and_polymer_limited",
@@ -4373,7 +5332,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bundelkhand_saur_urja_limited",
@@ -4426,7 +5393,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_gail_5",
@@ -4461,7 +5436,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_cci_cement",
@@ -4496,7 +5479,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ciwtc",
@@ -4531,7 +5522,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_grse_3",
@@ -4566,7 +5565,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hudco_2",
@@ -4601,7 +5608,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_chenab_valley_power_projects",
@@ -4654,7 +5669,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_dfccil",
@@ -4689,7 +5712,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_dmrc",
@@ -4724,7 +5755,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsc_2",
@@ -4759,7 +5798,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_dmrc_2",
@@ -4794,7 +5841,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ecgc",
@@ -4829,7 +5884,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_3",
@@ -4864,7 +5927,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_dci",
@@ -4899,7 +5970,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ecil",
@@ -4934,7 +6013,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_eesl_2",
@@ -4969,7 +6056,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ecgc_2",
@@ -5004,7 +6099,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_fertilisers_and_chemicals_travancore_limited",
@@ -5057,7 +6160,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_fci_2",
@@ -5092,7 +6203,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_fresh_and_healthy_enterprises_limited",
@@ -5181,7 +6300,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_grid_conductors_ltd",
@@ -5234,7 +6361,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hal_pharma",
@@ -5269,7 +6404,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hfcl",
@@ -5304,7 +6447,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hindustan_insecticides",
@@ -5357,7 +6508,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hal_2",
@@ -5392,7 +6551,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hal_3",
@@ -5427,7 +6594,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hal_4",
@@ -5462,7 +6637,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_htl",
@@ -5497,7 +6680,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hurl_barauni",
@@ -5550,7 +6741,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_gail_7",
@@ -5585,7 +6784,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_bpcl_2",
@@ -5620,7 +6827,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_idmc",
@@ -5673,7 +6888,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_india_government_mint",
@@ -5726,7 +6949,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_india_optel",
@@ -5779,7 +7010,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_rec_2",
@@ -5814,7 +7053,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_indian_financial_technology_and_allied_services",
@@ -5867,7 +7114,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_isprl",
@@ -5902,7 +7157,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_irctc_2",
@@ -5937,7 +7200,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pfc_5",
@@ -5972,7 +7243,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_isprl_2",
@@ -6007,7 +7286,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_isprl_3",
@@ -6042,7 +7329,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_cci",
@@ -6077,7 +7372,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_indraprastha_gas_limited",
@@ -6166,7 +7469,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_inland_and_coastal_shipping_ltd",
@@ -6219,7 +7530,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_instrumentation_limited",
@@ -6272,7 +7591,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pfc_7",
@@ -6307,7 +7634,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_5",
@@ -6342,7 +7677,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_6",
@@ -6377,7 +7720,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_karnataka_soaps_and_detergents_limited",
@@ -6430,7 +7781,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_khadi_natural",
@@ -6501,7 +7860,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_irctc_3",
@@ -6536,7 +7903,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_konkan_lng",
@@ -6589,7 +7964,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_life_spring_hospitals_p_ltd",
@@ -6696,7 +8079,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsic_3",
@@ -6731,7 +8122,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nhidcl",
@@ -6766,7 +8165,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nalco_2",
@@ -6801,7 +8208,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nhtpl",
@@ -6854,7 +8269,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_hudco_4",
@@ -6889,7 +8312,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nic",
@@ -6942,7 +8373,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nlmc",
@@ -6977,7 +8416,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_npci",
@@ -7012,7 +8459,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_npcc",
@@ -7047,7 +8502,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nsic_4",
@@ -7082,7 +8545,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pfc_9",
@@ -7117,7 +8588,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_gail_9",
@@ -7152,7 +8631,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nepa_mills_ltd",
@@ -7223,7 +8710,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_open_network_for_digital_commerce",
@@ -7312,7 +8807,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_7",
@@ -7347,7 +8850,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_praga_tools",
@@ -7400,7 +8911,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_protean_egov_technologies_ltd",
@@ -7489,7 +9008,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_rdpl",
@@ -7542,7 +9069,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_ratnagiri_gas_and_power",
@@ -7595,7 +9130,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_rxil",
@@ -7630,7 +9173,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_sagar_mala_development_company",
@@ -7719,7 +9270,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_siil",
@@ -7772,7 +9331,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_8",
@@ -7807,7 +9374,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nfl_3",
@@ -7842,7 +9417,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_pgcil_9",
@@ -7877,7 +9460,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_nicl_2",
@@ -7912,7 +9503,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_utiitsl",
@@ -7947,7 +9546,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_triveni_structurals_limited",
@@ -8000,7 +9607,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_rec_3",
@@ -8035,7 +9650,15 @@
       "enabled": true,
       "render": null,
       "publishedJobs": 0,
-      "lastScrape": null
+      "lastScrape": {
+        "ok": true,
+        "written": 0,
+        "errors": [],
+        "durationMs": 0,
+        "metrics": {
+          "note": "no_staging_file"
+        }
+      }
     },
     {
       "sourceId": "psu_irrpl",

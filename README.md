@@ -81,6 +81,21 @@ Or use `data/seed/manual_jobs.csv` + `npm run collect:manual` + `npm run process
 
 **Excluded:** CBT/written tests, GATE/SSC/UPSC/IBPS style exams.
 
+## Data storage & scrape status
+
+**There is no SQL database.** Jobs and sources are JSON files:
+
+- Published jobs: `data/processed/jobs.json`
+- Scrape results: `data/processed/collect-report.json`
+- Source list: `data/sources/registry.json`
+
+See **[docs/DATA_AND_STATUS.md](docs/DATA_AND_STATUS.md)** for:
+
+- What **“Not scraped yet / Not in last scrape report”** means  
+- How to tell scraped vs paused vs manual  
+- What processes are running (collect / process / deploy)  
+- Full data-flow diagram  
+
 ## Public hosting (free)
 
 See **[docs/HOSTING.md](docs/HOSTING.md)** for full steps.

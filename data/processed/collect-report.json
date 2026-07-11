@@ -1,13 +1,16 @@
 {
-  "startedAt": "2026-07-11T14:16:01.326Z",
-  "finishedAt": "2026-07-11T14:16:54.350Z",
-  "runId": "2026-07-11T14-16-01-326Z",
-  "pdfsProcessed": 1,
-  "pdfMax": 25,
-  "sourcesAttempted": 11,
-  "sourcesOk": 11,
+  "startedAt": "2026-07-11T14:16:21.673Z",
+  "finishedAt": "2026-07-11T15:00:02.475Z",
+  "runId": "rebuilt-from-staging",
+  "rebuiltAt": "2026-07-11T15:06:27.526Z",
+  "pdfsProcessed": null,
+  "pdfMax": null,
+  "sourcesAttempted": 199,
+  "sourcesOk": 199,
   "sourcesFailed": 0,
-  "totalWritten": 44,
+  "sourcesWithRows": 42,
+  "sourcesZeroRows": 157,
+  "totalWritten": 738,
   "results": [
     {
       "sourceId": "ncs_gov",
@@ -16,30 +19,26 @@
       "written": 26,
       "errors": [],
       "metrics": {
-        "method": "playwright",
-        "links": 28,
-        "written": 26
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ncs_gov\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 7325
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ncs_gov\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
       "sourceId": "employment_news",
       "name": "Employment News",
       "ok": true,
       "written": 0,
-      "errors": [
-        {
-          "url": "https://www.employmentnews.gov.in/",
-          "message": "HTTP 404 for https://www.employmentnews.gov.in/"
-        }
-      ],
+      "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\employment_news\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 5226
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\employment_news\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
     },
     {
       "sourceId": "becil",
@@ -48,146 +47,2488 @@
       "written": 6,
       "errors": [],
       "metrics": {
-        "listUrls": 1,
-        "links": 6,
-        "written": 6
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\becil\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 2576
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\becil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
-      "sourceId": "ntpc_careers",
-      "name": "NTPC Careers",
-      "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "https://www.ntpc.co.in/careers",
-          "message": "HTTP 404 for https://www.ntpc.co.in/careers"
-        }
-      ],
-      "metrics": {
-        "links": 0,
-        "written": 0
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ntpc_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 5221
-    },
-    {
-      "sourceId": "iocl_careers",
-      "name": "IOCL Careers",
-      "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "https://iocl.com/latest-job-opening",
-          "message": "HTTP 307 for https://iocl.com/latest-job-opening"
-        }
-      ],
-      "metrics": {
-        "links": 0,
-        "written": 0
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\iocl_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 4353
-    },
-    {
-      "sourceId": "ongc_careers",
-      "name": "ONGC Careers",
+      "sourceId": "psu_ongc",
+      "name": "Oil and Natural Gas Corporation (ONGC) (ONGC) Careers",
       "ok": true,
       "written": 12,
       "errors": [],
       "metrics": {
-        "links": 12,
-        "written": 12
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ongc_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 7029
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ongc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
-      "sourceId": "bhel_careers",
-      "name": "BHEL Careers",
+      "sourceId": "psu_bhel",
+      "name": "Bharat Heavy Electricals Limited (BHEL) (BHEL) Careers",
       "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "https://www.bhel.com/careers",
-          "message": "HTTP 404 for https://www.bhel.com/careers"
-        }
-      ],
+      "written": 11,
+      "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\bhel_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 5547
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bhel\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
-      "sourceId": "sail_careers",
-      "name": "SAIL Careers",
+      "sourceId": "psu_bpcl",
+      "name": "Bharat Petroleum (BPCL) (BPCL) Careers",
       "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "https://www.sail.co.in/en/careers",
-          "message": "fetch failed"
-        }
-      ],
+      "written": 37,
+      "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\sail_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 4373
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bpcl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
-      "sourceId": "powergrid_careers",
-      "name": "POWERGRID Careers",
+      "sourceId": "psu_cil",
+      "name": "Coal India (CIL) (CIL) Careers",
       "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "https://www.powergrid.in/en/career",
-          "message": "HTTP 404 for https://www.powergrid.in/en/career"
-        }
-      ],
+      "written": 27,
+      "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\powergrid_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 4920
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
     },
     {
-      "sourceId": "hal_careers",
-      "name": "HAL Careers",
+      "sourceId": "psu_gail",
+      "name": "GAIL (India) Limited (GAIL) Careers",
+      "ok": true,
+      "written": 2,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_gail\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_hpcl",
+      "name": "Hindustan Petroleum (HPCL) (HPCL) Careers",
+      "ok": true,
+      "written": 11,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_hpcl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_iocl",
+      "name": "Indian Oil (IOCL) (IOCL) Careers",
       "ok": true,
       "written": 0,
       "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\hal_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 534
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_iocl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
     },
     {
-      "sourceId": "bel_careers",
-      "name": "BEL Careers",
+      "sourceId": "psu_ntpc",
+      "name": "NTPC Limited (NTPC) Careers",
       "ok": true,
       "written": 0,
-      "errors": [
-        {
-          "url": "https://bel-india.in/careers",
-          "message": "HTTP 404 for https://bel-india.in/careers"
-        }
-      ],
+      "errors": [],
       "metrics": {
-        "links": 0,
-        "written": 0
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
       },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\bel_careers\\2026-07-11T14-16-01-326Z.json",
-      "durationMs": 5916
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ntpc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_pgcil",
+      "name": "Power Grid Corporation of India (PGCIL) (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_pgcil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_pfc",
+      "name": "Power Finance Corporation Limited (PFC) (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_pfc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_rec",
+      "name": "REC Limited (REC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rec\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_sail",
+      "name": "Steel Authority of India Limited (SAIL) (SAIL) Careers",
+      "ok": true,
+      "written": 22,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_sail\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_oil",
+      "name": "Oil India (OIL) (OIL) Careers",
+      "ok": true,
+      "written": 30,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_oil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_hal",
+      "name": "Hindustan Aeronautics Limited (HAL) (HAL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_hal\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_bel",
+      "name": "Bharat Electronics (BEL) (BEL) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bel\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_concor",
+      "name": "Container Corporation of India (CONCOR) (CONCOR) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_concor\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_eil",
+      "name": "Engineers India (EIL) (EIL) Careers",
+      "ok": true,
+      "written": 16,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_eil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_mtnl",
+      "name": "Mahanagar Telephone Nigam Limited (MTNL) (MTNL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_mtnl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_nalco",
+      "name": "National Aluminium Company (NALCO) (NALCO) Careers",
+      "ok": true,
+      "written": 50,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nalco\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_nbcc",
+      "name": "NBCC (India) Limited (NBCC) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nbcc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_nmdc",
+      "name": "NMDC Limited (NMDC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nmdc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_nlc",
+      "name": "NLC India Limited (Neyveli Lignite) (NLC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nlc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_rinl",
+      "name": "Rashtriya Ispat Nigam (RINL) (RINL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rinl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_sci",
+      "name": "Shipping Corporation of India (SCI) (SCI) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_sci\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_rvnl",
+      "name": "Rail Vikas Nigam (RVNL) (RVNL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rvnl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_ovl",
+      "name": "ONGC Videsh Limited (OVL) (OVL) Careers",
+      "ok": true,
+      "written": 12,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ovl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_rcf",
+      "name": "Rashtriya Chemicals and Fertilizers (RCF) (RCF) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rcf\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_ircon",
+      "name": "Ircon International (IRCON) (IRCON) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ircon\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_rites",
+      "name": "RITES Limited (RITES) Careers",
+      "ok": true,
+      "written": 15,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rites\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_nfl",
+      "name": "National Fertilizers Limited (NFL) (NFL) Careers",
+      "ok": true,
+      "written": 23,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nfl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_hudco",
+      "name": "Housing And Urban Development Corporation Limited (HUDCO) (HUDCO) Careers",
+      "ok": true,
+      "written": 10,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_hudco\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_ireda",
+      "name": "Indian Renewable Energy Development Agency (IREDA) (IREDA) Careers",
+      "ok": true,
+      "written": 5,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ireda\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_cwc",
+      "name": "Central Warehousing Corporation (CWC) (CWC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cwc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_mdl",
+      "name": "Mazagon Dockyard Limited (MDL) (MDL) Careers",
+      "ok": true,
+      "written": 10,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_mdl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_rcil",
+      "name": "RailTel Corporation of India Limited (RCIL) (RCIL) Careers",
+      "ok": true,
+      "written": 27,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_rcil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_sjvn",
+      "name": "SJVN Limited (SJVN) (SJVN) Careers",
+      "ok": true,
+      "written": 5,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_sjvn\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_nhpc",
+      "name": "NHPC Limited (NHPC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nhpc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_seci",
+      "name": "Solar Energy Corporation of India (SECI) (SECI) Careers",
+      "ok": true,
+      "written": 17,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_seci\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_irctc",
+      "name": "Indian Railway Catering and Tourism Corporation (IRCTC) (IRCTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_irctc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_irfc",
+      "name": "Indian Railway Finance Corporation (IRFC) (IRFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_irfc\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_nrl",
+      "name": "Numaligarh Refinery (NRL) (NRL) Careers",
+      "ok": true,
+      "written": 12,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_nrl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_cpcl",
+      "name": "Chennai Petroleum Corporation Limited (CPCL) (CPCL) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cpcl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_grse",
+      "name": "Garden Reach Shipbuilders & Engineers Limited (GRSE) (GRSE) Careers",
+      "ok": true,
+      "written": 5,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_grse\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_aai",
+      "name": "Airports Authority of India (AAI) (AAI) Careers",
+      "ok": true,
+      "written": 46,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_aai\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_ongc_2",
+      "name": "ONGC Videsh Limited (ONGC) Careers",
+      "ok": true,
+      "written": 12,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ongc_2\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_antrix",
+      "name": "Antrix Corporation (ANTRIX) (ANTRIX) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_antrix\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_balmer_lawrie",
+      "name": "Balmer Lawrie (Balmer Lawrie) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_balmer_lawrie\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_bccl",
+      "name": "Bharat Coking Coal Limited (BCCL) (BCCL) Careers",
+      "ok": true,
+      "written": 13,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bccl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_bdl",
+      "name": "Bharat Dynamics Limited (BDL) (BDL) Careers",
+      "ok": true,
+      "written": 17,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bdl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_beml",
+      "name": "Bharat Earth Movers Limited (BEML) (BEML) Careers",
+      "ok": true,
+      "written": 20,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_beml\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_bsnl",
+      "name": "Bharat Sanchar Nigam Limited (BSNL) (BSNL) Careers",
+      "ok": true,
+      "written": 4,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_bsnl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_b_and_r",
+      "name": "Bridge and Roof Company (India) (B&R) Careers",
+      "ok": true,
+      "written": 12,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_b_and_r\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_cel",
+      "name": "Central Electronics Limited (CEL) (CEL) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cel\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_ccl",
+      "name": "Central Coalfields Limited (CCL) (CCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ccl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_cel_2",
+      "name": "Central Mine Planning & Design Institute Limited (CEL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cel_2\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_midhani",
+      "name": "Mishra Dhatu Nigam Limited (MIDHANI) (MIDHANI) Careers",
+      "ok": true,
+      "written": 31,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_midhani\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_cpcl_2",
+      "name": "Chennai Petroleum Corporation (CPCL) (CPCL) Careers",
+      "ok": true,
+      "written": 9,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cpcl_2\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_csl",
+      "name": "Cochin Shipyard (CSL) (CSL) Careers",
+      "ok": true,
+      "written": 25,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_csl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_ccil",
+      "name": "Cotton Corporation of India Limited (CCIL) (CCIL) Careers",
+      "ok": true,
+      "written": 27,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_ccil\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_cil_2",
+      "name": "EdCIL (India) Limited (EdCIL) (CIL) Careers",
+      "ok": true,
+      "written": 27,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_cil_2\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_grse_2",
+      "name": "Garden Reach Shipbuilders & Engineers (GRSE) (to be upgraded to Navratna) (GRSE) Careers",
+      "ok": true,
+      "written": 50,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_grse_2\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "scraped"
+    },
+    {
+      "sourceId": "psu_gsl",
+      "name": "Goa Shipyard (GSL) (GSL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "fromStaging": true,
+        "runFile": "2026-07-11T14-47-43-078Z.json"
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\psu_gsl\\2026-07-11T14-47-43-078Z.json",
+      "durationMs": 0,
+      "status": "attempted_zero_rows"
+    },
+    {
+      "sourceId": "psu_hcl",
+      "name": "Hindustan Copper (HCL) (HCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hll",
+      "name": "HLL Lifecare (HLL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_2",
+      "name": "Hindustan Paper Corporation Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_2",
+      "name": "HSCC India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_itdc",
+      "name": "Indian Tourism Development Corporation (ITDC) (ITDC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ire",
+      "name": "Indian Rare Earths (IRE) (IRE) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_itpo",
+      "name": "India Trade Promotion Organisation (ITPO) (ITPO) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_kiocl",
+      "name": "Kudremukh Iron Ore Company (KIOCL) (KIOCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mcl",
+      "name": "Mahanadi Coalfields (MCL) (MCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_moil",
+      "name": "MOIL Limited (MOIL) (MOIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mrpl",
+      "name": "Mangalore Refinery and Petrochemicals Limited (MRPL) (MRPL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mecl",
+      "name": "Mineral Exploration Corporation Limited (MECL) (MECL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_midhani_2",
+      "name": "Mishra Dhatu Nigam (MIDHANI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mmtc",
+      "name": "MMTC Ltd. (MMTC) (MMTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mstc",
+      "name": "MSTC Limited (MSTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nfl_2",
+      "name": "National Fertilizers (NFL) (NFL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsic",
+      "name": "National Projects Construction Corporation (NSIC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsic_2",
+      "name": "National Small Industries Corporation (NSIC) (NSIC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsc",
+      "name": "National Seed Corporation (NSC) (NSC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ncl",
+      "name": "Northern Coalfields (NCL) (NCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_neepcl",
+      "name": "North Eastern Electric Power Corporation Limited (NEEPCL) (NEEPCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pawan_hans",
+      "name": "Pawan Hans Helicopters Limited (Pawan Hans) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pdil",
+      "name": "Projects and Development India Limited (PDIL) (PDIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rcf_2",
+      "name": "Rashtriya Chemicals & Fertilizers (RCF) (RCF) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_spmcil",
+      "name": "Security Printing and Minting Corporation of India (SPMCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_secl",
+      "name": "South Eastern Coalfields (SECL) (SECL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_tcil",
+      "name": "Telecommunications Consultants India (TCIL) (TCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_thdc",
+      "name": "THDC India Limited (THDC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_wcl",
+      "name": "Western Coalfields (WCL) (WCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_wapcos",
+      "name": "WAPCOS Limited (WAPCOS) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_2",
+      "name": "Artificial Limbs Manufacturing Corporation of India (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_becil",
+      "name": "Broadcast Engineering Consultants India Limited (BECIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_epi",
+      "name": "Engineering Projects (India) Limited (EPI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_fci",
+      "name": "FCI Aravali Gypsum and Minerals (India) Limited (FCI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_3",
+      "name": "Indian Medicines Pharmaceutical Corporation Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_fsnl",
+      "name": "Ferro Scrap Nigam Limited (FSNL) (FSNL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mecon",
+      "name": "MECON (MECON) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nfdc",
+      "name": "National Film Development Corporation of India (NFDC) (NFDC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_cel_3",
+      "name": "Rajasthan Electronics and Instruments Limited (CEL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_3",
+      "name": "AFC India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_mtnl_2",
+      "name": "Anushakti Vidhyut Nigam Limited (MTNL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_4",
+      "name": "Aravali Power Company Private Limited (APCPL) Jharli, Jhajjar (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bbnl",
+      "name": "Bharat Broadband Network (BBNL) (BBNL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bcgcl",
+      "name": "Bharat Coal Gasification and Chemicals Ltd (BCGCL) (BCGCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bhel_2",
+      "name": "Bharat Gold Mines Limited (BHEL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bhel_3",
+      "name": "Bharat Refractories Limited, Bokaro (BHEL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_beml_2",
+      "name": "BEML Midwest ltd. (BEML) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_eml",
+      "name": "BHEL Electrical Machines Ltd. (EML) (EML) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_kpl",
+      "name": "Bhor Sagar Port Limited (KPL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_4",
+      "name": "Biotech Consortium India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bvfcl",
+      "name": "Brahmaputra Valley Fertilizer Corporation Ltd (BVFCL) (BVFCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_brahmos",
+      "name": "BrahMos Aerospace (BrahMos) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_eesl",
+      "name": "Convergence Energy Services Limited (EESL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_5",
+      "name": "CSC e-Governance Services India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_cci_cement",
+      "name": "Cement Corporation of India (CCI Cement) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ciwtc",
+      "name": "Central Inland Water Transport Corporation Limited (CIWTC) (CIWTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_grse_3",
+      "name": "Certification Engineers International Limited (GRSE) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hudco_2",
+      "name": "City and Industrial Development Corporation (HUDCO) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dvc",
+      "name": "Damodar Valley Corporation (DVC) (DVC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dfccil",
+      "name": "Dedicated Freight Corridor Corporation of India (DFCCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dmrc",
+      "name": "Delhi Metro Rail Corporation (DMRC) (DMRC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsc_2",
+      "name": "Delhi Transco Limited (NSC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dmrc_2",
+      "name": "Delhi Transport Corporation (DMRC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ecgc",
+      "name": "Deposit Insurance and Credit Guarantee Corporation (ECGC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_3",
+      "name": "Digital India Corporation (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dci",
+      "name": "Dredging Corporation of India (DCI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ecil",
+      "name": "Electronics Corporation of India Limited (ECIL) (ECIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_eesl_2",
+      "name": "Energy Efficiency Services Limited (EESL) (EESL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ecgc_2",
+      "name": "Export Credit Guarantee Corporation of India (ECGC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_4",
+      "name": "Fertilizer Corporation of India (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_fci_2",
+      "name": "Food Corporation of India (FCI) (FCI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ireda_2",
+      "name": "Green Valley Renewable Energy Limited (IREDA) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_6",
+      "name": "Hemisphere Properties India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hal_pharma",
+      "name": "Hindustan Antibiotics Limited (HAL Pharma) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hfcl",
+      "name": "Hindustan Fertilizers Corporation Limited (HFCL) (HFCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hocl",
+      "name": "Hindustan Organic Chemicals Limited (HOCL) (HOCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hal_2",
+      "name": "Hindustan Prefab Limited (HAL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hal_3",
+      "name": "Hindustan Salts Limited (HAL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hal_4",
+      "name": "Hindustan Shipyard Limited (HSL) (HAL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_htl",
+      "name": "Hindustan Teleprinters Limited (HTL) (HTL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_oil_2",
+      "name": "Hindustan Vegetable Oils Corporation (OIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_7",
+      "name": "HSCC (India) Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_bpcl_2",
+      "name": "IHB Limited (a joint venture of IOCL, HPCL & BPCL) (BPCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_idrcl",
+      "name": "India Debt Resolution Company Limited (IDRCL) (IDRCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_iifcl",
+      "name": "India Infrastructure Finance Company Limited (IIFCL) (IIFCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_8",
+      "name": "India Ports Global Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rec_2",
+      "name": "India SME Asset Reconstruction Company Limited (REC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ihmcl",
+      "name": "Indian Highway Management Company Limited (IHMCL) (IHMCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_isprl",
+      "name": "Indian Immunologicals Limited (ISPRL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_irctc_2",
+      "name": "Indian Medicine Pharmaceutical Corporation Ltd. (IRCTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_5",
+      "name": "Indian Port Rail Corporation Limited(IPRCL) (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_isprl_2",
+      "name": "Indian Potash Limited (ISPRL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_isprl_3",
+      "name": "Indian Strategic Petroleum Reserves Ltd (ISPRL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_cci",
+      "name": "Indian Vaccine Corporation Limited (CCI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_6",
+      "name": "Industrial Finance Corporation of India Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_sail_2",
+      "name": "Inland Waterways Authority of India (SAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_icsil",
+      "name": "Intelligent Communication Systems India Limited (ICSIL) (ICSIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_7",
+      "name": "Irrigation and Water Resources Finance Corporation Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_5",
+      "name": "Jal Power Corporation Ltd. (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_6",
+      "name": "Jute Corporation of India (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nmdc_2",
+      "name": "Karnataka Vijayanagar Steel Limited, NMDC Steel (NMDC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_dmrc_3",
+      "name": "Kolkata Metro Rail Corporation (DMRC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_irctc_3",
+      "name": "Konkan Railway Corporation (IRCTC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nicl",
+      "name": "Krishnapatnam Railway Company Limited (NICL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_munpl",
+      "name": "Meja Urja Nigam Private Limited (MUNPL) (MUNPL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsic_3",
+      "name": "National Capital Region Transport Corporation (NSIC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nhidcl",
+      "name": "National Highways and Infrastructure Development Corporation Limited (NHIDCL) (NHIDCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nalco_2",
+      "name": "National Highways Logistics Management Company (NALCO) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hudco_3",
+      "name": "Narmada Hydroelectric Development Corporation (HUDCO) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_hudco_4",
+      "name": "National Industrial Corridor Development Corporation Limited (HUDCO) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_8",
+      "name": "National Jute Manufactures Corporation Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nlmc",
+      "name": "National Land Monetisation Corporation (NLMC) (NLMC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_npci",
+      "name": "National Payments Corporation of India (NPCI) (NPCI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_npcc",
+      "name": "National Projects Construction Corporation Ltd (NPCC) (NPCC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nsic_4",
+      "name": "National Textile Corporation (NSIC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_9",
+      "name": "NIIF Infrastructure Finance Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_gail_9",
+      "name": "NewSpace India Limited (GAIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_ntpc_2",
+      "name": "NSPCL (NTPC- SAIL Power Company Limited) (NTPC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_prcl",
+      "name": "Pipavav Railway Corporation Ltd. (PRCL) (PRCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_7",
+      "name": "Power System Operation Corporation (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_cpcl_3",
+      "name": "Prize Petroleum Company Limited (CPCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_remcl",
+      "name": "Railway Energy Management Company Limited (REMCL) (REMCL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rcf_3",
+      "name": "Ramagundam Fertilizers and Chemicals Limited (RCF) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rhpc",
+      "name": "Ratle Hydroelectric Power Corporation (RHPC) (RHPC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rxil",
+      "name": "Receivables Exchange of India Ltd (RXIL) (RXIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_10",
+      "name": "Sethusamudram Corporation Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pfc_11",
+      "name": "STCI Finance Limited (PFC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_8",
+      "name": "State Farms Corporation of India (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nfl_3",
+      "name": "Talcher Fertilizers Limited. (NFL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_pgcil_9",
+      "name": "Tourism Finance Corporation Of India Ltd. (PGCIL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_nicl_2",
+      "name": "The Industrial Credit Company Limited (NICL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_utiitsl",
+      "name": "UTI Infrastructure Technology and Services Limited (UTIITSL) (UTIITSL) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_midhani_3",
+      "name": "Utkarsha Aluminium Dhatu Nigam Limited (MIDHANI) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
+    },
+    {
+      "sourceId": "psu_rec_3",
+      "name": "UV Asset Reconstruction Company Limited (REC) Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "note": "no_staging_file"
+      },
+      "durationMs": 0,
+      "status": "not_attempted_or_empty"
     }
   ]
 }

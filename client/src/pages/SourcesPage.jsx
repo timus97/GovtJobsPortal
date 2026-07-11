@@ -35,12 +35,55 @@ const GROUP_ORDER = [
 ]
 
 function scrapeLabel(source) {
-  if (!source.enabled) return { text: 'Paused', className: 'badge badge-muted' }
+  // Manual seed is never "scraped"
+  if (source.method === 'manual') {
+    return {
+      text: source.publishedJobs > 0 ? 'Manual · has live jobs' : 'Manual only (no auto-scrape)',
+      className: 'badge badge-muted',
+      help: 'Filled by human seed/CSV, not by the daily scraper.',
+    }
+  }
+  if (!source.enabled) {
+    return {
+      text: 'Paused · no scrape',
+      className: 'badge badge-muted',
+      help: 'enabled=false in registry — usually missing a known career URL.',
+    }
+  }
   const run = source.lastScrape
-  if (!run) return { text: 'Not scraped yet', className: 'badge badge-muted' }
-  if (!run.ok) return { text: `Failed · ${run.written} rows`, className: 'badge badge-warn' }
-  if (run.written > 0) return { text: `Scraped · ${run.written} rows`, className: 'badge badge-soft' }
-  return { text: 'Reached · 0 job links', className: 'badge badge-muted' }
+  if (!run) {
+    if (source.publishedJobs > 0) {
+      return {
+        text: `Has ${source.publishedJobs} live jobs · report stale`,
+        className: 'badge badge-soft',
+        help: 'Jobs exist in jobs.json but this source is missing from the last collect-report. Re-run collect or rebuildCollectReport.',
+      }
+    }
+    return {
+      text: 'Not in last scrape report',
+      className: 'badge badge-muted',
+      help: 'Listed in the registry, but the last collect-report has no result for this id (not run yet, or report outdated).',
+    }
+  }
+  if (!run.ok) {
+    return {
+      text: `Failed · ${run.written || 0} rows`,
+      className: 'badge badge-warn',
+      help: run.errors?.[0]?.message || 'Scraper error for this source.',
+    }
+  }
+  if (run.written > 0) {
+    return {
+      text: `Scraped · ${run.written} rows`,
+      className: 'badge badge-soft',
+      help: 'Last collect wrote this many staging rows from career pages/PDFs.',
+    }
+  }
+  return {
+    text: 'Scraped · 0 job links',
+    className: 'badge badge-muted',
+    help: 'URL was fetched but no job-like links were extracted (empty, blocked, or layout change).',
+  }
 }
 
 function SourceCard({ source }) {
@@ -107,6 +150,8 @@ function SourceCard({ source }) {
           </ul>
         )}
       </div>
+
+      {status.help && <p className="muted small status-help">{status.help}</p>}
 
       {source.lastScrape?.errors?.length > 0 && (
         <p className="source-error small">
@@ -178,6 +223,55 @@ export default function SourcesPage() {
         {error && <p className="error-box">{error}</p>}
         {loading && <p className="muted">Loading sources…</p>}
 
+        <div className="panel status-legend" style={{ padding: '1rem 1.15rem', marginBottom: '1.25rem' }}>
+          <h2 style={{ fontSize: '1.05rem', marginBottom: '0.5rem' }}>What the status badges mean</h2>
+          <ul className="legend-list">
+            <li>
+              <span className="badge badge-soft">Scraped · N rows</span> — last collect run extracted N
+              job links into staging for this site.
+            </li>
+            <li>
+              <span className="badge badge-muted">Scraped · 0 job links</span> — URL was hit; no
+              vacancies extracted (empty page, block, or layout change).
+            </li>
+            <li>
+              <span className="badge badge-muted">Not in last scrape report</span> — source is
+              listed, but the last <code>collect-report.json</code> has no entry (not run yet, or
+              report is outdated). <strong>Not</strong> the same as “scraper is running now”.
+            </li>
+            <li>
+              <span className="badge badge-muted">Paused · no scrape</span> — disabled in registry
+              (often no known official career URL).
+            </li>
+            <li>
+              <span className="badge badge-muted">Manual only</span> — human-curated seed, not
+              auto-scraped.
+            </li>
+            <li>
+              <span className="badge badge-soft">N jobs live</span> — published vacancies currently
+              on the Jobs page from this source id.
+            </li>
+          </ul>
+          <p className="muted small" style={{ margin: '0.75rem 0 0' }}>
+            <strong>Where is the data?</strong> There is no SQL database. All listings live in JSON
+            files — mainly <code>data/processed/jobs.json</code> (and a public copy under{' '}
+            <code>/data/jobs.json</code> on this site). Full explanation:{' '}
+            <a
+              href="https://github.com/timus97/GovtJobsPortal/blob/main/docs/DATA_AND_STATUS.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              docs/DATA_AND_STATUS.md
+            </a>
+            .
+          </p>
+          <p className="muted small" style={{ margin: '0.35rem 0 0' }}>
+            <strong>In progress?</strong> Scrapes only run when someone executes{' '}
+            <code>npm run collect:daily</code> or the GitHub Action. The public site itself does not
+            scrape in the background. Watch the terminal or the repo Actions tab for active runs.
+          </p>
+        </div>
+
         <div className="stats-grid sources-summary">
           <div className="stat-card">
             <span className="stat-value">{sources.length}</span>
@@ -191,13 +285,13 @@ export default function SourcesPage() {
             <span className="stat-value">
               {sources.filter((s) => s.lastScrape && s.lastScrape.written > 0).length}
             </span>
-            <span className="stat-label">Returned jobs last run</span>
+            <span className="stat-label">Had rows in last report</span>
           </div>
           <div className="stat-card">
             <span className="stat-value">
-              {sources.reduce((n, s) => n + (s.publishedJobs || 0), 0)}
+              {sources.filter((s) => (s.publishedJobs || 0) > 0).length}
             </span>
-            <span className="stat-label">Live jobs from sources</span>
+            <span className="stat-label">Sources with live jobs</span>
           </div>
         </div>
 
