@@ -1,0 +1,14 @@
+# Free Render.com web service (optional full Express + SPA host)
+# Connect this repo at https://render.com and create a Blueprint
+services:
+  - type: web
+    name: noexam-sarkari-jobs
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm --prefix client install && node scripts/prepareStaticData.js && npm --prefix client run build && npm --prefix server install
+    startCommand: node server/src/index.js
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: PORT
+        value: "10000"

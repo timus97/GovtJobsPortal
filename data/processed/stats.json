@@ -1,0 +1,53 @@
+{
+  "total": 63,
+  "open": 53,
+  "closingSoon": 4,
+  "closed": 6,
+  "byOrgType": {
+    "govt_company": 9,
+    "central": 29,
+    "psu": 22,
+    "autonomous": 3
+  },
+  "bySector": {
+    "Administration": 1,
+    "IT & Media": 2,
+    "Health": 4,
+    "Oil & Gas": 3,
+    "Research": 1,
+    "Agriculture & Research": 1,
+    "Steel": 1,
+    "Power": 2,
+    "Mining": 1,
+    "Defence": 2,
+    "Other": 44,
+    "Heavy Engineering": 1
+  },
+  "byStatus": {
+    "closing_soon": 4,
+    "open": 53,
+    "closed": 6
+  },
+  "bySource": {
+    "becil": 9,
+    "ncs_gov": 29,
+    "iocl_careers": 1,
+    "seed_manual": 5,
+    "sail_careers": 1,
+    "powergrid_careers": 1,
+    "bel_careers": 1,
+    "hal_careers": 1,
+    "ntpc_careers": 1,
+    "ongc_careers": 13,
+    "bhel_careers": 1
+  },
+  "bySelection": {
+    "contract_interview": 3,
+    "interview_only": 52,
+    "walk_in": 4,
+    "merit": 1,
+    "apprenticeship": 3
+  },
+  "lastPipelineRunAt": "2026-07-11T14:16:54.468Z",
+  "sourcesMonitored": 12
+}

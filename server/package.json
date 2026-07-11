@@ -1,0 +1,10 @@
+{
+  "name": "govt-jobs-portal-server",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

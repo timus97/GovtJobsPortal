@@ -1,0 +1,57 @@
+name: Daily collect process alert
+
+on:
+  schedule:
+    # ~06:00 IST
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Run daily pipeline
+        env:
+          COLLECT_HEADLESS: 'true'
+          PDF_MAX_PER_RUN: '25'
+          ALERT_ENABLED: ${{ secrets.ALERT_ENABLED }}
+          ALERT_ON_FIRST_RUN: ${{ secrets.ALERT_ON_FIRST_RUN }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+        run: npm run pipeline:daily
+
+      - name: Commit data updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/processed data/staging data/raw/pdfs || true
+          if git diff --staged --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "chore(data): daily collect $(date -u +%Y-%m-%d)"
+            git push
+          fi

@@ -1,0 +1,2596 @@
+{
+  "updatedAt": "2026-07-11T14:47:38.343Z",
+  "count": 259,
+  "items": [
+    {
+      "name": "Oil and Natural Gas Corporation (ONGC)",
+      "short": "ONGC",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Oil and Natural Gas Corporation]] (ONGC)",
+      "hasDomain": true,
+      "domainKey": "Oil and Natural Gas Corporation",
+      "baseUrl": "https://www.ongcindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Bharat Heavy Electricals Limited (BHEL)",
+      "short": "BHEL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Bharat Heavy Electricals Limited]] (BHEL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Heavy Electricals Limited",
+      "baseUrl": "https://www.bhel.com/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "Bharat Petroleum (BPCL)",
+      "short": "BPCL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Bharat Petroleum]] (BPCL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Petroleum",
+      "baseUrl": "https://www.bharatpetroleum.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Coal India (CIL)",
+      "short": "CIL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Coal India]] (CIL)",
+      "hasDomain": true,
+      "domainKey": "Coal India",
+      "baseUrl": "https://www.coalindia.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "GAIL (India) Limited",
+      "short": null,
+      "ratna": "maharatna",
+      "wikiRaw": "[[GAIL (India) Limited]] (formerly Gas Authority of India Limited)",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Hindustan Petroleum (HPCL)",
+      "short": "HPCL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Hindustan Petroleum]] (HPCL)",
+      "hasDomain": true,
+      "domainKey": "Hindustan Petroleum",
+      "baseUrl": "https://www.hindustanpetroleum.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Oil (IOCL)",
+      "short": "IOCL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Indian Oil Corporation|Indian Oil]] (IOCL)",
+      "hasDomain": true,
+      "domainKey": "Indian Oil",
+      "baseUrl": "https://iocl.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "NTPC Limited",
+      "short": null,
+      "ratna": "maharatna",
+      "wikiRaw": "[[NTPC Limited]] (formerly National Thermal Power Corporation)",
+      "hasDomain": true,
+      "domainKey": "NTPC Limited",
+      "baseUrl": "https://www.ntpc.co.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Power Grid Corporation of India (PGCIL)",
+      "short": "PGCIL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Power Grid Corporation of India]] (PGCIL)",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Power Finance Corporation Limited (PFC)",
+      "short": "PFC",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Power Finance Corporation|Power Finance Corporation Limited]] (PFC)",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "REC Limited",
+      "short": null,
+      "ratna": "maharatna",
+      "wikiRaw": "[[REC Limited]] (formerly Rural Electrification Corporation Limited)",
+      "hasDomain": true,
+      "domainKey": "REC Limited",
+      "baseUrl": "https://www.recindia.nic.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Steel Authority of India Limited (SAIL)",
+      "short": "SAIL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Steel Authority of India Limited]] (SAIL)",
+      "hasDomain": true,
+      "domainKey": "Steel Authority of India Limited",
+      "baseUrl": "https://www.sail.co.in/",
+      "sector": "Steel"
+    },
+    {
+      "name": "Oil India (OIL)",
+      "short": "OIL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Oil India]] (OIL)",
+      "hasDomain": true,
+      "domainKey": "Oil India",
+      "baseUrl": "https://www.oil-india.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Hindustan Aeronautics Limited (HAL)",
+      "short": "HAL",
+      "ratna": "maharatna",
+      "wikiRaw": "[[Hindustan Aeronautics Limited]] (HAL)",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Bharat Electronics (BEL)",
+      "short": "BEL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Bharat Electronics]] (BEL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Electronics",
+      "baseUrl": "https://bel-india.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Container Corporation of India (CONCOR)",
+      "short": "CONCOR",
+      "ratna": "navratna",
+      "wikiRaw": "[[Container Corporation of India]] (CONCOR)",
+      "hasDomain": true,
+      "domainKey": "Container Corporation of India",
+      "baseUrl": "https://www.concorindia.co.in/",
+      "sector": "Logistics"
+    },
+    {
+      "name": "Engineers India (EIL)",
+      "short": "EIL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Engineers India]] (EIL)",
+      "hasDomain": true,
+      "domainKey": "Engineers India",
+      "baseUrl": "https://engineersindia.com/",
+      "sector": "Engineering"
+    },
+    {
+      "name": "Mahanagar Telephone Nigam Limited (MTNL)",
+      "short": "MTNL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Mahanagar Telephone Nigam Limited]] (MTNL)",
+      "hasDomain": true,
+      "domainKey": "Mahanagar Telephone Nigam Limited",
+      "baseUrl": "https://mtnl.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "National Aluminium Company (NALCO)",
+      "short": "NALCO",
+      "ratna": "navratna",
+      "wikiRaw": "[[National Aluminium Company]] (NALCO)",
+      "hasDomain": true,
+      "domainKey": "National Aluminium Company",
+      "baseUrl": "https://nalcoindia.com/",
+      "sector": "Metals"
+    },
+    {
+      "name": "NBCC (India) Limited",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[NBCC (India) Limited]]",
+      "hasDomain": true,
+      "domainKey": "NBCC (India) Limited",
+      "baseUrl": "https://www.nbccindia.in/",
+      "sector": "Construction"
+    },
+    {
+      "name": "NMDC Limited",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[NMDC Limited]]",
+      "hasDomain": true,
+      "domainKey": "NMDC Limited",
+      "baseUrl": "https://www.nmdc.co.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "NLC India Limited (Neyveli Lignite)",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[NLC India Limited]] (Neyveli Lignite)",
+      "hasDomain": true,
+      "domainKey": "NLC India Limited",
+      "baseUrl": "https://www.nlcindia.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Rashtriya Ispat Nigam (RINL)",
+      "short": "RINL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Rashtriya Ispat Nigam]] (RINL)",
+      "hasDomain": true,
+      "domainKey": "Rashtriya Ispat Nigam",
+      "baseUrl": "https://www.vizagsteel.com/",
+      "sector": "Steel"
+    },
+    {
+      "name": "Shipping Corporation of India (SCI)",
+      "short": "SCI",
+      "ratna": "navratna",
+      "wikiRaw": "[[Shipping Corporation of India]] (SCI)",
+      "hasDomain": true,
+      "domainKey": "Shipping Corporation of India",
+      "baseUrl": "https://www.shipindia.com/",
+      "sector": "Shipping"
+    },
+    {
+      "name": "Rail Vikas Nigam (RVNL)",
+      "short": "RVNL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Rail Vikas Nigam]] (RVNL)",
+      "hasDomain": true,
+      "domainKey": "Rail Vikas Nigam",
+      "baseUrl": "https://rvnl.org/",
+      "sector": "Railways"
+    },
+    {
+      "name": "ONGC Videsh Limited (OVL)",
+      "short": "OVL",
+      "ratna": "navratna",
+      "wikiRaw": "ONGC Videsh Limited (OVL)",
+      "hasDomain": true,
+      "domainKey": "Oil and Natural Gas Corporation",
+      "baseUrl": "https://www.ongcindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Rashtriya Chemicals and Fertilizers (RCF)",
+      "short": "RCF",
+      "ratna": "navratna",
+      "wikiRaw": "[[Rashtriya Chemicals and Fertilizers]] (RCF)",
+      "hasDomain": true,
+      "domainKey": "Rashtriya Chemicals and Fertilizers",
+      "baseUrl": "https://www.rcfltd.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "Ircon International (IRCON)",
+      "short": "IRCON",
+      "ratna": "navratna",
+      "wikiRaw": "[[Ircon International]] (IRCON)",
+      "hasDomain": true,
+      "domainKey": "Ircon International",
+      "baseUrl": "https://www.ircon.org/",
+      "sector": "Railways"
+    },
+    {
+      "name": "RITES Limited",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[RITES Limited]]",
+      "hasDomain": true,
+      "domainKey": "RITES Limited",
+      "baseUrl": "https://www.rites.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "National Fertilizers Limited (NFL)",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[National Fertilizers|National Fertilizers Limited (NFL)]]",
+      "hasDomain": true,
+      "domainKey": "National Fertilizers Limited (NFL)",
+      "baseUrl": "https://www.nationalfertilizers.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "Housing And Urban Development Corporation Limited (HUDCO)",
+      "short": "HUDCO",
+      "ratna": "navratna",
+      "wikiRaw": "[[Housing and Urban Development Corporation|Housing And Urban Development Corporation Limited]] (HUDCO)",
+      "hasDomain": true,
+      "domainKey": "Housing And Urban Development Corporation Limited",
+      "baseUrl": "https://www.hudco.org.in/",
+      "sector": "Housing"
+    },
+    {
+      "name": "Indian Renewable Energy Development Agency (IREDA)",
+      "short": "IREDA",
+      "ratna": "navratna",
+      "wikiRaw": "[[Indian Renewable Energy Development Agency]] (IREDA)",
+      "hasDomain": true,
+      "domainKey": "Indian Renewable Energy Development Agency",
+      "baseUrl": "https://www.ireda.in/",
+      "sector": "Energy"
+    },
+    {
+      "name": "Central Warehousing Corporation (CWC)",
+      "short": "CWC",
+      "ratna": "navratna",
+      "wikiRaw": "[[Central Warehousing Corporation]] (CWC)",
+      "hasDomain": true,
+      "domainKey": "Central Warehousing Corporation",
+      "baseUrl": "https://cewacor.nic.in/",
+      "sector": "Logistics"
+    },
+    {
+      "name": "Mazagon Dockyard Limited (MDL)",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[Mazagon Dock Shipbuilders|Mazagon Dockyard Limited]] (MDL)<ref>{{Cite web |title=MDL Granted Navratna status by Govt. |date=25 June 2024 |url=https://www.cnbctv18.com/market/mazagon-dock-shipbuilder",
+      "hasDomain": true,
+      "domainKey": "Mazagon Dockyard Limited",
+      "baseUrl": "https://mazagondock.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "RailTel Corporation of India Limited (RCIL)",
+      "short": "RCIL",
+      "ratna": "navratna",
+      "wikiRaw": "[[RailTel|RailTel Corporation of India Limited]] (RCIL)",
+      "hasDomain": true,
+      "domainKey": "Coal India",
+      "baseUrl": "https://www.coalindia.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "SJVN Limited (SJVN)",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[SJVN|SJVN Limited]] (SJVN)<ref name=\":3\">{{Cite web |date=2024-09-05 |title=KAVACH tender is of around ₹7,000 crore and will open on September 19, says RailTel Corporation - CNBC TV18 |url=https://w",
+      "hasDomain": true,
+      "domainKey": "SJVN Limited",
+      "baseUrl": "https://sjvn.nic.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "NHPC Limited",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[NHPC|NHPC Limited]]<ref name=\":3\" />",
+      "hasDomain": true,
+      "domainKey": "NHPC Limited",
+      "baseUrl": "https://www.nhpcindia.com/",
+      "sector": "Power"
+    },
+    {
+      "name": "Solar Energy Corporation of India (SECI)",
+      "short": null,
+      "ratna": "navratna",
+      "wikiRaw": "[[Solar Energy Corporation of India]] (SECI)<ref name=\":3\" />",
+      "hasDomain": true,
+      "domainKey": "Solar Energy Corporation of India",
+      "baseUrl": "https://www.seci.co.in/",
+      "sector": "Energy"
+    },
+    {
+      "name": "Indian Railway Catering and Tourism Corporation (IRCTC)",
+      "short": "IRCTC",
+      "ratna": "navratna",
+      "wikiRaw": "[[Indian Railway Catering and Tourism Corporation]] (IRCTC)",
+      "hasDomain": true,
+      "domainKey": "Indian Railway Catering and Tourism Corporation",
+      "baseUrl": "https://www.irctc.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "Indian Railway Finance Corporation (IRFC)",
+      "short": "IRFC",
+      "ratna": "navratna",
+      "wikiRaw": "[[Indian Railway Finance Corporation]] (IRFC)",
+      "hasDomain": true,
+      "domainKey": "Indian Railway Finance Corporation",
+      "baseUrl": "https://irfc.co.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Numaligarh Refinery (NRL)",
+      "short": "NRL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Numaligarh Refinery]] (NRL)",
+      "hasDomain": true,
+      "domainKey": "Numaligarh Refinery",
+      "baseUrl": "https://www.nrl.co.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Chennai Petroleum Corporation Limited (CPCL)",
+      "short": "CPCL",
+      "ratna": "navratna",
+      "wikiRaw": "[[Chennai Petroleum Corporation Limited]] (CPCL)",
+      "hasDomain": true,
+      "domainKey": "Chennai Petroleum Corporation Limited",
+      "baseUrl": "https://www.cpcl.co.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Garden Reach Shipbuilders & Engineers Limited (GRSE)",
+      "short": "GRSE",
+      "ratna": "navratna",
+      "wikiRaw": "Garden Reach Shipbuilders & Engineers Limited (GRSE)",
+      "hasDomain": true,
+      "domainKey": "Garden Reach Shipbuilders & Engineers Limited",
+      "baseUrl": "https://grse.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Airports Authority of India (AAI)",
+      "short": "AAI",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Airports Authority of India]] (AAI)",
+      "hasDomain": true,
+      "domainKey": "Airports Authority of India",
+      "baseUrl": "https://www.aai.aero/",
+      "sector": "Aviation"
+    },
+    {
+      "name": "ONGC Videsh Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Oil and Natural Gas Corporation#Subsidiaries|ONGC Videsh Limited]]",
+      "hasDomain": true,
+      "domainKey": "Oil and Natural Gas Corporation",
+      "baseUrl": "https://www.ongcindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Antrix Corporation (ANTRIX)",
+      "short": "ANTRIX",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Antrix Corporation]] (ANTRIX)",
+      "hasDomain": true,
+      "domainKey": "Antrix Corporation",
+      "baseUrl": "https://www.antrix.co.in/",
+      "sector": "Space"
+    },
+    {
+      "name": "Balmer Lawrie",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Balmer Lawrie]]",
+      "hasDomain": true,
+      "domainKey": "Balmer Lawrie",
+      "baseUrl": "https://www.balmerlawrie.com/",
+      "sector": "Multi-sector"
+    },
+    {
+      "name": "Braithwaite & Co.",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Braithwaite & Co.]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bharat Coking Coal Limited (BCCL)",
+      "short": "BCCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Bharat Coking Coal Limited]] (BCCL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Coking Coal Limited",
+      "baseUrl": "https://www.bcclweb.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Bharat Dynamics Limited (BDL)",
+      "short": "BDL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Bharat Dynamics Limited]] (BDL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Dynamics Limited",
+      "baseUrl": "https://bdl-india.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Bharat Earth Movers Limited (BEML)",
+      "short": "BEML",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Bharat Earth Movers Limited]] (BEML)",
+      "hasDomain": true,
+      "domainKey": "Bharat Earth Movers Limited",
+      "baseUrl": "https://www.bemlindia.in/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "Bharat Sanchar Nigam Limited (BSNL)",
+      "short": "BSNL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Bharat Sanchar Nigam Limited]] (BSNL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Sanchar Nigam Limited",
+      "baseUrl": "https://www.bsnl.co.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "Bridge and Roof Company (India)",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Bridge and Roof Company (India)]]",
+      "hasDomain": true,
+      "domainKey": "Bridge and Roof Company (India)",
+      "baseUrl": "https://www.bridgeroof.co.in/",
+      "sector": "Construction"
+    },
+    {
+      "name": "Central Electronics Limited (CEL)",
+      "short": "CEL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Central Electronics Limited]] (CEL)",
+      "hasDomain": true,
+      "domainKey": "Central Electronics Limited",
+      "baseUrl": "https://www.celindia.co.in/",
+      "sector": "Electronics"
+    },
+    {
+      "name": "Central Coalfields Limited (CCL)",
+      "short": "CCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Central Coalfields Limited]] (CCL)",
+      "hasDomain": true,
+      "domainKey": "Central Coalfields Limited",
+      "baseUrl": "https://www.centralcoalfields.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Central Mine Planning & Design Institute Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "Central Mine Planning & Design Institute Limited",
+      "hasDomain": true,
+      "domainKey": "Central Electronics Limited",
+      "baseUrl": "https://www.celindia.co.in/",
+      "sector": "Electronics"
+    },
+    {
+      "name": "Mishra Dhatu Nigam Limited (MIDHANI)",
+      "short": "MIDHANI",
+      "ratna": "miniratna_i",
+      "wikiRaw": "Mishra Dhatu Nigam Limited (MIDHANI)",
+      "hasDomain": true,
+      "domainKey": "Mishra Dhatu Nigam Limited (MIDHANI)",
+      "baseUrl": "https://midhani-india.in/",
+      "sector": "Metals"
+    },
+    {
+      "name": "Chennai Petroleum Corporation (CPCL)",
+      "short": "CPCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Chennai Petroleum Corporation]] (CPCL)",
+      "hasDomain": true,
+      "domainKey": "Chennai Petroleum Corporation Limited",
+      "baseUrl": "https://www.cpcl.co.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Cochin Shipyard (CSL)",
+      "short": "CSL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Cochin Shipyard]] (CSL)",
+      "hasDomain": true,
+      "domainKey": "Cochin Shipyard",
+      "baseUrl": "https://cochinshipyard.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Cotton Corporation of India Limited (CCIL)",
+      "short": "CCIL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Cotton Corporation of India|Cotton Corporation of India Limited]] (CCIL)",
+      "hasDomain": true,
+      "domainKey": "Coal India",
+      "baseUrl": "https://www.coalindia.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "EdCIL (India) Limited (EdCIL)",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[EdCIL (India) Limited]] (EdCIL)",
+      "hasDomain": true,
+      "domainKey": "Coal India",
+      "baseUrl": "https://www.coalindia.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Garden Reach Shipbuilders & Engineers (GRSE) (to be upgraded to Navratna)",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Garden Reach Shipbuilders & Engineers]] (GRSE) (to be upgraded to Navratna)<ref>{{Cite news |last=Shukla |first=Anuradha |date=2026-02-19 |title=Garden Reach Shipbuilders set for Navratna status as ",
+      "hasDomain": true,
+      "domainKey": "Garden Reach Shipbuilders & Engineers Limited",
+      "baseUrl": "https://grse.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Goa Shipyard (GSL)",
+      "short": "GSL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Goa Shipyard]] (GSL)",
+      "hasDomain": true,
+      "domainKey": "Goa Shipyard",
+      "baseUrl": "https://goashipyard.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Hindustan Copper (HCL)",
+      "short": "HCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Hindustan Copper]] (HCL)",
+      "hasDomain": true,
+      "domainKey": "Hindustan Copper",
+      "baseUrl": "https://www.hindustancopper.com/",
+      "sector": "Mining"
+    },
+    {
+      "name": "HLL Lifecare",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[HLL Lifecare]]",
+      "hasDomain": true,
+      "domainKey": "HLL Lifecare",
+      "baseUrl": "https://www.lifecarehll.com/",
+      "sector": "Health"
+    },
+    {
+      "name": "Hindustan Newsprint",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Hindustan Newsprint]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Hindustan Paper Corporation Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "Hindustan Paper Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Hindustan Steelworks Construction Ltd.",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "Hindustan Steelworks Construction Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "HSCC India Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "HSCC India Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Tourism Development Corporation (ITDC)",
+      "short": "ITDC",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Indian Tourism Development Corporation]] (ITDC)",
+      "hasDomain": true,
+      "domainKey": "Indian Tourism Development Corporation",
+      "baseUrl": "https://itdc.co.in/",
+      "sector": "Tourism"
+    },
+    {
+      "name": "Indian Rare Earths (IRE)",
+      "short": "IRE",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Indian Rare Earths]] (IRE)",
+      "hasDomain": true,
+      "domainKey": "Indian Rare Earths",
+      "baseUrl": "https://www.irel.co.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "India Trade Promotion Organisation (ITPO)",
+      "short": "ITPO",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[India Trade Promotion Organisation]] (ITPO)",
+      "hasDomain": true,
+      "domainKey": "India Trade Promotion Organisation",
+      "baseUrl": "https://indiatradefair.com/",
+      "sector": "Trade"
+    },
+    {
+      "name": "Kudremukh Iron Ore Company (KIOCL)",
+      "short": "KIOCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Kudremukh Iron Ore Company]] (KIOCL)",
+      "hasDomain": true,
+      "domainKey": "Kudremukh Iron Ore Company",
+      "baseUrl": "https://www.kioclltd.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Mahanadi Coalfields (MCL)",
+      "short": "MCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Mahanadi Coalfields]] (MCL)",
+      "hasDomain": true,
+      "domainKey": "Mahanadi Coalfields",
+      "baseUrl": "https://www.mahanadicoal.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "MOIL Limited (MOIL)",
+      "short": "MOIL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[MOIL (company)|MOIL Limited]] (MOIL)",
+      "hasDomain": true,
+      "domainKey": "MOIL Limited",
+      "baseUrl": "https://moil.nic.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Mangalore Refinery and Petrochemicals Limited (MRPL)",
+      "short": "MRPL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Mangalore Refinery and Petrochemicals Limited]] (MRPL)",
+      "hasDomain": true,
+      "domainKey": "Mangalore Refinery and Petrochemicals Limited",
+      "baseUrl": "https://www.mrpl.co.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Mineral Exploration Corporation Limited (MECL)",
+      "short": "MECL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "Mineral Exploration Corporation Limited (MECL)",
+      "hasDomain": true,
+      "domainKey": "Mineral Exploration Corporation Limited",
+      "baseUrl": "https://www.mecl.co.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Mishra Dhatu Nigam",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Mishra Dhatu Nigam]]",
+      "hasDomain": true,
+      "domainKey": "Mishra Dhatu Nigam",
+      "baseUrl": "https://midhani-india.in/",
+      "sector": "Metals"
+    },
+    {
+      "name": "MMTC Ltd. (MMTC)",
+      "short": "MMTC",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[MMTC Ltd.]] (MMTC)",
+      "hasDomain": true,
+      "domainKey": "MMTC Ltd.",
+      "baseUrl": "https://www.mmtclimited.com/",
+      "sector": "Trade"
+    },
+    {
+      "name": "MSTC Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[MSTC Limited]]",
+      "hasDomain": true,
+      "domainKey": "MSTC Limited",
+      "baseUrl": "https://www.mstcindia.co.in/",
+      "sector": "Trade"
+    },
+    {
+      "name": "National Fertilizers (NFL)",
+      "short": "NFL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[National Fertilizers]] (NFL)",
+      "hasDomain": true,
+      "domainKey": "National Fertilizers Limited (NFL)",
+      "baseUrl": "https://www.nationalfertilizers.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "National Projects Construction Corporation",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "National Projects Construction Corporation",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "National Small Industries Corporation (NSIC)",
+      "short": "NSIC",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[National Small Industries Corporation]] (NSIC)",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "National Seed Corporation (NSC)",
+      "short": "NSC",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[National Seed Corporation]] (NSC)",
+      "hasDomain": true,
+      "domainKey": "National Seed Corporation",
+      "baseUrl": "https://www.indiaseeds.com/",
+      "sector": "Agriculture"
+    },
+    {
+      "name": "Northern Coalfields (NCL)",
+      "short": "NCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Northern Coalfields]] (NCL)",
+      "hasDomain": true,
+      "domainKey": "Northern Coalfields",
+      "baseUrl": "https://www.nclcil.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "North Eastern Electric Power Corporation Limited (NEEPCL)",
+      "short": "NEEPCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[North Eastern Electric Power Corporation Limited]] (NEEPCL)",
+      "hasDomain": true,
+      "domainKey": "North Eastern Electric Power Corporation Limited",
+      "baseUrl": "https://neepco.co.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Pawan Hans Helicopters Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Pawan Hans|Pawan Hans Helicopters Limited]]",
+      "hasDomain": true,
+      "domainKey": "Pawan Hans Helicopters Limited",
+      "baseUrl": "https://www.pawanhans.co.in/",
+      "sector": "Aviation"
+    },
+    {
+      "name": "Projects and Development India Limited (PDIL)",
+      "short": "PDIL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Projects and Development India Limited]] (PDIL)",
+      "hasDomain": true,
+      "domainKey": "Projects and Development India Limited",
+      "baseUrl": "https://www.pdilin.com/",
+      "sector": "Engineering"
+    },
+    {
+      "name": "Rashtriya Chemicals & Fertilizers (RCF)",
+      "short": "RCF",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Rashtriya Chemicals & Fertilizers]] (RCF)",
+      "hasDomain": true,
+      "domainKey": "Rashtriya Chemicals and Fertilizers",
+      "baseUrl": "https://www.rcfltd.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "Security Printing and Minting Corporation of India",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Security Printing and Minting Corporation of India]]",
+      "hasDomain": true,
+      "domainKey": "Security Printing and Minting Corporation of India",
+      "baseUrl": "https://www.spmcil.com/",
+      "sector": "Security Printing"
+    },
+    {
+      "name": "South Eastern Coalfields (SECL)",
+      "short": "SECL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[South Eastern Coalfields]] (SECL)",
+      "hasDomain": true,
+      "domainKey": "South Eastern Coalfields",
+      "baseUrl": "https://www.secl-cil.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Telecommunications Consultants India (TCIL)",
+      "short": "TCIL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Telecommunications Consultants India]] (TCIL)",
+      "hasDomain": true,
+      "domainKey": "Telecommunications Consultants India",
+      "baseUrl": "https://www.tcil.net.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "THDC India Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[THDC India Limited]]",
+      "hasDomain": true,
+      "domainKey": "THDC India Limited",
+      "baseUrl": "https://thdc.co.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Western Coalfields (WCL)",
+      "short": "WCL",
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[Western Coalfields]] (WCL)",
+      "hasDomain": true,
+      "domainKey": "Western Coalfields",
+      "baseUrl": "https://westerncoal.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "WAPCOS Limited",
+      "short": null,
+      "ratna": "miniratna_i",
+      "wikiRaw": "[[WAPCOS Limited]]",
+      "hasDomain": true,
+      "domainKey": "WAPCOS Limited",
+      "baseUrl": "https://www.wapcos.gov.in/",
+      "sector": "Consulting"
+    },
+    {
+      "name": "Artificial Limbs Manufacturing Corporation of India",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Artificial Limbs Manufacturing Corporation of India",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Broadcast Engineering Consultants India Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Broadcast Engineering Consultants India Limited",
+      "hasDomain": true,
+      "domainKey": "Broadcast Engineering Consultants India Limited",
+      "baseUrl": "https://www.becil.com/",
+      "sector": "IT & Media"
+    },
+    {
+      "name": "Engineering Projects (India) Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Engineering Projects (India) Limited",
+      "hasDomain": true,
+      "domainKey": "Engineering Projects (India) Limited",
+      "baseUrl": "https://www.engineeringprojects.com/",
+      "sector": "Engineering"
+    },
+    {
+      "name": "FCI Aravali Gypsum and Minerals (India) Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "[[FCI Aravali Gypsum and Minerals India|FCI Aravali Gypsum and Minerals (India) Limited]]",
+      "hasDomain": true,
+      "domainKey": "Food Corporation of India",
+      "baseUrl": "https://fci.gov.in/",
+      "sector": "Food"
+    },
+    {
+      "name": "HMT International Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "[[HMT Limited|HMT International Limited]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Indian Medicines Pharmaceutical Corporation Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Indian Medicines Pharmaceutical Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Ferro Scrap Nigam Limited (FSNL)",
+      "short": "FSNL",
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Ferro Scrap Nigam Limited (FSNL)",
+      "hasDomain": true,
+      "domainKey": "Mahanagar Telephone Nigam Limited",
+      "baseUrl": "https://mtnl.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "MECON",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "[[MECON Limited|MECON]]",
+      "hasDomain": true,
+      "domainKey": "MECON Limited",
+      "baseUrl": "https://www.meconlimited.co.in/",
+      "sector": "Engineering"
+    },
+    {
+      "name": "National Film Development Corporation of India (NFDC)",
+      "short": "NFDC",
+      "ratna": "miniratna_ii",
+      "wikiRaw": "[[National Film Development Corporation of India]] (NFDC)",
+      "hasDomain": true,
+      "domainKey": "National Film Development Corporation of India",
+      "baseUrl": "https://www.nfdcindia.com/",
+      "sector": "Media"
+    },
+    {
+      "name": "Rajasthan Electronics and Instruments Limited",
+      "short": null,
+      "ratna": "miniratna_ii",
+      "wikiRaw": "Rajasthan Electronics and Instruments Limited",
+      "hasDomain": true,
+      "domainKey": "Central Electronics Limited",
+      "baseUrl": "https://www.celindia.co.in/",
+      "sector": "Electronics"
+    },
+    {
+      "name": "Advanced Weapons and Equipment India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Advanced Weapons and Equipment India]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Agrinnovate India Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Agrinnovate India Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "AFC India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "AFC India Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Anushakti Vidhyut Nigam Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Anushakti Vidhyut Nigam Limited",
+      "hasDomain": true,
+      "domainKey": "Mahanagar Telephone Nigam Limited",
+      "baseUrl": "https://mtnl.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "Aravali Power Company Private Limited (APCPL) Jharli, Jhajjar",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Aravali Power Company Private Limited (APCPL) Jharli, Jhajjar",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Armoured Vehicles Nigam",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Armoured Vehicles Nigam]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bengal Chemicals and Pharmaceuticals Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bengal Chemicals and Pharmaceuticals]] Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bengal Immunity Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Bengal Immunity Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bharat Broadband Network (BBNL)",
+      "short": "BBNL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bharat Broadband Network]] (BBNL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Broadband Network",
+      "baseUrl": "https://bbnl.nic.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "Bharat Coal Gasification and Chemicals Ltd (BCGCL)",
+      "short": "BCGCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Bharat Coal Gasification and Chemicals Ltd (BCGCL)",
+      "hasDomain": true,
+      "domainKey": "Bharat Coking Coal Limited",
+      "baseUrl": "https://www.bcclweb.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Bharat Gold Mines Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bharat Gold Mines Limited]]",
+      "hasDomain": true,
+      "domainKey": "Bharat Heavy Electricals Limited",
+      "baseUrl": "https://www.bhel.com/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "Bharat Immunologicals and Biologicals Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bharat Immunologicals and Biologicals Corporation]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bharat Refractories Limited, Bokaro",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Bharat Refractories Limited, Bokaro",
+      "hasDomain": true,
+      "domainKey": "Bharat Heavy Electricals Limited",
+      "baseUrl": "https://www.bhel.com/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "Bharat Wagon and Engineering",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Bharat Wagon and Engineering",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Bharatiya Reserve Bank Note Mudran",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bharatiya Reserve Bank Note Mudran]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "BHAVINI",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[BHAVINI]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "BEML Midwest ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "BEML Midwest ltd.",
+      "hasDomain": true,
+      "domainKey": "Bharat Earth Movers Limited",
+      "baseUrl": "https://www.bemlindia.in/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "BHEL Electrical Machines Ltd. (EML)",
+      "short": "EML",
+      "ratna": "other_cpsu",
+      "wikiRaw": "BHEL Electrical Machines Ltd. (EML)",
+      "hasDomain": true,
+      "domainKey": "Bharat Heavy Electricals Limited",
+      "baseUrl": "https://www.bhel.com/",
+      "sector": "Heavy Engineering"
+    },
+    {
+      "name": "Bhor Sagar Port Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Bhor Sagar Port Limited]]",
+      "hasDomain": true,
+      "domainKey": "Kamarajar Port Limited",
+      "baseUrl": "https://www.ennoreport.gov.in/",
+      "sector": "Ports"
+    },
+    {
+      "name": "Biotech Consortium India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Biotech Consortium India Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Brahmaputra Valley Fertilizer Corporation Ltd (BVFCL)",
+      "short": "BVFCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Brahmaputra Valley Fertilizer Corporation Ltd (BVFCL)",
+      "hasDomain": true,
+      "domainKey": "Damodar Valley Corporation",
+      "baseUrl": "https://www.dvc.gov.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Brahmaputra Cracker and Polymer Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Brahmaputra Cracker and Polymer Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "BrahMos Aerospace",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[BrahMos Aerospace]]",
+      "hasDomain": true,
+      "domainKey": "BrahMos Aerospace",
+      "baseUrl": "https://www.brahmos.com/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Bundelkhand Saur Urja Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Bundelkhand Saur Urja Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Convergence Energy Services Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Convergence Energy Services Limited",
+      "hasDomain": true,
+      "domainKey": "Energy Efficiency Services Limited",
+      "baseUrl": "https://eeslindia.org/",
+      "sector": "Energy"
+    },
+    {
+      "name": "CSC e-Governance Services India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Common Service Centres|CSC e-Governance Services India Limited]]",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Cement Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Cement Corporation of India",
+      "hasDomain": true,
+      "domainKey": "Cement Corporation of India",
+      "baseUrl": "https://www.cementcorporation.co.in/",
+      "sector": "Cement"
+    },
+    {
+      "name": "Central Inland Water Transport Corporation Limited (CIWTC)",
+      "short": "CIWTC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Central Inland Water Transport Corporation Limited (CIWTC)",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Certification Engineers International Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Certification Engineers International Limited",
+      "hasDomain": true,
+      "domainKey": "Garden Reach Shipbuilders & Engineers Limited",
+      "baseUrl": "https://grse.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "City and Industrial Development Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[City and Industrial Development Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Housing And Urban Development Corporation Limited",
+      "baseUrl": "https://www.hudco.org.in/",
+      "sector": "Housing"
+    },
+    {
+      "name": "Chenab Valley Power Projects",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Chenab Valley Power Projects",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Damodar Valley Corporation (DVC)",
+      "short": "DVC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Damodar Valley Corporation]] (DVC)",
+      "hasDomain": true,
+      "domainKey": "Damodar Valley Corporation",
+      "baseUrl": "https://www.dvc.gov.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Dedicated Freight Corridor Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Dedicated freight corridors in India|Dedicated Freight Corridor Corporation of India]]",
+      "hasDomain": true,
+      "domainKey": "Dedicated Freight Corridor Corporation of India",
+      "baseUrl": "https://dfccil.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "Delhi Metro Rail Corporation (DMRC)",
+      "short": "DMRC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Delhi Metro Rail Corporation]] (DMRC)",
+      "hasDomain": true,
+      "domainKey": "Delhi Metro Rail Corporation",
+      "baseUrl": "https://www.delhimetrorail.com/",
+      "sector": "Transport"
+    },
+    {
+      "name": "Delhi Transco Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Delhi Transco Limited]]",
+      "hasDomain": true,
+      "domainKey": "National Seed Corporation",
+      "baseUrl": "https://www.indiaseeds.com/",
+      "sector": "Agriculture"
+    },
+    {
+      "name": "Delhi Transport Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Delhi Transport Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Delhi Metro Rail Corporation",
+      "baseUrl": "https://www.delhimetrorail.com/",
+      "sector": "Transport"
+    },
+    {
+      "name": "Deposit Insurance and Credit Guarantee Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Deposit Insurance and Credit Guarantee Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Export Credit Guarantee Corporation of India",
+      "baseUrl": "https://www.ecgc.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Digital India Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Digital India Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Dredging Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Dredging Corporation of India]]",
+      "hasDomain": true,
+      "domainKey": "Dredging Corporation of India",
+      "baseUrl": "https://www.dredge-india.com/",
+      "sector": "Shipping"
+    },
+    {
+      "name": "Electronics Corporation of India Limited (ECIL)",
+      "short": "ECIL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Electronics Corporation of India Limited]] (ECIL)",
+      "hasDomain": true,
+      "domainKey": "Electronics Corporation of India Limited",
+      "baseUrl": "https://www.ecil.co.in/",
+      "sector": "Electronics"
+    },
+    {
+      "name": "Energy Efficiency Services Limited (EESL)",
+      "short": "EESL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Energy Efficiency Services Limited]] (EESL)",
+      "hasDomain": true,
+      "domainKey": "Energy Efficiency Services Limited",
+      "baseUrl": "https://eeslindia.org/",
+      "sector": "Energy"
+    },
+    {
+      "name": "Export Credit Guarantee Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Export Credit Guarantee Corporation of India",
+      "hasDomain": true,
+      "domainKey": "Export Credit Guarantee Corporation of India",
+      "baseUrl": "https://www.ecgc.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Fertilisers and Chemicals Travancore Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Fertilisers and Chemicals Travancore Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Fertilizer Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Fertiliser Corporation of India|Fertilizer Corporation of India]]",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Food Corporation of India (FCI)",
+      "short": "FCI",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Food Corporation of India]] (FCI)",
+      "hasDomain": true,
+      "domainKey": "Food Corporation of India",
+      "baseUrl": "https://fci.gov.in/",
+      "sector": "Food"
+    },
+    {
+      "name": "Fresh & Healthy Enterprises Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Fresh & Healthy Enterprises Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Gliders India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Gliders India]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Green Gas Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Green Gas Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Green Valley Renewable Energy Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Green Valley Renewable Energy Limited",
+      "hasDomain": true,
+      "domainKey": "Indian Renewable Energy Development Agency",
+      "baseUrl": "https://www.ireda.in/",
+      "sector": "Energy"
+    },
+    {
+      "name": "Grid Conductors Ltd",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Grid Conductors Ltd",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Hemisphere Properties India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hemisphere Properties India Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Hindustan Antibiotics Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Hindustan Antibiotics]] Limited",
+      "hasDomain": true,
+      "domainKey": "Hindustan Antibiotics Limited",
+      "baseUrl": "https://www.hindantibiotics.in/",
+      "sector": "Pharma"
+    },
+    {
+      "name": "Hindustan Fertilizers Corporation Limited (HFCL)",
+      "short": "HFCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hindustan Fertilizers Corporation Limited (HFCL)",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Hindustan Insecticides",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Hindustan Insecticides]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Hindustan Organic Chemicals Limited (HOCL)",
+      "short": "HOCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Hindustan Organic Chemicals Limited]] (HOCL)",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Hindustan Prefab Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hindustan Prefab Limited",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Hindustan Salts Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hindustan Salts Limited",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Hindustan Shipyard Limited (HSL)",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Hindustan Shipyard|Hindustan Shipyard Limited (HSL)]]",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "Hindustan Teleprinters Limited (HTL)",
+      "short": "HTL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hindustan Teleprinters Limited (HTL)",
+      "hasDomain": true,
+      "domainKey": "Hindustan Aeronautics Limited",
+      "baseUrl": "https://hal-india.co.in/",
+      "sector": "Defence"
+    },
+    {
+      "name": "HURL Barauni",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[HURL Barauni]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Hindustan Vegetable Oils Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Hindustan Vegetable Oils Corporation",
+      "hasDomain": true,
+      "domainKey": "Oil India",
+      "baseUrl": "https://www.oil-india.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "HSCC (India) Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "HSCC (India) Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "IHB Limited (a joint venture of IOCL, HPCL & BPCL)",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "IHB Limited (a joint venture of [[Indian Oil Corporation|IOCL]], [[Hindustan Petroleum|HPCL]] & [[Bharat Petroleum|BPCL]])",
+      "hasDomain": true,
+      "domainKey": "Bharat Petroleum",
+      "baseUrl": "https://www.bharatpetroleum.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Dairy Machinery Company Ltd. (IDMC)",
+      "short": "IDMC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Dairy Machinery Company Ltd. (IDMC)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "India Debt Resolution Company Limited (IDRCL)",
+      "short": "IDRCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "India Debt Resolution Company Limited (IDRCL)",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "India Government Mint",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[India Government Mint]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "India Infrastructure Finance Company Limited (IIFCL)",
+      "short": "IIFCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "India Infrastructure Finance Company Limited (IIFCL)",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "India Optel",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[India Optel]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "India Ports Global Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "India Ports Global Limited",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "India SME Asset Reconstruction Company Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "India SME Asset Reconstruction Company Limited",
+      "hasDomain": true,
+      "domainKey": "REC Limited",
+      "baseUrl": "https://www.recindia.nic.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Indian Financial Technology and Allied Services",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Financial Technology and Allied Services",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Indian Highway Management Company Limited (IHMCL)",
+      "short": "IHMCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Highway Management Company Limited (IHMCL)",
+      "hasDomain": true,
+      "domainKey": "Mahanadi Coalfields",
+      "baseUrl": "https://www.mahanadicoal.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Indian Immunologicals Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Indian Immunologicals Limited]]",
+      "hasDomain": true,
+      "domainKey": "Indian Strategic Petroleum Reserves Limited",
+      "baseUrl": "https://www.isprlindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Medicine Pharmaceutical Corporation Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Medicine Pharmaceutical Corporation Ltd.",
+      "hasDomain": true,
+      "domainKey": "Indian Railway Catering and Tourism Corporation",
+      "baseUrl": "https://www.irctc.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "Indian Port Rail Corporation Limited(IPRCL)",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Rail Vikas Nigam#New SPVs under formation|Indian Port Rail Corporation Limited(IPRCL)]]",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Indian Potash Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Potash Limited",
+      "hasDomain": true,
+      "domainKey": "Indian Strategic Petroleum Reserves Limited",
+      "baseUrl": "https://www.isprlindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Strategic Petroleum Reserves Ltd",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Strategic Petroleum Reserves Ltd",
+      "hasDomain": true,
+      "domainKey": "Indian Strategic Petroleum Reserves Limited",
+      "baseUrl": "https://www.isprlindia.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Indian Vaccine Corporation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indian Vaccine Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Cotton Corporation of India Limited",
+      "baseUrl": "https://cotcorp.org.in/",
+      "sector": "Agriculture"
+    },
+    {
+      "name": "Indraprastha Gas Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Indraprastha Gas]] Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Indradhanush Gas Grid Limited (IGGL)",
+      "short": "IGGL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Indradhanush Gas Grid Limited (IGGL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Infrastructure Leasing & Financial Services",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Infrastructure Leasing & Financial Services",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Industrial Finance Corporation of India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[IFCI Ltd|Industrial Finance Corporation of India Limited]]",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Inland & Coastal Shipping Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Inland & Coastal Shipping Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Inland Waterways Authority of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Inland Waterways Authority of India]]",
+      "hasDomain": true,
+      "domainKey": "Steel Authority of India Limited",
+      "baseUrl": "https://www.sail.co.in/",
+      "sector": "Steel"
+    },
+    {
+      "name": "Instrumentation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Instrumentation Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Intelligent Communication Systems India Limited (ICSIL)",
+      "short": "ICSIL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Intelligent Communication Systems India Limited (ICSIL)",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Irrigation and Water Resources Finance Corporation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Irrigation and Water Resources Finance Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Jal Power Corporation Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Jal Power Corporation Ltd.",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Jute Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Jute Corporation of India]]",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Karnataka Soaps and Detergents Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Karnataka Soaps and Detergents Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Karnataka Vijayanagar Steel Limited, NMDC Steel",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Karnataka Vijayanagar Steel Limited, NMDC Steel",
+      "hasDomain": true,
+      "domainKey": "NMDC Limited",
+      "baseUrl": "https://www.nmdc.co.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Khadi Natural",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Khadi Natural",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Khanij Bidesh India Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Khanij Bidesh India Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Kolkata Metro Rail Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Kolkata Metro Rail Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Delhi Metro Rail Corporation",
+      "baseUrl": "https://www.delhimetrorail.com/",
+      "sector": "Transport"
+    },
+    {
+      "name": "Konkan Railway Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Konkan Railway Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Indian Railway Catering and Tourism Corporation",
+      "baseUrl": "https://www.irctc.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "Konkan LNG",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Konkan LNG",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Krishnapatnam Railway Company Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Krishnapatnam Railway Company Limited",
+      "hasDomain": true,
+      "domainKey": "National Insurance Company Limited",
+      "baseUrl": "https://nationalinsurance.nic.co.in/",
+      "sector": "Insurance"
+    },
+    {
+      "name": "Life Spring Hospitals (P) Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Life Spring Hospitals (P) Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Madras Fertilizers",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Madras Fertilizers]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Mahanagar Gas",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Mahanagar Gas]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Millennium Telecom Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Millennium Telecom Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Meja Urja Nigam Private Limited (MUNPL)",
+      "short": "MUNPL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Meja Urja Nigam Private Limited (MUNPL)",
+      "hasDomain": true,
+      "domainKey": "Mahanagar Telephone Nigam Limited",
+      "baseUrl": "https://mtnl.in/",
+      "sector": "Telecom"
+    },
+    {
+      "name": "National Capital Region Transport Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Capital Region Transport Corporation]]",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "National Highways and Infrastructure Development Corporation Limited (NHIDCL)",
+      "short": "NHIDCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Highways and Infrastructure Development Corporation Limited]] (NHIDCL)",
+      "hasDomain": true,
+      "domainKey": "Housing And Urban Development Corporation Limited",
+      "baseUrl": "https://www.hudco.org.in/",
+      "sector": "Housing"
+    },
+    {
+      "name": "National Highways Logistics Management Company",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "National Highways Logistics Management Company",
+      "hasDomain": true,
+      "domainKey": "National Aluminium Company",
+      "baseUrl": "https://nalcoindia.com/",
+      "sector": "Metals"
+    },
+    {
+      "name": "National High Power Test Laboratory (NHTPL)",
+      "short": "NHTPL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "National High Power Test Laboratory (NHTPL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Narmada Hydroelectric Development Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Narmada Hydroelectric Development Corporation",
+      "hasDomain": true,
+      "domainKey": "Housing And Urban Development Corporation Limited",
+      "baseUrl": "https://www.hudco.org.in/",
+      "sector": "Housing"
+    },
+    {
+      "name": "National Industrial Corridor Development Corporation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "National Industrial Corridor Development Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Housing And Urban Development Corporation Limited",
+      "baseUrl": "https://www.hudco.org.in/",
+      "sector": "Housing"
+    },
+    {
+      "name": "National Informatics Centre Services Inc. (NIC)",
+      "short": "NIC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Informatics Centre|National Informatics Centre Services Inc.]] (NIC)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "National Jute Manufactures Corporation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Jute Manufactures Corporation Limited]]",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "National Land Monetisation Corporation (NLMC)",
+      "short": "NLMC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "National Land Monetisation Corporation (NLMC)",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "National Payments Corporation of India (NPCI)",
+      "short": "NPCI",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Payments Corporation of India]] (NPCI)",
+      "hasDomain": true,
+      "domainKey": "National Film Development Corporation of India",
+      "baseUrl": "https://www.nfdcindia.com/",
+      "sector": "Media"
+    },
+    {
+      "name": "National Projects Construction Corporation Ltd (NPCC)",
+      "short": "NPCC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "National Projects Construction Corporation Ltd (NPCC)",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "National Textile Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[National Textile Corporation]]",
+      "hasDomain": true,
+      "domainKey": "National Small Industries Corporation",
+      "baseUrl": "https://www.nsic.co.in/",
+      "sector": "Industry"
+    },
+    {
+      "name": "NIIF Infrastructure Finance Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "NIIF Infrastructure Finance Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "NewSpace India Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[NewSpace India Limited]]",
+      "hasDomain": true,
+      "domainKey": "GAIL (India) Limited",
+      "baseUrl": "https://gailonline.com/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "NEPA Mills Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "NEPA Mills Ltd.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "NSEIT",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "NSEIT",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "NSPCL (NTPC- SAIL Power Company Limited)",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[NSPCL]] ('''N'''TPC- '''S'''AIL '''P'''ower '''C'''ompany '''L'''imited)",
+      "hasDomain": true,
+      "domainKey": "NTPC Limited",
+      "baseUrl": "https://www.ntpc.co.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Open Network for Digital Commerce",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Open Network for Digital Commerce]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Orissa Drugs & Chemicals Ltd (ODCL)",
+      "short": "ODCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Orissa Drugs & Chemicals Ltd (ODCL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Petronet LNG",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Petronet LNG]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Pipavav Railway Corporation Ltd. (PRCL)",
+      "short": "PRCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Pipavav Railway Corporation Ltd. (PRCL)",
+      "hasDomain": true,
+      "domainKey": "Indian Railway Catering and Tourism Corporation",
+      "baseUrl": "https://www.irctc.com/",
+      "sector": "Railways"
+    },
+    {
+      "name": "Power System Operation Corporation",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Power System Operation Corporation]]",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Praga Tools",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Praga Tools]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Prize Petroleum Company Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Prize Petroleum Company Limited",
+      "hasDomain": true,
+      "domainKey": "Chennai Petroleum Corporation Limited",
+      "baseUrl": "https://www.cpcl.co.in/",
+      "sector": "Oil & Gas"
+    },
+    {
+      "name": "Protean eGov Technologies Ltd",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Protean eGov Technologies Ltd (Formerly NSDL e-Governance Infrastructure Limited)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "PTC India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[PTC India]] (formerly Power Trading Corporation India Limited)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Punjab Logistics Infrastructure Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Punjab Logistics Infrastructure Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Railway Energy Management Company Limited (REMCL)",
+      "short": "REMCL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Railway Energy Management Company Limited (REMCL)",
+      "hasDomain": true,
+      "domainKey": "Mahanadi Coalfields",
+      "baseUrl": "https://www.mahanadicoal.in/",
+      "sector": "Mining"
+    },
+    {
+      "name": "Rajasthan Drugs & Pharmaceuticals Limited (RDPL)",
+      "short": "RDPL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Rajasthan Drugs & Pharmaceuticals Limited (RDPL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Ramagundam Fertilizers and Chemicals Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Ramagundam Fertilizers and Chemicals Limited",
+      "hasDomain": true,
+      "domainKey": "Rashtriya Chemicals and Fertilizers",
+      "baseUrl": "https://www.rcfltd.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "Ratnagiri Gas and Power",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Ratnagiri Gas and Power]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Ratle Hydroelectric Power Corporation (RHPC)",
+      "short": "RHPC",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Ratle Hydroelectric Plant|Ratle Hydroelectric Power Corporation]] (RHPC)",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Receivables Exchange of India Ltd (RXIL)",
+      "short": "RXIL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Receivables Exchange of India Ltd (RXIL)",
+      "hasDomain": true,
+      "domainKey": "REC Limited",
+      "baseUrl": "https://www.recindia.nic.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Sagar Mala Development Company",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Sagar Mala project|Sagar Mala]] Development Company",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Semiconductor Complex Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Semiconductor Complex Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Smith Stanisteet Pharmaceuticals Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Smith Stanisteet Pharmaceuticals Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Sethusamudram Corporation Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Sethusamudram Corporation Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Sponge Iron India Ltd (SIIL)",
+      "short": "SIIL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "Sponge Iron India Ltd (SIIL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "STCI Finance Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "STCI Finance Limited",
+      "hasDomain": true,
+      "domainKey": "Power Finance Corporation Limited",
+      "baseUrl": "https://www.pfcindia.com/",
+      "sector": "Finance"
+    },
+    {
+      "name": "State Farms Corporation of India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "State Farms Corporation of India",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "Talcher Fertilizers Limited.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Talcher Fertilizers Limited.",
+      "hasDomain": true,
+      "domainKey": "National Fertilizers Limited (NFL)",
+      "baseUrl": "https://www.nationalfertilizers.com/",
+      "sector": "Fertilizers"
+    },
+    {
+      "name": "Tourism Finance Corporation Of India Ltd.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Tourism Finance Corporation Of India Ltd.",
+      "hasDomain": true,
+      "domainKey": "Power Grid Corporation of India",
+      "baseUrl": "https://www.powergrid.in/",
+      "sector": "Power"
+    },
+    {
+      "name": "The Industrial Credit Company Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "The Industrial Credit Company Limited",
+      "hasDomain": true,
+      "domainKey": "National Insurance Company Limited",
+      "baseUrl": "https://nationalinsurance.nic.co.in/",
+      "sector": "Insurance"
+    },
+    {
+      "name": "UTI Infrastructure Technology and Services Limited (UTIITSL)",
+      "short": "UTIITSL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "UTI Infrastructure Technology and Services Limited (UTIITSL)",
+      "hasDomain": true,
+      "domainKey": "Energy Efficiency Services Limited",
+      "baseUrl": "https://eeslindia.org/",
+      "sector": "Energy"
+    },
+    {
+      "name": "Triveni Structurals Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Triveni Structurals Limited",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Utkarsha Aluminium Dhatu Nigam Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Utkarsha Aluminium Dhatu Nigam Limited",
+      "hasDomain": true,
+      "domainKey": "Mishra Dhatu Nigam Limited (MIDHANI)",
+      "baseUrl": "https://midhani-india.in/",
+      "sector": "Metals"
+    },
+    {
+      "name": "UV Asset Reconstruction Company Limited",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "UV Asset Reconstruction Company Limited",
+      "hasDomain": true,
+      "domainKey": "REC Limited",
+      "baseUrl": "https://www.recindia.nic.in/",
+      "sector": "Finance"
+    },
+    {
+      "name": "Indo-Russia Rifles (IRRPL)",
+      "short": "IRRPL",
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Indo-Russia Rifles]] (IRRPL)",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Munitions India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Munitions India]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Troop Comforts",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Troop Comforts]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Yantra India",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "[[Yantra India]]",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    },
+    {
+      "name": "Tusco Limited.",
+      "short": null,
+      "ratna": "other_cpsu",
+      "wikiRaw": "Tusco Limited.",
+      "hasDomain": false,
+      "domainKey": null,
+      "baseUrl": null,
+      "sector": null
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "govt-jobs-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Indian government & PSU jobs without written exam — collect, process, publish",
+  "scripts": {
+    "process": "node scripts/process/buildJobs.js",
+    "snapshot:prev": "node scripts/process/snapshotPrev.js",
+    "collect:manual": "node scripts/collect/manualImport.js",
+    "collect:daily": "node scripts/collect/runDaily.js",
+    "psu:import": "node scripts/collect/importPsuCatalog.js",
+    "psu:import:fetch": "node scripts/collect/importPsuCatalog.js --fetch",
+    "alert:email": "node scripts/alerts/emailNewJobs.js",
+    "qa:schema": "node scripts/qa/schemaCheck.js",
+    "qa:sample": "node scripts/qa/sampleJobs.js",
+    "pipeline": "npm run process && npm run qa:schema",
+    "pipeline:daily": "npm run collect:daily && npm run process && npm run qa:schema && npm run alert:email && npm run snapshot:prev",
+    "server": "node server/src/index.js",
+    "server:dev": "node --watch server/src/index.js",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "dev": "npm run process && node server/src/index.js",
+    "postinstall": "echo Optional: npx playwright install chromium",
+    "setup": "npm install && npm --prefix client install && npm --prefix server install && npx playwright install chromium && npm run process",
+    "static:data": "node scripts/prepareStaticData.js",
+    "static:build": "node scripts/prepareStaticData.js && npm --prefix client run build"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "nodemailer": "^6.10.1",
+    "pdf-parse": "^1.1.1",
+    "playwright": "^1.51.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

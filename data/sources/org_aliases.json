@@ -1,0 +1,20 @@
+{
+  "aliases": {
+    "iocl": { "name": "Indian Oil Corporation Limited", "orgType": "psu", "sector": "Oil & Gas" },
+    "indian oil": { "name": "Indian Oil Corporation Limited", "orgType": "psu", "sector": "Oil & Gas" },
+    "ongc": { "name": "Oil and Natural Gas Corporation", "orgType": "psu", "sector": "Oil & Gas" },
+    "ntpc": { "name": "NTPC Limited", "orgType": "psu", "sector": "Power" },
+    "bhel": { "name": "Bharat Heavy Electricals Limited", "orgType": "psu", "sector": "Heavy Engineering" },
+    "sail": { "name": "Steel Authority of India Limited", "orgType": "psu", "sector": "Steel" },
+    "powergrid": { "name": "Power Grid Corporation of India Limited", "orgType": "psu", "sector": "Power" },
+    "power grid": { "name": "Power Grid Corporation of India Limited", "orgType": "psu", "sector": "Power" },
+    "hal": { "name": "Hindustan Aeronautics Limited", "orgType": "psu", "sector": "Defence" },
+    "bel": { "name": "Bharat Electronics Limited", "orgType": "psu", "sector": "Defence" },
+    "gail": { "name": "GAIL (India) Limited", "orgType": "psu", "sector": "Oil & Gas" },
+    "bpcl": { "name": "Bharat Petroleum Corporation Limited", "orgType": "psu", "sector": "Oil & Gas" },
+    "hpcl": { "name": "Hindustan Petroleum Corporation Limited", "orgType": "psu", "sector": "Oil & Gas" },
+    "coal india": { "name": "Coal India Limited", "orgType": "psu", "sector": "Mining" },
+    "becil": { "name": "Broadcast Engineering Consultants India Limited", "orgType": "govt_company", "sector": "IT & Media" },
+    "ncs": { "name": "National Career Service", "orgType": "central", "sector": "Multi-sector" }
+  }
+}

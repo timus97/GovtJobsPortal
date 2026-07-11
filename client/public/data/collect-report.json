@@ -1,0 +1,193 @@
+{
+  "startedAt": "2026-07-11T14:16:01.326Z",
+  "finishedAt": "2026-07-11T14:16:54.350Z",
+  "runId": "2026-07-11T14-16-01-326Z",
+  "pdfsProcessed": 1,
+  "pdfMax": 25,
+  "sourcesAttempted": 11,
+  "sourcesOk": 11,
+  "sourcesFailed": 0,
+  "totalWritten": 44,
+  "results": [
+    {
+      "sourceId": "ncs_gov",
+      "name": "National Career Service",
+      "ok": true,
+      "written": 26,
+      "errors": [],
+      "metrics": {
+        "method": "playwright",
+        "links": 28,
+        "written": 26
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ncs_gov\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 7325
+    },
+    {
+      "sourceId": "employment_news",
+      "name": "Employment News",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://www.employmentnews.gov.in/",
+          "message": "HTTP 404 for https://www.employmentnews.gov.in/"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\employment_news\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 5226
+    },
+    {
+      "sourceId": "becil",
+      "name": "BECIL Careers",
+      "ok": true,
+      "written": 6,
+      "errors": [],
+      "metrics": {
+        "listUrls": 1,
+        "links": 6,
+        "written": 6
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\becil\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 2576
+    },
+    {
+      "sourceId": "ntpc_careers",
+      "name": "NTPC Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://www.ntpc.co.in/careers",
+          "message": "HTTP 404 for https://www.ntpc.co.in/careers"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ntpc_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 5221
+    },
+    {
+      "sourceId": "iocl_careers",
+      "name": "IOCL Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://iocl.com/latest-job-opening",
+          "message": "HTTP 307 for https://iocl.com/latest-job-opening"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\iocl_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 4353
+    },
+    {
+      "sourceId": "ongc_careers",
+      "name": "ONGC Careers",
+      "ok": true,
+      "written": 12,
+      "errors": [],
+      "metrics": {
+        "links": 12,
+        "written": 12
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\ongc_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 7029
+    },
+    {
+      "sourceId": "bhel_careers",
+      "name": "BHEL Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://www.bhel.com/careers",
+          "message": "HTTP 404 for https://www.bhel.com/careers"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\bhel_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 5547
+    },
+    {
+      "sourceId": "sail_careers",
+      "name": "SAIL Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://www.sail.co.in/en/careers",
+          "message": "fetch failed"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\sail_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 4373
+    },
+    {
+      "sourceId": "powergrid_careers",
+      "name": "POWERGRID Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://www.powergrid.in/en/career",
+          "message": "HTTP 404 for https://www.powergrid.in/en/career"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\powergrid_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 4920
+    },
+    {
+      "sourceId": "hal_careers",
+      "name": "HAL Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\hal_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 534
+    },
+    {
+      "sourceId": "bel_careers",
+      "name": "BEL Careers",
+      "ok": true,
+      "written": 0,
+      "errors": [
+        {
+          "url": "https://bel-india.in/careers",
+          "message": "HTTP 404 for https://bel-india.in/careers"
+        }
+      ],
+      "metrics": {
+        "links": 0,
+        "written": 0
+      },
+      "stagingPath": "C:\\Users\\Timus97\\Desktop\\GovtJobsPortal\\data\\staging\\bel_careers\\2026-07-11T14-16-01-326Z.json",
+      "durationMs": 5916
+    }
+  ]
+}
