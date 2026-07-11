@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T14:58:47.544Z",
+  "generatedAt": "2026-07-11T15:00:15.242Z",
   "publicBase": "https://timus97.github.io/GovtJobsPortal",
   "apiBase": "http://localhost:4000",
   "summary": {
@@ -11,52 +11,52 @@
     {
       "name": "api_health",
       "ok": true,
-      "ms": 22,
+      "ms": 21,
       "status": 200
     },
     {
       "name": "api_stats",
       "ok": true,
       "ms": 1,
-      "total": 451,
-      "open": 382
+      "total": 627,
+      "open": 562
     },
     {
       "name": "api_jobs_list",
       "ok": true,
-      "ms": 6,
+      "ms": 7,
       "count": 5,
-      "total": 386
+      "total": 566
     },
     {
       "name": "api_sources",
       "ok": true,
-      "ms": 7,
+      "ms": 8,
       "sources": 264
     },
     {
       "name": "api_job_detail",
       "ok": true,
-      "ms": 5,
+      "ms": 6,
       "id": "f38c310d0e82d6c2"
     },
     {
       "name": "api_filter_psu",
       "ok": true,
-      "ms": 5,
-      "total": 346
+      "ms": 6,
+      "total": 526
     },
     {
       "name": "public_home",
       "ok": true,
-      "ms": 38,
+      "ms": 253,
       "status": 200,
       "bytes": 1674
     },
     {
       "name": "public_stats_json",
       "ok": true,
-      "ms": 11,
+      "ms": 246,
       "total": 451,
       "open": 382,
       "bytes": 1670
@@ -64,14 +64,14 @@
     {
       "name": "public_jobs_json",
       "ok": true,
-      "ms": 340,
+      "ms": 444,
       "count": 451,
       "bytes": 590190
     },
     {
       "name": "public_sources_json",
       "ok": true,
-      "ms": 249,
+      "ms": 256,
       "sources": 264,
       "bytes": 273284
     },
@@ -79,9 +79,9 @@
       "name": "perf_thresholds",
       "ok": true,
       "ms": 0,
-      "homeMs": 38,
-      "statsMs": 11,
-      "jobsMs": 340,
+      "homeMs": 253,
+      "statsMs": 246,
+      "jobsMs": 444,
       "publicStatsP50": 10,
       "publicStatsP95": 11,
       "publicStatsSamples": [
@@ -101,7 +101,7 @@
       "name": "local_schema_hasExam",
       "ok": true,
       "ms": 0,
-      "total": 451,
+      "total": 627,
       "bad": 0
     }
   ],
@@ -109,61 +109,61 @@
     "samples": [
       {
         "endpoint": "/api/health",
-        "ms": 22,
+        "ms": 21,
         "bytes": 74,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/api/stats",
         "ms": 1,
-        "bytes": 1196,
+        "bytes": 1343,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/api/jobs?limit=5",
-        "ms": 6,
-        "bytes": 6450,
+        "ms": 7,
+        "bytes": 6451,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/api/sources",
-        "ms": 7,
-        "bytes": 413631,
+        "ms": 8,
+        "bytes": 413645,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/api/jobs/:id",
-        "ms": 5,
+        "ms": 6,
         "bytes": 1225,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/api/jobs?orgType=psu",
-        "ms": 5,
+        "ms": 6,
         "bytes": 23043,
         "target": "http://localhost:4000"
       },
       {
         "endpoint": "/",
-        "ms": 38,
+        "ms": 253,
         "bytes": 1674,
         "target": "https://timus97.github.io/GovtJobsPortal"
       },
       {
         "endpoint": "/data/stats.json",
-        "ms": 11,
+        "ms": 246,
         "bytes": 1670,
         "target": "https://timus97.github.io/GovtJobsPortal"
       },
       {
         "endpoint": "/data/jobs.json",
-        "ms": 340,
+        "ms": 444,
         "bytes": 590190,
         "target": "https://timus97.github.io/GovtJobsPortal"
       },
       {
         "endpoint": "/data/sources.json",
-        "ms": 249,
+        "ms": 256,
         "bytes": 273284,
         "target": "https://timus97.github.io/GovtJobsPortal"
       }

@@ -270,7 +270,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 22,
+      "publishedJobs": 0,
       "lastScrape": null
     },
     {
@@ -1355,7 +1355,7 @@
       "cadence": "daily",
       "enabled": true,
       "render": null,
-      "publishedJobs": 3,
+      "publishedJobs": 0,
       "lastScrape": null
     },
     {
@@ -1828,7 +1828,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 13,
       "lastScrape": null
     },
     {
@@ -1863,7 +1863,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 17,
       "lastScrape": null
     },
     {
@@ -1898,7 +1898,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 20,
       "lastScrape": null
     },
     {
@@ -1933,7 +1933,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 4,
       "lastScrape": null
     },
     {
@@ -1968,7 +1968,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 11,
       "lastScrape": null
     },
     {
@@ -2003,7 +2003,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 9,
       "lastScrape": null
     },
     {
@@ -2108,7 +2108,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 31,
       "lastScrape": null
     },
     {
@@ -2178,7 +2178,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 25,
       "lastScrape": null
     },
     {
@@ -2213,7 +2213,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 25,
       "lastScrape": null
     },
     {
@@ -2283,7 +2283,7 @@
       "cadence": "weekly",
       "enabled": true,
       "render": null,
-      "publishedJobs": 0,
+      "publishedJobs": 46,
       "lastScrape": null
     },
     {
