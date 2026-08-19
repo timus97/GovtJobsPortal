@@ -1,8 +1,15 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import { isProfileMatchEnabled } from '../lib/features'
 
 const nav = [
   { to: '/', label: 'Home', end: true },
   { to: '/jobs', label: 'Jobs' },
+  ...(isProfileMatchEnabled()
+    ? [
+        { to: '/profile', label: 'Profile' },
+        { to: '/match', label: 'Match' },
+      ]
+    : []),
   { to: '/process', label: 'How it works' },
   { to: '/sources', label: 'Sources' },
   { to: '/about', label: 'About' },

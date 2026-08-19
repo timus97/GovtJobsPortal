@@ -32,6 +32,8 @@ export const QUAL_LABELS = {
   diploma: 'Diploma',
   graduate: 'Graduate',
   pg: 'Postgraduate',
+  postgraduate: 'Postgraduate',
+  phd: 'PhD',
   experience: 'Experience-based',
 }
 

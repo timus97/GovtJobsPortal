@@ -2,3 +2,81 @@
   background: #fde8e8;
   color: #9b1c1c;
 }
+
+.profile-layout {
+  max-width: 760px;
+}
+
+.profile-form {
+  padding: 1.35rem 1.4rem 1.5rem;
+}
+
+.profile-form .field small {
+  font-weight: 400;
+}
+
+.domicile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr));
+  gap: 0.35rem 0.5rem;
+}
+
+.check-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.check-inline input {
+  width: auto;
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.match-banner {
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  color: #9a3412;
+  font-weight: 700;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: flex-start;
+  max-width: 100%;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  padding: 0.28rem 0.55rem;
+  border-radius: 8px;
+  background: #eef1f5;
+  color: var(--text);
+}
+
+.chip-pass {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.chip-fail {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.chip-unknown {
+  background: var(--warn-soft);
+  color: var(--warn);
+}

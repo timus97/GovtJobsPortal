@@ -1,3 +1,5 @@
+import { isProfileComplete } from '../lib/profile'
+
 const BASE = import.meta.env.VITE_API_BASE || '/api'
 const STATIC = `${import.meta.env.BASE_URL || '/'}data`.replace(/\/+/g, '/').replace(/\/$/, '') || '/data'
 
@@ -172,4 +174,27 @@ export function fetchPipeline() {
     const { pipeline } = await loadStaticBundle()
     return pipeline
   })
+}
+
+/** Product path: server match. Never log the profile body. */
+export async function postMatch(profile, limit = 50) {
+  if (!isProfileComplete(profile)) {
+    const err = new Error(
+      'Complete profile required before matching (dob, highestEducation, reservationCategory, birthState, domicileStates)'
+    )
+    err.status = 400
+    throw err
+  }
+  const res = await fetch(`${BASE}/match`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ profile, limit }),
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    const err = new Error(body.error || `Request failed (${res.status})`)
+    err.status = res.status
+    throw err
+  }
+  return res.json()
 }
