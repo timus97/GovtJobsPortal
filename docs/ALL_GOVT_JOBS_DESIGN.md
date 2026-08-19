@@ -5,8 +5,8 @@
 | Document | Design: All-India Govt Jobs + Eligibility Match + Operator Scraper Dashboard |
 | Product | NoExam Sarkari Jobs Portal |
 | Repo | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
-| Date | 2026-08-18 |
-| Status | Accepted (owner decisions 2026-08-18) |
+| Date | 2026-08-18 (status updated 2026-08-19) |
+| Status | Accepted. **Implementation in progress:** PR01/03/05/07 pushed. **Next implement: PR02.** |
 | Author | Systems Architecture |
 | Audience | Senior engineers implementing PRs 01–10 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
@@ -1149,19 +1149,32 @@ This document: **Accepted** for owner decisions 2026-08-18. §1, §17, and §18 
 
 Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, or match UI with ops auth. `selectionProcess` stays a string on `jobs.json`.
 
-### PR01 — Schema + stop dropping exam jobs
+**Progress (2026-08-19):** PR01, PR03, PR05, PR07 are **written and pushed** (not yet merged to `master`). **Next PR to implement: PR02.** Next merge: GitHub [#1](https://github.com/timus97/GovtJobsPortal/pull/1).
+
+| PR | State | Link |
+| --- | --- | --- |
+| 01 | Pushed | https://github.com/timus97/GovtJobsPortal/pull/1 |
+| 02 | **Next to implement** | — |
+| 03 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/3 |
+| 04 | Not started | — |
+| 05 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/4 |
+| 06 | Not started | — |
+| 07 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/2 |
+| 08–10 | Not started | — |
+
+### PR01 — Schema + stop dropping exam jobs — **DONE (PR #1)**
 
 - **Deps:** none
 - **Files:** `shared/jobSchema.js` (`classifySelectionText` maps `EXCLUDE_PATTERNS` → `cbt` / `written_multi_stage` / `interview_after_exam` / `physical`), `shared/opportunitySchema.js`, `shared/examSeriesSchema.js`, `scripts/collect/lib/toStaging.js` (stop `needsReview`/`hasExam` force on exam rows), `scripts/process/buildJobs.js` (stop drop + stop overwrite `hasExam: false`), `scripts/qa/schemaCheck.js`, `emailNewJobs.js`, `data/seed/jobs.json` (move fake exam row to a **test fixture**), `server/src/routes/jobs.js`, `client/src/App.jsx`, `client/src/api/jobs.js`, `client/src/components/JobFilters.jsx`, `client/src/pages/JobsPage.jsx`, `client/src/utils/labels.js`
 - **Description:** Exam rows become publishable. `selectionProcess` remains the primary **string**; optional `selectionProcesses[]` on Opportunity only. `hasExam=all|yes|no` (**default `all` immediately**). Exit: existing 627 stay in `jobs.json` + one fixture exam row queryable with `hasExam=yes`. Do not require a staging reprocess (`data/staging/**` is gitignored).
 
-### PR02 — Optional SQLite cache (not a second SoR)
+### PR02 — Optional SQLite cache (not a second SoR) — **NEXT**
 
 - **Deps:** PR01
 - **Files:** `server/src/db/sqlite.js`, `scripts/migrate/jsonToSqlite.js`, `server/src/services/jobStore.js` (JSON first), `server/src/index.js` (boot rebuild + health `sqliteCache`)
 - **Description:** `better-sqlite3` is a **server-only** read cache rebuilt from git JSON on Express boot. **Not** dual-write. **Not** installed in GHA / root pipeline. `buildJobs.js` still writes JSON only. Non-unique index on `official_url`. `sources` projection includes `list_urls`, `enabled`, `cadence`, `category`, `priority` P0–P3. Pages unchanged.
 
-### PR03 — UPSC + SSC + calendar PDF
+### PR03 — UPSC + SSC + calendar PDF — **DONE (PR #3)**
 
 - **Deps:** PR01
 - **Files:** `scripts/collect/collectors/upsc.js`, `scripts/collect/collectors/ssc.js`, `scripts/collect/lib/calendarPdf.js`, `scripts/collect/runDaily.js`, `data/sources/registry.json` (`listUrls` for UPSC/SSC as in §8.4), `daily-collect.yml`
@@ -1173,7 +1186,7 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `scripts/collect/collectors/ibps.js`, `scripts/collect/collectors/sbi.js`, `scripts/collect/collectors/rrb.js`, `scripts/collect/runDaily.js`, `data/sources/registry.json`, `scripts/collect/collectors/employmentNews.js` (narrow to free highlights table)
 - **Description:** ibps.in + calendar listing page (not a year-stamped PDF as the forever URL). SBI current-openings + recruitment.sbi.bank.in. RRB via `rrbapply.gov.in` + zonals. **Do not** treat `rrbcdg.gov.in` as national.
 
-### PR05 — Profile + match engine + UI
+### PR05 — Profile + match engine + UI — **DONE (PR #4)**
 
 - **Deps:** PR01
 - **Files:** `shared/eligibilityMatch.js` (ESM), `shared/eligibilityFacts.js`, `client/vite.config.js` (`@shared` alias), `server/src/routes/match.js`, `client/src/pages/ProfilePage`, `client/src/pages/MatchResultsPage`, `client/src/App.jsx`, golden fixtures
@@ -1185,7 +1198,7 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `shared/examSeriesSchema.js`, `scripts/process/buildJobs.js` (write `exam_series.json`), `prepareStaticData.js`, `client/src/pages/PreparePage`
 - **Description:** Persist calendar rows as ExamSeries in **git JSON**. `PreparePage` recommends series; no Apply unless a linked Opportunity is open. Wire P0 series from PR03 **and** PR04. Capacity target ~200 series. Flag `FEATURE_PREPARE`.
 
-### PR07 — Ops auth + dashboard
+### PR07 — Ops auth + dashboard — **DONE (PR #2)**
 
 - **Deps:** PR01
 - **Files:** `server/src/routes/ops.js`, operator store (table or better-auth), `client/src/pages/ops/OpsDashboard`, `client/src/pages/ops/OpsRunDetail`, `client/src/pages/ops` login/bootstrap, `server/src/index.js`

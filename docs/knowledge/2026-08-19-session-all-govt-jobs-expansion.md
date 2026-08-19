@@ -2,10 +2,10 @@
 
 | Field | Value |
 | --- | --- |
-| Saved | 2026-08-19 |
+| Saved | 2026-08-19 (updated after PR01/03/05/07 landed on GitHub) |
 | Workspace | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
 | Repo | https://github.com/timus97/GovtJobsPortal |
-| Status | Design accepted. **PR01 implemented** (2026-08-19). Next: PR02 cache or PR03/05/07 in parallel. |
+| Status | **4 of 12 PRs written and pushed.** Next to **merge:** GitHub #1 (PR01). Next to **implement:** **PR02** (SQLite cache). |
 | Full design | [docs/ALL_GOVT_JOBS_DESIGN.md](../ALL_GOVT_JOBS_DESIGN.md) |
 
 Use this article to resume a new session. Do not re-litigate locked decisions. Do not start from “no-exam only” as the product goal.
@@ -107,46 +107,55 @@ P2: one `genericPsc.js` + registry rows. Start 10: UPPSC, BPSC, MPSC, TNPSC, WBP
 
 ---
 
-## Implementation order (12 PRs)
+## Implementation status (2026-08-19)
 
 ```text
 01 → 02 → (03 ∥ 05 ∥ 07) → 04 → 06 → 08 → 09a → (09b ∥ 09c) → 10
+ done        next    done   done  done
 ```
 
-| PR | Ship |
-| --- | --- |
-| **01** | Stop dropping exams across the whole pipeline + UI filter. Fixture exam row. Default `hasExam=all`. |
-| **02** | Optional SQLite **cache** only. |
-| **03** | UPSC + SSC + `calendarPdf.js`. Registry `listUrls`. |
-| **04** | IBPS + SBI + RRB. Employment News narrowing. |
-| **05** | Profile, ESM `eligibilityMatch.js` + `eligibilityFacts.js`, Vite `@shared` alias, Match page, golden fixtures. |
-| **06** | ExamSeries + Prepare page (deps include PR04). |
-| **07** | Operator accounts + empty `/ops` dashboard. |
-| **08** | Paste-URL, PATCH review, `ops_paste`, `ops-ingest.yml`. |
-| **09a** | Generic PSC + 10 registry entries. |
-| **09b** | Banks / regulators / post. |
-| **09c** | School / health / defence calendars. |
-| **10** | PwBD post-wise, unpublish, QA fixtures. |
+| PR | Status | GitHub | What shipped / what remains |
+| --- | --- | --- | --- |
+| **01** | **Pushed** (open, not merged to `master`) | https://github.com/timus97/GovtJobsPortal/pull/1 | Exam jobs publish; `hasExam` filter default all; SSC CGL fixture; 628 jobs |
+| **02** | **Not started — implement next** | — | Optional SQLite read cache. JSON stays SoR. |
+| **03** | **Pushed** (base = PR01) | https://github.com/timus97/GovtJobsPortal/pull/3 | UPSC/SSC collectors, `calendarPdf.js`, five registry IDs |
+| **04** | Not started | — | IBPS + SBI + RRB; Employment News free table |
+| **05** | **Pushed** (base = PR01) | https://github.com/timus97/GovtJobsPortal/pull/4 | Profile + `POST /api/match` + Match page |
+| **06** | Not started | — | ExamSeries + Prepare page (needs 03+04+05) |
+| **07** | **Pushed** (base = PR01) | https://github.com/timus97/GovtJobsPortal/pull/2 | Operator accounts + empty `/ops` |
+| **08** | Not started | — | Paste-URL + review queue (needs 07) |
+| **09a** | Not started | — | Generic PSC + 10 states |
+| **09b** | Not started | — | Banks / regulators / post |
+| **09c** | Not started | — | School / health / defence calendars |
+| **10** | Not started | — | PwBD post-wise, unpublish, QA |
 
-**Next session should implement PR01** unless the user says otherwise.
+### What was done
 
-PR01 files: `shared/jobSchema.js`, `shared/opportunitySchema.js`, `shared/examSeriesSchema.js`, `scripts/collect/lib/toStaging.js`, `scripts/process/buildJobs.js`, `scripts/qa/schemaCheck.js`, `scripts/alerts/emailNewJobs.js`, `data/seed/jobs.json` (move fake exam to fixture), `server/src/routes/jobs.js`, `client/src/api/jobs.js`, `client/src/components/JobFilters.jsx`, `client/src/pages/JobsPage.jsx`, `client/src/utils/labels.js`.
+- Design accepted; owner decisions locked (required reservation, fullstack product, UGC NET prepare-for, real ops auth, `/jobs` default all, PDFs 30-day private).
+- **PR01** on `pr/01-stop-dropping-exam-jobs`: pipeline no longer drops exams; UI Exam filter; fixture id `912c0026508e7dca`.
+- **PR03, PR05, PR07** built in parallel worktrees, QE reviewed, fixes applied, each committed and pushed.
+- QE merge note: when landing **05 + 07**, union `App.jsx`, `Layout.jsx`, `server/src/index.js`. Prefer PR07 CORS `credentials: true` + `trust proxy`.
 
-Exit for PR01: existing 627 still load; one fixture exam row is queryable with `hasExam=yes`. Do not require a staging reprocess.
+### Next PR to implement
+
+**PR02 — Optional SQLite cache** (`server/src/db/sqlite.js`, `scripts/migrate/jsonToSqlite.js`, `jobStore.js` JSON-first, boot rebuild). Not a second database. Do not install `better-sqlite3` in the GHA root pipeline.
+
+**Next git action (before or beside PR02):** merge GitHub **#1 (PR01)** into `master`, then merge #3 / #4 / #2.
+
+After PR02 and those merges, the next **new** product code is **PR04** (IBPS / SBI / RRB).
 
 ---
 
-## New paths (planned, not created yet)
+## New paths still not created
 
-- `shared/opportunitySchema.js`, `shared/examSeriesSchema.js`, `shared/eligibilityMatch.js` (ESM), `shared/eligibilityFacts.js`
-- `client/vite.config.js` `@shared` alias
-- `server/src/db/sqlite.js` (optional cache), `server/src/routes/match.js`, `server/src/routes/ops.js`, `server/src/services/collectQueue.js`
-- `scripts/migrate/jsonToSqlite.js`, `scripts/collect/lib/calendarPdf.js`
-- `scripts/collect/collectors/{upsc,ssc,ibps,sbi,rrb,genericPsc}.js`
+- `server/src/db/sqlite.js`, `scripts/migrate/jsonToSqlite.js`
+- `scripts/collect/collectors/{ibps,sbi,rrb,genericPsc}.js`
+- `server/src/services/collectQueue.js`
 - `data/processed/opportunities.json`, `exam_series.json`, `collect-jobs.json`
-- `data/staging/ops_paste/`
-- `.github/workflows/ops-ingest.yml`
-- Client pages: `ProfilePage`, `MatchResultsPage`, `PreparePage`, `ops/OpsDashboard`, `OpsRunDetail`, `OpsReviewQueue`
+- `data/staging/ops_paste/`, `.github/workflows/ops-ingest.yml`
+- Client: `PreparePage`, `ops/OpsReviewQueue`
+
+Already created on the PR branches: `opportunitySchema.js`, `examSeriesSchema.js`, `eligibilityMatch.js`, `eligibilityFacts.js`, `@shared` alias, `routes/match.js`, `routes/ops.js`, `calendarPdf.js`, `collectors/upsc.js`, `collectors/ssc.js`, Profile/Match/ops pages.
 
 ---
 
@@ -154,8 +163,7 @@ Exit for PR01: existing 627 still load; one fixture exam row is queryable with `
 
 ```text
 Continue GovtJobsPortal from docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md
-and docs/ALL_GOVT_JOBS_DESIGN.md. Design is accepted. Implement PR01:
-stop dropping exam jobs across the full pipeline, add hasExam filter,
-default /jobs to all, move the fake seed exam into a test fixture.
-Do not reopen locked SoR / Pages / auth / matching decisions.
+and docs/ALL_GOVT_JOBS_DESIGN.md. PR01/03/05/07 are on GitHub (#1, #3, #4, #2).
+Next implement PR02 (optional SQLite cache, JSON remains SoR).
+Then merge #1 and the stacked PRs. Do not reopen locked decisions.
 ```
