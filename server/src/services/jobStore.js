@@ -3,6 +3,7 @@ const path = require('path');
 
 const root = path.join(__dirname, '..', '..', '..');
 const jobsPath = path.join(root, 'data', 'processed', 'jobs.json');
+const opportunitiesPath = path.join(root, 'data', 'processed', 'opportunities.json');
 const statsPath = path.join(root, 'data', 'processed', 'stats.json');
 const reportPath = path.join(root, 'data', 'processed', 'run-report.json');
 const collectReportPath = path.join(root, 'data', 'processed', 'collect-report.json');
@@ -19,6 +20,12 @@ function readJson(file, fallback) {
 
 function getJobs() {
   return readJson(jobsPath, []);
+}
+
+function getOpportunities() {
+  const opps = readJson(opportunitiesPath, null);
+  if (Array.isArray(opps) && opps.length) return opps;
+  return getJobs();
 }
 
 function getStats() {
@@ -148,6 +155,8 @@ function getFilterMeta() {
 module.exports = {
   listJobs,
   getJobById,
+  getJobs,
+  getOpportunities,
   getStats,
   getPipeline,
   getRegistry,

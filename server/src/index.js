@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const jobsRouter = require('./routes/jobs');
+const matchRouter = require('./routes/match');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -14,6 +15,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api', jobsRouter);
+app.use('/api', matchRouter);
 
 // Serve client build in production if present
 const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
@@ -28,5 +30,5 @@ app.get('*', (req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`Govt Jobs Portal API listening on http://localhost:${PORT}`);
-  console.log(`  GET /api/jobs  /api/stats  /api/health`);
+  console.log(`  GET /api/jobs  POST /api/match  /api/stats  /api/health`);
 });
