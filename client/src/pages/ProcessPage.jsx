@@ -2,10 +2,12 @@ export default function ProcessPage() {
   return (
     <div className="section">
       <div className="container prose">
-        <h1>How no-exam recruitment works</h1>
+        <h1>How recruitment is classified</h1>
         <p className="lead">
           Not every sarkari job needs a long competitive exam. Many central departments, PSUs and
           government companies fill roles through interviews, walk-ins, merit lists, or contracts.
+          We also list exam-based notifications (CBT, SSC, UPSC, IBPS, and similar) and let you
+          filter them on the jobs page.
         </p>
 
         <h2>Types we catalogue</h2>
@@ -33,7 +35,7 @@ export default function ProcessPage() {
         <ol className="steps">
           <li>Collect from registered sources (official careers pages, NCS, manual curator seed).</li>
           <li>Normalize organisation names, dates and fields into a common schema.</li>
-          <li>Drop jobs whose process includes written test, CBT, GATE, SSC, etc.</li>
+          <li>Classify exam vs no-exam; keep both. Filter on the jobs page.</li>
           <li>Dedupe, mark open / closing soon / closed from last date.</li>
           <li>Publish to the website API — every card links to the official URL.</li>
         </ol>
@@ -41,7 +43,7 @@ export default function ProcessPage() {
         <h2>Your checklist before applying</h2>
         <ul className="check-list">
           <li>Open the official notification (PDF or careers page).</li>
-          <li>Confirm selection process still has no written exam.</li>
+          <li>Confirm whether the post is exam-based or interview/merit on the official notice.</li>
           <li>Check last date, fees, and eligibility carefully.</li>
           <li>Never share OTPs or pay unlisted agents — use only official channels.</li>
         </ul>

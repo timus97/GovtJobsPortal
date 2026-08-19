@@ -59,7 +59,7 @@ GitHub Actions daily workflow uses repository secrets for the same variables.
 
 ### Add a job
 
-1. Edit `data/seed/jobs.json` (set `hasExam: false`, real `officialUrl`, `selectionProcess`).
+1. Edit `data/seed/jobs.json` (set `hasExam` true or false, real `officialUrl`, `selectionProcess`).
 2. Run `npm run process`.
 3. Refresh the site.
 
@@ -74,6 +74,8 @@ Or use `data/seed/manual_jobs.csv` + `npm run collect:manual` + `npm run process
 | `data/processed/jobs.json` | Published dataset |
 | `scripts/process/buildJobs.js` | Pipeline |
 | `docs/collection-runbook.md` | Ops guide |
+| `docs/ALL_GOVT_JOBS_DESIGN.md` | Accepted expansion design (all jobs + match + ops) |
+| `docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md` | Session handoff: locked decisions, next PR |
 
 ## Scope
 

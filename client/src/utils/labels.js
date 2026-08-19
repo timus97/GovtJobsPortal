@@ -12,6 +12,16 @@ export const SELECTION_LABELS = {
   contract_interview: 'Contract + Interview',
   direct_recruitment: 'Direct Recruitment',
   apprenticeship: 'Apprenticeship',
+  cbt: 'Computer-based test',
+  written_multi_stage: 'Written (multi-stage)',
+  interview_after_exam: 'Exam + interview',
+  physical: 'Physical / PET-PST',
+}
+
+export const HAS_EXAM_LABELS = {
+  all: 'All jobs',
+  yes: 'Exam-based',
+  no: 'No written exam',
 }
 
 export const QUAL_LABELS = {

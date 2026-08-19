@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../App.css'
 import { Link, useParams } from 'react-router-dom'
 import { fetchJob } from '../api/jobs'
 import {
@@ -6,6 +7,7 @@ import {
   SELECTION_LABELS,
   QUAL_LABELS,
   STATUS_LABELS,
+  HAS_EXAM_LABELS,
   formatDate,
 } from '../utils/labels'
 
@@ -50,7 +52,8 @@ export default function JobDetailPage() {
         <header className="detail-header panel">
           <div className="badge-row">
             <span className={`badge org-${job.orgType}`}>{ORG_TYPE_LABELS[job.orgType]}</span>
-            <span className="badge badge-soft">{SELECTION_LABELS[job.selectionProcess]}</span>
+            <span className="badge badge-soft">{SELECTION_LABELS[job.selectionProcess] || job.selectionProcess}</span>
+            {job.hasExam === true && <span className="badge badge-exam">Exam</span>}
             <span className={`badge ${job.status === 'closing_soon' ? 'badge-warn' : 'badge-muted'}`}>
               {STATUS_LABELS[job.status]}
             </span>
@@ -106,6 +109,10 @@ export default function JobDetailPage() {
                 <dd>{job.applicationMode || '—'}</dd>
               </div>
               <div>
+                <dt>Exam</dt>
+                <dd>{job.hasExam === true ? HAS_EXAM_LABELS.yes : HAS_EXAM_LABELS.no}</dd>
+              </div>
+              <div>
                 <dt>Notification date</dt>
                 <dd>{formatDate(job.notificationDate)}</dd>
               </div>
@@ -125,8 +132,10 @@ export default function JobDetailPage() {
           <section className="panel">
             <h2>Selection process</h2>
             <p>
-              <strong>{SELECTION_LABELS[job.selectionProcess]}</strong> — no competitive written
-              exam / CBT for this listing (as classified).
+              <strong>{SELECTION_LABELS[job.selectionProcess] || job.selectionProcess}</strong>
+              {job.hasExam === true
+                ? ' — exam-based listing (as classified).'
+                : ' — no competitive written exam / CBT for this listing (as classified).'}
             </p>
             {job.processSteps?.length > 0 ? (
               <ol className="steps">

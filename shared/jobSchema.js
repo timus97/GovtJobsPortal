@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Canonical job shape and helpers shared by process pipeline and API.
  */
 
@@ -11,6 +11,10 @@ const SELECTION_PROCESSES = [
   'contract_interview',
   'direct_recruitment',
   'apprenticeship',
+  'cbt',
+  'written_multi_stage',
+  'interview_after_exam',
+  'physical',
 ];
 
 const STATUSES = ['open', 'closing_soon', 'closed'];
@@ -26,26 +30,40 @@ const QUALIFICATIONS = [
   'experience',
 ];
 
-const EXCLUDE_PATTERNS = [
-  /written\s+test/i,
-  /written\s+examination/i,
-  /competitive\s+exam/i,
-  /\bcbt\b/i,
-  /computer\s*[- ]?based\s+test/i,
-  /online\s+test/i,
-  /online\s+examination/i,
-  /\bgate\b/i,
-  /\bnet\b.*exam/i,
-  /\bjrf\b/i,
-  /\bupsc\b/i,
-  /\bssc\b/i,
-  /\bibps\b/i,
-  /rrb\s+exam/i,
-  /tier[-\s]?(i|ii|iii|1|2|3)\b/i,
-  /preliminary\s+exam/i,
-  /mains\s+examination/i,
-  /departmental\s+competitive/i,
+const EXAM_PATTERNS = [
+  {
+    code: 'interview_after_exam',
+    re: /interview\s+after\s+(?:a\s+)?(?:written|cbt|computer\s*[- ]?based|online\s+(?:test|exam))/i,
+  },
+  {
+    code: 'interview_after_exam',
+    re: /(?:written(?:\s+test)?|cbt|computer\s*[- ]?based\s+test).{0,48}followed\s+by\s+(?:a\s+)?(?:personal\s+)?interview/i,
+  },
+  { code: 'cbt', re: /\bcbt\b/i },
+  { code: 'cbt', re: /computer\s*[- ]?based\s+test/i },
+  { code: 'cbt', re: /online\s+test/i },
+  { code: 'cbt', re: /online\s+examination/i },
+  { code: 'written_multi_stage', re: /written\s+test/i },
+  { code: 'written_multi_stage', re: /written\s+examination/i },
+  { code: 'written_multi_stage', re: /competitive\s+exam/i },
+  { code: 'written_multi_stage', re: /tier[-\s]?(i|ii|iii|1|2|3)\b/i },
+  { code: 'written_multi_stage', re: /preliminary\s+exam/i },
+  { code: 'written_multi_stage', re: /mains\s+examination/i },
+  { code: 'written_multi_stage', re: /departmental\s+competitive/i },
+  { code: 'written_multi_stage', re: /\bgate\b/i },
+  { code: 'written_multi_stage', re: /\bnet\b.*exam/i },
+  { code: 'written_multi_stage', re: /\bjrf\b/i },
+  { code: 'written_multi_stage', re: /\bupsc\b/i },
+  { code: 'written_multi_stage', re: /\bssc\b/i },
+  { code: 'written_multi_stage', re: /\bibps\b/i },
+  { code: 'written_multi_stage', re: /rrb\s+exam/i },
+  { code: 'physical', re: /\bpet\b/i },
+  { code: 'physical', re: /\bpst\b/i },
+  { code: 'physical', re: /physical\s+standard/i },
+  { code: 'physical', re: /physical\s+endurance/i },
 ];
+
+const EXCLUDE_PATTERNS = EXAM_PATTERNS.map((p) => p.re);
 
 const INCLUDE_PATTERNS = [
   { code: 'walk_in', re: /walk[-\s]?in/i },
@@ -58,9 +76,9 @@ const INCLUDE_PATTERNS = [
 
 function classifySelectionText(text = '') {
   const blob = String(text);
-  for (const re of EXCLUDE_PATTERNS) {
+  for (const { code, re } of EXAM_PATTERNS) {
     if (re.test(blob)) {
-      return { hasExam: true, selectionProcess: null, reason: 'exclude_keyword' };
+      return { hasExam: true, selectionProcess: code, reason: 'exam_keyword' };
     }
   }
   for (const { code, re } of INCLUDE_PATTERNS) {
@@ -79,7 +97,7 @@ function isValidJob(job, { allowNeedsReview = false } = {}) {
   if (!job.organization) errors.push('organization required');
   if (!ORG_TYPES.includes(job.orgType)) errors.push('invalid orgType');
   if (!SELECTION_PROCESSES.includes(job.selectionProcess)) errors.push('invalid selectionProcess');
-  if (job.hasExam !== false) errors.push('hasExam must be false for publish');
+  if (typeof job.hasExam !== 'boolean') errors.push('hasExam must be boolean');
   if (!job.officialUrl || !/^https?:\/\//i.test(job.officialUrl)) errors.push('officialUrl required');
   if (!job.sourceId) errors.push('sourceId required');
   if (!job.sourceName) errors.push('sourceName required');

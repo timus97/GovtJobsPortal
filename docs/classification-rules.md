@@ -1,11 +1,15 @@
-# Classification rules (no-exam filter)
+# Classification rules
 
-## Exclude (drop) if selection text matches
+`hasExam` is a boolean filter, not a drop rule. Exam keywords classify onto a `selectionProcess` code (`cbt`, `written_multi_stage`, `interview_after_exam`, `physical`). Unknown selection still quarantines (`needsReview`).
 
-- written test / written examination / competitive exam  
-- CBT / computer based test / online test  
-- GATE, UPSC, SSC, IBPS, RRB exam  
-- tier-I / tier-II, preliminary exam, mains examination  
+## Exam codes (classify, do not drop)
+
+| Code | Signals |
+|------|---------|
+| cbt | CBT, computer based test, online test, online examination |
+| written_multi_stage | written test / examination, competitive exam, GATE, UPSC, SSC, IBPS, RRB exam, tier-I/II, preliminary exam, mains examination, departmental competitive |
+| interview_after_exam | interview after written/CBT |
+| physical | PET, PST, physical standard, physical endurance |
 
 ## Include codes
 
@@ -20,4 +24,4 @@
 
 ## Unknown
 
-If neither include nor exclude matches clearly → quarantine (`needsReview`), do not auto-publish.
+If neither exam nor include matches clearly → quarantine (`needsReview`), do not auto-publish.

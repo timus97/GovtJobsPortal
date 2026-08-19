@@ -1,0 +1,34 @@
+{
+  "title": "Combined Graduate Level Examination (fixture)",
+  "organization": "Staff Selection Commission",
+  "orgType": "central",
+  "sector": "Administration",
+  "location": "All India",
+  "vacancies": 7000,
+  "qualification": "graduate",
+  "experience": "Fresher",
+  "salary": "As per SSC CGL notification",
+  "selectionProcess": "written_multi_stage",
+  "hasExam": true,
+  "applicationMode": "online",
+  "notificationDate": "2026-08-01",
+  "lastDate": "2026-09-30",
+  "officialUrl": "https://ssc.gov.in/",
+  "sourceId": "seed_manual",
+  "sourceName": "Manual curator seed",
+  "sourceUrl": "https://ssc.gov.in/",
+  "summary": "Pipeline fixture: SSC Combined Graduate Level Examination. Computer-based written multi-stage selection (Tier-I/Tier-II CBT). This is a curated exam seed for the publish pipeline.",
+  "eligibility": [
+    "Bachelor's degree from a recognized university",
+    "Age limits as per SSC CGL notification and post",
+    "Nationality as per official advertisement"
+  ],
+  "processSteps": [
+    "Read the official SSC CGL notification on ssc.gov.in",
+    "Register and apply online before the last date",
+    "Download admit card when released",
+    "Appear for computer-based tests (Tier-I / Tier-II)",
+    "Document verification as per SSC schedule"
+  ],
+  "documentsRequired": ["Photo ID", "Degree certificate", "Category certificate if applicable"]
+}

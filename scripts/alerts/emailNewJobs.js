@@ -44,7 +44,7 @@ function buildBodies(newJobs) {
   const lines = newJobs.map((j) => {
     return `• ${j.title}\n  ${j.organization} | ${j.selectionProcess || ''} | Last: ${j.lastDate || '—'}\n  ${j.officialUrl}\n  Portal: ${site}/jobs/${j.id}\n`;
   });
-  const text = `New no-exam government/PSU jobs (${newJobs.length}):\n\n${lines.join('\n')}\n— NoExam Sarkari Jobs bot\n`;
+  const text = `New government/PSU jobs (${newJobs.length}):\n\n${lines.join('\n')}\n— Sarkari Jobs bot\n`;
 
   const htmlItems = newJobs
     .map(
@@ -58,8 +58,8 @@ function buildBodies(newJobs) {
     .join('');
 
   const html = `<div style="font-family:system-ui,sans-serif;line-height:1.45">
-    <h2>New no-exam jobs (${newJobs.length})</h2>
-    <p>Central / PSU / govt company openings without a competitive written test (as classified).</p>
+    <h2>New government/PSU jobs (${newJobs.length})</h2>
+    <p>Central / PSU / govt company openings (as classified).</p>
     <ul>${htmlItems}</ul>
     <p style="color:#666;font-size:12px">Always verify on the official site before applying. Not affiliated with GoI/PSUs.</p>
   </div>`;
@@ -135,10 +135,7 @@ async function main() {
 
   const prevIds = new Set((prev || []).map((j) => j.id));
   const newJobs = jobs.filter(
-    (j) =>
-      !prevIds.has(j.id) &&
-      (j.status === 'open' || j.status === 'closing_soon') &&
-      j.hasExam === false
+    (j) => !prevIds.has(j.id) && (j.status === 'open' || j.status === 'closing_soon')
   );
 
   if (newJobs.length === 0) {
@@ -148,7 +145,7 @@ async function main() {
   }
 
   const { text, html } = buildBodies(newJobs.slice(0, 40));
-  const subject = `[NoExam Sarkari] ${newJobs.length} new job(s) without written exam`;
+  const subject = `[Sarkari Jobs] ${newJobs.length} new government/PSU job(s)`;
 
   try {
     await sendMail({ subject, text, html });

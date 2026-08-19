@@ -10,4 +10,5 @@ data/staging/**
 .DS_Store
 .env
 .playwright/
+.playwright-mcp/
 *.log

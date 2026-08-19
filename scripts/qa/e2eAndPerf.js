@@ -123,7 +123,7 @@ async function main() {
       if (r.status !== 200) throw new Error(`status ${r.status}`);
       const job = JSON.parse(r.body);
       if (!job.officialUrl) throw new Error('missing officialUrl');
-      if (job.hasExam !== false) throw new Error('hasExam must be false');
+      if (typeof job.hasExam !== 'boolean') throw new Error('hasExam must be boolean');
       perf.push({ endpoint: `/api/jobs/:id`, ms: r.ms, bytes: r.bytes, target: apiBase });
       return { id, ms: r.ms };
     })
@@ -169,8 +169,8 @@ async function main() {
       if (r.status !== 200) throw new Error(`status ${r.status}`);
       const j = JSON.parse(r.body);
       if (!Array.isArray(j) || j.length < 1) throw new Error('no jobs');
-      const exam = j.filter((x) => x.hasExam === true);
-      if (exam.length) throw new Error(`published exam jobs: ${exam.length}`);
+      const badExam = j.filter((x) => typeof x.hasExam !== 'boolean');
+      if (badExam.length) throw new Error(`hasExam not boolean: ${badExam.length}`);
       const noUrl = j.filter((x) => !x.officialUrl);
       if (noUrl.length) throw new Error(`missing officialUrl: ${noUrl.length}`);
       perf.push({ endpoint: '/data/jobs.json', ms: r.ms, bytes: r.bytes, target: publicBase });
@@ -228,13 +228,15 @@ async function main() {
     const jobsPath = path.join(root, 'data', 'processed', 'jobs.json');
     if (fs.existsSync(jobsPath)) {
       const jobs = JSON.parse(fs.readFileSync(jobsPath, 'utf8'));
-      const exam = jobs.filter((j) => j.hasExam !== false);
+      const bad = jobs.filter((j) => typeof j.hasExam !== 'boolean');
+      const exam = jobs.filter((j) => j.hasExam === true);
       results.push({
         name: 'local_schema_hasExam',
-        ok: exam.length === 0,
+        ok: bad.length === 0 && exam.length >= 1,
         ms: 0,
         total: jobs.length,
-        bad: exam.length,
+        exam: exam.length,
+        bad: bad.length,
       });
     }
   } catch (e) {

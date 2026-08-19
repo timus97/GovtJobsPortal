@@ -48,6 +48,7 @@ function listJobs(query = {}) {
     sector,
     status,
     selectionProcess,
+    hasExam,
     sourceId,
     page = '1',
     limit = '20',
@@ -89,6 +90,14 @@ function listJobs(query = {}) {
   }
   if (selectionProcess) {
     jobs = jobs.filter((j) => j.selectionProcess === selectionProcess);
+  }
+  const examFilter = hasExam == null ? '' : String(hasExam).trim().toLowerCase();
+  if (examFilter && examFilter !== 'all') {
+    if (examFilter === 'yes' || examFilter === 'true' || examFilter === '1') {
+      jobs = jobs.filter((j) => j.hasExam === true);
+    } else if (examFilter === 'no' || examFilter === 'false' || examFilter === '0') {
+      jobs = jobs.filter((j) => j.hasExam === false);
+    }
   }
   if (sourceId) {
     jobs = jobs.filter((j) => j.sourceId === sourceId);
@@ -132,6 +141,7 @@ function getFilterMeta() {
     selectionProcesses: uniq(jobs.map((j) => j.selectionProcess)),
     sourceIds: uniq(jobs.map((j) => j.sourceId)),
     statuses: ['open', 'closing_soon', 'closed'],
+    hasExam: ['all', 'yes', 'no'],
   };
 }
 
