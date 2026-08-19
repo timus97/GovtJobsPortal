@@ -20,8 +20,20 @@ function toStagingRecord(item, source, meta = {}) {
   let hasExam = item.hasExam;
   let needsReview = false;
 
-  if (classified.hasExam === true || hasExam === true) {
+  if (classified.hasExam === true) {
     hasExam = true;
+    selectionProcess = classified.selectionProcess || selectionProcess;
+    if (!selectionProcess) {
+      needsReview = true;
+      selectionProcess = 'written_multi_stage';
+    }
+  } else if (hasExam === true) {
+    hasExam = true;
+    if (classified.selectionProcess) selectionProcess = classified.selectionProcess;
+    if (!selectionProcess) {
+      needsReview = true;
+      selectionProcess = 'written_multi_stage';
+    }
   } else if (classified.selectionProcess) {
     selectionProcess = classified.selectionProcess;
     hasExam = false;
@@ -78,13 +90,21 @@ function toStagingRecord(item, source, meta = {}) {
       summary ||
       `Scraped vacancy from ${source.name}. Verify selection process on the official page.`,
     eligibility: item.eligibility || [],
-    processSteps: item.processSteps || [
-      'Open the official notification link',
-      'Confirm eligibility and that selection has no written exam/CBT',
-      'Apply only through the official channel before the last date',
-    ],
+    processSteps:
+      item.processSteps ||
+      (hasExam === true
+        ? [
+            'Open the official notification link',
+            'Confirm eligibility on the official advertisement',
+            'Apply only through the official channel before the last date',
+          ]
+        : [
+            'Open the official notification link',
+            'Confirm eligibility and that selection has no written exam/CBT',
+            'Apply only through the official channel before the last date',
+          ]),
     documentsRequired: item.documentsRequired || [],
-    needsReview: Boolean(needsReview || !lastDate || hasExam === true),
+    needsReview: Boolean(needsReview || !lastDate),
     pdfHash: item.pdfHash || null,
     collectedAt: meta.collectedAt || new Date().toISOString(),
     collectorVersion: meta.collectorVersion || 'scrape-v1',

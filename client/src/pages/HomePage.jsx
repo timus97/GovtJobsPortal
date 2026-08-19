@@ -32,11 +32,12 @@ export default function HomePage() {
       <section className="hero">
         <div className="container hero-grid">
           <div>
-            <p className="eyebrow">India · No written test</p>
-            <h1>Central, PSU &amp; govt company jobs without competitive exams</h1>
+            <p className="eyebrow">India · Official notifications</p>
+            <h1>Central, PSU &amp; govt company jobs — exam and interview routes</h1>
             <p className="lead">
               Walk-in interviews, interview-only posts, merit-based selection, and contract roles —
-              collected, filtered for no written exam/CBT, and linked to official apply pages.
+              plus exam-based notifications (CBT, SSC, UPSC, IBPS, and more). Filter exam vs no-exam
+              on the jobs page. Every card links to the official apply page.
             </p>
             <div className="hero-actions">
               <Link to="/jobs" className="btn btn-primary btn-lg">
@@ -105,10 +106,11 @@ export default function HomePage() {
               <li>Merit-based (no exam) selection</li>
               <li>Contract &amp; consultant roles via interview</li>
               <li>Apprenticeships (clearly labelled)</li>
+              <li>Exam-based notifications (CBT, SSC, UPSC, IBPS, etc.)</li>
             </ul>
           </div>
           <div>
-            <h2>What we exclude</h2>
+            <h2>Competitive exams are labelled, not hidden</h2>
             <ul className="check-list exclude">
               <li>UPSC / SSC / IBPS style exams</li>
               <li>CBT / online written tests</li>

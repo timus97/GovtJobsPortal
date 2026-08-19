@@ -36,6 +36,7 @@ function filterJobs(jobs, params = {}) {
     sector,
     status,
     selectionProcess,
+    hasExam,
     sourceId,
     page = 1,
     limit = 20,
@@ -70,6 +71,8 @@ function filterJobs(jobs, params = {}) {
     list = list.filter((j) => j.status !== 'closed')
   }
   if (selectionProcess) list = list.filter((j) => j.selectionProcess === selectionProcess)
+  if (hasExam === 'yes') list = list.filter((j) => j.hasExam === true)
+  else if (hasExam === 'no') list = list.filter((j) => j.hasExam === false)
   if (sourceId) list = list.filter((j) => j.sourceId === sourceId)
 
   if (sort === 'newest') {

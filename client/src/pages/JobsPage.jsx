@@ -10,6 +10,7 @@ const defaultFilters = {
   sector: '',
   qualification: '',
   selectionProcess: '',
+  hasExam: 'all',
   status: '',
   location: '',
   sourceId: '',
@@ -56,7 +57,9 @@ export default function JobsPage() {
         <div className="section-head">
           <div>
             <h1>Job listings</h1>
-            <p className="muted">No-exam central, PSU and government company openings</p>
+            <p className="muted">
+              Central, PSU and government company openings — exam and interview routes
+            </p>
           </div>
           <p className="result-count">
             {loading ? 'Loading…' : `${result.total} result${result.total === 1 ? '' : 's'}`}

@@ -1,16 +1,16 @@
 {
-  "total": 627,
-  "open": 562,
+  "total": 628,
+  "open": 563,
   "closingSoon": 4,
   "closed": 61,
   "byOrgType": {
+    "central": 30,
     "govt_company": 9,
-    "central": 29,
     "psu": 586,
     "autonomous": 3
   },
   "bySector": {
-    "Administration": 1,
+    "Administration": 2,
     "IT & Media": 2,
     "Health": 4,
     "Oil & Gas": 96,
@@ -35,15 +35,15 @@
     "Shipping": 9
   },
   "byStatus": {
+    "open": 563,
     "closing_soon": 4,
-    "open": 562,
     "closed": 61
   },
   "bySource": {
+    "seed_manual": 6,
     "becil": 9,
     "ncs_gov": 29,
     "iocl_careers": 1,
-    "seed_manual": 5,
     "sail_careers": 1,
     "powergrid_careers": 1,
     "bel_careers": 1,
@@ -86,6 +86,7 @@
     "bhel_careers": 1
   },
   "bySelection": {
+    "written_multi_stage": 1,
     "contract_interview": 28,
     "interview_only": 583,
     "walk_in": 9,

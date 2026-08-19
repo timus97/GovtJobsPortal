@@ -3,6 +3,7 @@ import {
   SELECTION_LABELS,
   QUAL_LABELS,
   STATUS_LABELS,
+  HAS_EXAM_LABELS,
 } from '../utils/labels'
 
 export default function JobFilters({ filters, values, onChange, onReset }) {
@@ -25,6 +26,15 @@ export default function JobFilters({ filters, values, onChange, onReset }) {
           value={values.q || ''}
           onChange={(e) => set('q', e.target.value)}
         />
+      </label>
+
+      <label className="field">
+        <span>Exam</span>
+        <select value={values.hasExam || 'all'} onChange={(e) => set('hasExam', e.target.value)}>
+          <option value="all">{HAS_EXAM_LABELS.all}</option>
+          <option value="yes">{HAS_EXAM_LABELS.yes}</option>
+          <option value="no">{HAS_EXAM_LABELS.no}</option>
+        </select>
       </label>
 
       <label className="field">
@@ -72,7 +82,7 @@ export default function JobFilters({ filters, values, onChange, onReset }) {
           value={values.selectionProcess || ''}
           onChange={(e) => set('selectionProcess', e.target.value)}
         >
-          <option value="">All no-exam types</option>
+          <option value="">All selection types</option>
           {(filters.selectionProcesses || []).map((s) => (
             <option key={s} value={s}>
               {SELECTION_LABELS[s] || s}

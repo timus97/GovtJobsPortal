@@ -18,10 +18,6 @@ function main() {
       failed += 1;
       console.error(`FAIL ${job.id || job.title}: ${errors.join(', ')}`);
     }
-    if (job.hasExam !== false) {
-      failed += 1;
-      console.error(`FAIL ${job.id}: hasExam is not false`);
-    }
   }
   if (failed) {
     console.error(`Schema check failed: ${failed} issue(s) in ${jobs.length} jobs`);

@@ -11,6 +11,7 @@ const {
   computeStatus,
   stableJobId,
   ORG_TYPES,
+  SELECTION_PROCESSES,
 } = require(path.join(root, 'shared', 'jobSchema'));
 
 const paths = {
@@ -98,23 +99,27 @@ function enrichRecord(raw, aliases, collectedAt) {
   let hasExam = raw.hasExam;
   let needsReview = Boolean(raw.needsReview);
 
-  // Explicit exam flag always drops
-  if (hasExam === true) {
-    return { drop: true, reason: 'hasExam_true', raw };
-  }
-
-  const curated =
+  const curatedExam =
+    hasExam === true && SELECTION_OK(selectionProcess) && raw.officialUrl && raw.title;
+  const curatedNoExam =
     hasExam === false && SELECTION_OK(selectionProcess) && raw.officialUrl && raw.title;
 
-  // For automated/incomplete rows, classify from text.
-  // For curated seed (hasExam:false + valid selectionProcess), trust the curator —
-  // summaries often say "no GATE/CBT" which would false-positive on exclude keywords.
-  if (!curated) {
+  // Curated exam (hasExam:true + valid exam/no-exam code + url + title): trust the curator.
+  // CBT/GATE in the summary is expected for exam seeds.
+  // Curated no-exam: trust the curator — summaries often say "no GATE/CBT"
+  // which would false-positive on exam keywords.
+  if (!curatedExam && !curatedNoExam) {
     const classified = classifySelectionText(selectionText);
     if (classified.hasExam === true) {
-      return { drop: true, reason: 'exclude_keyword', raw };
-    }
-    if (!SELECTION_OK(selectionProcess)) {
+      hasExam = true;
+      if (!SELECTION_OK(selectionProcess) && classified.selectionProcess) {
+        selectionProcess = classified.selectionProcess;
+      }
+      if (!SELECTION_OK(selectionProcess)) {
+        needsReview = true;
+        selectionProcess = classified.selectionProcess || selectionProcess || 'written_multi_stage';
+      }
+    } else if (!SELECTION_OK(selectionProcess)) {
       if (classified.selectionProcess) {
         selectionProcess = classified.selectionProcess;
         hasExam = false;
@@ -123,11 +128,9 @@ function enrichRecord(raw, aliases, collectedAt) {
         selectionProcess = selectionProcess || 'interview_only';
         hasExam = false;
       }
-    } else {
+    } else if (hasExam !== true) {
       hasExam = false;
     }
-  } else {
-    hasExam = false;
   }
 
   const aliasHit = normalizeOrg(raw.organization, aliases);
@@ -162,7 +165,7 @@ function enrichRecord(raw, aliases, collectedAt) {
     experience: raw.experience || null,
     salary: raw.salary || null,
     selectionProcess,
-    hasExam: false,
+    hasExam: Boolean(hasExam === true),
     applicationMode: raw.applicationMode || null,
     notificationDate: raw.notificationDate || null,
     lastDate,
@@ -185,9 +188,9 @@ function enrichRecord(raw, aliases, collectedAt) {
 
   const isScrape = String(raw.collectorVersion || '').match(/scrape|playwright|pdf/i);
 
-  // Scrape rows without lastDate can still publish if selection is clear and no exam.
+  // Scrape rows without lastDate can still publish if selection is clear.
   // Unknown/ambiguous selection stays in quarantine for human review.
-  if (needsReview && isScrape && SELECTION_OK(selectionProcess) && hasExam !== true) {
+  if (needsReview && isScrape && SELECTION_OK(selectionProcess)) {
     // Clear review when collector already inferred a no-exam selection type
     if (!/unknown|review/i.test(String(raw.summary || ''))) {
       needsReview = false;
@@ -208,14 +211,7 @@ function enrichRecord(raw, aliases, collectedAt) {
 }
 
 function SELECTION_OK(code) {
-  return [
-    'walk_in',
-    'interview_only',
-    'merit',
-    'contract_interview',
-    'direct_recruitment',
-    'apprenticeship',
-  ].includes(code);
+  return SELECTION_PROCESSES.includes(code);
 }
 
 function dedupeKey(job) {
@@ -297,7 +293,10 @@ function main() {
 
     let job = result.job;
     const fix = overrides.fieldFixes?.[job.id];
-    if (fix) job = { ...job, ...fix, hasExam: false, updatedAt: startedAt };
+    if (fix) {
+      job = { ...job, ...fix, updatedAt: startedAt };
+      job.hasExam = Boolean(job.hasExam === true);
+    }
 
     if (overrides.forceIncludeIds?.includes(job.id)) {
       job.needsReview = false;

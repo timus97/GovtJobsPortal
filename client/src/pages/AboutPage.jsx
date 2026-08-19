@@ -5,7 +5,7 @@ export default function AboutPage() {
         <h1>About NoExam Sarkari</h1>
         <p className="lead">
           A community-style aggregator for Indian central government, PSU and government company
-          jobs that do not require a competitive written test.
+          jobs — exam-based and no-exam. Filter on the jobs page.
         </p>
         <h2>Where is the data stored?</h2>
         <p>
