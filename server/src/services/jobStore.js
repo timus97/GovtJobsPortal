@@ -44,6 +44,60 @@ function getRegistry() {
   return readJson(registryPath, { sources: [] });
 }
 
+function getSourcesView() {
+  const registry = getRegistry();
+  const pipeline = getPipeline();
+  const collectById = Object.fromEntries(
+    (pipeline.collect?.results || []).map((r) => [r.sourceId, r])
+  );
+  const stats = getStats();
+  const jobsBySource = stats.bySource || {};
+
+  const sources = (registry.sources || []).map((s) => {
+    const run = collectById[s.sourceId] || null;
+    const listUrls = Array.isArray(s.listUrls) ? s.listUrls.filter(Boolean) : [];
+    const urls = [...new Set([s.baseUrl, ...listUrls].filter(Boolean))];
+    return {
+      sourceId: s.sourceId,
+      name: s.name,
+      category: s.category || 'other',
+      orgType: s.orgTypeDefault || null,
+      baseUrl: s.baseUrl || '',
+      listUrls,
+      urls,
+      priority: s.priority,
+      method: s.method,
+      cadence: s.cadence,
+      enabled: Boolean(s.enabled),
+      render: s.render || null,
+      publishedJobs: jobsBySource[s.sourceId] || 0,
+      lastScrape: run
+        ? {
+            ok: run.ok,
+            written: run.written ?? 0,
+            errors: run.errors || [],
+            durationMs: run.durationMs,
+            metrics: run.metrics || {},
+          }
+        : null,
+    };
+  });
+
+  return {
+    updatedAt: registry.updatedAt || null,
+    lastCollectAt: pipeline.collect?.finishedAt || null,
+    sources,
+    groups: {
+      central_gov: sources.filter(
+        (s) =>
+          ['aggregator', 'manual', 'apprenticeship'].includes(s.category) || s.orgType === 'central'
+      ),
+      govt_company: sources.filter((s) => s.orgType === 'govt_company' || s.category === 'staffing'),
+      psu: sources.filter((s) => s.category === 'psu_careers' || s.orgType === 'psu'),
+    },
+  };
+}
+
 function listJobs(query = {}) {
   let jobs = getJobs();
 
@@ -160,5 +214,6 @@ module.exports = {
   getStats,
   getPipeline,
   getRegistry,
+  getSourcesView,
   getFilterMeta,
 };

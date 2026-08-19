@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { isProfileMatchEnabled } from '../lib/features'
+import { isStaticPagesHost } from '../api/ops'
 
 const nav = [
   { to: '/', label: 'Home', end: true },
@@ -16,6 +17,8 @@ const nav = [
 ]
 
 export default function Layout() {
+  const showOps = !isStaticPagesHost()
+
   return (
     <div className="app-shell">
       <div className="disclaimer-bar">
@@ -41,6 +44,16 @@ export default function Layout() {
                 {item.label}
               </NavLink>
             ))}
+            {showOps && (
+              <NavLink
+                to="/ops"
+                className={({ isActive }) =>
+                  isActive ? 'nav-link active nav-link-ops' : 'nav-link nav-link-ops'
+                }
+              >
+                Ops
+              </NavLink>
+            )}
           </nav>
         </div>
       </header>

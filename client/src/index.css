@@ -788,6 +788,49 @@ code {
   line-height: 1.4;
 }
 
+.nav-link-ops {
+  font-size: 0.82rem;
+  opacity: 0.72;
+}
+
+.ops-card {
+  padding: 1.35rem 1.4rem;
+}
+
+.ops-login-card {
+  max-width: 420px;
+}
+
+.ops-card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.45rem;
+}
+
+.ops-paste-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ops-paste-bar input {
+  flex: 1 1 12rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  background: #fff;
+  color: var(--text);
+}
+
+.ops-paste-bar input:disabled {
+  background: #f3f5f8;
+  color: var(--muted);
+}
+
+.ops-legal {
+  margin-top: 0.5rem;
+}
+
 
 @media (max-width: 860px) {
   .hero-grid,

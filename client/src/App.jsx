@@ -8,6 +8,9 @@ import SourcesPage from './pages/SourcesPage'
 import AboutPage from './pages/AboutPage'
 import ProfilePage from './pages/ProfilePage'
 import MatchResultsPage from './pages/MatchResultsPage'
+import OpsLoginPage from './pages/ops/OpsLoginPage'
+import OpsDashboard from './pages/ops/OpsDashboard'
+import OpsRunDetail from './pages/ops/OpsRunDetail'
 import { isProfileMatchEnabled } from './lib/features'
 
 export default function App() {
@@ -23,6 +26,9 @@ export default function App() {
         <Route path="process" element={<ProcessPage />} />
         <Route path="sources" element={<SourcesPage />} />
         <Route path="about" element={<AboutPage />} />
+        <Route path="ops" element={<OpsDashboard />} />
+        <Route path="ops/login" element={<OpsLoginPage />} />
+        <Route path="ops/runs/:id" element={<OpsRunDetail />} />
       </Route>
     </Routes>
   )
