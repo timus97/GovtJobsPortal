@@ -8,11 +8,15 @@ const { collectBecil } = require('./collectors/becil');
 const { collectNcs } = require('./collectors/ncs');
 const { collectEmploymentNews } = require('./collectors/employmentNews');
 const { collectGenericCareers } = require('./collectors/genericCareers');
+const { collectUpsc } = require('./collectors/upsc');
+const { collectSsc } = require('./collectors/ssc');
 
 const SPECIAL = {
   becil: collectBecil,
   ncs_gov: collectNcs,
   employment_news: collectEmploymentNews,
+  upsc: collectUpsc,
+  ssc: collectSsc,
 };
 
 function loadRegistry() {
@@ -27,6 +31,8 @@ function shouldCollect(source) {
 }
 
 function pickCollector(source) {
+  const key = source.collector || source.sourceId;
+  if (SPECIAL[key]) return SPECIAL[key];
   if (SPECIAL[source.sourceId]) return SPECIAL[source.sourceId];
   if (source.method === 'html_scrape' || source.method === 'browser_scrape' || source.render === 'browser') {
     return collectGenericCareers;

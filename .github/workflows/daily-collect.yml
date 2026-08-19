@@ -12,6 +12,9 @@ permissions:
 jobs:
   pipeline:
     runs-on: ubuntu-latest
+    # 45 min is enough today. If a dry-run exceeds ~35 min, split calendar
+    # vs careers (second job or COLLECT_SOURCE=upsc_calendar|ssc_notices|…)
+    # instead of raising this.
     timeout-minutes: 45
     steps:
       - name: Checkout
@@ -33,6 +36,7 @@ jobs:
         env:
           COLLECT_HEADLESS: 'true'
           PDF_MAX_PER_RUN: '25'
+          # COLLECT_SOURCE: optional single sourceId (upsc_calendar, ssc_notices, becil, …)
           ALERT_ENABLED: ${{ secrets.ALERT_ENABLED }}
           ALERT_ON_FIRST_RUN: ${{ secrets.ALERT_ON_FIRST_RUN }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
