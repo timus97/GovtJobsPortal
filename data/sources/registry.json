@@ -5988,6 +5988,104 @@
       "enabled": false,
       "owner": "automation",
       "wikiName": "Tusco Limited."
+    },
+    {
+      "sourceId": "upsc_calendar",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "baseUrl": "https://upsc.gov.in/",
+      "listUrls": [
+        "https://upsc.gov.in/examinations/exam-calendar"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "upsc",
+      "autoPublish": true,
+      "rateLimitMs": 600,
+      "robotsNotes": "Metadata + official URLs only; no PDF republish",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "upsc_active",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "baseUrl": "https://upsc.gov.in/",
+      "listUrls": [
+        "https://upsc.gov.in/examinations/active-exams"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "upsc",
+      "autoPublish": true,
+      "rateLimitMs": 600,
+      "robotsNotes": "Metadata + official URLs only; no PDF republish",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "upsc_online",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "baseUrl": "https://upsconline.nic.in/",
+      "listUrls": [
+        "https://upsconline.nic.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "upsc",
+      "autoPublish": true,
+      "rateLimitMs": 600,
+      "robotsNotes": "Metadata + official URLs only; no PDF republish",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "ssc_calendar",
+      "name": "Staff Selection Commission",
+      "category": "exam_board",
+      "baseUrl": "https://ssc.gov.in/",
+      "listUrls": [
+        "https://ssc.gov.in/for-candidates/examination-calendar",
+        "https://ssc.gov.in/home/ssc-calendar"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P0",
+      "method": "browser_scrape",
+      "render": "browser",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "ssc",
+      "autoPublish": true,
+      "rateLimitMs": 800,
+      "robotsNotes": "Playwright for JS calendar/notices; metadata only",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "ssc_notices",
+      "name": "Staff Selection Commission",
+      "category": "exam_board",
+      "baseUrl": "https://ssc.gov.in/",
+      "listUrls": [
+        "https://ssc.gov.in/home/notice-board"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P0",
+      "method": "browser_scrape",
+      "render": "browser",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "ssc",
+      "autoPublish": true,
+      "rateLimitMs": 800,
+      "robotsNotes": "Playwright for JS calendar/notices; metadata only",
+      "owner": "automation"
     }
   ],
   "wikiSource": "https://en.wikipedia.org/wiki/Public_Sector_Undertakings_in_India",
