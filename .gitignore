@@ -6,6 +6,8 @@ data/raw/**
 !data/raw/.gitkeep
 data/staging/**
 !data/staging/.gitkeep
+data/ops/**
+!data/ops/.gitkeep
 *.tmp
 .DS_Store
 .env
