@@ -6205,6 +6205,198 @@
       "rateLimitMs": 800,
       "robotsNotes": "Zonal notices. Metadata + official URLs only.",
       "owner": "automation"
+    },
+    {
+      "sourceId": "psc_uppsc",
+      "name": "Uttar Pradesh Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://uppsc.up.nic.in/",
+      "listUrls": [
+        "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx",
+        "https://uppsc.up.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Notifications list. If DOM yields no links, use ops paste-URL.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_bpsc",
+      "name": "Bihar Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://www.bpsc.bih.nic.in/",
+      "listUrls": [
+        "https://www.bpsc.bih.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_mpsc",
+      "name": "Maharashtra Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://mpsc.gov.in/",
+      "listUrls": [
+        "https://mpsc.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_tnpsc",
+      "name": "Tamil Nadu Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://www.tnpsc.gov.in/",
+      "listUrls": [
+        "https://tnpsc.gov.in/home.aspx",
+        "https://www.tnpsc.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_wbpsc",
+      "name": "West Bengal Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://psc.wb.gov.in/",
+      "listUrls": [
+        "https://psc.wb.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_rpsc",
+      "name": "Rajasthan Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://rpsc.rajasthan.gov.in/",
+      "listUrls": [
+        "https://rpsc.rajasthan.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_gpsc",
+      "name": "Gujarat Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://gpsc.gujarat.gov.in/",
+      "listUrls": [
+        "https://gpsc.gujarat.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_kpsc",
+      "name": "Karnataka Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://kpsc.kar.nic.in/",
+      "listUrls": [
+        "https://kpsc.kar.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_kerala",
+      "name": "Kerala Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://www.keralapsc.gov.in/",
+      "listUrls": [
+        "https://www.keralapsc.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "psc_appsc",
+      "name": "Andhra Pradesh Public Service Commission",
+      "category": "state_psc",
+      "baseUrl": "https://psc.ap.gov.in/",
+      "listUrls": [
+        "https://psc.ap.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
     }
   ],
   "wikiSource": "https://en.wikipedia.org/wiki/Public_Sector_Undertakings_in_India",

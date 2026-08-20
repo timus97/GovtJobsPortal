@@ -13,6 +13,7 @@ const { collectSsc } = require('./collectors/ssc');
 const { collectIbps } = require('./collectors/ibps');
 const { collectSbi } = require('./collectors/sbi');
 const { collectRrb } = require('./collectors/rrb');
+const { collectGenericPsc } = require('./collectors/genericPsc');
 
 const SPECIAL = {
   becil: collectBecil,
@@ -24,6 +25,7 @@ const SPECIAL = {
   ibps: collectIbps,
   sbi: collectSbi,
   rrb: collectRrb,
+  genericPsc: collectGenericPsc,
 };
 
 function loadRegistry() {
