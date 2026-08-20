@@ -11,6 +11,10 @@ data/staging/**
 data/processed/collect-jobs.json
 data/ops/**
 !data/ops/.gitkeep
+data/students/**
+!data/students/.gitkeep
+data/student-files/**
+!data/student-files/.gitkeep
 data/cache/**
 !data/cache/.gitkeep
 *.sqlite

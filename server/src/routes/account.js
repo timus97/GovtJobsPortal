@@ -1,0 +1,130 @@
+const express = require('express');
+const studentAuth = require('../services/studentAuth');
+const studentStore = require('../services/studentStore');
+
+const router = express.Router();
+
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const LOGIN_MAX = 5;
+const loginAttempts = new Map();
+
+function clientIp(req) {
+  return req.ip || (req.socket && req.socket.remoteAddress) || 'unknown';
+}
+
+function pruneAttempts(now) {
+  if (loginAttempts.size < 500) return;
+  for (const [ip, rec] of loginAttempts) {
+    if (!rec || rec.resetAt <= now) loginAttempts.delete(ip);
+  }
+}
+
+function rateLimitAuth(req, res, next) {
+  const now = Date.now();
+  pruneAttempts(now);
+  const ip = clientIp(req);
+  const rec = loginAttempts.get(ip);
+  if (!rec || rec.resetAt <= now) {
+    loginAttempts.set(ip, { count: 1, resetAt: now + LOGIN_WINDOW_MS });
+    return next();
+  }
+  rec.count += 1;
+  if (rec.count > LOGIN_MAX) {
+    const retrySec = Math.max(1, Math.ceil((rec.resetAt - now) / 1000));
+    res.setHeader('Retry-After', String(retrySec));
+    return res.status(429).json({ error: 'Too many attempts. Try again in 15 minutes.' });
+  }
+  next();
+}
+
+function requireFeature(_req, res, next) {
+  if (!studentAuth.featureStudentOn()) {
+    return res.status(404).json({ error: 'Student accounts are not enabled' });
+  }
+  next();
+}
+
+router.use(requireFeature);
+
+router.post('/register', rateLimitAuth, (req, res) => {
+  try {
+    const student = studentStore.register({
+      email: req.body?.email,
+      password: req.body?.password,
+    });
+    studentAuth.setSessionCookie(res, student);
+    res.status(201).json({ ok: true, student });
+  } catch (err) {
+    if (err.code === 'DUPLICATE') return res.status(409).json({ error: err.message });
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
+
+router.post('/login', rateLimitAuth, (req, res) => {
+  try {
+    const student = studentStore.verifyPassword(req.body?.email, req.body?.password);
+    if (!student) return res.status(401).json({ error: 'Invalid email or password' });
+    studentAuth.setSessionCookie(res, student);
+    res.json({ ok: true, student });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+router.post('/logout', (_req, res) => {
+  studentAuth.clearSessionCookie(res);
+  res.json({ ok: true });
+});
+
+router.get('/me', studentAuth.requireStudent, (req, res) => {
+  const row = studentStore.findById(req.student.uid);
+  if (!row) return res.status(401).json({ error: 'Unauthorized' });
+  res.json({ student: studentStore.publicStudent(row) });
+});
+
+router.get('/profile', studentAuth.requireStudent, (req, res) => {
+  res.json({ profile: studentStore.getProfile(req.student.uid) });
+});
+
+router.put('/profile', studentAuth.requireStudent, (req, res) => {
+  const body = req.body && typeof req.body === 'object' ? req.body : {};
+  const profile = studentStore.saveProfile(req.student.uid, body);
+  if (!profile) return res.status(401).json({ error: 'Unauthorized' });
+  res.json({ profile });
+});
+
+router.post('/profile/import', studentAuth.requireStudent, (req, res) => {
+  const existing = studentStore.getProfile(req.student.uid);
+  if (existing && !studentStore.profileIsEmpty(existing)) {
+    return res.status(409).json({ error: 'Server profile already has facts', profile: existing });
+  }
+  const incoming = req.body?.profile && typeof req.body.profile === 'object' ? req.body.profile : {};
+  const profile = studentStore.saveProfile(req.student.uid, incoming);
+  res.json({ profile, imported: true });
+});
+
+const meRouter = express.Router();
+meRouter.use(requireFeature);
+meRouter.get('/profile', studentAuth.requireStudent, (req, res) => {
+  res.json({ profile: studentStore.getProfile(req.student.uid) });
+});
+meRouter.put('/profile', studentAuth.requireStudent, (req, res) => {
+  const body = req.body && typeof req.body === 'object' ? req.body : {};
+  const profile = studentStore.saveProfile(req.student.uid, body);
+  if (!profile) return res.status(401).json({ error: 'Unauthorized' });
+  res.json({ profile });
+});
+meRouter.post('/profile/import', studentAuth.requireStudent, (req, res) => {
+  const existing = studentStore.getProfile(req.student.uid);
+  if (existing && !studentStore.profileIsEmpty(existing)) {
+    return res.status(409).json({ error: 'Server profile already has facts', profile: existing });
+  }
+  const incoming = req.body?.profile && typeof req.body.profile === 'object' ? req.body.profile : {};
+  const profile = studentStore.saveProfile(req.student.uid, incoming);
+  res.json({ profile, imported: true });
+});
+
+module.exports = { router, meRouter };

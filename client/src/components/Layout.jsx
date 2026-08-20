@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { isPrepareEnabled, isProfileMatchEnabled } from '../lib/features'
+import { isPrepareEnabled, isProfileMatchEnabled, isStudentEnabled } from '../lib/features'
 import { isStaticPagesHost } from '../api/ops'
+import { logoutAccount, meAccount } from '../api/account'
 
 const nav = [
   { to: '/', label: 'Home', end: true },
@@ -19,6 +21,32 @@ const nav = [
 
 export default function Layout() {
   const showOps = !isStaticPagesHost()
+  const studentOn = isStudentEnabled()
+  const [student, setStudent] = useState(null)
+
+  useEffect(() => {
+    if (!studentOn) return undefined
+    let cancelled = false
+    meAccount()
+      .then((body) => {
+        if (!cancelled) setStudent(body.student || null)
+      })
+      .catch(() => {
+        if (!cancelled) setStudent(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [studentOn])
+
+  async function onLogout() {
+    try {
+      await logoutAccount()
+    } catch {
+      /* ignore */
+    }
+    setStudent(null)
+  }
 
   return (
     <div className="app-shell">
@@ -31,7 +59,7 @@ export default function Layout() {
             <span className="brand-mark" aria-hidden />
             <span>
               <strong>NoExam Sarkari</strong>
-              <span className="brand-sub">Central · PSU · Govt Company</span>
+              <span className="brand-sub">Jobs · Exam desk · Prepare</span>
             </span>
           </Link>
           <nav className="nav" aria-label="Main">
@@ -45,6 +73,27 @@ export default function Layout() {
                 {item.label}
               </NavLink>
             ))}
+            {studentOn && student && (
+              <NavLink
+                to="/profile"
+                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+              >
+                Desk
+              </NavLink>
+            )}
+            {studentOn && !student && (
+              <NavLink
+                to="/account/login"
+                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+              >
+                Sign in
+              </NavLink>
+            )}
+            {studentOn && student && (
+              <button type="button" className="nav-link" onClick={onLogout}>
+                Sign out
+              </button>
+            )}
             {showOps && (
               <NavLink
                 to="/ops"

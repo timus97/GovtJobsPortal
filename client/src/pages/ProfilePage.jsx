@@ -1,7 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
 import { isProfileComplete, loadProfile, saveProfile } from '../lib/profile'
+import { isStudentEnabled } from '../lib/features'
+import {
+  getServerProfile,
+  importServerProfile,
+  meAccount,
+  saveServerProfile,
+} from '../api/account'
 
 const EDUCATION_OPTIONS = [
   { value: 'below_10', label: 'Below 10th' },
@@ -76,16 +83,46 @@ const STATES = [
 export default function ProfilePage() {
   const [profile, setProfile] = useState(() => loadProfile())
   const [savedAt, setSavedAt] = useState('')
+  const [student, setStudent] = useState(null)
+  const [importOffer, setImportOffer] = useState(false)
+  const [error, setError] = useState('')
   const complete = useMemo(() => isProfileComplete(profile), [profile])
   const canMatch = complete
+  const studentOn = isStudentEnabled()
+
+  useEffect(() => {
+    if (!studentOn) return undefined
+    let cancelled = false
+    meAccount()
+      .then(async (body) => {
+        if (cancelled) return
+        setStudent(body.student || null)
+        const remote = await getServerProfile()
+        if (cancelled) return
+        if (remote.profile && (remote.profile.dob || remote.profile.reservationCategory)) {
+          setProfile((p) => ({ ...p, ...remote.profile }))
+          setImportOffer(false)
+        } else {
+          const local = loadProfile()
+          setImportOffer(Boolean(local.dob || local.reservationCategory))
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setStudent(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [studentOn])
 
   function update(patch) {
     setProfile((p) => ({ ...p, ...patch }))
     setSavedAt('')
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault()
+    setError('')
     const next = {
       ...profile,
       domicileStates:
@@ -97,7 +134,28 @@ export default function ProfilePage() {
     }
     setProfile(next)
     saveProfile(next)
+    if (student) {
+      try {
+        await saveServerProfile(next)
+      } catch (err) {
+        setError(err.message || 'Could not save on the server')
+        return
+      }
+    }
     setSavedAt(new Date().toISOString())
+  }
+
+  async function onImport() {
+    setError('')
+    const local = loadProfile()
+    try {
+      const out = await importServerProfile(local)
+      setProfile((p) => ({ ...p, ...out.profile }))
+      setImportOffer(false)
+      setSavedAt(new Date().toISOString())
+    } catch (err) {
+      setError(err.message || 'Import failed')
+    }
   }
 
   function toggleDomicile(code) {
@@ -116,12 +174,22 @@ export default function ProfilePage() {
           <div>
             <h1>Your profile</h1>
             <p className="muted">
-              Stored only in this browser (<code>sarkari.profile.v1</code>). It is never saved on
-              the server.
+              {student
+                ? `Signed in as ${student.email}. Facts are saved on this API host for match and your desk.`
+                : 'Stored in this browser until you sign in. Create an account to keep the profile on the API host.'}
             </p>
           </div>
         </div>
 
+        {error && <p className="error-box">{error}</p>}
+        {importOffer && student && (
+          <div className="match-banner" role="note">
+            This browser has a saved profile.{' '}
+            <button type="button" className="btn btn-secondary" onClick={onImport}>
+              Import browser profile
+            </button>
+          </div>
+        )}
         <form className="panel profile-form" onSubmit={onSubmit}>
           <label className="field">
             <span>Date of birth *</span>
@@ -276,7 +344,7 @@ export default function ProfilePage() {
 
           <div className="hero-actions">
             <button type="submit" className="btn btn-primary">
-              Save in this browser
+              {student ? 'Save profile' : 'Save in this browser'}
             </button>
             <Link
               to="/match"
@@ -291,7 +359,8 @@ export default function ProfilePage() {
           </div>
           {savedAt && (
             <p className="muted small">
-              Saved locally{complete ? '' : ' (complete required fields before matching)'}.
+              Saved{student ? ' on this host' : ' locally'}
+              {complete ? '' : ' (complete required fields before matching)'}.
             </p>
           )}
           {!complete && (

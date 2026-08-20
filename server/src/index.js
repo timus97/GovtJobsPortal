@@ -5,7 +5,9 @@ const cors = require('cors');
 const jobsRouter = require('./routes/jobs');
 const matchRouter = require('./routes/match');
 const opsRouter = require('./routes/ops');
+const { router: accountRouter, meRouter } = require('./routes/account');
 const operatorStore = require('./services/operatorStore');
+const studentStore = require('./services/studentStore');
 const collectQueue = require('./services/collectQueue');
 const sqlite = require('./db/sqlite');
 const { rebuildCache } = require('../../scripts/migrate/jsonToSqlite');
@@ -40,6 +42,8 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/ops', opsRouter);
+app.use('/api/account', accountRouter);
+app.use('/api/me', meRouter);
 app.use('/api', jobsRouter);
 app.use('/api', matchRouter);
 
@@ -84,6 +88,11 @@ function start() {
       }
     } catch (err) {
       console.warn(`Operator bootstrap skipped: ${err.message}`);
+    }
+    try {
+      studentStore.warnIfUnwritable();
+    } catch (err) {
+      console.warn(`Student store check skipped: ${err.message}`);
     }
     try {
       collectQueue.resumePending();

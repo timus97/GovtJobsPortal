@@ -145,6 +145,10 @@ code {
   font-size: 0.95rem;
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .nav-link:hover,

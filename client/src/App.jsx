@@ -13,11 +13,14 @@ import OpsDashboard from './pages/ops/OpsDashboard'
 import OpsRunDetail from './pages/ops/OpsRunDetail'
 import OpsReviewQueue from './pages/ops/OpsReviewQueue'
 import PreparePage from './pages/PreparePage'
-import { isPrepareEnabled, isProfileMatchEnabled } from './lib/features'
+import AccountLoginPage from './pages/account/AccountLoginPage'
+import AccountRegisterPage from './pages/account/AccountRegisterPage'
+import { isPrepareEnabled, isProfileMatchEnabled, isStudentEnabled } from './lib/features'
 
 export default function App() {
   const profileMatch = isProfileMatchEnabled()
   const prepare = isPrepareEnabled()
+  const student = isStudentEnabled()
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -27,6 +30,8 @@ export default function App() {
         {profileMatch && <Route path="profile" element={<ProfilePage />} />}
         {profileMatch && <Route path="match" element={<MatchResultsPage />} />}
         {prepare && <Route path="prepare" element={<PreparePage />} />}
+        {student && <Route path="account/login" element={<AccountLoginPage />} />}
+        {student && <Route path="account/register" element={<AccountRegisterPage />} />}
         <Route path="process" element={<ProcessPage />} />
         <Route path="sources" element={<SourcesPage />} />
         <Route path="about" element={<AboutPage />} />

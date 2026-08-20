@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const express = require('express');
 const store = require('../services/jobStore');
+const studentAuth = require('../services/studentAuth');
+const studentStore = require('../services/studentStore');
 const { matchOpportunities } = require('../../../shared/eligibilityMatch');
 
 const router = express.Router();
@@ -18,7 +20,11 @@ router.post('/match', (req, res) => {
   }
 
   const body = req.body && typeof req.body === 'object' ? req.body : {};
-  const profile = body.profile;
+  let profile = body.profile;
+  const session = studentAuth.readSession(req);
+  if (session && (!profile || typeof profile !== 'object')) {
+    profile = studentStore.getProfile(session.uid);
+  }
   const limitNum = Math.min(100, Math.max(1, parseInt(body.limit, 10) || 50));
 
   try {

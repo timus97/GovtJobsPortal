@@ -1,8 +1,9 @@
 const crypto = require('crypto');
-const { hash, verify, safeEqual } = require('./password');
+const { safeEqual } = require('./password');
 
-const COOKIE_NAME = 'ops_session';
-const IDLE_TTL_MS = 12 * 60 * 60 * 1000;
+const COOKIE_NAME = 'student_session';
+const IDLE_TTL_MS = 14 * 24 * 60 * 60 * 1000;
+const AUD = 'student';
 
 let ephemeralSecret = null;
 
@@ -13,9 +14,7 @@ function getSecret() {
   }
   if (!ephemeralSecret) {
     ephemeralSecret = crypto.randomBytes(32).toString('hex');
-    console.warn(
-      'SESSION_SECRET not set; using ephemeral secret (sessions reset on restart)'
-    );
+    console.warn('SESSION_SECRET not set; using ephemeral secret (sessions reset on restart)');
   }
   return ephemeralSecret;
 }
@@ -32,22 +31,6 @@ function fromB64url(str) {
   const pad = str.length % 4 === 0 ? '' : '='.repeat(4 - (str.length % 4));
   const b64 = String(str).replace(/-/g, '+').replace(/_/g, '/') + pad;
   return Buffer.from(b64, 'base64');
-}
-
-function signCookie(user, opts = {}) {
-  const now = opts.now instanceof Date ? opts.now.getTime() : Number(opts.now) || Date.now();
-  const ttlMs = Number(opts.ttlMs) > 0 ? Number(opts.ttlMs) : IDLE_TTL_MS;
-  const payload = {
-    v: 1,
-    uid: user.id,
-    sub: user.username,
-    role: user.role || 'operator',
-    iat: Math.floor(now / 1000),
-    exp: Math.floor((now + ttlMs) / 1000),
-  };
-  const body = b64url(JSON.stringify(payload));
-  const sig = b64url(crypto.createHmac('sha256', getSecret()).update(body).digest());
-  return `${body}.${sig}`;
 }
 
 function parseCookies(header) {
@@ -68,6 +51,22 @@ function parseCookies(header) {
   return out;
 }
 
+function signCookie(user, opts = {}) {
+  const now = opts.now instanceof Date ? opts.now.getTime() : Number(opts.now) || Date.now();
+  const ttlMs = Number(opts.ttlMs) > 0 ? Number(opts.ttlMs) : IDLE_TTL_MS;
+  const payload = {
+    v: 1,
+    aud: AUD,
+    uid: user.id,
+    sub: user.email,
+    iat: Math.floor(now / 1000),
+    exp: Math.floor((now + ttlMs) / 1000),
+  };
+  const body = b64url(JSON.stringify(payload));
+  const sig = b64url(crypto.createHmac('sha256', getSecret()).update(body).digest());
+  return `${body}.${sig}`;
+}
+
 function readSession(req) {
   try {
     const cookies = parseCookies(req && req.headers && req.headers.cookie);
@@ -80,7 +79,9 @@ function readSession(req) {
     const expected = b64url(crypto.createHmac('sha256', getSecret()).update(body).digest());
     if (!safeEqual(fromB64url(sig), fromB64url(expected))) return null;
     const payload = JSON.parse(fromB64url(body).toString('utf8'));
-    if (!payload || payload.v !== 1 || !payload.sub || !payload.exp) return null;
+    if (!payload || payload.v !== 1 || payload.aud !== AUD || !payload.uid || !payload.exp) {
+      return null;
+    }
     const nowSec = Math.floor(Date.now() / 1000);
     if (payload.exp <= nowSec) return null;
     return payload;
@@ -114,30 +115,29 @@ function clearSessionCookie(res) {
   });
 }
 
-function requireOps(req, res, next) {
+function requireStudent(req, res, next) {
   const session = readSession(req);
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  req.ops = session;
-  setSessionCookie(res, {
-    id: session.uid,
-    username: session.sub,
-    role: session.role || 'operator',
-  });
+  req.student = session;
+  setSessionCookie(res, { id: session.uid, email: session.sub });
   next();
+}
+
+function featureStudentOn() {
+  const flag = String(process.env.FEATURE_STUDENT || 'on').trim().toLowerCase();
+  return flag !== 'off' && flag !== '0' && flag !== 'false';
 }
 
 module.exports = {
   COOKIE_NAME,
   IDLE_TTL_MS,
-  hash,
-  verify,
+  AUD,
   signCookie,
   readSession,
-  requireOps,
+  requireStudent,
   setSessionCookie,
   clearSessionCookie,
-  cookieOptions,
-  parseCookies,
+  featureStudentOn,
 };

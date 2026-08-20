@@ -6,7 +6,7 @@
 | Workspace | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
 | Repo | https://github.com/timus97/GovtJobsPortal |
 | Default branch | `master` (`cecedb0` — Merge PR10) |
-| Status | **Design PR plan complete.** All 12 PRs (01–08, 09a, 09b, 09c, 10) are on `master`. No open GitHub issues or PRs. |
+| Status | **Design PR plan (01–10) complete.** Stage 7 (student desk + coaching) accepted — see [STUDENT_COACHING_DESIGN.md](../STUDENT_COACHING_DESIGN.md). PR11 accounts start next. |
 | Full design | [docs/ALL_GOVT_JOBS_DESIGN.md](../ALL_GOVT_JOBS_DESIGN.md) |
 
 Use this article to resume a new session. Do not re-litigate locked decisions. Do not start from “no-exam only” as the product goal. Do not open another design-plan PR unless the owner changes scope.
@@ -88,7 +88,16 @@ Feature branches `pr/01`–`pr/10` were deleted after merge (local and `origin`)
 
 ---
 
-## Follow-ups (not design-plan PRs)
+## Stage 7 (accepted 2026-08-20)
+
+Owner reopened “no student accounts.” Full design: [docs/STUDENT_COACHING_DESIGN.md](../STUDENT_COACHING_DESIGN.md).
+
+- Email + password, no verify/reset v1.
+- Private files on the API host.
+- Dashboard: official calendars + applied jobs + custom exams.
+- Then syllabus, study plan, unofficial mocks (PR12–PR15).
+
+## Follow-ups (not catalog PRs)
 
 These are leftover vs the spec or ops, not a 13th implementation PR:
 
