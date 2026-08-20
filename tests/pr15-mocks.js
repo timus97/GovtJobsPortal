@@ -129,6 +129,15 @@ async function main() {
     assert.ok(Number(startedBody.durationMin) > 0);
     const attemptId = startedBody.attempt.id;
 
+    const reuse = await fetch(`${base}/api/me/mocks/ssc-cgl/attempts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', cookie },
+      body: JSON.stringify({}),
+    });
+    assert.strictEqual(reuse.status, 201);
+    const reuseBody = await reuse.json();
+    assert.strictEqual(reuseBody.attempt.id, attemptId, 'open attempt must be reused');
+
     const openGet = await fetch(`${base}/api/me/mocks/attempts/${attemptId}`, { headers: { cookie } });
     assert.strictEqual(openGet.status, 200);
     const openBody = await openGet.json();

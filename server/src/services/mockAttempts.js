@@ -65,11 +65,23 @@ function startAttempt(studentId, seriesId, input = {}) {
   const bank = loadBank(seriesId);
   if (!bank) return { error: 'NOT_FOUND' };
   const data = studentStore.load();
+  data.mockAttempts = Array.isArray(data.mockAttempts) ? data.mockAttempts : [];
+  const seriesKey = bank.seriesId || normalizeSeriesId(seriesId);
+  const open = data.mockAttempts.find(
+    (a) => a.studentId === studentId && a.seriesId === seriesKey && !a.submittedAt
+  );
+  if (open) {
+    return {
+      attempt: publicAttempt(open),
+      bank: publicBank(bank),
+      durationMin: Number(bank.durationMin) > 0 ? Number(bank.durationMin) : 20,
+    };
+  }
   const now = new Date().toISOString();
   const row = {
     id: crypto.randomUUID(),
     studentId,
-    seriesId: bank.seriesId || normalizeSeriesId(seriesId),
+    seriesId: seriesKey,
     itemId: resolveItemId(studentId, input.itemId),
     startedAt: now,
     submittedAt: null,
@@ -77,7 +89,6 @@ function startAttempt(studentId, seriesId, input = {}) {
     total: null,
     answers: {},
   };
-  data.mockAttempts = Array.isArray(data.mockAttempts) ? data.mockAttempts : [];
   data.mockAttempts.push(row);
   studentStore.save(data);
   return {
