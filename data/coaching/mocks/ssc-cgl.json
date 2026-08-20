@@ -1,0 +1,82 @@
+{
+  "seriesId": "ssc-cgl",
+  "unofficial": true,
+  "durationMin": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "What is the LCM of 12 and 18?",
+      "choices": ["24", "36", "48", "54"],
+      "answerIndex": 1,
+      "explain": "12 = 2²×3 and 18 = 2×3², so the LCM is 2²×3² = 36."
+    },
+    {
+      "id": "q2",
+      "stem": "What is 15% of 240?",
+      "choices": ["24", "30", "36", "48"],
+      "answerIndex": 2,
+      "explain": "15% of 240 = (15/100)×240 = 36."
+    },
+    {
+      "id": "q3",
+      "stem": "Find the next number: 2, 6, 12, 20, 30, ?",
+      "choices": ["36", "40", "42", "48"],
+      "answerIndex": 2,
+      "explain": "Differences increase by 2 each time: +4, +6, +8, +10, then +12 → 42."
+    },
+    {
+      "id": "q4",
+      "stem": "Which is the odd one out?",
+      "choices": ["9", "16", "25", "28"],
+      "answerIndex": 3,
+      "explain": "9, 16 and 25 are perfect squares; 28 is not."
+    },
+    {
+      "id": "q5",
+      "stem": "Choose the closest meaning of “brief”.",
+      "choices": ["Lengthy", "Short", "Loud", "Rare"],
+      "answerIndex": 1,
+      "explain": "Brief means short in time or length."
+    },
+    {
+      "id": "q6",
+      "stem": "She has been working here ___ 2019.",
+      "choices": ["for", "since", "from", "at"],
+      "answerIndex": 1,
+      "explain": "Use “since” with a starting point in time; “for” is used with a duration."
+    },
+    {
+      "id": "q7",
+      "stem": "Who appoints the Chief Election Commissioner of India?",
+      "choices": ["Prime Minister", "Chief Justice of India", "President of India", "Lok Sabha Speaker"],
+      "answerIndex": 2,
+      "explain": "The President of India appoints the Chief Election Commissioner."
+    },
+    {
+      "id": "q8",
+      "stem": "Goods and Services Tax (GST) was rolled out nationwide in India in which year?",
+      "choices": ["2014", "2016", "2017", "2019"],
+      "answerIndex": 2,
+      "explain": "GST came into force on 1 July 2017."
+    },
+    {
+      "id": "q9",
+      "stem": "What is the average of 8, 12, 16 and 20?",
+      "choices": ["12", "14", "16", "18"],
+      "answerIndex": 1,
+      "explain": "Sum is 56; 56 ÷ 4 = 14."
+    },
+    {
+      "id": "q10",
+      "stem": "If all roses are flowers and some flowers fade quickly, which statement must be true?",
+      "choices": [
+        "All roses fade quickly",
+        "Some roses are not flowers",
+        "All flowers are roses",
+        "Some flowers may or may not be roses"
+      ],
+      "answerIndex": 3,
+      "explain": "Roses are a subset of flowers, so some flowers can be roses; the other statements do not follow."
+    }
+  ]
+}

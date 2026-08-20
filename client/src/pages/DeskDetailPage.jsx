@@ -9,6 +9,7 @@ import {
   patchDeskItem,
   uploadDeskFile,
 } from '../api/account'
+import { getPublicMockBank } from '../api/mocks'
 import { STATUSES, STATUS_LABELS } from '../lib/deskGuidance'
 import '../App.css'
 
@@ -85,6 +86,7 @@ export default function DeskDetailPage() {
   const [item, setItem] = useState(null)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [hasMockBank, setHasMockBank] = useState(false)
 
   async function load() {
     const body = await getDeskItem(id)
@@ -105,6 +107,24 @@ export default function DeskDetailPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, navigate])
+
+  useEffect(() => {
+    if (!item || item.kind !== 'series' || !item.refId) {
+      setHasMockBank(false)
+      return undefined
+    }
+    let cancelled = false
+    getPublicMockBank(item.refId)
+      .then(() => {
+        if (!cancelled) setHasMockBank(true)
+      })
+      .catch(() => {
+        if (!cancelled) setHasMockBank(false)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [item])
 
   async function save(patch) {
     setBusy(true)
@@ -289,6 +309,17 @@ export default function DeskDetailPage() {
             </div>
           </section>
         </div>
+
+        <section className="panel">
+          <h2>Unofficial mock</h2>
+          {item.kind === 'series' && hasMockBank ? (
+            <Link to={`/desk/${item.id}/mock`} className="btn btn-primary">
+              Start unofficial mock
+            </Link>
+          ) : (
+            <p className="muted">No unofficial mock for this exam yet.</p>
+          )}
+        </section>
       </div>
     </div>
   )

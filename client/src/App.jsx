@@ -17,6 +17,8 @@ import AccountLoginPage from './pages/account/AccountLoginPage'
 import AccountRegisterPage from './pages/account/AccountRegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import DeskDetailPage from './pages/DeskDetailPage'
+import MockPage from './pages/MockPage'
+import MockReviewPage from './pages/MockReviewPage'
 import { isPrepareEnabled, isProfileMatchEnabled, isStudentEnabled } from './lib/features'
 
 export default function App() {
@@ -36,6 +38,8 @@ export default function App() {
         {student && <Route path="account/register" element={<AccountRegisterPage />} />}
         {student && <Route path="dashboard" element={<DashboardPage />} />}
         {student && <Route path="desk/:id" element={<DeskDetailPage />} />}
+        {student && <Route path="desk/:id/mock" element={<MockPage />} />}
+        {student && <Route path="desk/:id/mock/:attemptId" element={<MockReviewPage />} />}
         <Route path="process" element={<ProcessPage />} />
         <Route path="sources" element={<SourcesPage />} />
         <Route path="about" element={<AboutPage />} />
