@@ -5,13 +5,13 @@
 | Document | Design: All-India Govt Jobs + Eligibility Match + Operator Scraper Dashboard |
 | Product | NoExam Sarkari Jobs Portal |
 | Repo | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
-| Date | 2026-08-18 (status updated 2026-08-20) |
+| Date | 2026-08-18 (status updated 2026-08-20 after Stage 7) |
 | Status | Accepted. **Implementation complete:** PR01–PR08, PR09a, PR09b, PR09c, PR10 are on `master`. No further design-plan PRs. |
 | Author | Systems Architecture |
 | Audience | Engineers operating and extending the shipped v1 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
 | Session knowledge | [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](knowledge/2026-08-19-session-all-govt-jobs-expansion.md) |
-| Next stage | Stage 7 specified: [STUDENT_COACHING_DESIGN.md](STUDENT_COACHING_DESIGN.md) (PR11–PR16). After that: live collect / PDF TTL / always-on host + disk. |
+| Next stage | **Stage 7 complete** ([STUDENT_COACHING_DESIGN.md](STUDENT_COACHING_DESIGN.md) PR11–PR16 + `STUDENT_STORE`). Remaining work is operational: live collect / PDF TTL / always-on host + disk or Postgres. |
 
 ---
 
@@ -1150,7 +1150,7 @@ This document: **Accepted** for owner decisions 2026-08-18. §1, §17, and §18 
 
 Twelve mergeable PRs (PR09 split). All landed on `master` by 2026-08-20. `selectionProcess` stays a string on `jobs.json`.
 
-**Progress (2026-08-20):** Implementation complete. No further design-plan PRs. Remaining work is operational (live collect into `jobs.json`, optional PDF 30-day TTL, always-on host), not a new PR in this DAG.
+**Progress (2026-08-20):** Catalog DAG complete. Stage 7 (student desk PR11–PR16) also complete on `master`. No further design-plan PRs. Remaining work is operational (live collect into `jobs.json`, optional PDF 30-day TTL, always-on host + disk/Postgres), not a new PR in this DAG.
 
 | PR | State | Link |
 | --- | --- | --- |

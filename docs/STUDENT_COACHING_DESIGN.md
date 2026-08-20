@@ -5,7 +5,7 @@
 | Document | Design: student accounts + exam desk + unofficial coaching |
 | Product | GovtJobsPortal (exam preparation desk on top of the jobs catalog) |
 | Date | 2026-08-20 |
-| Status | **Accepted.** Stage 7 specified (PR11–PR16). PR11–PR13 shipped. PR14–PR15 coaching in tree. PR16 docs/hosting/brand. |
+| Status | **Implementation complete.** PR11–PR16 on `master`. Student store is `json` or `postgres` (`2f5d19a`). |
 | Supersedes | v1 lock “no public candidate accounts / no server PII” — **reopened by owner** |
 | Catalog design | [ALL_GOVT_JOBS_DESIGN.md](ALL_GOVT_JOBS_DESIGN.md) (PR01–PR10 complete) |
 
@@ -51,7 +51,7 @@ Email verify, password reset, OAuth, phone OTP, leaderboards, social, OCR, paid 
 
 ### 1.5 Constraints
 
-Always-on Express + **persistent disk**. Free Render sleep/redeploy wipes student data unless the disk is persistent. Catalog SoR stays `data/processed/*.json`. Student SoR is a **separate** host store under `STUDENT_DATA_DIR` (not `portal.sqlite` — that cache is wiped on rebuild). Rate-limit register/login 5 / 15 min / IP. Disclaimer on desk and mocks.
+Always-on Express + **persistent disk** and/or **Postgres**. Free Render sleep/redeploy wipes JSON/files unless the disk (or DB volume) is persistent. Catalog SoR stays `data/processed/*.json`. Student SoR is `STUDENT_STORE=json` or `postgres` — **never** `portal.sqlite`. Rate-limit register/login 5 / 15 min / IP. Disclaimer on desk and mocks.
 
 ---
 
@@ -76,7 +76,18 @@ Password hashing: shared `server/src/services/password.js` (scrypt, extracted fr
 
 ### 2.2 Student store
 
-Directory `STUDENT_DATA_DIR` (default `data/students/`). v1 implementation: **atomic JSON** `students.json` (same write pattern as `operatorStore`). SQLite is allowed later; **never** put student tables in `data/cache/portal.sqlite`.
+Configurable backend. `GET /api/health` reports `studentStore`.
+
+| `STUDENT_STORE` | Persistence |
+| --- | --- |
+| `json` (default) | Atomic `STUDENT_DATA_DIR/students.json` |
+| `postgres` | Docker Compose `student-db` or `STUDENT_DATABASE_URL` |
+
+If `STUDENT_DATABASE_URL` is set and `STUDENT_STORE` is unset → postgres. Admit/result **bytes** stay under `STUDENT_FILES_DIR`. **Never** put student tables in `data/cache/portal.sqlite`.
+
+Facade: `server/src/services/studentStore.js` → `studentStoreJson.js` or `studentStorePg.js`. Schema: `server/src/db/student-schema.sql`. Import: `npm run student:import-json`.
+
+JSON document / Postgres tables:
 
 ```
 students[]: { id, email, emailNorm, passwordHash, createdAt, lastLoginAt }
@@ -120,12 +131,14 @@ Missing → “Add exam date.” Else whole UTC days from today (negative = “N
 
 | PR | Title | Deps | Ships |
 | --- | --- | --- | --- |
-| **11** | Student accounts + server profile | — | register/login, `GET/PUT /api/me/profile`, import localStorage, nav |
-| **12** | Dashboard tracker + countdowns | 11 | items API, `/dashboard`, Track on Prepare/Jobs, days-left, guidance strip |
+| **11** | Student accounts + server profile | — | register/login, `GET/PUT /api/me/profile`, import localStorage, nav **(done)** |
+| **12** | Dashboard tracker + countdowns | 11 | items API, `/dashboard`, Track on Prepare/Jobs, days-left, guidance strip **(done)** |
 | **13** | Private admit card + result uploads | 12 | 5 MB PDF/JPEG/PNG, owner-only download **(done)** |
-| **14** | Syllabus + study plan | 12 | unofficial topic packs, even-split plan, ticks **(in tree)** |
-| **15** | Mock tests | 14 | timed unofficial banks, score, review **(in tree)** |
-| **16** | Docs + hosting + brand | 15 | README/HOSTING persistent disk, brand copy **(this PR)** |
+| **14** | Syllabus + study plan | 12 | unofficial topic packs, even-split plan, ticks **(done)** |
+| **15** | Mock tests | 14 | timed unofficial banks, score, review **(done)** |
+| **16** | Docs + hosting + brand | 15 | README/HOSTING persistent disk, brand copy **(done)** |
+
+After 16: `STUDENT_STORE=json|postgres` + `docker-compose.yml` (`2f5d19a`).
 
 Order: **11 → 12 → (13 ∥ 14) → 15 → 16.**
 
@@ -136,6 +149,8 @@ Order: **11 → 12 → (13 ∥ 14) → 15 → 16.**
 - `tests/pr11-student-account.js` — register, duplicate 409, login cookie, profile persist, ops cookie rejected, rate-limit, FEATURE off → 404
 - `tests/pr12-tracker.js` — kinds, days-left, Track upsert, custom needs a date
 - `tests/pr13-files.js` — magic bytes, 5 MB, owner-only download, replace, delete item wipes disk
-- Later: `pr14-plan.js`, `pr15-mocks.js`
+- `tests/pr14-plan.js` — even-split, no invented pack, tick persist
+- `tests/pr15-mocks.js` — public bank strips answers, score, reuse open attempt, 409 second submit
+- `tests/pr17-student-postgres.js` — same desk APIs against Docker Postgres (`npm run db:up`)
 
 Temp dirs for student data (same idea as `tests/pr08-ops-paste.js`).

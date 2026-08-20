@@ -320,7 +320,7 @@ This is **not** a board account. Aggregator only — verify the official site. T
 
 ## Design status
 
-Catalog expansion (PR01–PR10) is specified and on `master`. Stage 7 (PR11–PR16) is specified: **PR11–PR13** accounts / tracker / files are done; **PR14–PR15** unofficial syllabus/plan and mocks are in tree; **PR16** is this docs/hosting/brand landing. Next work is operational (live collect, PDF TTL, always-on host + disk), not another design PR. Session handoff: [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md).
+Catalog PR01–PR10 and Stage 7 PR11–PR16 are on `master`. Student data is `STUDENT_STORE=json` or `postgres` (Docker). Next work is operational (live collect, PDF TTL, always-on host + disk/Postgres), not another design PR. Session handoff: [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md).
 
 ---
 

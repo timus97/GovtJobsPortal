@@ -6,7 +6,9 @@ This document explains **where data lives**, what **“Not scraped yet”** mean
 
 ## 1. Catalog store is git JSON (optional SQLite cache)
 
-The **catalog** store is **JSON files committed to git** (`data/processed/*.json`). There is **no** MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **catalog-only read cache rebuilt from JSON on boot** — it is not the source of record, is **not** used for student PII, and is not installed in GitHub Actions.
+The **catalog** store is **JSON files committed to git** (`data/processed/*.json`). The catalog does not use MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **catalog-only read cache rebuilt from JSON on boot** — it is not the catalog source of record, is **not** used for student PII, and is not installed in GitHub Actions.
+
+Student accounts (not catalog) may use **Postgres** when `STUDENT_STORE=postgres` — see below.
 
 | Role | Path | Description |
 |------|------|-------------|
@@ -207,7 +209,7 @@ git push
 | Question | Answer |
 |----------|--------|
 | Where is the catalog? | **`data/processed/jobs.json`** (git JSON). Optional sqlite is a catalog cache only. |
-| Where are student accounts/files? | Host dirs `STUDENT_DATA_DIR` / `STUDENT_FILES_DIR` — not git JSON, not Pages, not `portal.sqlite` |
+| Where are student accounts/files? | `STUDENT_STORE=json` (`STUDENT_DATA_DIR`) or `postgres` (`STUDENT_DATABASE_URL`). Files in `STUDENT_FILES_DIR`. Not git, not Pages, not `portal.sqlite`. |
 | What does Not scraped yet mean? | No entry for that source in the **last collect-report** |
 | How do I see scraped sources? | Badge **Scraped · N rows**, or staging folder, or live job count |
 | What’s in progress? | Only while `collect:daily` / Actions is running — watch the terminal or Actions tab |
