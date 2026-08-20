@@ -171,17 +171,99 @@ function evaluateGender(profile, extracted) {
   return reason('gender', 'fail', `This post requires ${required}; profile gender is ${have}`);
 }
 
+function profilePwbdCategory(profile) {
+  return facts.normalizePwbdCategory(profile && profile.pwbd && profile.pwbd.category);
+}
+
+/**
+ * Post-wise PwBD when every listed post has an explicit pwbdAllowed.
+ * Any missing flag is ambiguous → verify official, never invent suitability.
+ */
+function postAllowsPwbd(post, category) {
+  if (post.pwbdAllowed === false) return false;
+  if (post.pwbdAllowed !== true) return null;
+  if (!post.pwbdCategories || !post.pwbdCategories.length) return true;
+  if (!category) return null;
+  return post.pwbdCategories.includes(category);
+}
+
 function evaluatePwbd(profile, extracted) {
   if (!profileHasDisability(profile)) {
     return reason('pwbd', 'pass', 'No disability declared');
   }
+  const category = profilePwbdCategory(profile);
+  const posts = extracted.posts;
+
+  if (posts && posts.length) {
+    const verdicts = posts.map((post) => ({ post, allow: postAllowsPwbd(post, category) }));
+    if (verdicts.some((row) => row.allow == null)) {
+      return reason(
+        'pwbd',
+        'unknown',
+        'PwBD mentioned — verify official post-wise suitability'
+      );
+    }
+    const suitable = verdicts.filter((row) => row.allow === true);
+    if (!suitable.length) {
+      return reason(
+        'pwbd',
+        'fail',
+        'Listed posts do not include a PwBD vacancy for this category'
+      );
+    }
+    if (suitable.length === posts.length) {
+      return reason('pwbd', 'pass', `PwBD vacancies listed on all ${posts.length} posts`);
+    }
+    const names = suitable
+      .map((row) => row.post.title)
+      .slice(0, 6)
+      .join(', ');
+    return reason('pwbd', 'pass', `PwBD suitable posts: ${names}`);
+  }
+
   if (extracted.pwbdAllowed === true) {
+    if (extracted.pwbdCategories && extracted.pwbdCategories.length) {
+      if (!category) {
+        return reason('pwbd', 'unknown', 'PwBD mentioned — verify official post-wise suitability');
+      }
+      if (extracted.pwbdCategories.includes(category)) {
+        return reason('pwbd', 'pass', `PwBD category ${category} is listed`);
+      }
+      return reason(
+        'pwbd',
+        'fail',
+        `Listed PwBD categories are ${extracted.pwbdCategories.join(', ')}`
+      );
+    }
     return reason('pwbd', 'pass', 'PwBD vacancies mentioned');
   }
   if (extracted.pwbdAllowed === false) {
     return reason('pwbd', 'fail', 'Notification does not allow PwBD');
   }
   return reason('pwbd', 'unknown', 'PwBD suitability not listed — verify on official site');
+}
+
+/**
+ * Reserved-only only fails when openToCategories / reservedOnly is structured.
+ * A free-text "reserved" mention without those fields must not fail UR.
+ */
+function evaluateCategory(profile, extracted) {
+  const have = facts.normalizeCategory(profile.reservationCategory);
+  const listed = extracted.openToCategories;
+  if (!listed && extracted.reservedOnly !== true) {
+    return reason('category', 'pass', 'No reserved-only restriction listed');
+  }
+  if (extracted.reservedOnly === true && !listed) {
+    return reason(
+      'category',
+      'unknown',
+      'Reserved-only listed without categories — verify on official site'
+    );
+  }
+  if (listed.includes(have)) {
+    return reason('category', 'pass', `${have} is in the listed categories`);
+  }
+  return reason('category', 'fail', `Open to ${listed.join(', ')} only; profile is ${have}`);
 }
 
 function closeSortKey(extracted) {
@@ -198,6 +280,7 @@ function matchOne(profile, opportunity) {
     evaluateDomicile(profile, extracted),
     evaluateGender(profile, extracted),
     evaluatePwbd(profile, extracted),
+    evaluateCategory(profile, extracted),
   ];
 
   const applicableRules = reasons.length;

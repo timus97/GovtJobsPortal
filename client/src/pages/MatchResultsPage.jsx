@@ -98,7 +98,8 @@ export default function MatchResultsPage() {
             <h1>Match results</h1>
             <p className="muted">
               Ranked against currently listed opportunities. Unknown facts lower confidence — they
-              do not fail a row. Always verify on the official site.
+              do not fail a row. Post-wise PwBD and reserved-only apply only when those facts are
+              structured on the notification. Always verify on the official site.
             </p>
           </div>
           <Link to="/profile" className="btn btn-secondary">

@@ -101,7 +101,26 @@ CREATE TABLE IF NOT EXISTS collect_jobs (
 CREATE INDEX IF NOT EXISTS cj_state ON collect_jobs(state, updated_at);
 `;
 
-const MIGRATIONS = [{ name: '001_init_cache', sql: INIT_SQL }];
+const MIGRATIONS = [
+  { name: '001_init_cache', sql: INIT_SQL },
+  {
+    name: '002_posts_reserved',
+    sql: `
+ALTER TABLE opportunities ADD COLUMN reserved_only INTEGER;
+ALTER TABLE opportunities ADD COLUMN open_to_categories TEXT;
+CREATE TABLE IF NOT EXISTS opportunity_posts (
+  id TEXT PRIMARY KEY,
+  opportunity_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  pwbd_allowed INTEGER,
+  pwbd_categories TEXT,
+  reserved_only INTEGER,
+  open_to_categories TEXT
+);
+CREATE INDEX IF NOT EXISTS opp_posts_opp ON opportunity_posts(opportunity_id);
+`,
+  },
+];
 
 let db = null;
 let lastStatus = 'missing';

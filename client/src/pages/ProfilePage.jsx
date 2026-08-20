@@ -269,8 +269,8 @@ export default function ProfilePage() {
               </label>
             )}
             <small className="muted">
-              v1 only checks whether the notification mentions PwBD vacancies. Post-wise suitability
-              is not decided here.
+              When a notification lists posts with PwBD flags, match uses that list. If the list is
+              incomplete, we stay at “verify on official” instead of claiming suitability.
             </small>
           </fieldset>
 
