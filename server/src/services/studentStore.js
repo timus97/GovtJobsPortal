@@ -563,6 +563,7 @@ module.exports = {
   saveProfile,
   profileIsEmpty,
   load,
+  save,
   listItems,
   getItem,
   createItem,
