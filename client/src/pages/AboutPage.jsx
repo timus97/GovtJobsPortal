@@ -5,13 +5,16 @@ export default function AboutPage() {
         <h1>About NoExam Sarkari</h1>
         <p className="lead">
           A community-style aggregator for Indian central government, PSU and government company
-          jobs — exam-based and no-exam. Filter on the jobs page.
+          jobs — exam-based and no-exam. Filter on the jobs page. On the API host you can also
+          create a student exam desk, track calendars, keep admit cards private, and practise
+          unofficial mocks.
         </p>
         <h2>Where is the data stored?</h2>
         <p>
-          There is <strong>no SQL database</strong>. Job listings and scrape metadata are stored as
-          JSON files in the project (mainly <code>data/processed/jobs.json</code>). The public site
-          serves a snapshot of those files. See the full guide:{' '}
+          Job listings and scrape metadata are stored as JSON files in the project (mainly{' '}
+          <code>data/processed/jobs.json</code>). An optional sqlite file on the API host is a
+          catalog cache only. The public Pages site serves a snapshot of those catalog files —
+          not student accounts. See the full guide:{' '}
           <a
             href="https://github.com/timus97/GovtJobsPortal/blob/main/docs/DATA_AND_STATUS.md"
             target="_blank"
@@ -20,6 +23,14 @@ export default function AboutPage() {
             Data storage, scrape status &amp; running jobs
           </a>
           .
+        </p>
+        <h2>Student exam desk</h2>
+        <p>
+          On the always-on API host you can create an account, track exams, upload a private admit
+          card or result, and use an unofficial syllabus/plan and unofficial mocks. GitHub Pages is
+          a catalog snapshot without accounts. Student files stay on the host disk — not in git and
+          not in the optional catalog sqlite cache. This is not a board account; always verify the
+          official website.
         </p>
         <h2>Source badges (“Not scraped…”)</h2>
         <p>

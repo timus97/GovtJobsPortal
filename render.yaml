@@ -1,5 +1,10 @@
 # Free Render.com web service (optional full Express + SPA host)
 # Connect this repo at https://render.com and create a Blueprint
+#
+# Student desk: a persistent disk is required for accounts and private files.
+# The free plan has no disk; sleep/redeploy wipes data/students and data/student-files.
+# Do not attach a disk here — that would change the plan. After you upgrade, add a
+# disk in the Render dashboard (mount /var/data) and point STUDENT_*_DIR there.
 services:
   - type: web
     name: noexam-sarkari-jobs
@@ -7,8 +12,25 @@ services:
     plan: free
     buildCommand: npm install && npm --prefix client install && node scripts/prepareStaticData.js && npm --prefix client run build && npm --prefix server install
     startCommand: node server/src/index.js
+    # Persistent disk (not enabled on free — uncomment only after upgrading the plan):
+    # disk:
+    #   name: student-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "20"
       - key: PORT
         value: "10000"
+      - key: FEATURE_STUDENT
+        value: "on"
+      # Defaults match the repo paths (ephemeral on free). After a disk is mounted:
+      # STUDENT_DATA_DIR=/var/data/students
+      # STUDENT_FILES_DIR=/var/data/student-files
+      - key: STUDENT_DATA_DIR
+        value: data/students
+      - key: STUDENT_FILES_DIR
+        value: data/student-files
+      # SESSION_SECRET is required in production (ops + student cookies).
+      # Set it in the Render dashboard → Environment. Do not commit a real secret.
+      # This file does not use generateValue; create the secret in the dashboard.

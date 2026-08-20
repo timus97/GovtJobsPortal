@@ -4,9 +4,9 @@ This document explains **where data lives**, what **“Not scraped yet”** mean
 
 ---
 
-## 1. Durable store is git JSON (optional SQLite cache)
+## 1. Catalog store is git JSON (optional SQLite cache)
 
-The product store is **JSON files committed to git**. There is **no** MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **read cache rebuilt from JSON on boot** — it is not the source of record and is not installed in GitHub Actions.
+The **catalog** store is **JSON files committed to git** (`data/processed/*.json`). There is **no** MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **catalog-only read cache rebuilt from JSON on boot** — it is not the source of record, is **not** used for student PII, and is not installed in GitHub Actions.
 
 | Role | Path | Description |
 |------|------|-------------|
@@ -30,6 +30,17 @@ The product store is **JSON files committed to git**. There is **no** MySQL/Post
 (and `stats.json`, `sources.json`, etc.)
 
 Local API reads the same logical data from `data/processed/` on your machine.
+
+### Student PII and files are not git JSON
+
+Student accounts, profiles, tracker rows, mock scores, and admit/result files are **never** written to `data/processed/*.json` and are **never** copied to `client/public/data/`.
+
+| Role | Path / env | Description |
+|------|------------|-------------|
+| Student SoR | `STUDENT_DATA_DIR` (default `data/students/`) | Host JSON. Gitignored. |
+| Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card + result per desk item. Gitignored. |
+
+**Never** put student tables in `data/cache/portal.sqlite`. That cache is catalog-only and is discarded on rebuild / free-tier sleep. Production desk needs a persistent disk — see [HOSTING.md](HOSTING.md).
 
 ---
 
@@ -195,8 +206,9 @@ git push
 
 | Question | Answer |
 |----------|--------|
-| Where is the database? | **`data/processed/jobs.json`** (JSON files, not SQL) |
+| Where is the catalog? | **`data/processed/jobs.json`** (git JSON). Optional sqlite is a catalog cache only. |
+| Where are student accounts/files? | Host dirs `STUDENT_DATA_DIR` / `STUDENT_FILES_DIR` — not git JSON, not Pages, not `portal.sqlite` |
 | What does Not scraped yet mean? | No entry for that source in the **last collect-report** |
 | How do I see scraped sources? | Badge **Scraped · N rows**, or staging folder, or live job count |
 | What’s in progress? | Only while `collect:daily` / Actions is running — watch the terminal or Actions tab |
-| What’s on the public site? | Snapshot in `client/public/data/` deployed to GitHub Pages |
+| What’s on the public Pages site? | Catalog snapshot in `client/public/data/` — no student accounts |

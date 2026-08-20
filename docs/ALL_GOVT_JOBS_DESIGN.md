@@ -11,7 +11,7 @@
 | Audience | Engineers operating and extending the shipped v1 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
 | Session knowledge | [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](knowledge/2026-08-19-session-all-govt-jobs-expansion.md) |
-| Next stage | [STUDENT_COACHING_DESIGN.md](STUDENT_COACHING_DESIGN.md) — student accounts, exam desk, unofficial coaching (PR11–PR16) |
+| Next stage | Stage 7 specified: [STUDENT_COACHING_DESIGN.md](STUDENT_COACHING_DESIGN.md) (PR11–PR16). After that: live collect / PDF TTL / always-on host + disk. |
 
 ---
 

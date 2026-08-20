@@ -5,7 +5,7 @@
 | Document | Design: student accounts + exam desk + unofficial coaching |
 | Product | GovtJobsPortal (exam preparation desk on top of the jobs catalog) |
 | Date | 2026-08-20 |
-| Status | **Accepted.** PR11–PR13 shipped. Next: PR14 syllabus + study plan. |
+| Status | **Accepted.** Stage 7 specified (PR11–PR16). PR11–PR13 shipped. PR14–PR15 coaching in tree. PR16 docs/hosting/brand. |
 | Supersedes | v1 lock “no public candidate accounts / no server PII” — **reopened by owner** |
 | Catalog design | [ALL_GOVT_JOBS_DESIGN.md](ALL_GOVT_JOBS_DESIGN.md) (PR01–PR10 complete) |
 
@@ -123,9 +123,9 @@ Missing → “Add exam date.” Else whole UTC days from today (negative = “N
 | **11** | Student accounts + server profile | — | register/login, `GET/PUT /api/me/profile`, import localStorage, nav |
 | **12** | Dashboard tracker + countdowns | 11 | items API, `/dashboard`, Track on Prepare/Jobs, days-left, guidance strip |
 | **13** | Private admit card + result uploads | 12 | 5 MB PDF/JPEG/PNG, owner-only download **(done)** |
-| **14** | Syllabus + study plan | 12 | unofficial topic packs, even-split plan, ticks |
-| **15** | Mock tests | 14 | timed unofficial banks, score, review |
-| **16** | Docs + hosting + brand | 15 | README/HOSTING persistent disk, brand copy |
+| **14** | Syllabus + study plan | 12 | unofficial topic packs, even-split plan, ticks **(in tree)** |
+| **15** | Mock tests | 14 | timed unofficial banks, score, review **(in tree)** |
+| **16** | Docs + hosting + brand | 15 | README/HOSTING persistent disk, brand copy **(this PR)** |
 
 Order: **11 → 12 → (13 ∥ 14) → 15 → 16.**
 
