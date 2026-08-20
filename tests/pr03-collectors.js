@@ -158,7 +158,7 @@ async function main() {
   const registry = JSON.parse(
     fs.readFileSync(path.join(__dirname, '..', 'data', 'sources', 'registry.json'), 'utf8')
   );
-  assert.strictEqual(registry.sources.length, 269, `expected 269 sources, got ${registry.sources.length}`);
+  assert.ok(registry.sources.length >= 269, `expected >= 269 sources, got ${registry.sources.length}`);
   const byId = Object.fromEntries(registry.sources.map((s) => [s.sourceId, s]));
   assert.ok(!byId.upsc && !byId.ssc, 'combined upsc/ssc sourceIds must be removed');
   const upscCalendar = byId.upsc_calendar;

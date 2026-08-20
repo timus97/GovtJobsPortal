@@ -10,13 +10,20 @@ const { collectEmploymentNews } = require('./collectors/employmentNews');
 const { collectGenericCareers } = require('./collectors/genericCareers');
 const { collectUpsc } = require('./collectors/upsc');
 const { collectSsc } = require('./collectors/ssc');
+const { collectIbps } = require('./collectors/ibps');
+const { collectSbi } = require('./collectors/sbi');
+const { collectRrb } = require('./collectors/rrb');
 
 const SPECIAL = {
   becil: collectBecil,
   ncs_gov: collectNcs,
   employment_news: collectEmploymentNews,
+  employmentNews: collectEmploymentNews,
   upsc: collectUpsc,
   ssc: collectSsc,
+  ibps: collectIbps,
+  sbi: collectSbi,
+  rrb: collectRrb,
 };
 
 function loadRegistry() {
