@@ -185,11 +185,11 @@ try {
   const missingDateRow = missingRow;
   const unknownCount = missingDateRow.reasons.filter((r) => r.outcome === 'unknown').length;
   const covered = missingDateRow.reasons.filter((r) => r.outcome !== 'unknown').length;
-  assert.strictEqual(missingDateRow.reasons.length, 7);
+  assert.strictEqual(missingDateRow.reasons.length, 8);
   assert.ok(unknownCount >= 1);
   assert.strictEqual(
     missingDateRow.confidence,
-    Math.round((covered / 7) * 10000) / 10000
+    Math.round((covered / 8) * 10000) / 10000
   );
   assert.strictEqual(missingDateRow.score, Math.round(100 * missingDateRow.confidence * 100) / 100);
   assert.ok(eduRow.score === 0);
@@ -209,9 +209,10 @@ try {
   assert.ok(clerk < becil, 'missing last date ranks last');
 
   // Low-confidence badge threshold exists for sparse facts.
-  const sparse = matchOpportunities(baseProfile, [
-    { id: 'sparse', officialUrl: 'https://ncs.gov.in/', lastDate: null, qualification: null },
-  ]);
+  const sparse = matchOpportunities(
+    { ...baseProfile, pwbd: { hasDisability: true, category: 'OH' } },
+    [{ id: 'sparse', officialUrl: 'https://ncs.gov.in/', lastDate: null, qualification: null }]
+  );
   assert.ok(sparse.matches[0]);
   assert.ok(sparse.matches[0].confidence < LOW_CONFIDENCE);
   assert.strictEqual(sparse.matches[0].lowConfidence, true);

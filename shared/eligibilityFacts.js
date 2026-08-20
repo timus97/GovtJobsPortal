@@ -155,6 +155,49 @@ function asStringArray(value) {
   return value.map((s) => String(s).trim()).filter(Boolean);
 }
 
+function normalizePwbdCategory(value) {
+  if (value == null || value === '') return null;
+  const raw = String(value).trim();
+  if (raw.toLowerCase() === 'others' || raw.toLowerCase() === 'other') return 'others';
+  const u = raw.toUpperCase();
+  return ['VH', 'HH', 'OH'].includes(u) ? u : null;
+}
+
+function normalizeOpenToCategories(value) {
+  if (!Array.isArray(value)) return null;
+  const out = [];
+  for (const item of value) {
+    const cat = normalizeCategory(item);
+    if (cat && !out.includes(cat)) out.push(cat);
+  }
+  return out.length ? out : null;
+}
+
+/**
+ * Structured post list only. Missing pwbdAllowed stays null — never invent suitability.
+ */
+function normalizePosts(posts) {
+  if (!Array.isArray(posts) || !posts.length) return null;
+  const out = [];
+  posts.forEach((post, index) => {
+    if (!post || typeof post !== 'object') return;
+    const title = String(post.title || post.name || post.post || '').trim();
+    if (!title) return;
+    const cats = Array.isArray(post.pwbdCategories)
+      ? post.pwbdCategories.map(normalizePwbdCategory).filter(Boolean)
+      : null;
+    out.push({
+      id: post.id || `post-${index + 1}`,
+      title,
+      pwbdAllowed: boolOrNull(post.pwbdAllowed),
+      pwbdCategories: cats && cats.length ? cats : null,
+      reservedOnly: boolOrNull(post.reservedOnly),
+      openToCategories: normalizeOpenToCategories(post.openToCategories),
+    });
+  });
+  return out.length ? out : null;
+}
+
 /**
  * Copy structured facts from an Opportunity or compat job.
  * Never reads eligibility[] free text.
@@ -174,6 +217,9 @@ function extractOpportunityFacts(opp) {
       domicileStates: [],
       pwbdAllowed: null,
       pwbdCategories: null,
+      posts: null,
+      reservedOnly: null,
+      openToCategories: null,
       applicationOpen: null,
       applicationClose: null,
       officialUrl: null,
@@ -198,7 +244,13 @@ function extractOpportunityFacts(opp) {
   const domicileRequired = boolOrNull(opp.domicileRequired) === true;
   const domicileStates = asStringArray(opp.domicileStates);
   const pwbdAllowed = boolOrNull(opp.pwbdAllowed);
-  const pwbdCategories = Array.isArray(opp.pwbdCategories) ? opp.pwbdCategories : null;
+  const rawPwbdCats = Array.isArray(opp.pwbdCategories)
+    ? opp.pwbdCategories.map(normalizePwbdCategory).filter(Boolean)
+    : null;
+  const pwbdCategories = rawPwbdCats && rawPwbdCats.length ? rawPwbdCats : null;
+  const posts = normalizePosts(opp.posts);
+  const reservedOnly = boolOrNull(opp.reservedOnly);
+  const openToCategories = normalizeOpenToCategories(opp.openToCategories);
 
   const bandPresent = ageMin != null && ageMax != null;
   const complete = Boolean(ageAsOnDate && bandPresent && minEducation && applicationClose);
@@ -220,6 +272,9 @@ function extractOpportunityFacts(opp) {
     domicileStates,
     pwbdAllowed,
     pwbdCategories,
+    posts,
+    reservedOnly,
+    openToCategories,
     applicationOpen,
     applicationClose,
     eligibilityParse: {
@@ -270,6 +325,9 @@ module.exports = {
   normalizeGender,
   normalizeAgeRelaxation,
   boolOrNull,
+  normalizePwbdCategory,
+  normalizeOpenToCategories,
+  normalizePosts,
   extractOpportunityFacts,
   validateMatchProfile,
 };

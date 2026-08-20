@@ -100,6 +100,10 @@ export function rejectReview(id, reason) {
   })
 }
 
+export function unpublishReview(id) {
+  return opsFetch(`/review/${encodeURIComponent(id)}/unpublish`, { method: 'POST', body: '{}' })
+}
+
 const ALLOWED_HOST_RE = /(\.gov\.in|\.nic\.in)$/i
 const EXTRA_HOSTS = [
   'ibps.in',

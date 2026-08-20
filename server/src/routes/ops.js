@@ -199,6 +199,22 @@ router.post('/review/:id/publish', opsAuth.requireOps, async (req, res) => {
   }
 });
 
+router.post('/review/:id/unpublish', opsAuth.requireOps, async (req, res) => {
+  try {
+    if (!collectQueue.featureUnpublishOn()) {
+      return res.status(404).json({ error: 'Unpublish is not enabled' });
+    }
+    const job = await collectQueue.unpublish(req.params.id);
+    if (!job) return res.status(404).json({ error: 'Collect job not found' });
+    res.json(job);
+  } catch (err) {
+    if (err.code === 'FEATURE') return res.status(404).json({ error: err.message });
+    if (err.code === 'STATE') return res.status(409).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to unpublish' });
+  }
+});
+
 router.post('/review/:id/reject', opsAuth.requireOps, (req, res) => {
   try {
     const job = collectQueue.reject(req.params.id, req.body?.reason);

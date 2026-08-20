@@ -39,7 +39,12 @@ const EXTRA_HOSTS = new Set([
   'www.aiims.edu',
 ]);
 
-const TERMINAL = new Set(['published', 'published_local', 'rejected', 'cancelled']);
+const TERMINAL = new Set(['published', 'published_local', 'unpublished', 'rejected', 'cancelled']);
+
+function featureUnpublishOn() {
+  const flag = String(process.env.FEATURE_UNPUBLISH || 'on').trim().toLowerCase();
+  return flag !== 'off' && flag !== '0' && flag !== 'false';
+}
 
 function jobsPath() {
   return process.env.COLLECT_JOBS_PATH || path.join(root, 'data', 'processed', 'collect-jobs.json');
@@ -575,10 +580,94 @@ async function ingestViaDispatch(relPath, content, jobId) {
   return { ok: true, method: 'dispatch' };
 }
 
+function removeCatalogId(file, id) {
+  const rows = readJson(file, []);
+  if (!Array.isArray(rows)) return false;
+  const next = rows.filter((row) => row && row.id !== id);
+  if (next.length === rows.length) return false;
+  writeAtomic(file, next);
+  return true;
+}
+
+function deleteStagingFile(recordId) {
+  if (!recordId) return null;
+  const file = path.join(stagingDir(), `${recordId}.json`);
+  if (!fs.existsSync(file)) return null;
+  fs.unlinkSync(file);
+  return file;
+}
+
+async function deleteViaContentsApi(relPath) {
+  const token = process.env.OPS_INGEST_TOKEN || process.env.GITHUB_TOKEN;
+  const { owner, repo } = repoParts();
+  if (!token || !owner || !repo) return { ok: false, reason: 'no_token' };
+  const branch = process.env.OPS_INGEST_BRANCH || 'master';
+  const api = `https://api.github.com/repos/${owner}/${repo}/contents/${relPath.replace(/\\/g, '/')}`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'GovtJobsPortal-ops-ingest',
+  };
+  const existing = await fetch(`${api}?ref=${encodeURIComponent(branch)}`, { headers });
+  if (!existing.ok) return { ok: false, reason: `contents_api_${existing.status}` };
+  const body = await existing.json();
+  const res = await fetch(api, {
+    method: 'DELETE',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `chore(ops): unpublish ${path.basename(relPath, '.json')}`,
+      sha: body.sha,
+      branch,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    return { ok: false, reason: `contents_api_${res.status}`, detail: text.slice(0, 300) };
+  }
+  return { ok: true, method: 'contents' };
+}
+
+async function unpublish(id) {
+  if (!featureUnpublishOn()) {
+    const err = new Error('FEATURE_UNPUBLISH is off');
+    err.code = 'FEATURE';
+    throw err;
+  }
+  const job = findJob(id);
+  if (!job) return null;
+  if (!['published', 'published_local'].includes(job.state)) {
+    const err = new Error(`Cannot unpublish a job in state ${job.state}`);
+    err.code = 'STATE';
+    throw err;
+  }
+  const oppId = job.opportunityId || (job.extracted && job.extracted.id) || null;
+  if (oppId) {
+    removeCatalogId(jobsJsonPath(), oppId);
+    removeCatalogId(opportunitiesJsonPath(), oppId);
+    deleteStagingFile(oppId);
+  }
+  const relPath = oppId ? path.relative(root, path.join(stagingDir(), `${oppId}.json`)).replace(/\\/g, '/') : null;
+  let ingest = { ok: false, reason: 'no_token' };
+  if (job.state === 'published' && relPath) {
+    ingest = await deleteViaContentsApi(relPath);
+  }
+  const detail = ingest.ok
+    ? `removed from catalog and git via ${ingest.method}`
+    : 'removed from local catalog';
+  return updateJob(id, {
+    state: 'unpublished',
+    reason:
+      job.state === 'published' && !ingest.ok
+        ? 'unpublished locally — staging may remain in git'
+        : null,
+    timelineDetail: detail,
+  });
+}
+
 async function publish(id) {
   const job = findJob(id);
   if (!job) return null;
-  if (!['valid', 'needs_review', 'published_local'].includes(job.state)) {
+  if (!['valid', 'needs_review', 'published_local', 'unpublished'].includes(job.state)) {
     const err = new Error(`Cannot publish a job in state ${job.state}`);
     err.code = 'STATE';
     throw err;
@@ -644,6 +733,8 @@ module.exports = {
   patchReview,
   reject,
   publish,
+  unpublish,
+  featureUnpublishOn,
   processJob,
   resumePending,
   setFetchHtml,

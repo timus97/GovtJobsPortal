@@ -8,6 +8,7 @@ import {
   probeOpsApi,
   publishReview,
   rejectReview,
+  unpublishReview,
 } from '../../api/ops'
 import { formatDateTime } from '../../utils/labels'
 import OpsRequiresApi from './OpsRequiresApi'
@@ -107,7 +108,8 @@ export default function OpsRunDetail() {
   }
 
   const canReview = ['needs_review', 'valid', 'invalid', 'extracted'].includes(job.state)
-  const canPublish = ['needs_review', 'valid', 'published_local'].includes(job.state)
+  const canPublish = ['needs_review', 'valid', 'published_local', 'unpublished'].includes(job.state)
+  const canUnpublish = ['published', 'published_local'].includes(job.state)
   const canCancel = job.state === 'pending'
 
   return (
@@ -211,6 +213,16 @@ export default function OpsRunDetail() {
                 onClick={() => run('publish', () => publishReview(job.id))}
               >
                 Publish
+              </button>
+            )}
+            {canUnpublish && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                disabled={Boolean(busy)}
+                onClick={() => run('unpublish', () => unpublishReview(job.id))}
+              >
+                Unpublish
               </button>
             )}
           </div>

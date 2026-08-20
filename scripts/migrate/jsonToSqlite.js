@@ -137,6 +137,10 @@ function mapOpportunity(item) {
       ? JSON.stringify(item.domicileStates)
       : null,
     pwbd_allowed: item.pwbdAllowed == null ? null : item.pwbdAllowed ? 1 : 0,
+    reserved_only: item.reservedOnly == null ? null : item.reservedOnly ? 1 : 0,
+    open_to_categories: Array.isArray(item.openToCategories)
+      ? JSON.stringify(item.openToCategories)
+      : null,
     reservation_notes: item.reservationNotes || null,
     eligibility_json: JSON.stringify(facts),
     raw: JSON.stringify(item),
@@ -235,9 +239,26 @@ function rebuildCache({ dbPath } = {}) {
   }
 
   const opportunityRows = [];
+  const postRows = [];
   for (const item of jobs) {
     if (!item || !item.id || !item.title || !item.officialUrl) continue;
     opportunityRows.push(mapOpportunity(item));
+    for (const post of item.posts || []) {
+      if (!post || !post.title) continue;
+      postRows.push({
+        id: `${item.id}:${post.id || post.title}`,
+        opportunity_id: item.id,
+        title: post.title,
+        pwbd_allowed: post.pwbdAllowed == null ? null : post.pwbdAllowed ? 1 : 0,
+        pwbd_categories: Array.isArray(post.pwbdCategories)
+          ? JSON.stringify(post.pwbdCategories)
+          : null,
+        reserved_only: post.reservedOnly == null ? null : post.reservedOnly ? 1 : 0,
+        open_to_categories: Array.isArray(post.openToCategories)
+          ? JSON.stringify(post.openToCategories)
+          : null,
+      });
+    }
   }
   for (const item of opportunities) {
     if (!item || !item.id || !item.title || !(item.officialUrl || item.official_url)) continue;
@@ -272,14 +293,21 @@ function rebuildCache({ dbPath } = {}) {
       id, source_id, exam_series_id, title, board, has_exam, selection_process, selection_processes,
       application_open, application_close, status, official_url, notification_url,
       age_min, age_max, age_as_on, min_education, discipline, gender_required,
-      domicile_required, domicile_states, pwbd_allowed, reservation_notes,
-      eligibility_json, raw, published_at, updated_at
+      domicile_required, domicile_states, pwbd_allowed, reserved_only, open_to_categories,
+      reservation_notes, eligibility_json, raw, published_at, updated_at
     ) VALUES (
       @id, @source_id, @exam_series_id, @title, @board, @has_exam, @selection_process, @selection_processes,
       @application_open, @application_close, @status, @official_url, @notification_url,
       @age_min, @age_max, @age_as_on, @min_education, @discipline, @gender_required,
-      @domicile_required, @domicile_states, @pwbd_allowed, @reservation_notes,
-      @eligibility_json, @raw, @published_at, @updated_at
+      @domicile_required, @domicile_states, @pwbd_allowed, @reserved_only, @open_to_categories,
+      @reservation_notes, @eligibility_json, @raw, @published_at, @updated_at
+    )
+  `);
+  const upsertPost = database.prepare(`
+    INSERT OR REPLACE INTO opportunity_posts (
+      id, opportunity_id, title, pwbd_allowed, pwbd_categories, reserved_only, open_to_categories
+    ) VALUES (
+      @id, @opportunity_id, @title, @pwbd_allowed, @pwbd_categories, @reserved_only, @open_to_categories
     )
   `);
   const upsertCollect = database.prepare(`
@@ -294,12 +322,14 @@ function rebuildCache({ dbPath } = {}) {
     const rebuild = database.transaction(() => {
       database.pragma('foreign_keys = OFF');
       database.exec('DELETE FROM collect_jobs');
+      database.exec('DELETE FROM opportunity_posts');
       database.exec('DELETE FROM opportunities');
       database.exec('DELETE FROM exam_series');
       database.exec('DELETE FROM sources');
       for (const row of sourceRows) upsertSource.run(row);
       for (const row of examRows) upsertExam.run(row);
       for (const row of opportunityRows) upsertOpp.run(row);
+      for (const row of postRows) upsertPost.run(row);
       for (const row of collectRows) upsertCollect.run(row);
       database.pragma('foreign_keys = ON');
     });
