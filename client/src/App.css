@@ -99,3 +99,12 @@
   margin: 0;
   font-weight: 600;
 }
+
+.ops-json {
+  overflow: auto;
+  max-height: 24rem;
+  font-size: 0.78rem;
+  background: #eef2f7;
+  padding: 0.85rem;
+  border-radius: 10px;
+}

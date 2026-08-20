@@ -6,6 +6,7 @@ const jobsRouter = require('./routes/jobs');
 const matchRouter = require('./routes/match');
 const opsRouter = require('./routes/ops');
 const operatorStore = require('./services/operatorStore');
+const collectQueue = require('./services/collectQueue');
 const sqlite = require('./db/sqlite');
 const { rebuildCache } = require('../../scripts/migrate/jsonToSqlite');
 
@@ -83,6 +84,11 @@ function start() {
       }
     } catch (err) {
       console.warn(`Operator bootstrap skipped: ${err.message}`);
+    }
+    try {
+      collectQueue.resumePending();
+    } catch (err) {
+      console.warn(`Collect queue resume skipped: ${err.message}`);
     }
     console.log(`Govt Jobs Portal API listening on http://localhost:${PORT}`);
     console.log(`  GET /api/jobs  POST /api/match  /api/stats  /api/health  /api/ops/me`);

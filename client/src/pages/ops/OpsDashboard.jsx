@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchSources } from '../../api/jobs'
-import { createOperator, listOpsJobs, logout, me, probeOpsApi } from '../../api/ops'
+import { createOperator, listOpsJobs, logout, me, pasteUrlError, probeOpsApi, submitCollect } from '../../api/ops'
 import { formatDateTime } from '../../utils/labels'
 import OpsRequiresApi from './OpsRequiresApi'
 
@@ -24,6 +24,10 @@ export default function OpsDashboard() {
   const [newPass, setNewPass] = useState('')
   const [addMsg, setAddMsg] = useState('')
   const [adding, setAdding] = useState(false)
+  const [pasteUrl, setPasteUrl] = useState('')
+  const [pasteLabel, setPasteLabel] = useState('')
+  const [pasteMsg, setPasteMsg] = useState('')
+  const [pasting, setPasting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -62,6 +66,32 @@ export default function OpsDashboard() {
     const ok = sources.filter((s) => s.lastScrape && s.lastScrape.ok)
     return { total: sources.length, enabled: enabled.length, failed: failed.length, ok: ok.length }
   }, [sources])
+
+  async function refreshJobs() {
+    const jobPayload = await listOpsJobs()
+    setJobs(jobPayload.items || [])
+  }
+
+  async function onPaste(e) {
+    e.preventDefault()
+    setPasteMsg('')
+    const blocked = pasteUrlError(pasteUrl)
+    if (blocked) {
+      setPasteMsg(blocked)
+      return
+    }
+    setPasting(true)
+    try {
+      const result = await submitCollect(pasteUrl, pasteLabel)
+      setPasteMsg(`Queued ${result.jobId}`)
+      setPasteUrl('')
+      await refreshJobs()
+    } catch (err) {
+      setPasteMsg(err.message || 'Could not queue URL')
+    } finally {
+      setPasting(false)
+    }
+  }
 
   async function onLogout() {
     try {
@@ -118,29 +148,47 @@ export default function OpsDashboard() {
             <p className="eyebrow">Operator dashboard</p>
             <h1>Collect jobs &amp; source health</h1>
             <p className="muted" style={{ marginBottom: 0 }}>
-              Signed in as <strong>{session.username}</strong> ({session.role}). Paste-URL collect
-              lands in PR08.
+              Signed in as <strong>{session.username}</strong> ({session.role}). HTML/metadata
+              only — no Playwright, no PDF republish.
             </p>
           </div>
-          <button type="button" className="btn btn-secondary" onClick={onLogout}>
-            Sign out
-          </button>
+          <div className="hero-actions">
+            <Link to="/ops/review" className="btn btn-secondary">
+              Review queue
+            </Link>
+            <button type="button" className="btn btn-secondary" onClick={onLogout}>
+              Sign out
+            </button>
+          </div>
         </div>
 
         {error && <p className="error-box">{error}</p>}
 
         <div className="panel ops-card" style={{ marginBottom: '1.25rem' }}>
           <h2>Paste a careers URL</h2>
-          <div className="ops-paste-bar">
-            <input type="url" placeholder="https://…" disabled aria-disabled="true" />
-            <input type="text" placeholder="Optional source label" disabled aria-disabled="true" />
-            <button type="button" className="btn btn-primary" disabled>
-              Submit
+          <form className="ops-paste-bar" onSubmit={onPaste}>
+            <input
+              type="url"
+              placeholder="https://…"
+              value={pasteUrl}
+              onChange={(e) => setPasteUrl(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Optional source label"
+              value={pasteLabel}
+              onChange={(e) => setPasteLabel(e.target.value)}
+            />
+            <button type="submit" className="btn btn-primary" disabled={pasting}>
+              {pasting ? 'Queuing…' : 'Submit'}
             </button>
-          </div>
+          </form>
           <p className="muted small" style={{ margin: '0.65rem 0 0' }}>
-            coming in PR08
+            https + official hosts only (gov.in, nic.in, listed bank/board hosts). Rejected hosts
+            never fetch.
           </p>
+          {pasteMsg && <p className="muted small" style={{ margin: '0.45rem 0 0' }}>{pasteMsg}</p>}
         </div>
 
         <div className="panel ops-card" style={{ marginBottom: '1.25rem' }}>
@@ -160,7 +208,7 @@ export default function OpsDashboard() {
                 {jobs.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="muted">
-                      No collect jobs yet. Paste-URL ingest is not in this PR.
+                      No paste-URL jobs yet.
                     </td>
                   </tr>
                 ) : (

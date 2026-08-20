@@ -11,6 +11,7 @@ import MatchResultsPage from './pages/MatchResultsPage'
 import OpsLoginPage from './pages/ops/OpsLoginPage'
 import OpsDashboard from './pages/ops/OpsDashboard'
 import OpsRunDetail from './pages/ops/OpsRunDetail'
+import OpsReviewQueue from './pages/ops/OpsReviewQueue'
 import PreparePage from './pages/PreparePage'
 import { isPrepareEnabled, isProfileMatchEnabled } from './lib/features'
 
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="ops" element={<OpsDashboard />} />
         <Route path="ops/login" element={<OpsLoginPage />} />
         <Route path="ops/runs/:id" element={<OpsRunDetail />} />
+        <Route path="ops/review" element={<OpsReviewQueue />} />
       </Route>
     </Routes>
   )
