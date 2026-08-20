@@ -260,13 +260,81 @@ function matchOpportunities(profile, opportunities) {
   return { matches, excluded };
 }
 
+const AGE_WHEN_NOTIFIED = 'Age will be computed when notification is out';
+
+function matchOneSeries(profile, series) {
+  const reasons = [];
+  const minEducation = series.minEducation || series.min_education || null;
+  if (!minEducation) {
+    reasons.push(
+      reason('education', 'unknown', 'Typical education floor not listed — verify when notification is out')
+    );
+  } else {
+    const cmp = facts.compareEducation(profile.highestEducation, minEducation);
+    if (cmp === 'pass') {
+      reasons.push(reason('education', 'pass', `Education meets typical ${minEducation} floor`));
+    } else if (cmp === 'fail') {
+      reasons.push(reason('education', 'fail', `Typical floor is ${minEducation}`));
+    } else {
+      reasons.push(
+        reason('education', 'unknown', 'Typical education floor not listed — verify when notification is out')
+      );
+    }
+  }
+
+  if (!series.ageAsOnDate || series.ageMin == null || series.ageMax == null) {
+    reasons.push(reason('age', 'unknown', AGE_WHEN_NOTIFIED));
+  } else {
+    reasons.push(evaluateAge(profile, series));
+  }
+
+  const openIds = series.linkedOpportunityIds || [];
+  if (series.applyNever) {
+    reasons.push(reason('apply', 'unknown', 'Prepare-for only — not a vacancy'));
+  } else if (openIds.length) {
+    reasons.push(reason('apply', 'pass', 'A linked apply window is open'));
+  } else {
+    reasons.push(reason('apply', 'unknown', 'No open apply window yet — start preparing'));
+  }
+
+  const fails = reasons.filter((r) => r.outcome === 'fail').length;
+  const covered = reasons.filter((r) => r.outcome !== 'unknown').length;
+  const confidence = reasons.length ? Math.round((covered / reasons.length) * 10000) / 10000 : 0;
+  return {
+    id: series.id,
+    title: series.name,
+    board: series.board,
+    officialUrl: series.officialUrl,
+    cycle: series.cycle || null,
+    applyNever: Boolean(series.applyNever),
+    canApply: !series.applyNever && openIds.length > 0,
+    linkedOpportunityIds: openIds,
+    score: Math.round(100 * confidence * (fails === 0 ? 1 : 0) * 100) / 100,
+    confidence,
+    reasons,
+    fails,
+  };
+}
+
+function matchExamSeries(profile, seriesList) {
+  requireMatchableProfile(profile);
+  const list = Array.isArray(seriesList) ? seriesList : [];
+  const scored = list.map((s) => matchOneSeries(profile, s));
+  const matches = scored.filter((r) => r.fails === 0).sort((a, b) => b.score - a.score);
+  const excluded = scored.filter((r) => r.fails > 0);
+  return { matches, excluded };
+}
+
 module.exports = {
   matchOpportunities,
   matchOne,
+  matchExamSeries,
+  matchOneSeries,
   requireMatchableProfile,
   LOW_CONFIDENCE,
   LAST_DATE_UNKNOWN_CHIP,
   VERIFY_BADGE,
+  AGE_WHEN_NOTIFIED,
 };
 
 // Named bindings for bundlers that parse CJS
@@ -276,3 +344,6 @@ exports.requireMatchableProfile = requireMatchableProfile;
 exports.LOW_CONFIDENCE = LOW_CONFIDENCE;
 exports.LAST_DATE_UNKNOWN_CHIP = LAST_DATE_UNKNOWN_CHIP;
 exports.VERIFY_BADGE = VERIFY_BADGE;
+exports.matchExamSeries = matchExamSeries;
+exports.matchOneSeries = matchOneSeries;
+exports.AGE_WHEN_NOTIFIED = AGE_WHEN_NOTIFIED;

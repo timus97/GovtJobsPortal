@@ -21,6 +21,8 @@ function copy(name, from) {
 }
 
 copy('jobs.json', path.join(processed, 'jobs.json'));
+copy('exam_series.json', path.join(processed, 'exam_series.json'));
+copy('opportunities.json', path.join(processed, 'opportunities.json'));
 copy('stats.json', path.join(processed, 'stats.json'));
 copy('run-report.json', path.join(processed, 'run-report.json'));
 copy('collect-report.json', path.join(processed, 'collect-report.json'));

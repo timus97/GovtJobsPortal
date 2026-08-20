@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { isProfileMatchEnabled } from '../lib/features'
+import { isPrepareEnabled, isProfileMatchEnabled } from '../lib/features'
 import { isStaticPagesHost } from '../api/ops'
 
 const nav = [
@@ -11,6 +11,7 @@ const nav = [
         { to: '/match', label: 'Match' },
       ]
     : []),
+  ...(isPrepareEnabled() ? [{ to: '/prepare', label: 'Prepare' }] : []),
   { to: '/process', label: 'How it works' },
   { to: '/sources', label: 'Sources' },
   { to: '/about', label: 'About' },

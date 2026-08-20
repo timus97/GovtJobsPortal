@@ -13,14 +13,24 @@ const {
   ORG_TYPES,
   SELECTION_PROCESSES,
 } = require(path.join(root, 'shared', 'jobSchema'));
+const {
+  isCuetName,
+  looksLikeCalendarRow,
+  normalizeExamSeries,
+  isValidExamSeries,
+  seriesMatchesJob,
+} = require(path.join(root, 'shared', 'examSeriesSchema'));
 
 const paths = {
   seed: path.join(root, 'data', 'seed', 'jobs.json'),
+  seriesSeed: path.join(root, 'data', 'seed', 'exam_series.json'),
   overrides: path.join(root, 'data', 'seed', 'overrides.json'),
   aliases: path.join(root, 'data', 'sources', 'org_aliases.json'),
   stagingDir: path.join(root, 'data', 'staging'),
   processedDir: path.join(root, 'data', 'processed'),
   jobsOut: path.join(root, 'data', 'processed', 'jobs.json'),
+  opportunitiesOut: path.join(root, 'data', 'processed', 'opportunities.json'),
+  seriesOut: path.join(root, 'data', 'processed', 'exam_series.json'),
   statsOut: path.join(root, 'data', 'processed', 'stats.json'),
   quarantineOut: path.join(root, 'data', 'processed', 'quarantine.json'),
   reportOut: path.join(root, 'data', 'processed', 'run-report.json'),
@@ -181,6 +191,8 @@ function enrichRecord(raw, aliases, collectedAt) {
     status,
     needsReview,
     notificationNo: raw.notificationNo || null,
+    examSeriesId: raw.examSeriesId || null,
+    examDate: raw.examDate || null,
     collectedAt: raw.collectedAt || now,
     collectorVersion: raw.collectorVersion || 'process-v1',
     updatedAt: now,
@@ -254,7 +266,89 @@ function buildStats(jobs, reportMeta) {
     bySelection,
     lastPipelineRunAt: reportMeta.finishedAt,
     sourcesMonitored: reportMeta.sourcesMonitored,
+    examSeries: reportMeta.examSeries || 0,
   };
+}
+
+function boardFromSource(raw) {
+  const blob = `${raw.sourceId || ''} ${raw.organization || ''} ${raw.sourceName || ''}`.toLowerCase();
+  if (/\bupsc\b/.test(blob)) return 'UPSC';
+  if (/\bssc\b|staff selection/.test(blob)) return 'SSC';
+  if (/\bibps\b/.test(blob)) return 'IBPS';
+  if (/\bsbi\b|state bank/.test(blob)) return 'SBI';
+  if (/\brrb\b|railway recruitment/.test(blob)) return 'RRB';
+  if (/\bnta\b|ugc\s*net/.test(blob)) return 'NTA';
+  return null;
+}
+
+function seriesFromCalendarRaw(raw, now) {
+  const name = raw.title || raw.name;
+  if (!name || isCuetName(name)) return null;
+  const board = raw.board || boardFromSource(raw);
+  if (!board) return null;
+  return normalizeExamSeries(
+    {
+      board,
+      name,
+      cycle: raw.cycle || null,
+      sourceId: raw.sourceId,
+      officialUrl: raw.officialUrl,
+      expectedNotify: raw.notificationDate,
+      expectedApply: raw.lastDate,
+      expectedExam: raw.examDate,
+      minEducation: raw.qualification || raw.minEducation,
+    },
+    now
+  );
+}
+
+function mergeSeries(existing, incoming) {
+  if (!existing) return incoming;
+  return {
+    ...existing,
+    ...Object.fromEntries(
+      Object.entries(incoming).filter(([, v]) => v != null && v !== '' && !(Array.isArray(v) && !v.length))
+    ),
+    aliases: [...new Set([...(existing.aliases || []), ...(incoming.aliases || [])])],
+    linkedOpportunityIds: [...new Set([...(existing.linkedOpportunityIds || []), ...(incoming.linkedOpportunityIds || [])])],
+  };
+}
+
+function buildExamSeries(seedSeries, calendarRaws, jobs, now) {
+  const byId = new Map();
+  for (const raw of seedSeries) {
+    const series = normalizeExamSeries(raw, now);
+    if (!series) continue;
+    if (isValidExamSeries(series).length) continue;
+    byId.set(series.id, series);
+  }
+  for (const raw of calendarRaws) {
+    const series = seriesFromCalendarRaw(raw, now);
+    if (!series) continue;
+    if (isValidExamSeries(series).length) continue;
+    const prev = [...byId.values()].find((s) => seriesMatchesJob(s, { title: series.name, organization: series.board, sourceId: series.sourceId })) || byId.get(series.id);
+    if (prev) {
+      byId.set(prev.id, mergeSeries(prev, { ...series, id: prev.id }));
+    } else {
+      byId.set(series.id, series);
+    }
+  }
+
+  for (const job of jobs) {
+    const hit = [...byId.values()].find((s) => seriesMatchesJob(s, job));
+    if (!hit) continue;
+    job.examSeriesId = hit.id;
+    const openApply = job.status === 'open' || job.status === 'closing_soon';
+    if (openApply && job.lastDate && !hit.applyNever) {
+      hit.linkedOpportunityIds = [...new Set([...(hit.linkedOpportunityIds || []), job.id])];
+    }
+  }
+
+  return [...byId.values()].sort((a, b) => {
+    const board = String(a.board).localeCompare(String(b.board));
+    if (board !== 0) return board;
+    return String(a.name).localeCompare(String(b.name));
+  });
 }
 
 function main() {
@@ -270,7 +364,9 @@ function main() {
 
   const published = [];
   const quarantine = [];
+  const calendarRaws = [];
   let droppedExam = 0;
+  let skippedCalendar = 0;
   let deduped = 0;
 
   const map = new Map();
@@ -278,6 +374,15 @@ function main() {
   for (const raw of incoming) {
     if (overrides.forceExcludeIds?.includes(raw.id)) {
       droppedExam += 1;
+      continue;
+    }
+    if (isCuetName(raw.title || raw.name)) {
+      droppedExam += 1;
+      continue;
+    }
+    if (looksLikeCalendarRow(raw) && !raw.lastDate) {
+      calendarRaws.push(raw);
+      skippedCalendar += 1;
       continue;
     }
 
@@ -336,6 +441,9 @@ function main() {
   const registry = readJson(path.join(root, 'data', 'sources', 'registry.json'), { sources: [] });
   const sourcesMonitored = (registry.sources || []).filter((s) => s.enabled).length;
 
+  const seedSeries = readJson(paths.seriesSeed, []);
+  const examSeries = buildExamSeries(seedSeries, calendarRaws, published, finishedAt);
+
   const report = {
     startedAt,
     finishedAt,
@@ -346,11 +454,13 @@ function main() {
     published: published.length,
     quarantine: quarantine.length,
     droppedExam,
+    skippedCalendar,
+    examSeries: examSeries.length,
     deduped,
     sourcesMonitored,
   };
 
-  const stats = buildStats(published, report);
+  const stats = buildStats(published, { ...report, examSeries: examSeries.length });
 
   const writeAtomic = (file, data) => {
     const tmp = `${file}.${process.pid}.tmp`;
@@ -358,7 +468,15 @@ function main() {
     fs.renameSync(tmp, file);
   };
 
+  const opportunities = published.map((job) => ({
+    ...job,
+    kind: 'opportunity',
+    examSeriesId: job.examSeriesId || null,
+  }));
+
   writeAtomic(paths.jobsOut, published);
+  writeAtomic(paths.opportunitiesOut, opportunities);
+  writeAtomic(paths.seriesOut, examSeries);
   writeAtomic(paths.statsOut, stats);
   writeAtomic(paths.quarantineOut, quarantine);
   writeAtomic(paths.reportOut, report);
@@ -366,6 +484,11 @@ function main() {
   console.log('Pipeline complete');
   console.log(JSON.stringify(report, null, 2));
   console.log(`Wrote ${published.length} jobs → data/processed/jobs.json`);
+  console.log(`Wrote ${examSeries.length} exam series → data/processed/exam_series.json`);
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = { buildExamSeries };

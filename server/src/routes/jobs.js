@@ -50,6 +50,26 @@ router.get('/pipeline', (_req, res) => {
   }
 });
 
+router.get('/exam-series', (req, res) => {
+  try {
+    res.json(store.listExamSeries(req.query));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list exam series' });
+  }
+});
+
+router.get('/exam-series/:id', (req, res) => {
+  try {
+    const series = store.getExamSeriesById(req.params.id);
+    if (!series) return res.status(404).json({ error: 'Exam series not found' });
+    res.json(series);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load exam series' });
+  }
+});
+
 router.get('/sources', (_req, res) => {
   try {
     res.json(store.getSourcesView());
