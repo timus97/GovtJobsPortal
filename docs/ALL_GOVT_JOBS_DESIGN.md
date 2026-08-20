@@ -5,10 +5,10 @@
 | Document | Design: All-India Govt Jobs + Eligibility Match + Operator Scraper Dashboard |
 | Product | NoExam Sarkari Jobs Portal |
 | Repo | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
-| Date | 2026-08-18 (status updated 2026-08-19) |
-| Status | Accepted. **Implementation in progress:** PR01/03/05/07 pushed. **Next implement: PR02.** |
+| Date | 2026-08-18 (status updated 2026-08-20) |
+| Status | Accepted. **Implementation complete:** PR01–PR08, PR09a, PR09b, PR09c, PR10 are on `master`. No further design-plan PRs. |
 | Author | Systems Architecture |
-| Audience | Senior engineers implementing PRs 01–10 |
+| Audience | Engineers operating and extending the shipped v1 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
 | Session knowledge | [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](knowledge/2026-08-19-session-all-govt-jobs-expansion.md) |
 
@@ -28,7 +28,7 @@ Locked defaults (owner-resolved 2026-08-18; do not re-litigate in implementation
 - Age uses the notification’s `ageAsOnDate`.
 - **`reservationCategory` is required** on the profile (`UR|EWS|OBC|SC|ST`) before matching. Used only for printed age-relaxation tables. Never invent relaxations.
 - Profile v1 lives in `localStorage` only. No public candidate accounts. No server-side candidate PII.
-- PwBD v1 is binary mention of PwBD allowed; post-wise suitability is Stage 6.
+- PwBD v1 was mention-only. **Stage 6 is implemented:** post-wise PwBD when `posts[]` list explicit flags; incomplete lists stay at “verify official”.
 - **Ops auth is a real admin:** operator user table (or better-auth) with username + hashed password, session cookie signed with `SESSION_SECRET`, `role=operator`. Shared `OPERATOR_PASSWORD` is **bootstrap only** to create the first admin.
 - Legal: rate-limit collectors, store metadata + official URLs only, **PDFs in private raw staging + 30-day TTL, never on Pages / public export**, show disclaimer.
 - **UGC NET is a prepare-for ExamSeries immediately** (not a vacancy, not behind `FEATURE_UGC_NET=off`).
@@ -451,7 +451,7 @@ Missing close date is an applicable Status rule that is **unknown**, so it penal
 
 Each result returns `reasons[]`: `{ rule, outcome: pass|fail|unknown, detail }`. The UI renders these as chips. Copy is factual (“Age 28 on 2026-08-01 is within 21–30”) not marketing.
 
-`MatchResultsPage` has a **persistent banner** (not only a footer): **“Not an official eligibility decision.”** Do not claim post-wise PwBD or reserved-only exclusion before Stage 6.
+`MatchResultsPage` has a **persistent banner** (not only a footer): **“Not an official eligibility decision.”** Post-wise PwBD and reserved-only apply only when those facts are structured on the notification.
 
 ### 6.5 ACTIVE vs prepare-for
 
@@ -1043,7 +1043,7 @@ Env / `data/processed/flags.json` consumed by API and copied to Pages:
 | `FEATURE_SERVER_MATCH` | **on** | Product path is `POST /api/match` |
 | `FEATURE_AUTO_PUBLISH_P0` | on | Calendar upserts for P0 only |
 | `FEATURE_UGC_NET` | **on** (or omit the flag) | Owner: show NET as ExamSeries immediately |
-| `FEATURE_UNPUBLISH` | off until Stage 6 | |
+| `FEATURE_UNPUBLISH` | **on** (Stage 6 landed) | `POST /api/ops/review/:id/unpublish` |
 
 Rollout steps: (1) PR01 with `/jobs` default `all`; (2) keep the 627 via `jobs.json` + prove the exam fixture; (3) P0 collectors first week; (4) enable server match (category required); (5) enable prepare including UGC NET; (6) ops admin accounts on the always-on host. Rollback = revert the git JSON commit and redeploy the API. Pages snapshot is optional.
 
@@ -1101,7 +1101,7 @@ These are **final**. Implementation PRs follow the answer column. Do not re-open
 | Source catalog | `data/sources/registry.json` only | Extend in place. No `psc.json`. Priority P0–P3. Concrete `listUrls` before PR03. |
 | Age | Notification `ageAsOnDate` | “Age today” is wrong for Indian notifications. |
 | Reservation | **Required** UR/EWS/OBC/SC/ST before match | Owner. Only printed age-relaxation tables. Never invent. |
-| PwBD v1 | Mention allowed only | Post-wise suitability is legally sharp; Stage 6 or verify-on-official. |
+| PwBD | Mention-only until Stage 6; **post-wise when `posts[]` are explicit** | Ambiguous post lists stay at verify-on-official. Never invent suitability. |
 | Profile store | `localStorage` (`sarkari.profile.v1`) | No public accounts; no server PII. |
 | `/jobs` default | `hasExam=all` at Stage 0 | Owner: no 7-day grace. |
 | PDFs | Private raw staging + 30-day TTL | Owner. Never public / Pages. |
@@ -1147,20 +1147,24 @@ This document: **Accepted** for owner decisions 2026-08-18. §1, §17, and §18 
 
 ## 20. PR Plan
 
-Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, or match UI with ops auth. `selectionProcess` stays a string on `jobs.json`.
+Twelve mergeable PRs (PR09 split). All landed on `master` by 2026-08-20. `selectionProcess` stays a string on `jobs.json`.
 
-**Progress (2026-08-19):** PR01, PR03, PR05, PR07 are **written and pushed** (not yet merged to `master`). **Next PR to implement: PR02.** Next merge: GitHub [#1](https://github.com/timus97/GovtJobsPortal/pull/1).
+**Progress (2026-08-20):** Implementation complete. No further design-plan PRs. Remaining work is operational (live collect into `jobs.json`, optional PDF 30-day TTL, always-on host), not a new PR in this DAG.
 
 | PR | State | Link |
 | --- | --- | --- |
-| 01 | Pushed | https://github.com/timus97/GovtJobsPortal/pull/1 |
-| 02 | **Next to implement** | — |
-| 03 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/3 |
-| 04 | Not started | — |
-| 05 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/4 |
-| 06 | Not started | — |
-| 07 | Pushed (base PR01) | https://github.com/timus97/GovtJobsPortal/pull/2 |
-| 08–10 | Not started | — |
+| 01 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/1 |
+| 02 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/5 |
+| 03 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/3 |
+| 04 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/6 |
+| 05 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/4 |
+| 06 | **Merged** (local + GH #7 closed) | https://github.com/timus97/GovtJobsPortal/pull/7 |
+| 07 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/2 |
+| 08 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/8 |
+| 09a | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/9 |
+| 09b | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/10 |
+| 09c | **On master** (`1c2594f`; GH #11 closed after local merge) | https://github.com/timus97/GovtJobsPortal/pull/11 |
+| 10 | **Merged** | https://github.com/timus97/GovtJobsPortal/pull/12 |
 
 ### PR01 — Schema + stop dropping exam jobs — **DONE (PR #1)**
 
@@ -1168,7 +1172,7 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `shared/jobSchema.js` (`classifySelectionText` maps `EXCLUDE_PATTERNS` → `cbt` / `written_multi_stage` / `interview_after_exam` / `physical`), `shared/opportunitySchema.js`, `shared/examSeriesSchema.js`, `scripts/collect/lib/toStaging.js` (stop `needsReview`/`hasExam` force on exam rows), `scripts/process/buildJobs.js` (stop drop + stop overwrite `hasExam: false`), `scripts/qa/schemaCheck.js`, `emailNewJobs.js`, `data/seed/jobs.json` (move fake exam row to a **test fixture**), `server/src/routes/jobs.js`, `client/src/App.jsx`, `client/src/api/jobs.js`, `client/src/components/JobFilters.jsx`, `client/src/pages/JobsPage.jsx`, `client/src/utils/labels.js`
 - **Description:** Exam rows become publishable. `selectionProcess` remains the primary **string**; optional `selectionProcesses[]` on Opportunity only. `hasExam=all|yes|no` (**default `all` immediately**). Exit: existing 627 stay in `jobs.json` + one fixture exam row queryable with `hasExam=yes`. Do not require a staging reprocess (`data/staging/**` is gitignored).
 
-### PR02 — Optional SQLite cache (not a second SoR) — **NEXT**
+### PR02 — Optional SQLite cache (not a second SoR) — **DONE (PR #5)**
 
 - **Deps:** PR01
 - **Files:** `server/src/db/sqlite.js`, `scripts/migrate/jsonToSqlite.js`, `server/src/services/jobStore.js` (JSON first), `server/src/index.js` (boot rebuild + health `sqliteCache`)
@@ -1180,7 +1184,7 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `scripts/collect/collectors/upsc.js`, `scripts/collect/collectors/ssc.js`, `scripts/collect/lib/calendarPdf.js`, `scripts/collect/runDaily.js`, `data/sources/registry.json` (`listUrls` for UPSC/SSC as in §8.4), `daily-collect.yml`
 - **Description:** Register like `becil`/`ncs`. UPSC exam-calendar, active-exams, upsconline. SSC calendar + notice-board via Playwright **in GHA**. Metadata only. Split GHA if dry-run > 35 min. Rows ship `eligibilityParse.complete=false`.
 
-### PR04 — IBPS + SBI + RRB
+### PR04 — IBPS + SBI + RRB — **DONE (PR #6)**
 
 - **Deps:** PR03 (calendar parser)
 - **Files:** `scripts/collect/collectors/ibps.js`, `scripts/collect/collectors/sbi.js`, `scripts/collect/collectors/rrb.js`, `scripts/collect/runDaily.js`, `data/sources/registry.json`, `scripts/collect/collectors/employmentNews.js` (narrow to free highlights table)
@@ -1192,7 +1196,7 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `shared/eligibilityMatch.js` (ESM), `shared/eligibilityFacts.js`, `client/vite.config.js` (`@shared` alias), `server/src/routes/match.js`, `client/src/pages/ProfilePage`, `client/src/pages/MatchResultsPage`, `client/src/App.jsx`, golden fixtures
 - **Description:** Profile v1 in `localStorage`. **`reservationCategory` required** (UI block + API 400). Shared education ladder (`below_10`…`experience`). No NLP of `eligibility[]`. Printed age relaxation only — never invent. ACTIVE match includes null lastDate as Status=unknown + chip. Persistent banner: “Not an official eligibility decision.” **`POST /api/match` is the product** (`FEATURE_SERVER_MATCH=on`). p95 < 200 ms on 10k. Flag `FEATURE_PROFILE_MATCH`.
 
-### PR06 — ExamSeries + prepare-for
+### PR06 — ExamSeries + prepare-for — **DONE (PR #7)**
 
 - **Deps:** PR03, PR04, PR05
 - **Files:** `shared/examSeriesSchema.js`, `scripts/process/buildJobs.js` (write `exam_series.json`), `prepareStaticData.js`, `client/src/pages/PreparePage`
@@ -1204,31 +1208,31 @@ Twelve mergeable PRs (PR09 split). Do not combine schema-drop with collectors, o
 - **Files:** `server/src/routes/ops.js`, operator store (table or better-auth), `client/src/pages/ops/OpsDashboard`, `client/src/pages/ops/OpsRunDetail`, `client/src/pages/ops` login/bootstrap, `server/src/index.js`
 - **Description:** Real admin auth. Operator table: username + hashed password + `role`. `POST /api/ops/login` `{ username, password }`; session cookie signed with **`SESSION_SECRET`**. `OPERATOR_PASSWORD` bootstraps the first admin only when the table is empty, then cannot sign in. `POST /api/ops/operators` (admin) adds more operators. Dashboard lists paste-URL jobs (empty until PR08) and registry source health. `/ops` 404 on Pages snapshot (`FEATURE_OPS`).
 
-### PR08 — Paste-URL + review queue
+### PR08 — Paste-URL + review queue — **DONE (PR #8)**
 
 - **Deps:** PR07
 - **Files:** `server/src/services/collectQueue.js`, `server/src/routes/ops.js`, `client/src/pages/ops/OpsReviewQueue`, `client/src/pages/ops/OpsDashboard`, `data/processed/collect-jobs.json`, `data/staging/ops_paste/`, `.github/workflows/ops-ingest.yml`
 - **Description:** `POST /api/ops/collect` → 202. Persist collect jobs in `collect-jobs.json`. States as §7 including `published_local`. **`PATCH /api/ops/review/:id`** edits facts. Publish writes `data/staging/ops_paste/<stableJobId>.json` (staging shape `buildJobs.js` already walks), upserts local `jobs.json` / `opportunities.json`, then commits the staging file via **`ops-ingest.yml`** (Contents API or `repository_dispatch`). Slim `npm run process` or the next daily process step rebuilds processed JSON from seed + staging. **Do not** `workflow_dispatch` `pipeline:daily`. No token → `published_local` + “not in git SoR until staging file is committed.” HTML/metadata **only** on Render. Never auto-publish paste jobs. Daily collect does not create collect_jobs.
 
-### PR09a — Generic PSC + 10 registry entries
+### PR09a — Generic PSC + 10 registry entries — **DONE (PR #9)**
 
 - **Deps:** PR04, PR08
 - **Files:** `scripts/collect/collectors/genericPsc.js`, `data/sources/registry.json` (10 commissions: start with UPPSC, BPSC, MPSC, TNPSC, WBPSC, RPSC, GPSC, KPSC, Kerala PSC, APPSC), `runDaily.js`
 - **Description:** One scraper. **No** `scripts/collect/registry/psc.json`. Enable when `listUrls` parse; otherwise paste-URL.
 
-### PR09b — Bank / regulator / post P1
+### PR09b — Bank / regulator / post P1 — **DONE (PR #10)**
 
 - **Deps:** PR09a
 - **Files:** `scripts/collect/collectors/` as needed, `data/sources/registry.json`
 - **Description:** RBI (`opportunities.rbi.org.in`), NABARD, SEBI, India Post, FCI, LIC, EPFO. Register `listUrls` + `collector` + `priority`.
 
-### PR09c — School / health / defence calendars
+### PR09c — School / health / defence calendars — **DONE (on master; GH #11)**
 
 - **Deps:** PR09a
 - **Files:** `scripts/collect/collectors/` as needed, `data/sources/registry.json`
 - **Description:** KVS/NVS/DSSSB/CTET, AIIMS/ESIC/NHM, DRDO/ISRO/BARC, GATE-as-score + per-PSU, defence **calendars/manual only** (no CAPTCHA bypass), apprenticeship type flag. CUET excluded. **UGC NET as ExamSeries immediately** (prepare-for, not a vacancy).
 
-### PR10 — Hardening
+### PR10 — Hardening — **DONE (PR #12)**
 
 - **Deps:** PR05, PR08, PR09c
 - **Files:** `shared/eligibilityMatch.js`, schema extras, ops unpublish, `tests/` golden notifications

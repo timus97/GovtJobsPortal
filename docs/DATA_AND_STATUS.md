@@ -4,13 +4,13 @@ This document explains **where data lives**, what **“Not scraped yet”** mean
 
 ---
 
-## 1. There is no traditional database (SQL)
+## 1. Durable store is git JSON (optional SQLite cache)
 
-The portal uses **JSON files on disk** (and the same files published to GitHub Pages). There is **no** MySQL/Postgres/MongoDB.
+The product store is **JSON files committed to git**. There is **no** MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **read cache rebuilt from JSON on boot** — it is not the source of record and is not installed in GitHub Actions.
 
 | Role | Path | Description |
 |------|------|-------------|
-| **Published jobs (“the database”)** | `data/processed/jobs.json` | Canonical list of no-exam jobs served by the API and website |
+| **Published jobs (durable SoR)** | `data/processed/jobs.json` | Exam + no-exam opportunities served by the API and website |
 | Stats | `data/processed/stats.json` | Counts by org type, sector, status, source |
 | Last process run | `data/processed/run-report.json` | How many jobs published/dropped last pipeline |
 | Last collect run | `data/processed/collect-report.json` | Per-source scrape results (rows written, errors) |
@@ -57,7 +57,7 @@ A source can be:
 
 1. **In registry only** → shows until scraped  
 2. **Scraped with 0 rows** → site OK but no extractable vacancies that day  
-3. **Scraped with rows** → may still drop exam posts in process  
+3. **Scraped with rows** → `hasExam` is a filter; exam posts are published, not dropped
 4. **Paused** → no automatic scrape until a career URL is added and `enabled: true`
 
 ### Why many PSUs said “Not scraped yet”

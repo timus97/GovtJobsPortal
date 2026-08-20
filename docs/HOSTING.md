@@ -1,8 +1,10 @@
-# Public hosting (free)
+# Public hosting
 
-This portal can be hosted for free in two ways.
+The **v1 product** is always-on Express + SPA (match and `/ops` need the API). GitHub Pages is a **JSON snapshot fallback**, not the match or ops host.
 
-## 1. GitHub Pages (recommended free static site)
+`render.yaml` is still the free Render plan (sleeps ~15 min). Upgrade that service when you want the product host to stay awake.
+
+## 1. GitHub Pages (static snapshot)
 
 **Public URL pattern:** `https://timus97.github.io/GovtJobsPortal/`
 
