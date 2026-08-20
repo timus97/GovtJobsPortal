@@ -1,0 +1,107 @@
+{
+  "seriesId": "ugc-net",
+  "unofficial": true,
+  "durationMin": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "Formative assessment is used primarily to:",
+      "choices": [
+        "Assign a final grade at the end of a course",
+        "Monitor learning and give feedback while teaching is still going on",
+        "Rank students for a national merit list",
+        "Replace the syllabus"
+      ],
+      "answerIndex": 1,
+      "explain": "Formative assessment is ongoing and aims to improve learning, not only to certify it."
+    },
+    {
+      "id": "q2",
+      "stem": "In an experiment, the variable that the researcher deliberately changes is the:",
+      "choices": ["Dependent variable", "Confounding variable", "Independent variable", "Extraneous constant"],
+      "answerIndex": 2,
+      "explain": "The independent variable is manipulated; the dependent variable is what is measured."
+    },
+    {
+      "id": "q3",
+      "stem": "Presenting another author’s words as your own without citation is:",
+      "choices": ["Peer review", "Plagiarism", "Meta-analysis", "Informed consent"],
+      "answerIndex": 1,
+      "explain": "Plagiarism is using someone else’s work without proper acknowledgement."
+    },
+    {
+      "id": "q4",
+      "stem": "Find the next term: 3, 9, 27, 81, ?",
+      "choices": ["108", "162", "243", "324"],
+      "answerIndex": 2,
+      "explain": "Each term is multiplied by 3; 81 × 3 = 243."
+    },
+    {
+      "id": "q5",
+      "stem": "HTTPS differs from HTTP mainly because it:",
+      "choices": [
+        "Uses a different top-level domain",
+        "Encrypts the connection, typically with TLS",
+        "Works only on mobile devices",
+        "Cannot transfer images"
+      ],
+      "answerIndex": 1,
+      "explain": "The “S” stands for secure; traffic is encrypted with TLS."
+    },
+    {
+      "id": "q6",
+      "stem": "NAAC is an autonomous body that:",
+      "choices": [
+        "Conducts the UGC-NET examination",
+        "Accredits higher education institutions in India",
+        "Disburses all research grants of CSIR",
+        "Sets the school-leaving syllabus for CBSE"
+      ],
+      "answerIndex": 1,
+      "explain": "The National Assessment and Accreditation Council assesses and accredits HEIs."
+    },
+    {
+      "id": "q7",
+      "stem": "In Bloom’s revised taxonomy, the lowest cognitive level is:",
+      "choices": ["Create", "Evaluate", "Remember", "Analyse"],
+      "answerIndex": 2,
+      "explain": "Remember (recall of facts) is the base of the revised taxonomy."
+    },
+    {
+      "id": "q8",
+      "stem": "In communication theory, “noise” refers to:",
+      "choices": [
+        "Only loud sounds in a classroom",
+        "Any interference that distorts the intended message",
+        "The sender’s qualifications",
+        "The length of the syllabus"
+      ],
+      "answerIndex": 1,
+      "explain": "Noise is any barrier — physical, semantic, or psychological — that distorts the message."
+    },
+    {
+      "id": "q9",
+      "stem": "A sample in research is best described as:",
+      "choices": [
+        "The entire set of people or items of interest",
+        "A subset selected from the population for study",
+        "Only the control group",
+        "The published literature review"
+      ],
+      "answerIndex": 1,
+      "explain": "The population is the full set; a sample is the portion actually observed."
+    },
+    {
+      "id": "q10",
+      "stem": "Which statement about classroom ICT use is most accurate?",
+      "choices": [
+        "ICT automatically improves learning without pedagogy",
+        "ICT is a tool whose value depends on how teaching is designed",
+        "ICT can replace the need for any learning outcomes",
+        "Only desktop computers count as ICT"
+      ],
+      "answerIndex": 1,
+      "explain": "Technology supports teaching; learning gains depend on design, not the tool alone."
+    }
+  ]
+}

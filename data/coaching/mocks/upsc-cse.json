@@ -1,0 +1,97 @@
+{
+  "seriesId": "upsc-cse",
+  "unofficial": true,
+  "durationMin": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "Article 32 of the Constitution of India is associated with:",
+      "choices": [
+        "Directive Principles of State Policy",
+        "Right to constitutional remedies",
+        "Official language of the Union",
+        "Finance Commission"
+      ],
+      "answerIndex": 1,
+      "explain": "Article 32 gives the right to move the Supreme Court for enforcement of fundamental rights."
+    },
+    {
+      "id": "q2",
+      "stem": "Who is the ex-officio Chairperson of the Rajya Sabha?",
+      "choices": ["President of India", "Prime Minister", "Vice-President of India", "Speaker of the Lok Sabha"],
+      "answerIndex": 2,
+      "explain": "The Vice-President of India is the ex-officio Chairman of the Rajya Sabha."
+    },
+    {
+      "id": "q3",
+      "stem": "The Dandi March led by Mahatma Gandhi began in which year?",
+      "choices": ["1919", "1922", "1930", "1942"],
+      "answerIndex": 2,
+      "explain": "The Salt March from Sabarmati to Dandi began in March 1930."
+    },
+    {
+      "id": "q4",
+      "stem": "The Tropic of Cancer does not pass through which of these states?",
+      "choices": ["Rajasthan", "Chhattisgarh", "Jharkhand", "Kerala"],
+      "answerIndex": 3,
+      "explain": "The Tropic of Cancer crosses several central and eastern states, not Kerala in the far south."
+    },
+    {
+      "id": "q5",
+      "stem": "The Reserve Bank of India’s repo rate is best described as:",
+      "choices": [
+        "The rate at which banks lend to each other overnight",
+        "The rate at which the RBI lends short-term funds to commercial banks against securities",
+        "The interest paid on savings accounts",
+        "The tax on bank profits"
+      ],
+      "answerIndex": 1,
+      "explain": "Repo is the policy rate at which the RBI injects short-term liquidity against collateral."
+    },
+    {
+      "id": "q6",
+      "stem": "A Ramsar site is designated primarily for the conservation of:",
+      "choices": ["Coral reefs only", "Wetlands", "Desert dunes", "Alpine glaciers"],
+      "answerIndex": 1,
+      "explain": "The Ramsar Convention is an international treaty on wetlands of international importance."
+    },
+    {
+      "id": "q7",
+      "stem": "Which gas is released as a by-product of photosynthesis in green plants?",
+      "choices": ["Nitrogen", "Carbon dioxide", "Oxygen", "Methane"],
+      "answerIndex": 2,
+      "explain": "Water is split during the light reactions and oxygen is released."
+    },
+    {
+      "id": "q8",
+      "stem": "Fundamental Duties were inserted into the Constitution by which amendment?",
+      "choices": ["24th Amendment", "42nd Amendment", "44th Amendment", "73rd Amendment"],
+      "answerIndex": 1,
+      "explain": "The 42nd Amendment, 1976, added Part IVA (Article 51A) on Fundamental Duties."
+    },
+    {
+      "id": "q9",
+      "stem": "The southwest monsoon that brings most of India’s summer rain is driven mainly by:",
+      "choices": [
+        "Polar jet streams over Antarctica",
+        "Seasonal reversal of winds due to differential heating of land and sea",
+        "Tides in the Bay of Bengal",
+        "El Niño alone, every year"
+      ],
+      "answerIndex": 1,
+      "explain": "Land heats faster than the ocean, drawing moisture-laden winds from the sea; ENSO can modulate, not replace, this pattern."
+    },
+    {
+      "id": "q10",
+      "stem": "The FRBM Act is primarily intended to:",
+      "choices": [
+        "Fix the repo rate each quarter",
+        "Set a statutory framework for fiscal deficit discipline",
+        "Nationalise all commercial banks",
+        "Replace the Finance Commission"
+      ],
+      "answerIndex": 1,
+      "explain": "The Fiscal Responsibility and Budget Management Act aims to institutionalise fiscal discipline and deficit targets."
+    }
+  ]
+}

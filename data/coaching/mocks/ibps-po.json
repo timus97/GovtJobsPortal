@@ -1,0 +1,87 @@
+{
+  "seriesId": "ibps-po",
+  "unofficial": true,
+  "durationMin": 20,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "Simple interest on ₹5,000 at 10% per annum for 2 years is:",
+      "choices": ["₹500", "₹800", "₹1,000", "₹1,100"],
+      "answerIndex": 2,
+      "explain": "SI = (P×R×T)/100 = (5000×10×2)/100 = ₹1,000."
+    },
+    {
+      "id": "q2",
+      "stem": "What is 3/5 of 250?",
+      "choices": ["100", "125", "150", "175"],
+      "answerIndex": 2,
+      "explain": "(3/5)×250 = 150."
+    },
+    {
+      "id": "q3",
+      "stem": "Pointing to a photograph, Ravi says, “She is the daughter of my mother’s only son.” How is the girl related to Ravi?",
+      "choices": ["Sister", "Niece", "Daughter", "Cousin"],
+      "answerIndex": 2,
+      "explain": "Ravi’s mother’s only son is Ravi himself, so the girl is his daughter."
+    },
+    {
+      "id": "q4",
+      "stem": "Five friends sit in a row facing north. A is left of B, C is right of B, D is left of A, and E is at the extreme right. Who sits in the middle?",
+      "choices": ["D", "A", "B", "C"],
+      "answerIndex": 2,
+      "explain": "Order left to right is D, A, B, C, E, so B is in the middle."
+    },
+    {
+      "id": "q5",
+      "stem": "Choose the word that is most nearly opposite in meaning to “scarce”.",
+      "choices": ["Rare", "Meagre", "Abundant", "Sparse"],
+      "answerIndex": 2,
+      "explain": "Scarce means in short supply; abundant is the opposite."
+    },
+    {
+      "id": "q6",
+      "stem": "Cash Reserve Ratio (CRR) is the share of deposits that scheduled banks must keep as cash with:",
+      "choices": ["The Ministry of Finance", "NABARD", "The Reserve Bank of India", "SEBI"],
+      "answerIndex": 2,
+      "explain": "CRR is maintained as a cash balance with the RBI."
+    },
+    {
+      "id": "q7",
+      "stem": "NEFT is a payment system used mainly for:",
+      "choices": [
+        "Trading listed shares",
+        "Electronic transfer of funds between bank accounts",
+        "Issuing physical demand drafts only",
+        "Setting the policy repo rate"
+      ],
+      "answerIndex": 1,
+      "explain": "National Electronic Funds Transfer moves money between bank accounts in batches."
+    },
+    {
+      "id": "q8",
+      "stem": "A scheduled bank in India is one that is:",
+      "choices": [
+        "Listed on the stock exchange",
+        "Included in the Second Schedule to the RBI Act, 1934",
+        "Owned only by the central government",
+        "Allowed to print currency notes"
+      ],
+      "answerIndex": 1,
+      "explain": "Scheduled status comes from inclusion in the Second Schedule of the RBI Act."
+    },
+    {
+      "id": "q9",
+      "stem": "An article is bought for ₹250 and sold at a 20% profit. The selling price is:",
+      "choices": ["₹270", "₹280", "₹300", "₹320"],
+      "answerIndex": 2,
+      "explain": "Profit = 20% of 250 = 50; SP = 250 + 50 = ₹300."
+    },
+    {
+      "id": "q10",
+      "stem": "The idiom “once in a blue moon” means:",
+      "choices": ["Very frequently", "At midnight only", "Very rarely", "During a lunar eclipse"],
+      "answerIndex": 2,
+      "explain": "It means something that happens only rarely."
+    }
+  ]
+}
