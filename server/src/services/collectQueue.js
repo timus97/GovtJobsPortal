@@ -25,6 +25,11 @@ const EXTRA_HOSTS = new Set([
   'nta.ac.in',
   'www.nta.ac.in',
   'ugcnet.nta.nic.in',
+  'gate2027.iitm.ac.in',
+  'aiimsexams.ac.in',
+  'www.aiimsexams.ac.in',
+  'aiims.edu',
+  'www.aiims.edu',
 ]);
 
 const TERMINAL = new Set(['published', 'published_local', 'rejected', 'cancelled']);

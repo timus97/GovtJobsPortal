@@ -94,6 +94,7 @@ async function main() {
       const records = (out.records || []).map((r) => ({
         ...r,
         sector: r.sector && r.sector !== 'Other' ? r.sector : source.sector || r.sector,
+        opportunityType: r.opportunityType || source.opportunityType || null,
       }));
       const stagingPath = writeStaging(source.sourceId, runId, records);
       const entry = {
