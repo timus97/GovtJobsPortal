@@ -107,7 +107,7 @@ Missing → “Add exam date.” Else whole UTC days from today (negative = “N
 | --- | --- | --- |
 | Identity | Email + password, no verify/reset | Owner |
 | Session | Separate `student_session` + `aud=student` | Do not mix with ops |
-| Student SoR | Host JSON/files, gitignored | PII/PDFs cannot be git or Pages |
+| Student SoR | `STUDENT_STORE=json` or `postgres`; files on disk | PII/PDFs cannot be git or Pages |
 | Catalog SoR | Unchanged git JSON | Shared vacancies/calendars |
 | Tracker kinds | series + opportunity + custom | Owner |
 | Coaching content | Hand-built unofficial JSON | No official paper scrape |

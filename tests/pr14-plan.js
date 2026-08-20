@@ -90,7 +90,7 @@ async function main() {
 
   const missingPack = planStore.getSyllabusPack('ssc-chsl');
   assert.strictEqual(missingPack, null);
-  assert.strictEqual(planStore.getPlanForStudent('nobody', 'does-not-exist'), null);
+  assert.strictEqual(await planStore.getPlanForStudent('nobody', 'does-not-exist'), null);
 
   const pack = planStore.getSyllabusPack('ssc-cgl');
   assert.ok(pack);
@@ -108,7 +108,7 @@ async function main() {
   });
 
   const first = pack.topics[0].id;
-  const ticked = planStore.setTopicDone(student.id, 'ssc-cgl', first, true);
+  const ticked = await planStore.setTopicDone(student.id, 'ssc-cgl', first, true);
   assert.ok(ticked.progress[first]);
   const stored = studentStore.load();
   assert.ok(
@@ -117,7 +117,7 @@ async function main() {
     )
   );
 
-  const unticked = planStore.setTopicDone(student.id, 'ssc-cgl', first, false);
+  const unticked = await planStore.setTopicDone(student.id, 'ssc-cgl', first, false);
   assert.strictEqual(unticked.progress[first], undefined);
   const after = studentStore.load();
   assert.ok(
@@ -127,13 +127,13 @@ async function main() {
   );
 
   try {
-    planStore.setTopicDone(student.id, 'ssc-cgl', 'not-a-real-topic', true);
+    await planStore.setTopicDone(student.id, 'ssc-cgl', 'not-a-real-topic', true);
     assert.fail('invented topic tick');
   } catch (err) {
     assert.strictEqual(err.code, 'NOT_FOUND');
   }
 
-  const planned = planStore.getPlanForStudent(student.id, 'ssc-cgl', item.id);
+  const planned = await planStore.getPlanForStudent(student.id, 'ssc-cgl', item.id);
   assert.strictEqual(planned.unofficial, true);
   assert.deepStrictEqual(
     planned.plan.topics.map((t) => t.id),

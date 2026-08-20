@@ -47,9 +47,9 @@ function requireFeature(_req, res, next) {
 
 router.use(requireFeature);
 
-router.post('/register', rateLimitAuth, (req, res) => {
+router.post('/register', rateLimitAuth, async (req, res) => {
   try {
-    const student = studentStore.register({
+    const student = await studentStore.register({
       email: req.body?.email,
       password: req.body?.password,
     });
@@ -63,9 +63,9 @@ router.post('/register', rateLimitAuth, (req, res) => {
   }
 });
 
-router.post('/login', rateLimitAuth, (req, res) => {
+router.post('/login', rateLimitAuth, async (req, res) => {
   try {
-    const student = studentStore.verifyPassword(req.body?.email, req.body?.password);
+    const student = await studentStore.verifyPassword(req.body?.email, req.body?.password);
     if (!student) return res.status(401).json({ error: 'Invalid email or password' });
     studentAuth.setSessionCookie(res, student);
     res.json({ ok: true, student });
@@ -80,66 +80,66 @@ router.post('/logout', (_req, res) => {
   res.json({ ok: true });
 });
 
-router.get('/me', studentAuth.requireStudent, (req, res) => {
-  const row = studentStore.findById(req.student.uid);
+router.get('/me', studentAuth.requireStudent, async (req, res) => {
+  const row = await studentStore.findById(req.student.uid);
   if (!row) return res.status(401).json({ error: 'Unauthorized' });
   res.json({ student: studentStore.publicStudent(row) });
 });
 
-router.get('/profile', studentAuth.requireStudent, (req, res) => {
-  res.json({ profile: studentStore.getProfile(req.student.uid) });
+router.get('/profile', studentAuth.requireStudent, async (req, res) => {
+  res.json({ profile: await studentStore.getProfile(req.student.uid) });
 });
 
-router.put('/profile', studentAuth.requireStudent, (req, res) => {
+router.put('/profile', studentAuth.requireStudent, async (req, res) => {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
-  const profile = studentStore.saveProfile(req.student.uid, body);
+  const profile = await studentStore.saveProfile(req.student.uid, body);
   if (!profile) return res.status(401).json({ error: 'Unauthorized' });
   res.json({ profile });
 });
 
-router.post('/profile/import', studentAuth.requireStudent, (req, res) => {
-  const existing = studentStore.getProfile(req.student.uid);
+router.post('/profile/import', studentAuth.requireStudent, async (req, res) => {
+  const existing = await studentStore.getProfile(req.student.uid);
   if (existing && !studentStore.profileIsEmpty(existing)) {
     return res.status(409).json({ error: 'Server profile already has facts', profile: existing });
   }
   const incoming = req.body?.profile && typeof req.body.profile === 'object' ? req.body.profile : {};
-  const profile = studentStore.saveProfile(req.student.uid, incoming);
+  const profile = await studentStore.saveProfile(req.student.uid, incoming);
   res.json({ profile, imported: true });
 });
 
 const meRouter = express.Router();
 meRouter.use(requireFeature);
-meRouter.get('/profile', studentAuth.requireStudent, (req, res) => {
-  res.json({ profile: studentStore.getProfile(req.student.uid) });
+meRouter.get('/profile', studentAuth.requireStudent, async (req, res) => {
+  res.json({ profile: await studentStore.getProfile(req.student.uid) });
 });
-meRouter.put('/profile', studentAuth.requireStudent, (req, res) => {
+meRouter.put('/profile', studentAuth.requireStudent, async (req, res) => {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
-  const profile = studentStore.saveProfile(req.student.uid, body);
+  const profile = await studentStore.saveProfile(req.student.uid, body);
   if (!profile) return res.status(401).json({ error: 'Unauthorized' });
   res.json({ profile });
 });
-meRouter.post('/profile/import', studentAuth.requireStudent, (req, res) => {
-  const existing = studentStore.getProfile(req.student.uid);
+meRouter.post('/profile/import', studentAuth.requireStudent, async (req, res) => {
+  const existing = await studentStore.getProfile(req.student.uid);
   if (existing && !studentStore.profileIsEmpty(existing)) {
     return res.status(409).json({ error: 'Server profile already has facts', profile: existing });
   }
   const incoming = req.body?.profile && typeof req.body.profile === 'object' ? req.body.profile : {};
-  const profile = studentStore.saveProfile(req.student.uid, incoming);
+  const profile = await studentStore.saveProfile(req.student.uid, incoming);
   res.json({ profile, imported: true });
 });
 
-meRouter.get('/items', studentAuth.requireStudent, (req, res) => {
+meRouter.get('/items', studentAuth.requireStudent, async (req, res) => {
   try {
-    res.json(studentStore.listItems(req.student.uid, { status: req.query.status }));
+    res.json(await studentStore.listItems(req.student.uid, { status: req.query.status }));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to list desk items' });
   }
 });
 
-meRouter.post('/items', studentAuth.requireStudent, (req, res) => {
+meRouter.post('/items', studentAuth.requireStudent, async (req, res) => {
   try {
-    const item = studentStore.createItem(req.student.uid, req.body || {});
+    const item = await studentStore.createItem(req.student.uid, req.body || {});
     if (!item) return res.status(401).json({ error: 'Unauthorized' });
     res.status(201).json({ item });
   } catch (err) {
@@ -149,15 +149,15 @@ meRouter.post('/items', studentAuth.requireStudent, (req, res) => {
   }
 });
 
-meRouter.get('/items/:id', studentAuth.requireStudent, (req, res) => {
-  const item = studentStore.getItem(req.student.uid, req.params.id);
+meRouter.get('/items/:id', studentAuth.requireStudent, async (req, res) => {
+  const item = await studentStore.getItem(req.student.uid, req.params.id);
   if (!item) return res.status(404).json({ error: 'Item not found' });
   res.json({ item });
 });
 
-meRouter.patch('/items/:id', studentAuth.requireStudent, (req, res) => {
+meRouter.patch('/items/:id', studentAuth.requireStudent, async (req, res) => {
   try {
-    const item = studentStore.updateItem(req.student.uid, req.params.id, req.body || {});
+    const item = await studentStore.updateItem(req.student.uid, req.params.id, req.body || {});
     if (!item) return res.status(404).json({ error: 'Item not found' });
     res.json({ item });
   } catch (err) {
@@ -167,8 +167,8 @@ meRouter.patch('/items/:id', studentAuth.requireStudent, (req, res) => {
   }
 });
 
-meRouter.delete('/items/:id', studentAuth.requireStudent, (req, res) => {
-  const ok = studentStore.deleteItem(req.student.uid, req.params.id);
+meRouter.delete('/items/:id', studentAuth.requireStudent, async (req, res) => {
+  const ok = await studentStore.deleteItem(req.student.uid, req.params.id);
   if (!ok) return res.status(404).json({ error: 'Item not found' });
   res.json({ ok: true });
 });
@@ -197,7 +197,7 @@ meRouter.post('/items/:id/files/:kind', studentAuth.requireStudent, async (req, 
       fieldName: 'file',
       maxBytes: studentStore.MAX_FILE_BYTES + 65536,
     });
-    const result = studentStore.saveFile(req.student.uid, req.params.id, kind, {
+    const result = await studentStore.saveFile(req.student.uid, req.params.id, kind, {
       buffer: part.buffer,
       originalName: part.originalName,
     });
@@ -208,11 +208,11 @@ meRouter.post('/items/:id/files/:kind', studentAuth.requireStudent, async (req, 
   }
 });
 
-meRouter.get('/items/:id/files/:kind', studentAuth.requireStudent, (req, res) => {
+meRouter.get('/items/:id/files/:kind', studentAuth.requireStudent, async (req, res) => {
   const kind = fileKindParam(req, res);
   if (!kind) return;
   try {
-    const file = studentStore.readFileForDownload(req.student.uid, req.params.id, kind);
+    const file = await studentStore.readFileForDownload(req.student.uid, req.params.id, kind);
     if (!file) return res.status(404).json({ error: 'File not found' });
     res.setHeader('Content-Type', file.mime);
     res.setHeader('Content-Length', String(file.buffer.length));
@@ -226,11 +226,11 @@ meRouter.get('/items/:id/files/:kind', studentAuth.requireStudent, (req, res) =>
   }
 });
 
-meRouter.delete('/items/:id/files/:kind', studentAuth.requireStudent, (req, res) => {
+meRouter.delete('/items/:id/files/:kind', studentAuth.requireStudent, async (req, res) => {
   const kind = fileKindParam(req, res);
   if (!kind) return;
   try {
-    const result = studentStore.deleteFile(req.student.uid, req.params.id, kind);
+    const result = await studentStore.deleteFile(req.student.uid, req.params.id, kind);
     if (!result) return res.status(404).json({ error: 'Item not found' });
     if (!result.removed) return res.status(404).json({ error: 'File not found' });
     res.json({ ok: true, item: result.item });

@@ -104,9 +104,9 @@ prepareStaticData.js (Pages)     data/staging/ops_paste/        optional SQLite 
 | Collect | `scripts/collect/` | Registry-driven. Special collectors + `genericPsc` / `genericBoard` / `genericCareers`. |
 | Process | `scripts/process/buildJobs.js` | Rebuilds published JSON from **seed + staging**. Does not drop exams. |
 | Optional cache | `server/src/db/sqlite.js` | Catalog-only. Rebuilt by `scripts/migrate/jsonToSqlite.js` on boot. Never student tables. |
-| Student SoR | `STUDENT_DATA_DIR` + `STUDENT_FILES_DIR` | Host JSON + private files. Gitignored. **Never** `portal.sqlite`. |
+| Student SoR | `STUDENT_STORE=json` or `postgres` | Configurable. JSON file **or** Docker Postgres. Files on disk. **Never** `portal.sqlite`. |
 
-**Catalog SoR is git JSON** (`data/processed/*.json`). Student SoR is host JSON under `STUDENT_DATA_DIR` (default `data/students/`) and files under `STUDENT_FILES_DIR` (default `data/student-files/`). SQLite is a catalog cache discarded on free Render sleep — do not store students there.
+**Catalog SoR is git JSON** (`data/processed/*.json`). Student accounts/tracker/scores persist in `STUDENT_STORE` (`json` default, or `postgres` via `npm run db:up`). Admit/result bytes stay under `STUDENT_FILES_DIR`. The catalog SQLite cache is discarded on rebuild — do not store students there.
 
 ### SPA routes
 
@@ -223,7 +223,17 @@ npm.cmd run client
 - Website (dev): http://localhost:5173
 - API: http://localhost:4000/api/health · `/api/jobs` · `POST /api/match`
 
-Copy `.env.example` to `.env` for SMTP alerts, `SESSION_SECRET` (required in production), `OPERATOR_PASSWORD`, optional `OPS_INGEST_TOKEN`, and student dirs (`STUDENT_DATA_DIR`, `STUDENT_FILES_DIR`).
+Copy `.env.example` to `.env` for SMTP alerts, `SESSION_SECRET` (required in production), `OPERATOR_PASSWORD`, optional `OPS_INGEST_TOKEN`, and student store settings.
+
+**Student database (Docker Postgres, optional):**
+
+```bash
+npm run db:up
+npm run student:import-json    # one-time copy of data/students/students.json
+npm run server:pg              # STUDENT_STORE=postgres
+```
+
+Switch back with `STUDENT_STORE=json` (default) or unset `STUDENT_DATABASE_URL`. Admit/result files stay on disk (`STUDENT_FILES_DIR`). The catalog stays git JSON.
 
 ```bash
 npx playwright install chromium   # one-time; GHA and local JS collects

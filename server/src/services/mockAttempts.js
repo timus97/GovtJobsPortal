@@ -54,22 +54,18 @@ function publicAttempt(row, { includeAnswers = false } = {}) {
   return out;
 }
 
-function resolveItemId(studentId, itemId) {
+async function resolveItemId(studentId, itemId) {
   if (!itemId) return null;
-  const item = studentStore.getItem(studentId, String(itemId));
+  const item = await studentStore.getItem(studentId, String(itemId));
   return item ? item.id : null;
 }
 
-function startAttempt(studentId, seriesId, input = {}) {
-  if (!studentStore.findById(studentId)) return { error: 'UNAUTHORIZED' };
+async function startAttempt(studentId, seriesId, input = {}) {
+  if (!(await studentStore.findById(studentId))) return { error: 'UNAUTHORIZED' };
   const bank = loadBank(seriesId);
   if (!bank) return { error: 'NOT_FOUND' };
-  const data = studentStore.load();
-  data.mockAttempts = Array.isArray(data.mockAttempts) ? data.mockAttempts : [];
   const seriesKey = bank.seriesId || normalizeSeriesId(seriesId);
-  const open = data.mockAttempts.find(
-    (a) => a.studentId === studentId && a.seriesId === seriesKey && !a.submittedAt
-  );
+  const open = await studentStore.findOpenMockAttempt(studentId, seriesKey);
   if (open) {
     return {
       attempt: publicAttempt(open),
@@ -82,15 +78,14 @@ function startAttempt(studentId, seriesId, input = {}) {
     id: crypto.randomUUID(),
     studentId,
     seriesId: seriesKey,
-    itemId: resolveItemId(studentId, input.itemId),
+    itemId: await resolveItemId(studentId, input.itemId),
     startedAt: now,
     submittedAt: null,
     score: null,
     total: null,
     answers: {},
   };
-  data.mockAttempts.push(row);
-  studentStore.save(data);
+  await studentStore.insertMockAttempt(row);
   return {
     attempt: publicAttempt(row),
     bank: publicBank(bank),
@@ -98,13 +93,8 @@ function startAttempt(studentId, seriesId, input = {}) {
   };
 }
 
-function getOwnedAttempt(studentId, attemptId) {
-  const data = studentStore.load();
-  return (data.mockAttempts || []).find((a) => a.id === attemptId && a.studentId === studentId) || null;
-}
-
-function getAttempt(studentId, attemptId) {
-  const row = getOwnedAttempt(studentId, attemptId);
+async function getAttempt(studentId, attemptId) {
+  const row = await studentStore.findMockAttempt(studentId, attemptId);
   if (!row) return { error: 'NOT_FOUND' };
   const bank = loadBank(row.seriesId);
   const submitted = Boolean(row.submittedAt);
@@ -134,11 +124,9 @@ function cleanAnswers(bank, answers) {
   return clean;
 }
 
-function submitAttempt(studentId, attemptId, answers) {
-  const data = studentStore.load();
-  const idx = (data.mockAttempts || []).findIndex((a) => a.id === attemptId && a.studentId === studentId);
-  if (idx < 0) return { error: 'NOT_FOUND' };
-  const row = data.mockAttempts[idx];
+async function submitAttempt(studentId, attemptId, answers) {
+  const row = await studentStore.findMockAttempt(studentId, attemptId);
+  if (!row) return { error: 'NOT_FOUND' };
   if (row.submittedAt) return { error: 'ALREADY_SUBMITTED' };
   const bank = loadBank(row.seriesId);
   if (!bank) return { error: 'NOT_FOUND' };
@@ -151,8 +139,7 @@ function submitAttempt(studentId, attemptId, answers) {
     total: scored.total,
     answers: clean,
   };
-  data.mockAttempts[idx] = next;
-  studentStore.save(data);
+  await studentStore.saveMockAttempt(next);
   return {
     attempt: publicAttempt(next, { includeAnswers: true }),
     review: scored.review,

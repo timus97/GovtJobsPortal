@@ -40,6 +40,7 @@ app.get('/api/health', (_req, res) => {
     service: 'govt-jobs-portal',
     time: new Date().toISOString(),
     sqliteCache: sqlite.getStatus(),
+    studentStore: studentStore.BACKEND || studentStore.BACKEND_NAME,
   });
 });
 
@@ -84,8 +85,14 @@ function rebuildSqliteCache() {
   }
 }
 
-function start() {
+async function start() {
   rebuildSqliteCache();
+  try {
+    const ready = await studentStore.ready();
+    console.log(`Student store: ${ready.backend}${ready.url ? ` (${ready.url})` : ''}`);
+  } catch (err) {
+    console.warn(`Student store init skipped: ${err.message}`);
+  }
   return app.listen(PORT, () => {
     try {
       const boot = operatorStore.bootstrapIfEmpty();
@@ -111,7 +118,10 @@ function start() {
 }
 
 if (require.main === module) {
-  start();
+  start().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }
 
 module.exports = { app, start, rebuildSqliteCache };

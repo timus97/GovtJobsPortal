@@ -22,19 +22,24 @@ router.get('/syllabus/:seriesId', (req, res) => {
 
 mePlanRouter.use(requireFeature);
 
-mePlanRouter.get('/plan/:seriesId', studentAuth.requireStudent, (req, res) => {
-  const result = planStore.getPlanForStudent(req.student.uid, req.params.seriesId, req.query.itemId);
-  if (!result) return res.status(404).json({ error: 'Syllabus not found' });
-  res.json(result);
+mePlanRouter.get('/plan/:seriesId', studentAuth.requireStudent, async (req, res) => {
+  try {
+    const result = await planStore.getPlanForStudent(req.student.uid, req.params.seriesId, req.query.itemId);
+    if (!result) return res.status(404).json({ error: 'Syllabus not found' });
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load plan' });
+  }
 });
 
-mePlanRouter.put('/plan/:seriesId/topics/:topicId', studentAuth.requireStudent, (req, res) => {
+mePlanRouter.put('/plan/:seriesId/topics/:topicId', studentAuth.requireStudent, async (req, res) => {
   const done = req.body && req.body.done;
   if (typeof done !== 'boolean') {
     return res.status(400).json({ error: 'done must be true or false' });
   }
   try {
-    const result = planStore.setTopicDone(req.student.uid, req.params.seriesId, req.params.topicId, done);
+    const result = await planStore.setTopicDone(req.student.uid, req.params.seriesId, req.params.topicId, done);
     res.json(result);
   } catch (err) {
     if (err.code === 'NOT_FOUND') return res.status(404).json({ error: err.message });

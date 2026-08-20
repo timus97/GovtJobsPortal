@@ -37,8 +37,8 @@ Student accounts, profiles, tracker rows, mock scores, and admit/result files ar
 
 | Role | Path / env | Description |
 |------|------------|-------------|
-| Student SoR | `STUDENT_DATA_DIR` (default `data/students/`) | Host JSON. Gitignored. |
-| Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card + result per desk item. Gitignored. |
+| Student SoR | `STUDENT_STORE=json` or `postgres` | JSON file or Docker/hosted Postgres. Configurable. |
+| Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card + result bytes. Gitignored. |
 
 **Never** put student tables in `data/cache/portal.sqlite`. That cache is catalog-only and is discarded on rebuild / free-tier sleep. Production desk needs a persistent disk — see [HOSTING.md](HOSTING.md).
 

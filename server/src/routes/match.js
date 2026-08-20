@@ -13,7 +13,7 @@ function requestIdOf(req) {
   return req.headers['x-request-id'] || crypto.randomUUID();
 }
 
-router.post('/match', (req, res) => {
+router.post('/match', async (req, res) => {
   const requestId = requestIdOf(req);
   if (!FEATURE_SERVER_MATCH) {
     return res.status(404).json({ error: 'Match is disabled' });
@@ -23,7 +23,7 @@ router.post('/match', (req, res) => {
   let profile = body.profile;
   const session = studentAuth.readSession(req);
   if (session && (!profile || typeof profile !== 'object')) {
-    profile = studentStore.getProfile(session.uid);
+    profile = await studentStore.getProfile(session.uid);
   }
   const limitNum = Math.min(100, Math.max(1, parseInt(body.limit, 10) || 50));
 

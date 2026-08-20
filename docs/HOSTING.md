@@ -66,17 +66,32 @@ The Pages workflow rebuilds the site on every push to `main`.
 
 Student accounts, tracker rows, mock scores, and admit/result files live on the API host, **not** in git and **not** on GitHub Pages.
 
-| Path | Env | What |
+| Path / service | Env | What |
 |------|-----|------|
-| `data/students/` | `STUDENT_DATA_DIR` | Host JSON (students, profiles, items, topic ticks, mock attempts) |
-| `data/student-files/` | `STUDENT_FILES_DIR` | Private admit / result files |
+| Docker `student-db` | `STUDENT_STORE=postgres` + `STUDENT_DATABASE_URL` | Accounts, profile, desk items, file metadata, topic ticks, mock scores |
+| `data/students/` | `STUDENT_STORE=json` + `STUDENT_DATA_DIR` | Same data as a JSON file (default for tests / no Docker) |
+| `data/student-files/` | `STUDENT_FILES_DIR` | Private admit / result bytes (always on disk) |
 
-**Without a disk**, Render free sleep/redeploy wipes `data/students` and `data/student-files`.
+**Switch the backend** with `STUDENT_STORE=json` or `STUDENT_STORE=postgres`. If `STUDENT_DATABASE_URL` is set and `STUDENT_STORE` is unset, the API uses Postgres.
 
-Mount a disk at `/var/data` (or similar) and set:
+Local Docker database:
 
 ```bash
-STUDENT_DATA_DIR=/var/data/students
+npm run db:up
+npm --prefix server install
+npm run student:import-json
+npm run server:pg
+```
+
+Default URL: `postgres://govtjobs:govtjobs@127.0.0.1:5432/govtjobs_students` (local only; change the password before any shared host). Volume `student-pg-data` keeps rows across compose restarts.
+
+**Without a disk or a database volume**, Render free sleep/redeploy wipes student data.
+
+Mount a disk at `/var/data` (or attach a hosted Postgres) and set:
+
+```bash
+STUDENT_STORE=postgres
+STUDENT_DATABASE_URL=postgres://USER:PASS@HOST:5432/govtjobs_students
 STUDENT_FILES_DIR=/var/data/student-files
 SESSION_SECRET=<long random; required in production>
 FEATURE_STUDENT=on
@@ -111,7 +126,9 @@ Not required for public Pages browsing. For the API host / alerts / scrape CI:
 | `SESSION_SECRET` | Required in production. HMAC for `ops_session` and `student_session`. Set in the host dashboard — do not commit. |
 | `OPERATOR_PASSWORD` | Bootstrap first ops admin only |
 | `FEATURE_STUDENT` | `on` for the API host desk |
-| `STUDENT_DATA_DIR` / `STUDENT_FILES_DIR` | Persistent-disk paths (see above) |
+| `STUDENT_STORE` | `json` (default) or `postgres` |
+| `STUDENT_DATABASE_URL` | Postgres URL when `STUDENT_STORE=postgres` |
+| `STUDENT_DATA_DIR` / `STUDENT_FILES_DIR` | JSON path / private file path |
 | `VITE_FEATURE_STUDENT` | Off on github.io unless `VITE_API_BASE` points at the API host |
 
 ---

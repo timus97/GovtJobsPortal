@@ -1,0 +1,26 @@
+# Student desk database. Catalog stays git JSON.
+# Start: docker compose up -d student-db
+# App:   set STUDENT_STORE=postgres (see .env.example)
+services:
+  student-db:
+    image: postgres:16-alpine
+    container_name: govtjobs-student-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: govtjobs_students
+      POSTGRES_USER: govtjobs
+      POSTGRES_PASSWORD: govtjobs
+    volumes:
+      - student-pg-data:/var/lib/postgresql/data
+      - ./server/src/db/student-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U govtjobs -d govtjobs_students"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+
+volumes:
+  student-pg-data:

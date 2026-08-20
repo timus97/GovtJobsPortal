@@ -56,10 +56,10 @@ function getSyllabusPack(seriesId) {
   }
 }
 
-function resolveExamDate(studentId, seriesId, itemId) {
+async function resolveExamDate(studentId, seriesId, itemId) {
   let item = null;
   if (itemId) {
-    const found = studentStore.getItem(studentId, String(itemId));
+    const found = await studentStore.getItem(studentId, String(itemId));
     if (found && found.kind === 'series' && found.refId === seriesId) {
       item = found;
     }
@@ -72,49 +72,25 @@ function resolveExamDate(studentId, seriesId, itemId) {
   return { examDate, item };
 }
 
-function progressMap(studentId, seriesId) {
-  const data = studentStore.load();
-  const out = {};
-  for (const row of data.topicProgress || []) {
-    if (row.studentId === studentId && row.seriesId === seriesId && row.topicId && row.doneAt) {
-      out[row.topicId] = row.doneAt;
-    }
-  }
-  return out;
-}
-
-function getPlanForStudent(studentId, seriesId, itemId) {
+async function getPlanForStudent(studentId, seriesId, itemId) {
   const pack = getSyllabusPack(seriesId);
   if (!pack) return null;
-  const { examDate, item } = resolveExamDate(studentId, seriesId, itemId);
+  const { examDate, item } = await resolveExamDate(studentId, seriesId, itemId);
   return {
     unofficial: true,
     seriesId: pack.seriesId,
     plan: buildPlan(pack.topics, examDate),
-    progress: progressMap(studentId, pack.seriesId),
+    progress: await studentStore.topicProgressMap(studentId, pack.seriesId),
     item,
   };
 }
 
-function setTopicDone(studentId, seriesId, topicId, done) {
+async function setTopicDone(studentId, seriesId, topicId, done) {
   const pack = getSyllabusPack(seriesId);
   if (!pack) fail('NOT_FOUND', 'Syllabus not found');
   const id = String(topicId || '').trim();
   if (!pack.topics.some((t) => t.id === id)) fail('NOT_FOUND', 'Topic not found');
-  const data = studentStore.load();
-  const rows = Array.isArray(data.topicProgress) ? data.topicProgress : [];
-  data.topicProgress = rows.filter(
-    (r) => !(r.studentId === studentId && r.seriesId === pack.seriesId && r.topicId === id)
-  );
-  if (done) {
-    data.topicProgress.push({
-      studentId,
-      seriesId: pack.seriesId,
-      topicId: id,
-      doneAt: new Date().toISOString(),
-    });
-  }
-  studentStore.save(data);
+  await studentStore.setTopicProgress(studentId, pack.seriesId, id, done);
   return getPlanForStudent(studentId, pack.seriesId);
 }
 

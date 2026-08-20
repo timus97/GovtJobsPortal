@@ -25,7 +25,7 @@ The NoExam Sarkari Jobs portal is now a **fullstack all-India government-jobs pr
 
 Matching is rule-based only. Never invent eligibility. Age uses notification `ageAsOnDate`. Incomplete parse → unknown, not fail. Post-wise PwBD when `posts[]` are explicit; reserved-only fails UR only with structured `reservedOnly` / `openToCategories`.
 
-Product host is **always-on Express + SPA + persistent disk**. Git JSON (`data/processed/*.json`) is the catalog store. Student SoR is host JSON under `STUDENT_DATA_DIR` + files under `STUDENT_FILES_DIR` (gitignored). SQLite is an optional **catalog-only** Express read cache. GitHub Pages is a snapshot without accounts.
+Product host is **always-on Express + SPA + persistent disk**. Git JSON (`data/processed/*.json`) is the catalog store. Student SoR is `STUDENT_STORE=json` (file) or `postgres` (Docker/`STUDENT_DATABASE_URL`). Files stay under `STUDENT_FILES_DIR` (gitignored). SQLite is an optional **catalog-only** Express read cache. GitHub Pages is a snapshot without accounts.
 
 ---
 
