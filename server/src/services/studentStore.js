@@ -7,8 +7,21 @@ const jobStore = require('./jobStore');
 
 const MIN_PASSWORD = 10;
 
+const FILE_KINDS = ['admit', 'result'];
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MIME_EXT = {
+  'application/pdf': 'pdf',
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+};
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 function dataDir() {
   return process.env.STUDENT_DATA_DIR || path.join(__dirname, '..', '..', '..', 'data', 'students');
+}
+
+function filesDir() {
+  return process.env.STUDENT_FILES_DIR || path.join(__dirname, '..', '..', '..', 'data', 'student-files');
 }
 
 function storePath() {
@@ -17,14 +30,15 @@ function storePath() {
 
 function warnIfUnwritable() {
   if (process.env.NODE_ENV !== 'production') return;
-  const dir = dataDir();
-  try {
-    fs.mkdirSync(dir, { recursive: true });
-    fs.accessSync(dir, fs.constants.W_OK);
-  } catch {
-    console.warn(
-      `Student store is not writable (${dir}). Use a persistent disk. Ephemeral hosts lose accounts on sleep/redeploy.`
-    );
+  for (const dir of [dataDir(), filesDir()]) {
+    try {
+      fs.mkdirSync(dir, { recursive: true });
+      fs.accessSync(dir, fs.constants.W_OK);
+    } catch {
+      console.warn(
+        `Student store is not writable (${dir}). Use a persistent disk. Ephemeral hosts lose accounts on sleep/redeploy.`
+      );
+    }
   }
 }
 
@@ -191,8 +205,78 @@ function catalogFor(kind, refId) {
   return null;
 }
 
+function detectMime(buffer) {
+  if (!Buffer.isBuffer(buffer) || buffer.length < 4) return null;
+  if (buffer[0] === 0x25 && buffer[1] === 0x50 && buffer[2] === 0x44 && buffer[3] === 0x46) {
+    return 'application/pdf';
+  }
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return 'image/jpeg';
+  }
+  if (
+    buffer.length >= 8 &&
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return 'image/png';
+  }
+  return null;
+}
+
+function isUuid(id) {
+  return UUID_RE.test(String(id || ''));
+}
+
+function sanitizeName(originalName, kind, mime) {
+  const ext = MIME_EXT[mime] || 'bin';
+  const fallback = kind === 'admit' ? `admit-card.${ext}` : `result.${ext}`;
+  const base = String(originalName || '')
+    .split(/[/\\]/)
+    .pop()
+    .replace(/[^\w.\- ()[\]]+/g, '_')
+    .replace(/^\.+/, '')
+    .slice(0, 80);
+  if (base && /\.(pdf|png|jpe?g)$/i.test(base)) return base;
+  return fallback;
+}
+
+function publicFileMeta(row) {
+  if (!row) return null;
+  return {
+    kind: row.kind,
+    originalName: row.originalName,
+    mime: row.mime,
+    bytes: row.bytes,
+    uploadedAt: row.uploadedAt,
+  };
+}
+
+function fileRow(data, itemId, kind) {
+  return (data.files || []).find((f) => f.itemId === itemId && f.kind === kind) || null;
+}
+
 function itemHasFile(data, itemId, kind) {
-  return (data.files || []).some((f) => f.itemId === itemId && f.kind === kind);
+  return Boolean(fileRow(data, itemId, kind));
+}
+
+function itemDir(studentId, itemId) {
+  if (!isUuid(studentId) || !isUuid(itemId)) fail('VALIDATION', 'invalid id');
+  return path.join(filesDir(), studentId, itemId);
+}
+
+function unlinkKindFiles(dir, kind) {
+  if (!fs.existsSync(dir)) return;
+  for (const name of fs.readdirSync(dir)) {
+    if (name.startsWith(`${kind}.`)) {
+      fs.unlinkSync(path.join(dir, name));
+    }
+  }
 }
 
 function publicItem(row, data) {
@@ -215,6 +299,8 @@ function publicItem(row, data) {
     updatedAt: row.updatedAt,
     hasAdmit: itemHasFile(data, row.id, 'admit'),
     hasResult: itemHasFile(data, row.id, 'result'),
+    admitFile: publicFileMeta(fileRow(data, row.id, 'admit')),
+    resultFile: publicFileMeta(fileRow(data, row.id, 'result')),
     applyOpen: Boolean(catalog && catalog.applyOpen),
   });
 }
@@ -370,14 +456,103 @@ function deleteItem(studentId, id) {
   data.items = next;
   data.files = (data.files || []).filter((f) => f.itemId !== id);
   save(data);
+  if (isUuid(studentId) && isUuid(id)) {
+    fs.rmSync(itemDir(studentId, id), { recursive: true, force: true });
+  }
   return true;
+}
+
+function saveFile(studentId, itemId, kind, input) {
+  if (!FILE_KINDS.includes(kind)) fail('VALIDATION', 'kind must be admit or result');
+  const buffer = input && input.buffer;
+  if (!Buffer.isBuffer(buffer) || buffer.length === 0) fail('VALIDATION', 'A file is required');
+  if (buffer.length > MAX_FILE_BYTES) {
+    const err = new Error('File must be 5 MB or smaller');
+    err.code = 'TOO_LARGE';
+    throw err;
+  }
+  const mime = detectMime(buffer);
+  if (!mime) fail('VALIDATION', 'Only PDF, JPEG, and PNG files are allowed');
+  const data = load();
+  const idx = data.items.findIndex((i) => i.id === itemId && i.studentId === studentId);
+  if (idx < 0) return null;
+  const dir = itemDir(studentId, itemId);
+  fs.mkdirSync(dir, { recursive: true });
+  unlinkKindFiles(dir, kind);
+  const destName = `${kind}.${MIME_EXT[mime]}`;
+  fs.writeFileSync(path.join(dir, destName), buffer);
+  const now = new Date().toISOString();
+  data.files = (data.files || []).filter((f) => !(f.itemId === itemId && f.kind === kind));
+  const row = {
+    id: crypto.randomUUID(),
+    itemId,
+    kind,
+    storedPath: [studentId, itemId, destName].join('/'),
+    mime,
+    bytes: buffer.length,
+    originalName: sanitizeName(input.originalName, kind, mime),
+    uploadedAt: now,
+  };
+  data.files.push(row);
+  data.items[idx] = { ...data.items[idx], updatedAt: now };
+  save(data);
+  return { item: publicItem(data.items[idx], data), file: publicFileMeta(row) };
+}
+
+function deleteFile(studentId, itemId, kind) {
+  if (!FILE_KINDS.includes(kind)) fail('VALIDATION', 'kind must be admit or result');
+  const data = load();
+  const idx = data.items.findIndex((i) => i.id === itemId && i.studentId === studentId);
+  if (idx < 0) return null;
+  const before = (data.files || []).length;
+  data.files = (data.files || []).filter((f) => !(f.itemId === itemId && f.kind === kind));
+  if (data.files.length === before) {
+    return { item: publicItem(data.items[idx], data), removed: false };
+  }
+  if (isUuid(studentId) && isUuid(itemId)) {
+    unlinkKindFiles(itemDir(studentId, itemId), kind);
+  }
+  const now = new Date().toISOString();
+  data.items[idx] = { ...data.items[idx], updatedAt: now };
+  save(data);
+  return { item: publicItem(data.items[idx], data), removed: true };
+}
+
+function resolveStored(storedPath) {
+  const parts = String(storedPath || '').split(/[/\\]/).filter(Boolean);
+  if (parts.length !== 3) fail('VALIDATION', 'invalid stored path');
+  if (parts.some((p) => p === '..' || p === '.')) fail('VALIDATION', 'invalid stored path');
+  if (!isUuid(parts[0]) || !isUuid(parts[1])) fail('VALIDATION', 'invalid stored path');
+  if (!/^(admit|result)\.(pdf|jpg|png)$/.test(parts[2])) fail('VALIDATION', 'invalid stored path');
+  return path.join(filesDir(), parts[0], parts[1], parts[2]);
+}
+
+function readFileForDownload(studentId, itemId, kind) {
+  if (!FILE_KINDS.includes(kind)) fail('VALIDATION', 'kind must be admit or result');
+  const data = load();
+  const item = data.items.find((i) => i.id === itemId && i.studentId === studentId);
+  if (!item) return null;
+  const row = fileRow(data, itemId, kind);
+  if (!row) return null;
+  const abs = resolveStored(row.storedPath);
+  if (!fs.existsSync(abs)) return null;
+  return {
+    buffer: fs.readFileSync(abs),
+    mime: row.mime,
+    originalName: row.originalName,
+    bytes: row.bytes,
+  };
 }
 
 module.exports = {
   MIN_PASSWORD,
+  FILE_KINDS,
+  MAX_FILE_BYTES,
   dataDir,
+  filesDir,
   storePath,
   warnIfUnwritable,
+  detectMime,
   normalizeEmail,
   publicStudent,
   findByEmail,
@@ -393,4 +568,7 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
+  saveFile,
+  deleteFile,
+  readFileForDownload,
 };

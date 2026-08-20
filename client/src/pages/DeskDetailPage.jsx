@@ -1,8 +1,83 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { deleteDeskItem, getDeskItem, meAccount, patchDeskItem } from '../api/account'
+import {
+  deleteDeskFile,
+  deleteDeskItem,
+  downloadDeskFile,
+  getDeskItem,
+  meAccount,
+  patchDeskItem,
+  uploadDeskFile,
+} from '../api/account'
 import { STATUSES, STATUS_LABELS } from '../lib/deskGuidance'
 import '../App.css'
+
+const MAX_BYTES = 5 * 1024 * 1024
+
+function formatBytes(n) {
+  if (n == null) return ''
+  if (n < 1024) return `${n} B`
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`
+}
+
+function FileTile({ label, kind, file, busy, onUpload, onDownload, onRemove }) {
+  const inputId = `desk-file-${kind}`
+  return (
+    <div className="desk-file">
+      <strong>{label}</strong>
+      {file ? (
+        <p className="muted small">
+          {file.originalName} · {formatBytes(file.bytes)}
+        </p>
+      ) : (
+        <p className="muted small">Not uploaded yet · PDF, JPEG, or PNG · 5 MB max</p>
+      )}
+      <input
+        id={inputId}
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+        disabled={busy}
+        onChange={(e) => {
+          const chosen = e.target.files && e.target.files[0]
+          e.target.value = ''
+          if (chosen) onUpload(kind, chosen)
+        }}
+      />
+      <div className="desk-file-actions">
+        <label
+          htmlFor={inputId}
+          className={`btn btn-secondary ${busy ? 'is-disabled' : ''}`}
+          aria-label={file ? `Replace ${label.toLowerCase()}` : `Upload ${label.toLowerCase()}`}
+        >
+          {file ? 'Replace' : 'Upload'}
+        </label>
+        {file && (
+          <button
+            type="button"
+            className="btn btn-secondary"
+            disabled={busy}
+            onClick={() => onDownload(kind, file)}
+            aria-label={`Download ${label.toLowerCase()}`}
+          >
+            Download
+          </button>
+        )}
+        {file && (
+          <button
+            type="button"
+            className="btn btn-secondary"
+            disabled={busy}
+            onClick={() => onRemove(kind)}
+            aria-label={`Remove ${label.toLowerCase()}`}
+          >
+            Remove
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
 
 export default function DeskDetailPage() {
   const { id } = useParams()
@@ -36,6 +111,45 @@ export default function DeskDetailPage() {
     setError('')
     try {
       const body = await patchDeskItem(id, patch)
+      setItem(body.item)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onUpload(kind, file) {
+    if (file.size > MAX_BYTES) {
+      setError('File must be 5 MB or smaller')
+      return
+    }
+    setBusy(true)
+    setError('')
+    try {
+      const body = await uploadDeskFile(id, kind, file)
+      setItem(body.item)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onDownload(kind, file) {
+    setError('')
+    try {
+      await downloadDeskFile(id, kind, file && file.originalName)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  async function onRemoveFile(kind) {
+    setBusy(true)
+    setError('')
+    try {
+      const body = await deleteDeskFile(id, kind)
       setItem(body.item)
     } catch (err) {
       setError(err.message)
@@ -150,18 +264,28 @@ export default function DeskDetailPage() {
           <section className="panel">
             <h2>Private documents</h2>
             <p className="muted">
-              Admit card and result uploads ship in the next step. Files will stay private on this
-              API host.
+              Admit card and result stay on this API host. Only you can download them. Never published
+              with the jobs catalog.
             </p>
             <div className="desk-file-grid">
-              <div className="desk-file">
-                <strong>Admit card</strong>
-                <p className="muted small">{item.hasAdmit ? 'On file' : 'Not uploaded yet'}</p>
-              </div>
-              <div className="desk-file">
-                <strong>Result</strong>
-                <p className="muted small">{item.hasResult ? 'On file' : 'Not uploaded yet'}</p>
-              </div>
+              <FileTile
+                label="Admit card"
+                kind="admit"
+                file={item.admitFile}
+                busy={busy}
+                onUpload={onUpload}
+                onDownload={onDownload}
+                onRemove={onRemoveFile}
+              />
+              <FileTile
+                label="Result"
+                kind="result"
+                file={item.resultFile}
+                busy={busy}
+                onUpload={onUpload}
+                onDownload={onDownload}
+                onRemove={onRemoveFile}
+              />
             </div>
           </section>
         </div>

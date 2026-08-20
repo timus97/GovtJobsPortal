@@ -8,7 +8,8 @@ async function readJson(res) {
 
 export async function accountFetch(path, options = {}) {
   const headers = { ...(options.headers || {}) }
-  if (options.body && !headers['Content-Type']) {
+  const isForm = typeof FormData !== 'undefined' && options.body instanceof FormData
+  if (options.body && !headers['Content-Type'] && !isForm) {
     headers['Content-Type'] = 'application/json'
   }
   const res = await fetch(`${BASE}${path}`, {
@@ -97,4 +98,40 @@ export function patchDeskItem(id, payload) {
 
 export function deleteDeskItem(id) {
   return accountFetch(`/me/items/${encodeURIComponent(id)}`, { method: 'DELETE' })
+}
+
+export function uploadDeskFile(id, kind, file) {
+  const body = new FormData()
+  body.append('file', file)
+  return accountFetch(`/me/items/${encodeURIComponent(id)}/files/${encodeURIComponent(kind)}`, {
+    method: 'POST',
+    body,
+  })
+}
+
+export function deleteDeskFile(id, kind) {
+  return accountFetch(`/me/items/${encodeURIComponent(id)}/files/${encodeURIComponent(kind)}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function downloadDeskFile(id, kind, suggestedName) {
+  const res = await fetch(`${BASE}/me/items/${encodeURIComponent(id)}/files/${encodeURIComponent(kind)}`, {
+    credentials: 'include',
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    const err = new Error(body.error || `Download failed (${res.status})`)
+    err.status = res.status
+    throw err
+  }
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = suggestedName || kind
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  URL.revokeObjectURL(url)
 }

@@ -118,8 +118,8 @@ Dashboard list (title + days), desk detail stacked (next-step banner, download, 
 | UX | PR |
 | --- | --- |
 | 01–02, 08 | PR11 (done) |
-| 03–04, 06–07, 09, days-left | PR12 |
-| 05 files | PR13 |
+| 03–04, 06–07, 09, days-left | PR12 (done) |
+| 05 files | PR13 (done) |
 | 10 | PR14 |
 | 11–12 | PR15 |
 | Brand / hosting | PR16 |

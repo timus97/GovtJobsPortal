@@ -262,16 +262,17 @@ See [docs/HOSTING.md](docs/HOSTING.md) and [docs/DATA_AND_STATUS.md](docs/DATA_A
 
 ## Student desk (Stage 7)
 
-Students can **create an email + password account** on the API host, save a server profile, and (next PRs) track exams, upload admit cards/results, and run unofficial mocks.
+Students can **create an email + password account** on the API host, save a server profile, track exams on a dashboard, and upload private admit cards / results.
 
 - Design: [docs/STUDENT_COACHING_DESIGN.md](docs/STUDENT_COACHING_DESIGN.md)
 - Routes: `/account/register`, `/account/login`, `/dashboard`, `/desk/:id`, `/profile`
+- Desk files: one admit card and one result per tracked item (PDF/JPEG/PNG, 5 MB). Owner-only download via `GET /api/me/items/:id/files/:kind`.
 - Student data is **gitignored** (`data/students/`, `data/student-files/`). Use a **persistent disk** in production.
-- GitHub Pages does not host accounts.
+- GitHub Pages does not host accounts. Syllabus / unofficial mocks are next (PR14–PR15).
 
 ## Design status
 
-Catalog expansion (PR01–PR10) is on `master`. Student desk / coaching is specified in Stage 7; **PR11 (accounts + server profile) is in tree**. Session handoff: [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md).
+Catalog expansion (PR01–PR10) is on `master`. Student desk: **PR11 accounts, PR12 tracker, PR13 private files** are in tree. Session handoff: [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md).
 
 ---
 

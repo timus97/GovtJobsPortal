@@ -1,6 +1,7 @@
 const express = require('express');
 const studentAuth = require('../services/studentAuth');
 const studentStore = require('../services/studentStore');
+const multipart = require('../services/multipart');
 
 const router = express.Router();
 
@@ -170,6 +171,72 @@ meRouter.delete('/items/:id', studentAuth.requireStudent, (req, res) => {
   const ok = studentStore.deleteItem(req.student.uid, req.params.id);
   if (!ok) return res.status(404).json({ error: 'Item not found' });
   res.json({ ok: true });
+});
+
+function sendStoreError(res, err, fallback) {
+  if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+  if (err.code === 'TOO_LARGE') return res.status(413).json({ error: err.message });
+  console.error(err);
+  return res.status(500).json({ error: fallback });
+}
+
+function fileKindParam(req, res) {
+  const kind = String(req.params.kind || '');
+  if (!studentStore.FILE_KINDS.includes(kind)) {
+    res.status(400).json({ error: 'kind must be admit or result' });
+    return null;
+  }
+  return kind;
+}
+
+meRouter.post('/items/:id/files/:kind', studentAuth.requireStudent, async (req, res) => {
+  const kind = fileKindParam(req, res);
+  if (!kind) return;
+  try {
+    const part = await multipart.readMultipartFile(req, {
+      fieldName: 'file',
+      maxBytes: studentStore.MAX_FILE_BYTES + 65536,
+    });
+    const result = studentStore.saveFile(req.student.uid, req.params.id, kind, {
+      buffer: part.buffer,
+      originalName: part.originalName,
+    });
+    if (!result) return res.status(404).json({ error: 'Item not found' });
+    res.status(201).json(result);
+  } catch (err) {
+    sendStoreError(res, err, 'Upload failed');
+  }
+});
+
+meRouter.get('/items/:id/files/:kind', studentAuth.requireStudent, (req, res) => {
+  const kind = fileKindParam(req, res);
+  if (!kind) return;
+  try {
+    const file = studentStore.readFileForDownload(req.student.uid, req.params.id, kind);
+    if (!file) return res.status(404).json({ error: 'File not found' });
+    res.setHeader('Content-Type', file.mime);
+    res.setHeader('Content-Length', String(file.buffer.length));
+    res.setHeader('Cache-Control', 'private, no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    const name = String(file.originalName || kind).replace(/"/g, '');
+    res.setHeader('Content-Disposition', `attachment; filename="${name}"`);
+    res.send(file.buffer);
+  } catch (err) {
+    sendStoreError(res, err, 'Download failed');
+  }
+});
+
+meRouter.delete('/items/:id/files/:kind', studentAuth.requireStudent, (req, res) => {
+  const kind = fileKindParam(req, res);
+  if (!kind) return;
+  try {
+    const result = studentStore.deleteFile(req.student.uid, req.params.id, kind);
+    if (!result) return res.status(404).json({ error: 'Item not found' });
+    if (!result.removed) return res.status(404).json({ error: 'File not found' });
+    res.json({ ok: true, item: result.item });
+  } catch (err) {
+    sendStoreError(res, err, 'Delete failed');
+  }
 });
 
 module.exports = { router, meRouter };
