@@ -25,6 +25,13 @@ const EXTRA_HOSTS = new Set([
   'nta.ac.in',
   'www.nta.ac.in',
   'ugcnet.nta.nic.in',
+  'opportunities.rbi.org.in',
+  'rbi.org.in',
+  'www.rbi.org.in',
+  'nabard.org',
+  'www.nabard.org',
+  'licindia.in',
+  'www.licindia.in',
 ]);
 
 const TERMINAL = new Set(['published', 'published_local', 'rejected', 'cancelled']);
