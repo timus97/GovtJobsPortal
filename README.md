@@ -265,7 +265,7 @@ See [docs/HOSTING.md](docs/HOSTING.md) and [docs/DATA_AND_STATUS.md](docs/DATA_A
 Students can **create an email + password account** on the API host, save a server profile, and (next PRs) track exams, upload admit cards/results, and run unofficial mocks.
 
 - Design: [docs/STUDENT_COACHING_DESIGN.md](docs/STUDENT_COACHING_DESIGN.md)
-- Routes: `/account/register`, `/account/login`, `/profile` (saves to the API when signed in)
+- Routes: `/account/register`, `/account/login`, `/dashboard`, `/desk/:id`, `/profile`
 - Student data is **gitignored** (`data/students/`, `data/student-files/`). Use a **persistent disk** in production.
 - GitHub Pages does not host accounts.
 

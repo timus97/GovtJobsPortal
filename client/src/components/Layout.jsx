@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 import { isPrepareEnabled, isProfileMatchEnabled, isStudentEnabled } from '../lib/features'
 import { isStaticPagesHost } from '../api/ops'
 import { logoutAccount, meAccount } from '../api/account'
+import { onStudentSession } from '../lib/studentSession'
 
 const nav = [
   { to: '/', label: 'Home', end: true },
@@ -27,15 +28,20 @@ export default function Layout() {
   useEffect(() => {
     if (!studentOn) return undefined
     let cancelled = false
-    meAccount()
-      .then((body) => {
-        if (!cancelled) setStudent(body.student || null)
-      })
-      .catch(() => {
-        if (!cancelled) setStudent(null)
-      })
+    function load() {
+      meAccount()
+        .then((body) => {
+          if (!cancelled) setStudent(body.student || null)
+        })
+        .catch(() => {
+          if (!cancelled) setStudent(null)
+        })
+    }
+    load()
+    const off = onStudentSession(load)
     return () => {
       cancelled = true
+      off()
     }
   }, [studentOn])
 
@@ -75,7 +81,7 @@ export default function Layout() {
             ))}
             {studentOn && student && (
               <NavLink
-                to="/profile"
+                to="/dashboard"
                 className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
               >
                 Desk

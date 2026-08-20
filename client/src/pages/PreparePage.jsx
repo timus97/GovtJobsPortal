@@ -4,6 +4,7 @@ import '../App.css'
 import { fetchExamSeries } from '../api/jobs'
 import { matchExamSeries } from '../lib/eligibilityMatch'
 import { isProfileComplete, loadProfile } from '../lib/profile'
+import TrackButton from '../components/TrackButton'
 
 function SeriesCard({ series, recommended }) {
   const canApply = Boolean(series.canApply && !series.applyNever)
@@ -68,6 +69,7 @@ function SeriesCard({ series, recommended }) {
             Apply (open window)
           </Link>
         )}
+        <TrackButton kind="series" refId={series.id} compact />
       </div>
     </article>
   )

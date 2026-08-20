@@ -3,6 +3,108 @@
   color: #9b1c1c;
 }
 
+.badge-ok {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.desk-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.85rem;
+  margin: 1.25rem 0;
+}
+
+.desk-stat {
+  padding: 1rem 1.1rem;
+}
+
+.desk-stat strong {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--navy);
+}
+
+.desk-stat span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.desk-filters {
+  margin-bottom: 1rem;
+}
+
+.desk-filters .chip {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.desk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.desk-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.desk-days {
+  text-align: right;
+  min-width: 5.5rem;
+}
+
+.desk-days strong {
+  display: block;
+  font-size: 1.8rem;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.desk-days span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.desk-custom {
+  max-width: 32rem;
+  margin-bottom: 1.25rem;
+}
+
+.desk-file-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.desk-file {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.desk-detail {
+  max-width: 52rem;
+}
+
+@media (max-width: 640px) {
+  .desk-card-top {
+    flex-direction: column;
+  }
+
+  .desk-days {
+    text-align: left;
+  }
+
+  .desk-file-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .profile-layout {
   max-width: 760px;
 }

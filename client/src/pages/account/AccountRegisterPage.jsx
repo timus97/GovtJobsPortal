@@ -17,7 +17,7 @@ export default function AccountRegisterPage() {
     setBusy(true)
     try {
       await registerAccount(email, password)
-      navigate('/profile', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (err) {
       setError(err.message || 'Registration failed')
     } finally {

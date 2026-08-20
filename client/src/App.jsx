@@ -15,6 +15,8 @@ import OpsReviewQueue from './pages/ops/OpsReviewQueue'
 import PreparePage from './pages/PreparePage'
 import AccountLoginPage from './pages/account/AccountLoginPage'
 import AccountRegisterPage from './pages/account/AccountRegisterPage'
+import DashboardPage from './pages/DashboardPage'
+import DeskDetailPage from './pages/DeskDetailPage'
 import { isPrepareEnabled, isProfileMatchEnabled, isStudentEnabled } from './lib/features'
 
 export default function App() {
@@ -32,6 +34,8 @@ export default function App() {
         {prepare && <Route path="prepare" element={<PreparePage />} />}
         {student && <Route path="account/login" element={<AccountLoginPage />} />}
         {student && <Route path="account/register" element={<AccountRegisterPage />} />}
+        {student && <Route path="dashboard" element={<DashboardPage />} />}
+        {student && <Route path="desk/:id" element={<DeskDetailPage />} />}
         <Route path="process" element={<ProcessPage />} />
         <Route path="sources" element={<SourcesPage />} />
         <Route path="about" element={<AboutPage />} />

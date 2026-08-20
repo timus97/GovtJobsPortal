@@ -127,4 +127,49 @@ meRouter.post('/profile/import', studentAuth.requireStudent, (req, res) => {
   res.json({ profile, imported: true });
 });
 
+meRouter.get('/items', studentAuth.requireStudent, (req, res) => {
+  try {
+    res.json(studentStore.listItems(req.student.uid, { status: req.query.status }));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list desk items' });
+  }
+});
+
+meRouter.post('/items', studentAuth.requireStudent, (req, res) => {
+  try {
+    const item = studentStore.createItem(req.student.uid, req.body || {});
+    if (!item) return res.status(401).json({ error: 'Unauthorized' });
+    res.status(201).json({ item });
+  } catch (err) {
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to track item' });
+  }
+});
+
+meRouter.get('/items/:id', studentAuth.requireStudent, (req, res) => {
+  const item = studentStore.getItem(req.student.uid, req.params.id);
+  if (!item) return res.status(404).json({ error: 'Item not found' });
+  res.json({ item });
+});
+
+meRouter.patch('/items/:id', studentAuth.requireStudent, (req, res) => {
+  try {
+    const item = studentStore.updateItem(req.student.uid, req.params.id, req.body || {});
+    if (!item) return res.status(404).json({ error: 'Item not found' });
+    res.json({ item });
+  } catch (err) {
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update item' });
+  }
+});
+
+meRouter.delete('/items/:id', studentAuth.requireStudent, (req, res) => {
+  const ok = studentStore.deleteItem(req.student.uid, req.params.id);
+  if (!ok) return res.status(404).json({ error: 'Item not found' });
+  res.json({ ok: true });
+});
+
 module.exports = { router, meRouter };

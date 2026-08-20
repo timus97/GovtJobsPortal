@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { hash, verify } = require('./password');
+const desk = require('../../../shared/deskGuidance');
+const jobStore = require('./jobStore');
 
 const MIN_PASSWORD = 10;
 
@@ -155,6 +157,222 @@ function profileIsEmpty(profile) {
   return !profile.dob && !profile.highestEducation && !profile.reservationCategory;
 }
 
+function fail(code, message) {
+  const err = new Error(message);
+  err.code = code;
+  throw err;
+}
+
+function catalogFor(kind, refId) {
+  if (kind === 'series') {
+    const series = jobStore.getExamSeriesById(refId);
+    if (!series) return null;
+    return {
+      title: series.name,
+      board: series.board,
+      officialUrl: series.officialUrl,
+      examDate: desk.formatIsoDate(series.expectedExam),
+      lastDate: desk.formatIsoDate(series.expectedApply),
+      applyOpen: Boolean(series.canApply),
+    };
+  }
+  if (kind === 'opportunity') {
+    const job = jobStore.getJobById(refId);
+    if (!job) return null;
+    return {
+      title: job.title,
+      board: job.organization || job.board || '',
+      officialUrl: job.officialUrl,
+      examDate: desk.formatIsoDate(job.examDate || job.walkInDate),
+      lastDate: desk.formatIsoDate(job.lastDate || job.applicationClose),
+      applyOpen: job.status === 'open' || job.status === 'closing_soon',
+    };
+  }
+  return null;
+}
+
+function itemHasFile(data, itemId, kind) {
+  return (data.files || []).some((f) => f.itemId === itemId && f.kind === kind);
+}
+
+function publicItem(row, data) {
+  const catalog = row.kind === 'custom' ? null : catalogFor(row.kind, row.refId);
+  const examDate = row.examDate || (catalog && catalog.examDate) || null;
+  const lastDate = row.lastDate || (catalog && catalog.lastDate) || null;
+  return desk.decorateItem({
+    id: row.id,
+    studentId: row.studentId,
+    kind: row.kind,
+    refId: row.refId || null,
+    title: row.title || (catalog && catalog.title) || 'Untitled',
+    board: row.board || (catalog && catalog.board) || '',
+    status: row.status,
+    examDate,
+    lastDate,
+    officialUrl: row.officialUrl || (catalog && catalog.officialUrl) || '',
+    notes: row.notes || '',
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    hasAdmit: itemHasFile(data, row.id, 'admit'),
+    hasResult: itemHasFile(data, row.id, 'result'),
+    applyOpen: Boolean(catalog && catalog.applyOpen),
+  });
+}
+
+function listItems(studentId, filter = {}) {
+  const data = load();
+  let items = data.items.filter((i) => i.studentId === studentId).map((i) => publicItem(i, data));
+  if (filter.status && desk.STATUSES.includes(filter.status)) {
+    items = items.filter((i) => i.status === filter.status);
+  }
+  items.sort((a, b) => {
+    const ad = a.daysLeft == null ? 99999 : a.daysLeft < 0 ? 50000 - a.daysLeft : a.daysLeft;
+    const bd = b.daysLeft == null ? 99999 : b.daysLeft < 0 ? 50000 - b.daysLeft : b.daysLeft;
+    return ad - bd;
+  });
+  const upcoming = items.filter((i) => i.daysLeft != null && i.daysLeft >= 0).length;
+  const admitPending = items.filter((i) => i.status === 'applied' && !i.hasAdmit).length;
+  const dated = items.filter((i) => i.daysLeft != null && i.daysLeft >= 0);
+  const nearest = dated.length ? Math.min(...dated.map((i) => i.daysLeft)) : null;
+  return {
+    items,
+    total: items.length,
+    stats: {
+      upcoming,
+      admitPending,
+      nearestDays: nearest,
+      mocksCompleted: (data.mockAttempts || []).filter((a) => a.studentId === studentId && a.submittedAt)
+        .length,
+    },
+  };
+}
+
+function getItem(studentId, id) {
+  const data = load();
+  const row = data.items.find((i) => i.id === id && i.studentId === studentId);
+  return row ? publicItem(row, data) : null;
+}
+
+function createItem(studentId, input) {
+  if (!findById(studentId)) return null;
+  const kind = String(input.kind || '').trim();
+  if (!desk.KINDS.includes(kind)) fail('VALIDATION', 'kind must be series, opportunity, or custom');
+  const status = input.status && desk.STATUSES.includes(input.status) ? input.status : 'watching';
+  const now = new Date().toISOString();
+  const data = load();
+
+  if (kind === 'series' || kind === 'opportunity') {
+    const refId = String(input.refId || '').trim();
+    if (!refId) fail('VALIDATION', 'refId is required');
+    const catalog = catalogFor(kind, refId);
+    if (!catalog) fail('VALIDATION', kind === 'series' ? 'Exam series not found' : 'Job not found');
+    const existing = data.items.find(
+      (i) => i.studentId === studentId && i.kind === kind && i.refId === refId
+    );
+    if (existing) {
+      if (status !== existing.status) {
+        existing.status = status;
+        existing.updatedAt = now;
+        save(data);
+      }
+      return publicItem(existing, data);
+    }
+    const row = {
+      id: crypto.randomUUID(),
+      studentId,
+      kind,
+      refId,
+      title: catalog.title,
+      board: catalog.board,
+      status,
+      examDate: input.examDate || null,
+      lastDate: input.lastDate || null,
+      officialUrl: input.officialUrl || '',
+      notes: typeof input.notes === 'string' ? input.notes.trim() : '',
+      createdAt: now,
+      updatedAt: now,
+    };
+    data.items.push(row);
+    save(data);
+    return publicItem(row, data);
+  }
+
+  const title = String(input.title || '').trim();
+  if (!title) fail('VALIDATION', 'title is required');
+  const examDate = desk.formatIsoDate(input.examDate);
+  const lastDate = desk.formatIsoDate(input.lastDate);
+  if (!examDate && !lastDate) fail('VALIDATION', 'custom exam needs an exam date or last date');
+  let officialUrl = String(input.officialUrl || '').trim();
+  if (officialUrl && !/^https:\/\//i.test(officialUrl)) {
+    fail('VALIDATION', 'officialUrl must be https');
+  }
+  const row = {
+    id: crypto.randomUUID(),
+    studentId,
+    kind: 'custom',
+    refId: null,
+    title,
+    board: String(input.board || '').trim(),
+    status,
+    examDate,
+    lastDate,
+    officialUrl,
+    notes: typeof input.notes === 'string' ? input.notes.trim() : '',
+    createdAt: now,
+    updatedAt: now,
+  };
+  data.items.push(row);
+  save(data);
+  return publicItem(row, data);
+}
+
+function updateItem(studentId, id, patch) {
+  const data = load();
+  const idx = data.items.findIndex((i) => i.id === id && i.studentId === studentId);
+  if (idx < 0) return null;
+  const row = { ...data.items[idx] };
+  if (patch.status != null) {
+    if (!desk.STATUSES.includes(patch.status)) fail('VALIDATION', 'invalid status');
+    row.status = patch.status;
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'examDate')) {
+    row.examDate = patch.examDate ? desk.formatIsoDate(patch.examDate) : null;
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'lastDate')) {
+    row.lastDate = patch.lastDate ? desk.formatIsoDate(patch.lastDate) : null;
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'officialUrl')) {
+    const url = String(patch.officialUrl || '').trim();
+    if (url && !/^https:\/\//i.test(url)) fail('VALIDATION', 'officialUrl must be https');
+    row.officialUrl = url;
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'notes')) {
+    row.notes = String(patch.notes || '').trim();
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'title') && row.kind === 'custom') {
+    const title = String(patch.title || '').trim();
+    if (!title) fail('VALIDATION', 'title is required');
+    row.title = title;
+  }
+  if (Object.prototype.hasOwnProperty.call(patch, 'board') && row.kind === 'custom') {
+    row.board = String(patch.board || '').trim();
+  }
+  row.updatedAt = new Date().toISOString();
+  data.items[idx] = row;
+  save(data);
+  return publicItem(row, data);
+}
+
+function deleteItem(studentId, id) {
+  const data = load();
+  const next = data.items.filter((i) => !(i.id === id && i.studentId === studentId));
+  if (next.length === data.items.length) return false;
+  data.items = next;
+  data.files = (data.files || []).filter((f) => f.itemId !== id);
+  save(data);
+  return true;
+}
+
 module.exports = {
   MIN_PASSWORD,
   dataDir,
@@ -170,4 +388,9 @@ module.exports = {
   saveProfile,
   profileIsEmpty,
   load,
+  listItems,
+  getItem,
+  createItem,
+  updateItem,
+  deleteItem,
 };

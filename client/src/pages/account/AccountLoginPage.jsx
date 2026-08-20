@@ -16,7 +16,7 @@ export default function AccountLoginPage() {
     let cancelled = false
     meAccount()
       .then(() => {
-        if (!cancelled) navigate('/profile', { replace: true })
+        if (!cancelled) navigate('/dashboard', { replace: true })
       })
       .catch(() => {})
     return () => {
@@ -30,7 +30,7 @@ export default function AccountLoginPage() {
     setBusy(true)
     try {
       await loginAccount(email, password)
-      navigate('/profile', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (err) {
       setError(err.message || 'Sign in failed')
     } finally {

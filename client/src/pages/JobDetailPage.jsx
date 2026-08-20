@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import '../App.css'
 import { Link, useParams } from 'react-router-dom'
 import { fetchJob } from '../api/jobs'
+import TrackButton from '../components/TrackButton'
 import {
   ORG_TYPE_LABELS,
   SELECTION_LABELS,
@@ -70,6 +71,7 @@ export default function JobDetailPage() {
             >
               Apply / read official notification
             </a>
+            <TrackButton kind="opportunity" refId={job.id} applied />
           </div>
           <p className="muted small">
             You will leave this site. Apply only on the official organisation website.

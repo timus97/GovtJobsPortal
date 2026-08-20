@@ -17,7 +17,11 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['@shared/eligibilityMatch.js', '@shared/eligibilityFacts.js'],
+    include: [
+      '@shared/eligibilityMatch.js',
+      '@shared/eligibilityFacts.js',
+      '@shared/deskGuidance.js',
+    ],
   },
   server: {
     port: 5173,
