@@ -100,10 +100,12 @@ export default function PreparePage() {
     }
     try {
       const { matches, excluded } = matchExamSeries(profile, data.items)
-      const matchIds = new Set(matches.map((m) => m.id))
       const byId = Object.fromEntries(data.items.map((s) => [s.id, s]))
       const recommended = matches.map((m) => ({ ...byId[m.id], ...m, reasons: m.reasons }))
-      const rest = [...excluded.map((m) => ({ ...byId[m.id], ...m, reasons: m.reasons })), ...data.items.filter((s) => !matchIds.has(s.id) && !excluded.some((e) => e.id === s.id))]
+      const rest = data.items.map((s) => {
+        const scored = matches.find((m) => m.id === s.id) || excluded.find((m) => m.id === s.id)
+        return scored ? { ...s, ...scored, reasons: scored.reasons } : s
+      })
       return { recommended, rest }
     } catch {
       return { recommended: [], rest: data.items }

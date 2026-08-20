@@ -41,7 +41,8 @@ function tryLoadJobsFromCache() {
 }
 
 function loadJobsForList() {
-  return tryLoadJobsFromCache() || getJobs();
+  // JSON is cheaper than SELECT raw for every row. Cache is used for PK lookups.
+  return getJobs();
 }
 
 function applyJobFilters(jobs, query = {}) {
@@ -229,10 +230,9 @@ function getJobById(id) {
   return getJobs().find((j) => j.id === id) || null;
 }
 
-function decorateSeries(series) {
-  const jobs = getJobs();
+function decorateSeries(series, jobsById) {
   const linked = (series.linkedOpportunityIds || [])
-    .map((id) => jobs.find((j) => j.id === id))
+    .map((id) => jobsById.get(id))
     .filter(Boolean);
   const openLinked = linked.filter((j) => j.status === 'open' || j.status === 'closing_soon');
   return {
@@ -249,21 +249,29 @@ function decorateSeries(series) {
   };
 }
 
+function jobsByIdMap() {
+  return new Map(getJobs().map((j) => [j.id, j]));
+}
+
 function getExamSeries() {
-  return readJson(examSeriesPath, []).map(decorateSeries);
+  const byId = jobsByIdMap();
+  return readJson(examSeriesPath, []).map((s) => decorateSeries(s, byId));
 }
 
 function getExamSeriesById(id) {
-  return getExamSeries().find((s) => s.id === id) || null;
+  const series = readJson(examSeriesPath, []).find((s) => s.id === id);
+  if (!series) return null;
+  return decorateSeries(series, jobsByIdMap());
 }
 
 function listExamSeries(query = {}) {
-  let items = getExamSeries();
+  const items = getExamSeries();
   const board = query.board ? String(query.board).trim() : '';
   const q = query.q ? String(query.q).toLowerCase() : '';
-  if (board) items = items.filter((s) => String(s.board).toLowerCase() === board.toLowerCase());
+  let filtered = items;
+  if (board) filtered = filtered.filter((s) => String(s.board).toLowerCase() === board.toLowerCase());
   if (q) {
-    items = items.filter(
+    filtered = filtered.filter(
       (s) =>
         s.name.toLowerCase().includes(q) ||
         String(s.board).toLowerCase().includes(q) ||
@@ -271,9 +279,9 @@ function listExamSeries(query = {}) {
     );
   }
   return {
-    items,
-    total: items.length,
-    boards: [...new Set(getExamSeries().map((s) => s.board))].sort(),
+    items: filtered,
+    total: filtered.length,
+    boards: [...new Set(items.map((s) => s.board))].sort(),
   };
 }
 

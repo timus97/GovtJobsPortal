@@ -53,6 +53,7 @@ export default function HomePage() {
                 collect: {formatDateTime(pipeline.collect?.finishedAt)} ·{' '}
                 {pipeline.process?.sourcesMonitored ?? pipeline.collect?.sourcesAttempted ?? '—'}{' '}
                 sources
+                {stats?.examSeries != null ? ` · ${stats.examSeries} exam calendars` : ''}
               </p>
             )}
 
@@ -71,8 +72,8 @@ export default function HomePage() {
               <span className="stat-label">PSU posts</span>
             </div>
             <div className="stat-card">
-              <span className="stat-value">{stats?.examSeries ?? stats?.total ?? '—'}</span>
-              <span className="stat-label">{stats?.examSeries != null ? 'Exam calendars' : 'In dataset'}</span>
+              <span className="stat-value">{stats?.total ?? '—'}</span>
+              <span className="stat-label">In dataset</span>
             </div>
           </div>
         </div>

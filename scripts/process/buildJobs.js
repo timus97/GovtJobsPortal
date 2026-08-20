@@ -232,6 +232,16 @@ function dedupeKey(job) {
   return `t:${(job.organization || '').toLowerCase()}|${(job.title || '').toLowerCase()}|${job.lastDate || ''}`;
 }
 
+function sortPublished(a, b) {
+  const statusRank = { closing_soon: 0, open: 1, closed: 2 };
+  const sr = (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9);
+  if (sr !== 0) return sr;
+  const ad = a.lastDate || '9999';
+  const bd = b.lastDate || '9999';
+  if (ad !== bd) return ad.localeCompare(bd);
+  return (b.notificationDate || '').localeCompare(a.notificationDate || '');
+}
+
 function richer(a, b) {
   const score = (j) =>
     (j.summary ? 2 : 0) +
@@ -427,15 +437,30 @@ function main() {
     }
   }
 
-  published.sort((a, b) => {
-    const statusRank = { closing_soon: 0, open: 1, closed: 2 };
-    const sr = (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9);
-    if (sr !== 0) return sr;
-    const ad = a.lastDate || '9999';
-    const bd = b.lastDate || '9999';
-    if (ad !== bd) return ad.localeCompare(bd);
-    return (b.notificationDate || '').localeCompare(a.notificationDate || '');
-  });
+  published.sort(sortPublished);
+
+  let keptPublished = 0;
+  const previous = readJson(paths.jobsOut, []);
+  const replacePublished =
+    process.env.REPLACE_PUBLISHED === '1' || process.argv.includes('--replace-published');
+  if (!replacePublished && previous.length > published.length) {
+    const seen = new Set(published.map(dedupeKey));
+    for (const job of previous) {
+      const key = dedupeKey(job);
+      if (seen.has(key)) continue;
+      const errors = isValidJob(job);
+      if (errors.length) continue;
+      published.push(job);
+      seen.add(key);
+      keptPublished += 1;
+    }
+    if (keptPublished) {
+      console.warn(
+        `Kept ${keptPublished} previously published jobs (incoming set was smaller). Set REPLACE_PUBLISHED=1 to replace instead.`
+      );
+      published.sort(sortPublished);
+    }
+  }
 
   const finishedAt = new Date().toISOString();
   const registry = readJson(path.join(root, 'data', 'sources', 'registry.json'), { sources: [] });
@@ -455,6 +480,7 @@ function main() {
     quarantine: quarantine.length,
     droppedExam,
     skippedCalendar,
+    keptPublished,
     examSeries: examSeries.length,
     deduped,
     sourcesMonitored,
