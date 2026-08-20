@@ -2,6 +2,7 @@ const express = require('express');
 const operatorStore = require('../services/operatorStore');
 const opsAuth = require('../services/opsAuth');
 const store = require('../services/jobStore');
+const collectQueue = require('../services/collectQueue');
 
 const router = express.Router();
 
@@ -107,8 +108,108 @@ router.post('/operators', opsAuth.requireOps, (req, res) => {
   }
 });
 
-router.get('/jobs', opsAuth.requireOps, (_req, res) => {
-  res.json({ items: [] });
+router.post('/collect', opsAuth.requireOps, (req, res) => {
+  try {
+    const job = collectQueue.submit({
+      url: req.body?.url,
+      sourceLabel: req.body?.sourceLabel || req.body?.label,
+    });
+    res.status(202).json({ jobId: job.id, job });
+  } catch (err) {
+    if (err.code === 'HOST') {
+      return res.status(400).json({ error: 'host_not_allowed', reason: 'host_not_allowed' });
+    }
+    if (err.code === 'VALIDATION') {
+      return res.status(400).json({ error: err.message });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Failed to queue collect job' });
+  }
+});
+
+router.get('/jobs', opsAuth.requireOps, (req, res) => {
+  try {
+    const items = collectQueue.listJobs({ state: req.query.state });
+    res.json({ items, total: items.length });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to list collect jobs' });
+  }
+});
+
+router.get('/jobs/:id', opsAuth.requireOps, (req, res) => {
+  const job = collectQueue.findJob(req.params.id);
+  if (!job) return res.status(404).json({ error: 'Collect job not found' });
+  res.json(job);
+});
+
+router.post('/jobs/:id/cancel', opsAuth.requireOps, (req, res) => {
+  try {
+    const job = collectQueue.cancel(req.params.id);
+    if (!job) return res.status(404).json({ error: 'Collect job not found' });
+    res.json(job);
+  } catch (err) {
+    if (err.code === 'STATE') return res.status(409).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to cancel job' });
+  }
+});
+
+router.get('/review', opsAuth.requireOps, (_req, res) => {
+  try {
+    const items = collectQueue.reviewQueue();
+    res.json({
+      items,
+      total: items.length,
+      counts: {
+        needs_review: items.filter((j) => j.state === 'needs_review').length,
+        valid: items.filter((j) => j.state === 'valid').length,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to load review queue' });
+  }
+});
+
+router.patch('/review/:id', opsAuth.requireOps, (req, res) => {
+  try {
+    const facts = req.body && typeof req.body === 'object' ? req.body : {};
+    const job = collectQueue.patchReview(req.params.id, facts);
+    if (!job) return res.status(404).json({ error: 'Collect job not found' });
+    res.json(job);
+  } catch (err) {
+    if (err.code === 'STATE') return res.status(409).json({ error: err.message });
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to patch review' });
+  }
+});
+
+router.post('/review/:id/publish', opsAuth.requireOps, async (req, res) => {
+  try {
+    const job = await collectQueue.publish(req.params.id);
+    if (!job) return res.status(404).json({ error: 'Collect job not found' });
+    res.json(job);
+  } catch (err) {
+    if (err.code === 'STATE') return res.status(409).json({ error: err.message });
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to publish' });
+  }
+});
+
+router.post('/review/:id/reject', opsAuth.requireOps, (req, res) => {
+  try {
+    const job = collectQueue.reject(req.params.id, req.body?.reason);
+    if (!job) return res.status(404).json({ error: 'Collect job not found' });
+    res.json(job);
+  } catch (err) {
+    if (err.code === 'STATE') return res.status(409).json({ error: err.message });
+    if (err.code === 'VALIDATION') return res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to reject' });
+  }
 });
 
 router.get('/sources', opsAuth.requireOps, (_req, res) => {

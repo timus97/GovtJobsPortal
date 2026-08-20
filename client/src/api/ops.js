@@ -58,8 +58,73 @@ export function me() {
   return opsFetch('/me')
 }
 
-export function listOpsJobs() {
-  return opsFetch('/jobs')
+export function listOpsJobs(state) {
+  const qs = state ? `?state=${encodeURIComponent(state)}` : ''
+  return opsFetch(`/jobs${qs}`)
+}
+
+export function getOpsJob(id) {
+  return opsFetch(`/jobs/${encodeURIComponent(id)}`)
+}
+
+export function submitCollect(url, sourceLabel) {
+  return opsFetch('/collect', {
+    method: 'POST',
+    body: JSON.stringify({ url, sourceLabel }),
+  })
+}
+
+export function cancelOpsJob(id) {
+  return opsFetch(`/jobs/${encodeURIComponent(id)}/cancel`, { method: 'POST', body: '{}' })
+}
+
+export function listReview() {
+  return opsFetch('/review')
+}
+
+export function patchReview(id, facts) {
+  return opsFetch(`/review/${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(facts),
+  })
+}
+
+export function publishReview(id) {
+  return opsFetch(`/review/${encodeURIComponent(id)}/publish`, { method: 'POST', body: '{}' })
+}
+
+export function rejectReview(id, reason) {
+  return opsFetch(`/review/${encodeURIComponent(id)}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({ reason }),
+  })
+}
+
+const ALLOWED_HOST_RE = /(\.gov\.in|\.nic\.in)$/i
+const EXTRA_HOSTS = [
+  'ibps.in',
+  'sbi.co.in',
+  'sbi.bank.in',
+  'bank.sbi',
+  'recruitment.sbi.bank.in',
+  'becil.com',
+  'nta.ac.in',
+]
+
+export function pasteUrlError(raw) {
+  const url = String(raw || '').trim()
+  if (!url) return 'Paste an https URL'
+  let parsed
+  try {
+    parsed = new URL(url)
+  } catch {
+    return 'URL is not valid'
+  }
+  if (parsed.protocol !== 'https:') return 'URL must be https'
+  const host = parsed.hostname.toLowerCase()
+  if (ALLOWED_HOST_RE.test(host)) return ''
+  if (EXTRA_HOSTS.some((h) => host === h || host === `www.${h}` || host.endsWith(`.${h}`))) return ''
+  return 'Host is not on the official allowlist'
 }
 
 export function createOperator(username, password) {

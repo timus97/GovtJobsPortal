@@ -1,0 +1,47 @@
+name: Ops ingest paste
+
+# Writes one staging file from a paste-URL publish.
+# Never runs pipeline:daily (that rebuilds from empty runner staging).
+on:
+  repository_dispatch:
+    types: [ops-ingest]
+  workflow_dispatch:
+    inputs:
+      path:
+        description: Repo-relative staging path (data/staging/ops_paste/<id>.json)
+        required: true
+      content:
+        description: Staging JSON
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write staging file
+        env:
+          INGEST_PATH: ${{ github.event.client_payload.path || inputs.path }}
+          INGEST_CONTENT: ${{ github.event.client_payload.content || inputs.content }}
+        run: |
+          set -euo pipefail
+          case "$INGEST_PATH" in
+            data/staging/ops_paste/*.json) ;;
+            *) echo "Refusing path $INGEST_PATH"; exit 1 ;;
+          esac
+          mkdir -p "$(dirname "$INGEST_PATH")"
+          printf '%s' "$INGEST_CONTENT" > "$INGEST_PATH"
+      - name: Commit staging only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "data/staging/ops_paste"
+          if git diff --staged --quiet; then
+            echo "No staging change"
+          else
+            git commit -m "chore(ops): ingest paste staging"
+            git push
+          fi

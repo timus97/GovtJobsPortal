@@ -6,6 +6,9 @@ data/raw/**
 !data/raw/.gitkeep
 data/staging/**
 !data/staging/.gitkeep
+!data/staging/ops_paste/
+!data/staging/ops_paste/**
+data/processed/collect-jobs.json
 data/ops/**
 !data/ops/.gitkeep
 data/cache/**
