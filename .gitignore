@@ -8,6 +8,11 @@ data/staging/**
 !data/staging/.gitkeep
 data/ops/**
 !data/ops/.gitkeep
+data/cache/**
+!data/cache/.gitkeep
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
 *.tmp
 .DS_Store
 .env

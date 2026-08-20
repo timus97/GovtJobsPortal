@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const sqlite = require('../db/sqlite');
 
 const root = path.join(__dirname, '..', '..', '..');
 const jobsPath = path.join(root, 'data', 'processed', 'jobs.json');
@@ -20,6 +21,100 @@ function readJson(file, fallback) {
 
 function getJobs() {
   return readJson(jobsPath, []);
+}
+
+function tryLoadJobsFromCache() {
+  if (sqlite.getStatus() !== 'ok' || !sqlite.isFresh()) return null;
+  const db = sqlite.getDb();
+  if (!db) return null;
+  try {
+    const rows = db.prepare('SELECT raw FROM opportunities').all();
+    const jobs = [];
+    for (const row of rows) {
+      jobs.push(JSON.parse(row.raw));
+    }
+    return jobs;
+  } catch {
+    return null;
+  }
+}
+
+function loadJobsForList() {
+  return tryLoadJobsFromCache() || getJobs();
+}
+
+function applyJobFilters(jobs, query = {}) {
+  const {
+    q,
+    orgType,
+    location,
+    qualification,
+    sector,
+    status,
+    selectionProcess,
+    hasExam,
+    sourceId,
+    sort = 'lastDate',
+  } = query;
+
+  let next = jobs;
+
+  if (q) {
+    const term = String(q).toLowerCase();
+    next = next.filter(
+      (j) =>
+        j.title?.toLowerCase().includes(term) ||
+        j.organization?.toLowerCase().includes(term) ||
+        j.location?.toLowerCase().includes(term) ||
+        j.sector?.toLowerCase().includes(term) ||
+        j.summary?.toLowerCase().includes(term)
+    );
+  }
+
+  if (orgType) {
+    const types = String(orgType).split(',');
+    next = next.filter((j) => types.includes(j.orgType));
+  }
+  if (location) {
+    const loc = String(location).toLowerCase();
+    next = next.filter((j) => j.location?.toLowerCase().includes(loc));
+  }
+  if (qualification) {
+    next = next.filter((j) => j.qualification === qualification);
+  }
+  if (sector) {
+    next = next.filter((j) => j.sector === sector);
+  }
+  if (status) {
+    const statuses = String(status).split(',');
+    next = next.filter((j) => statuses.includes(j.status));
+  } else {
+    next = next.filter((j) => j.status !== 'closed');
+  }
+  if (selectionProcess) {
+    next = next.filter((j) => j.selectionProcess === selectionProcess);
+  }
+  const examFilter = hasExam == null ? '' : String(hasExam).trim().toLowerCase();
+  if (examFilter && examFilter !== 'all') {
+    if (examFilter === 'yes' || examFilter === 'true' || examFilter === '1') {
+      next = next.filter((j) => j.hasExam === true);
+    } else if (examFilter === 'no' || examFilter === 'false' || examFilter === '0') {
+      next = next.filter((j) => j.hasExam === false);
+    }
+  }
+  if (sourceId) {
+    next = next.filter((j) => j.sourceId === sourceId);
+  }
+
+  if (sort === 'newest') {
+    next = [...next].sort((a, b) =>
+      (b.notificationDate || '').localeCompare(a.notificationDate || '')
+    );
+  } else if (sort === 'lastDate') {
+    next = [...next].sort((a, b) => (a.lastDate || '9999').localeCompare(b.lastDate || '9999'));
+  }
+
+  return next;
 }
 
 function getOpportunities() {
@@ -99,79 +194,12 @@ function getSourcesView() {
 }
 
 function listJobs(query = {}) {
-  let jobs = getJobs();
-
   const {
-    q,
-    orgType,
-    location,
-    qualification,
-    sector,
-    status,
-    selectionProcess,
-    hasExam,
-    sourceId,
     page = '1',
     limit = '20',
-    sort = 'lastDate',
   } = query;
 
-  if (q) {
-    const term = String(q).toLowerCase();
-    jobs = jobs.filter(
-      (j) =>
-        j.title?.toLowerCase().includes(term) ||
-        j.organization?.toLowerCase().includes(term) ||
-        j.location?.toLowerCase().includes(term) ||
-        j.sector?.toLowerCase().includes(term) ||
-        j.summary?.toLowerCase().includes(term)
-    );
-  }
-
-  if (orgType) {
-    const types = String(orgType).split(',');
-    jobs = jobs.filter((j) => types.includes(j.orgType));
-  }
-  if (location) {
-    const loc = String(location).toLowerCase();
-    jobs = jobs.filter((j) => j.location?.toLowerCase().includes(loc));
-  }
-  if (qualification) {
-    jobs = jobs.filter((j) => j.qualification === qualification);
-  }
-  if (sector) {
-    jobs = jobs.filter((j) => j.sector === sector);
-  }
-  if (status) {
-    const statuses = String(status).split(',');
-    jobs = jobs.filter((j) => statuses.includes(j.status));
-  } else {
-    // default: hide closed unless asked
-    jobs = jobs.filter((j) => j.status !== 'closed');
-  }
-  if (selectionProcess) {
-    jobs = jobs.filter((j) => j.selectionProcess === selectionProcess);
-  }
-  const examFilter = hasExam == null ? '' : String(hasExam).trim().toLowerCase();
-  if (examFilter && examFilter !== 'all') {
-    if (examFilter === 'yes' || examFilter === 'true' || examFilter === '1') {
-      jobs = jobs.filter((j) => j.hasExam === true);
-    } else if (examFilter === 'no' || examFilter === 'false' || examFilter === '0') {
-      jobs = jobs.filter((j) => j.hasExam === false);
-    }
-  }
-  if (sourceId) {
-    jobs = jobs.filter((j) => j.sourceId === sourceId);
-  }
-
-  if (sort === 'newest') {
-    jobs = [...jobs].sort((a, b) =>
-      (b.notificationDate || '').localeCompare(a.notificationDate || '')
-    );
-  } else if (sort === 'lastDate') {
-    jobs = [...jobs].sort((a, b) => (a.lastDate || '9999').localeCompare(b.lastDate || '9999'));
-  }
-
+  const jobs = applyJobFilters(loadJobsForList(), query);
   const pageNum = Math.max(1, parseInt(page, 10) || 1);
   const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
   const total = jobs.length;
@@ -188,6 +216,15 @@ function listJobs(query = {}) {
 }
 
 function getJobById(id) {
+  if (sqlite.getStatus() === 'ok' && sqlite.isFresh()) {
+    try {
+      const db = sqlite.getDb();
+      const row = db && db.prepare('SELECT raw FROM opportunities WHERE id = ?').get(id);
+      if (row && row.raw) return JSON.parse(row.raw);
+    } catch {
+      /* JSON SoR fallback */
+    }
+  }
   return getJobs().find((j) => j.id === id) || null;
 }
 
@@ -216,4 +253,5 @@ module.exports = {
   getRegistry,
   getSourcesView,
   getFilterMeta,
+  applyJobFilters,
 };
