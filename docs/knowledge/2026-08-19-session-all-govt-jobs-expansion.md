@@ -6,7 +6,7 @@
 | Workspace | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
 | Repo | https://github.com/timus97/GovtJobsPortal |
 | Default branch | `master` (`cecedb0` — Merge PR10) |
-| Status | **Design PR plan (01–10) complete.** Stage 7: PR11–PR13 shipped (accounts, desk tracker, private files). Next is PR14 syllabus + study plan. |
+| Status | **Design PR plan (01–10) complete.** Stage 7 PR11–PR16 specified (14–16 landing). Next work is operational: live collect / PDF TTL / always-on host + persistent disk. |
 | Full design | [docs/ALL_GOVT_JOBS_DESIGN.md](../ALL_GOVT_JOBS_DESIGN.md) |
 
 Use this article to resume a new session. Do not re-litigate locked decisions. Do not start from “no-exam only” as the product goal. Do not open another design-plan PR unless the owner changes scope.
@@ -18,20 +18,21 @@ Use this article to resume a new session. Do not re-litigate locked decisions. D
 The NoExam Sarkari Jobs portal is now a **fullstack all-India government-jobs product**:
 
 1. **Browse `/jobs`** — exam and no-exam. Default filter `hasExam=all`.
-2. **Profile + Match** — localStorage profile (`reservationCategory` required). `POST /api/match` scores currently-open opportunities with explainable reasons. Banner: not an official eligibility decision.
+2. **Profile + Match** — reservation category required. Anonymous match uses a request body / localStorage profile; logged-in match uses the server profile. Banner: not an official eligibility decision.
 3. **Prepare `/prepare`** — ExamSeries from official calendars. No Apply unless a linked Opportunity is open. **UGC NET, GATE, CTET** are prepare-for (`applyNever`), never vacancies. CUET excluded.
 4. **Ops `/ops`** — operator accounts (hashed password + session + role). Paste official URL → review → publish to `data/staging/ops_paste/`. Unpublish on (`FEATURE_UNPUBLISH=on`).
+5. **Student exam desk** — register, server profile, dashboard tracker, days-left, private admit/result files, unofficial syllabus/plan, unofficial mocks. API host + persistent disk only.
 
 Matching is rule-based only. Never invent eligibility. Age uses notification `ageAsOnDate`. Incomplete parse → unknown, not fail. Post-wise PwBD when `posts[]` are explicit; reserved-only fails UR only with structured `reservedOnly` / `openToCategories`.
 
-Product host is **always-on Express + SPA**. Git JSON (`data/processed/*.json`) is the durable store. SQLite is an optional Express read cache. GitHub Pages may remain a snapshot fallback.
+Product host is **always-on Express + SPA + persistent disk**. Git JSON (`data/processed/*.json`) is the catalog store. Student SoR is host JSON under `STUDENT_DATA_DIR` + files under `STUDENT_FILES_DIR` (gitignored). SQLite is an optional **catalog-only** Express read cache. GitHub Pages is a snapshot without accounts.
 
 ---
 
 ## Owner decisions (2026-08-18) — do not reopen
 
 1. **Reservation category is required** before match (UR / EWS / OBC / SC / ST). Use only printed age-relaxation tables; never invent relaxations.
-2. **Fullstack Express + SPA is the product.** `FEATURE_SERVER_MATCH=on`. Pages is a snapshot, not the match/ops host.
+2. **Fullstack Express + SPA is the product.** `FEATURE_SERVER_MATCH=on`. Pages is a snapshot, not the match/ops/desk host.
 3. **UGC NET** is a prepare-for ExamSeries immediately, not a vacancy.
 4. **Real admin auth.** `OPERATOR_PASSWORD` bootstraps the first admin only.
 5. **`/jobs` defaults to all jobs immediately** (no 7-day no-exam grace).
@@ -41,7 +42,7 @@ Product host is **always-on Express + SPA**. Git JSON (`data/processed/*.json`) 
 
 ## Architecture locks (do not reopen)
 
-- **Git JSON is the durable store.** Optional `better-sqlite3` cache on Express only. Never install it in the root/GHA pipeline.
+- **Git JSON is the catalog store.** Optional `better-sqlite3` cache on Express is catalog-only. Never install it in the root/GHA pipeline. Student SoR is host JSON + files (`STUDENT_DATA_DIR` / `STUDENT_FILES_DIR`), never `portal.sqlite`.
 - Two entities: **Opportunity** (live apply window) and **ExamSeries** (calendar / prepare-for).
 - `hasExam` is a filter, not a drop. `selectionProcess` stays a **string** on `jobs.json`.
 - Source catalog is **only** `data/sources/registry.json`. No `psc.json`.
@@ -95,7 +96,11 @@ Owner reopened “no student accounts.” Full design: [docs/STUDENT_COACHING_DE
 - Email + password, no verify/reset v1. **PR11 done.**
 - Dashboard: official calendars + applied jobs + custom exams + days-left. **PR12 done.**
 - Private admit/result files on the API host (PDF/JPEG/PNG ≤ 5 MB, owner-only). **PR13 done.**
-- Next: unofficial syllabus + study plan (PR14), then mocks (PR15), then docs/hosting (PR16).
+- Unofficial syllabus + study plan. **PR14 in tree.**
+- Unofficial mocks. **PR15 in tree.**
+- Docs, hosting disk, brand. **PR16 landing.**
+
+Next work is **not** another design PR. See Follow-ups: live collect, PDF TTL, always-on host + persistent disk.
 
 ## Follow-ups (not catalog PRs)
 
@@ -104,7 +109,7 @@ These are leftover vs the spec or ops, not a 13th implementation PR:
 1. Run a real `collect:daily` + `process` (with `REPLACE_PUBLISHED` only when intended) so P0/P1 boards fill `jobs.json` / `exam_series.json`.
 2. Implement PDF **30-day TTL** in `rawStore` / GHA so `data/raw/pdfs` does not grow forever.
 3. Optional API polish: dedicated `GET /api/opportunities`, `includeClosed=1`, `kind=` filter; write `opportunities.json` on the next successful process.
-4. Always-on host: `render.yaml` is still free-tier (sleeps). Product intent is always-on Express.
+4. Always-on host + **persistent disk** for the student desk. `render.yaml` is still free-tier (sleeps; ephemeral disk wipes accounts/files).
 5. Deferred collector-helper cleanup.
 
 ---
@@ -113,7 +118,8 @@ These are leftover vs the spec or ops, not a 13th implementation PR:
 
 ```text
 Continue GovtJobsPortal from docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md
-and docs/ALL_GOVT_JOBS_DESIGN.md. The design PR plan (01–10) is complete on master.
+and docs/ALL_GOVT_JOBS_DESIGN.md. Catalog PRs 01–10 are complete on master.
+Stage 7 (PR11–PR16) is specified; 11–13 done; 14–15 coaching in tree; 16 is docs/hosting/brand.
 Do not reopen locked decisions. Next work is operational (live collect, PDF TTL,
-always-on host), not a new design-plan PR.
+always-on host + persistent disk for the student desk), not a new design-plan PR.
 ```

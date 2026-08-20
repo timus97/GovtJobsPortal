@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchJobs, fetchStats, fetchPipeline } from '../api/jobs'
 import JobCard from '../components/JobCard'
+import { isStudentEnabled } from '../lib/features'
 import { formatDateTime } from '../utils/labels'
 
 export default function HomePage() {
@@ -35,9 +36,10 @@ export default function HomePage() {
             <p className="eyebrow">India · Official notifications</p>
             <h1>Central, PSU &amp; govt company jobs — exam and interview routes</h1>
             <p className="lead">
-              Walk-in interviews, interview-only posts, merit-based selection, and contract roles —
-              plus exam-based notifications (CBT, SSC, UPSC, IBPS, and more). Filter exam vs no-exam
-              on the jobs page. Every card links to the official apply page.
+              Browse open applications (exam and no-exam). Match against a profile (reservation
+              category required). Create a student desk to track exams, keep admit cards private on
+              this API host, and practise unofficial mocks. Every card links to the official apply
+              page. Aggregator only — always verify dates and eligibility on the official site.
             </p>
             <div className="hero-actions">
               <Link to="/jobs" className="btn btn-primary btn-lg">
@@ -46,6 +48,11 @@ export default function HomePage() {
               <Link to="/prepare" className="btn btn-secondary btn-lg">
                 Prepare for exams
               </Link>
+              {isStudentEnabled() && (
+                <Link to="/account/register" className="btn btn-secondary btn-lg">
+                  Create exam desk
+                </Link>
+              )}
             </div>
             {(pipeline?.process?.finishedAt || pipeline?.collect?.finishedAt) && (
               <p className="pipeline-stamp muted">

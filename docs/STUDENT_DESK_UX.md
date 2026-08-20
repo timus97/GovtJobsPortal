@@ -120,8 +120,8 @@ Dashboard list (title + days), desk detail stacked (next-step banner, download, 
 | 01–02, 08 | PR11 (done) |
 | 03–04, 06–07, 09, days-left | PR12 (done) |
 | 05 files | PR13 (done) |
-| 10 | PR14 |
-| 11–12 | PR15 |
-| Brand / hosting | PR16 |
+| 10 | PR14 (in tree) |
+| 11–12 | PR15 (in tree) |
+| Brand / hosting | PR16 (this PR) |
 
 When Figma MCP quota resets, add frames 10–12 and mobile to the same file (`37BnL3aZ62LmXqnJu1PnZH`) — do not start a second file.

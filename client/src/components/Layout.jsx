@@ -119,8 +119,9 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="container footer-inner">
           <p>
-            <strong>NoExam Sarkari Jobs</strong> lists Indian government and PSU openings that do not require a competitive written test.
-            Coverage is curated and growing — not exhaustive.
+            <strong>NoExam Sarkari Jobs</strong> lists Indian government and PSU openings (exam and
+            no-exam), prepare-for calendars, and a student exam desk. Coverage is curated and
+            growing — not exhaustive.
           </p>
           <p className="muted">
             Always confirm eligibility, last date, and selection process on the official notification before applying.

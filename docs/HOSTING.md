@@ -1,8 +1,8 @@
 # Public hosting
 
-The **v1 product** is always-on Express + SPA (match and `/ops` need the API). GitHub Pages is a **JSON snapshot fallback**, not the match or ops host.
+The **product** is always-on Express + SPA (match, `/ops`, and the **student exam desk** need the API). GitHub Pages is a **JSON snapshot fallback** — no accounts, no match, no ops.
 
-`render.yaml` is still the free Render plan (sleeps ~15 min). Upgrade that service when you want the product host to stay awake.
+`render.yaml` is still the free Render plan (sleeps ~15 min). Upgrade that service when you want the product host to stay awake. The student desk also needs a **persistent disk** (see below); the free plan’s ephemeral disk wipes accounts and files.
 
 ## 1. GitHub Pages (static snapshot)
 
@@ -13,6 +13,7 @@ The **v1 product** is always-on Express + SPA (match and `/ops` need the API). G
 - Built React SPA (`client/dist`)
 - Snapshot of job data under `client/public/data/` (jobs, stats, sources, pipeline reports)
 - Client uses live `/api` when available; otherwise falls back to static JSON
+- No student accounts or files. Keep `VITE_FEATURE_STUDENT` off unless `VITE_API_BASE` points at the API host.
 
 ### One-time setup
 
@@ -57,7 +58,35 @@ The Pages workflow rebuilds the site on every push to `main`.
    - Plan: **Free**
 4. After deploy: `https://<service-name>.onrender.com`
 
-**Note:** Free web services sleep after ~15 minutes idle; first request may take 30–60s.
+**Note:** Free web services sleep after ~15 minutes idle; first request may take 30–60s. Sleep and redeploy also wipe the ephemeral disk — see the student desk section below.
+
+---
+
+## Persistent disk for the student desk
+
+Student accounts, tracker rows, mock scores, and admit/result files live on the API host, **not** in git and **not** on GitHub Pages.
+
+| Path | Env | What |
+|------|-----|------|
+| `data/students/` | `STUDENT_DATA_DIR` | Host JSON (students, profiles, items, topic ticks, mock attempts) |
+| `data/student-files/` | `STUDENT_FILES_DIR` | Private admit / result files |
+
+**Without a disk**, Render free sleep/redeploy wipes `data/students` and `data/student-files`.
+
+Mount a disk at `/var/data` (or similar) and set:
+
+```bash
+STUDENT_DATA_DIR=/var/data/students
+STUDENT_FILES_DIR=/var/data/student-files
+SESSION_SECRET=<long random; required in production>
+FEATURE_STUDENT=on
+```
+
+`render.yaml` documents these vars and keeps the **free** plan. It does **not** attach a disk (that would change the plan). After you upgrade, add the disk in the Render dashboard (mount `/var/data`) and point the two dirs there.
+
+GitHub Pages must keep `VITE_FEATURE_STUDENT` off unless `VITE_API_BASE` points at the API host. Pages must not ship student JSON or files.
+
+Never store students in `data/cache/portal.sqlite`. That optional cache is **catalog-only** and is discarded on rebuild / free-tier sleep.
 
 ---
 
@@ -71,14 +100,19 @@ Same as GitHub Pages static mode:
 
 ---
 
-## Secrets (only for email alerts + optional daily scrape Action)
+## Secrets (alerts, ops, student desk)
 
-Not required for public browsing. For alerts / scrape CI:
+Not required for public Pages browsing. For the API host / alerts / scrape CI:
 
-| Secret | Purpose |
-|--------|---------|
+| Secret / env | Purpose |
+|--------------|---------|
 | `SMTP_*` / `ALERT_*` | Email digests |
 | `PUBLIC_SITE_URL` | Links inside alert emails |
+| `SESSION_SECRET` | Required in production. HMAC for `ops_session` and `student_session`. Set in the host dashboard — do not commit. |
+| `OPERATOR_PASSWORD` | Bootstrap first ops admin only |
+| `FEATURE_STUDENT` | `on` for the API host desk |
+| `STUDENT_DATA_DIR` / `STUDENT_FILES_DIR` | Persistent-disk paths (see above) |
+| `VITE_FEATURE_STUDENT` | Off on github.io unless `VITE_API_BASE` points at the API host |
 
 ---
 
@@ -95,6 +129,7 @@ If a host asks for email verification (Render, Netlify, etc.), any Gmail works.
 - `/jobs` lists openings
 - `/sources` lists PSU/gov URLs
 - Job detail “Official site” opens external career page
+- On the API host (not Pages): `/account/register` works; `/dashboard` persists across a process restart **only if** a persistent disk is mounted
 
 ## Live URLs (this project)
 
