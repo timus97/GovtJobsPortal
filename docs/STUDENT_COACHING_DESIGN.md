@@ -11,6 +11,8 @@
 
 Jobs, exam series, and the registry stay **git JSON**. Student PII, tracker rows, admit cards, results, and mock scores are **never** git JSON and **never** GitHub Pages.
 
+**UX (Figma + written spec):** [STUDENT_DESK_UX.md](STUDENT_DESK_UX.md) · [Figma file](https://www.figma.com/design/37BnL3aZ62LmXqnJu1PnZH)
+
 ---
 
 ## 1. Requirements (locked)
