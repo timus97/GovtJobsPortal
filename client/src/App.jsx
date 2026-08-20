@@ -11,10 +11,12 @@ import MatchResultsPage from './pages/MatchResultsPage'
 import OpsLoginPage from './pages/ops/OpsLoginPage'
 import OpsDashboard from './pages/ops/OpsDashboard'
 import OpsRunDetail from './pages/ops/OpsRunDetail'
-import { isProfileMatchEnabled } from './lib/features'
+import PreparePage from './pages/PreparePage'
+import { isPrepareEnabled, isProfileMatchEnabled } from './lib/features'
 
 export default function App() {
   const profileMatch = isProfileMatchEnabled()
+  const prepare = isPrepareEnabled()
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -23,6 +25,7 @@ export default function App() {
         <Route path="jobs/:id" element={<JobDetailPage />} />
         {profileMatch && <Route path="profile" element={<ProfilePage />} />}
         {profileMatch && <Route path="match" element={<MatchResultsPage />} />}
+        {prepare && <Route path="prepare" element={<PreparePage />} />}
         <Route path="process" element={<ProcessPage />} />
         <Route path="sources" element={<SourcesPage />} />
         <Route path="about" element={<AboutPage />} />

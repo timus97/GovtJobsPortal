@@ -7,16 +7,37 @@ let cache = null
 
 async function loadStaticBundle() {
   if (cache) return cache
-  const [jobs, stats, sources, processReport, collectReport, alertReport] = await Promise.all([
+  const [jobs, stats, sources, processReport, collectReport, alertReport, examSeries] = await Promise.all([
     fetch(`${STATIC}/jobs.json`).then((r) => (r.ok ? r.json() : [])),
     fetch(`${STATIC}/stats.json`).then((r) => (r.ok ? r.json() : {})),
     fetch(`${STATIC}/sources.json`).then((r) => (r.ok ? r.json() : { sources: [] })),
     fetch(`${STATIC}/run-report.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
     fetch(`${STATIC}/collect-report.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
     fetch(`${STATIC}/alert-report.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch(`${STATIC}/exam_series.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
   ])
+  const jobList = Array.isArray(jobs) ? jobs : []
+  const decoratedSeries = (Array.isArray(examSeries) ? examSeries : []).map((s) => {
+    const linked = (s.linkedOpportunityIds || [])
+      .map((id) => jobList.find((j) => j.id === id))
+      .filter(Boolean)
+      .filter((j) => j.status === 'open' || j.status === 'closing_soon')
+    return {
+      ...s,
+      kind: 'series',
+      linkedOpportunities: linked.map((j) => ({
+        id: j.id,
+        title: j.title,
+        status: j.status,
+        lastDate: j.lastDate,
+        officialUrl: j.officialUrl,
+      })),
+      canApply: !s.applyNever && linked.length > 0,
+    }
+  })
   cache = {
-    jobs: Array.isArray(jobs) ? jobs : [],
+    jobs: jobList,
+    examSeries: decoratedSeries,
     stats: stats || {},
     sources: sources || { sources: [] },
     pipeline: {
@@ -166,6 +187,34 @@ export function fetchSources() {
   return tryApiThenStatic('/sources', async () => {
     const { sources } = await loadStaticBundle()
     return sources
+  })
+}
+
+export function fetchExamSeries(params = {}) {
+  const qs = new URLSearchParams()
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== '') qs.set(k, v)
+  })
+  const q = qs.toString()
+  return tryApiThenStatic(`/exam-series${q ? `?${q}` : ''}`, async () => {
+    const bundle = await loadStaticBundle()
+    const series = Array.isArray(bundle.examSeries) ? bundle.examSeries : []
+    const board = params.board ? String(params.board).toLowerCase() : ''
+    const term = params.q ? String(params.q).toLowerCase() : ''
+    let items = series
+    if (board) items = items.filter((s) => String(s.board).toLowerCase() === board)
+    if (term) {
+      items = items.filter(
+        (s) =>
+          String(s.name).toLowerCase().includes(term) ||
+          String(s.board).toLowerCase().includes(term)
+      )
+    }
+    return {
+      items,
+      total: items.length,
+      boards: [...new Set(series.map((s) => s.board))].sort(),
+    }
   })
 }
 

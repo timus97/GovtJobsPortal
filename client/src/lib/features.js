@@ -18,3 +18,15 @@ export function isProfileMatchEnabled() {
   if (isStaticPagesHost() && !apiBase) return false
   return true
 }
+
+/**
+ * FEATURE_PREPARE: default on once PR06 ships (including Pages JSON snapshot).
+ * Off only when VITE_FEATURE_PREPARE is explicitly off.
+ */
+export function isPrepareEnabled() {
+  const flag = String(import.meta.env.VITE_FEATURE_PREPARE ?? '')
+    .trim()
+    .toLowerCase()
+  if (flag === 'off' || flag === 'false' || flag === '0') return false
+  return true
+}

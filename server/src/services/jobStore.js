@@ -10,6 +10,7 @@ const reportPath = path.join(root, 'data', 'processed', 'run-report.json');
 const collectReportPath = path.join(root, 'data', 'processed', 'collect-report.json');
 const alertReportPath = path.join(root, 'data', 'processed', 'alert-report.json');
 const registryPath = path.join(root, 'data', 'sources', 'registry.json');
+const examSeriesPath = path.join(root, 'data', 'processed', 'exam_series.json');
 
 function readJson(file, fallback) {
   try {
@@ -228,6 +229,54 @@ function getJobById(id) {
   return getJobs().find((j) => j.id === id) || null;
 }
 
+function decorateSeries(series) {
+  const jobs = getJobs();
+  const linked = (series.linkedOpportunityIds || [])
+    .map((id) => jobs.find((j) => j.id === id))
+    .filter(Boolean);
+  const openLinked = linked.filter((j) => j.status === 'open' || j.status === 'closing_soon');
+  return {
+    ...series,
+    kind: 'series',
+    linkedOpportunities: openLinked.map((j) => ({
+      id: j.id,
+      title: j.title,
+      status: j.status,
+      lastDate: j.lastDate,
+      officialUrl: j.officialUrl,
+    })),
+    canApply: !series.applyNever && openLinked.length > 0,
+  };
+}
+
+function getExamSeries() {
+  return readJson(examSeriesPath, []).map(decorateSeries);
+}
+
+function getExamSeriesById(id) {
+  return getExamSeries().find((s) => s.id === id) || null;
+}
+
+function listExamSeries(query = {}) {
+  let items = getExamSeries();
+  const board = query.board ? String(query.board).trim() : '';
+  const q = query.q ? String(query.q).toLowerCase() : '';
+  if (board) items = items.filter((s) => String(s.board).toLowerCase() === board.toLowerCase());
+  if (q) {
+    items = items.filter(
+      (s) =>
+        s.name.toLowerCase().includes(q) ||
+        String(s.board).toLowerCase().includes(q) ||
+        String(s.cycle || '').toLowerCase().includes(q)
+    );
+  }
+  return {
+    items,
+    total: items.length,
+    boards: [...new Set(getExamSeries().map((s) => s.board))].sort(),
+  };
+}
+
 function getFilterMeta() {
   const jobs = getJobs().filter((j) => j.status !== 'closed');
   const uniq = (arr) => [...new Set(arr.filter(Boolean))].sort();
@@ -254,4 +303,7 @@ module.exports = {
   getSourcesView,
   getFilterMeta,
   applyJobFilters,
+  getExamSeries,
+  getExamSeriesById,
+  listExamSeries,
 };

@@ -94,5 +94,6 @@
     "apprenticeship": 6
   },
   "lastPipelineRunAt": "2026-07-11T15:00:09.051Z",
-  "sourcesMonitored": 200
+  "sourcesMonitored": 200,
+  "examSeries": 23
 }

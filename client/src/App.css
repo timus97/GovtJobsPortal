@@ -80,3 +80,22 @@
   background: var(--warn-soft);
   color: var(--warn);
 }
+
+.series-dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.45rem 1rem;
+  margin: 0 0 0.85rem;
+}
+
+.series-dates dt {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.series-dates dd {
+  margin: 0;
+  font-weight: 600;
+}

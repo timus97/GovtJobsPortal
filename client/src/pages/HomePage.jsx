@@ -43,8 +43,8 @@ export default function HomePage() {
               <Link to="/jobs" className="btn btn-primary btn-lg">
                 Browse open jobs
               </Link>
-              <Link to="/process" className="btn btn-secondary btn-lg">
-                How selection works
+              <Link to="/prepare" className="btn btn-secondary btn-lg">
+                Prepare for exams
               </Link>
             </div>
             {(pipeline?.process?.finishedAt || pipeline?.collect?.finishedAt) && (
@@ -71,8 +71,8 @@ export default function HomePage() {
               <span className="stat-label">PSU posts</span>
             </div>
             <div className="stat-card">
-              <span className="stat-value">{stats?.total ?? '—'}</span>
-              <span className="stat-label">In dataset</span>
+              <span className="stat-value">{stats?.examSeries ?? stats?.total ?? '—'}</span>
+              <span className="stat-label">{stats?.examSeries != null ? 'Exam calendars' : 'In dataset'}</span>
             </div>
           </div>
         </div>

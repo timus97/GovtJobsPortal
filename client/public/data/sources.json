@@ -53,12 +53,14 @@
       "name": "Employment News",
       "category": "aggregator",
       "orgType": "central",
-      "baseUrl": "https://www.employmentnews.gov.in/",
+      "baseUrl": "https://employmentnews.gov.in/newemp/Home.aspx",
       "listUrls": [
-        "https://www.employmentnews.gov.in/"
+        "https://employmentnews.gov.in/newemp/Home.aspx",
+        "https://employmentnews.gov.in/newemp/AllJobs.aspx?k=All"
       ],
       "urls": [
-        "https://www.employmentnews.gov.in/"
+        "https://employmentnews.gov.in/newemp/Home.aspx",
+        "https://employmentnews.gov.in/newemp/AllJobs.aspx?k=All"
       ],
       "priority": "P0",
       "method": "html_scrape",
@@ -9746,6 +9748,233 @@
       "method": "manual",
       "cadence": "weekly",
       "enabled": false,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "upsc_calendar",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://upsc.gov.in/",
+      "listUrls": [
+        "https://upsc.gov.in/examinations/exam-calendar"
+      ],
+      "urls": [
+        "https://upsc.gov.in/",
+        "https://upsc.gov.in/examinations/exam-calendar"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "upsc_active",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://upsc.gov.in/",
+      "listUrls": [
+        "https://upsc.gov.in/examinations/active-exams"
+      ],
+      "urls": [
+        "https://upsc.gov.in/",
+        "https://upsc.gov.in/examinations/active-exams"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "upsc_online",
+      "name": "Union Public Service Commission",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://upsconline.nic.in/",
+      "listUrls": [
+        "https://upsconline.nic.in/"
+      ],
+      "urls": [
+        "https://upsconline.nic.in/"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "ssc_calendar",
+      "name": "Staff Selection Commission",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://ssc.gov.in/",
+      "listUrls": [
+        "https://ssc.gov.in/for-candidates/examination-calendar",
+        "https://ssc.gov.in/home/ssc-calendar"
+      ],
+      "urls": [
+        "https://ssc.gov.in/",
+        "https://ssc.gov.in/for-candidates/examination-calendar",
+        "https://ssc.gov.in/home/ssc-calendar"
+      ],
+      "priority": "P0",
+      "method": "browser_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": "browser",
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "ssc_notices",
+      "name": "Staff Selection Commission",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://ssc.gov.in/",
+      "listUrls": [
+        "https://ssc.gov.in/home/notice-board"
+      ],
+      "urls": [
+        "https://ssc.gov.in/",
+        "https://ssc.gov.in/home/notice-board"
+      ],
+      "priority": "P0",
+      "method": "browser_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": "browser",
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "ibps_home",
+      "name": "Institute of Banking Personnel Selection",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://www.ibps.in/",
+      "listUrls": [
+        "https://www.ibps.in/"
+      ],
+      "urls": [
+        "https://www.ibps.in/"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "ibps_calendar",
+      "name": "Institute of Banking Personnel Selection",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://www.ibps.in/",
+      "listUrls": [
+        "https://www.ibps.in/index.php/crp-updates/"
+      ],
+      "urls": [
+        "https://www.ibps.in/",
+        "https://www.ibps.in/index.php/crp-updates/"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "sbi_openings",
+      "name": "State Bank of India Careers",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://sbi.co.in/web/careers/current-openings",
+      "listUrls": [
+        "https://sbi.co.in/web/careers/current-openings"
+      ],
+      "urls": [
+        "https://sbi.co.in/web/careers/current-openings"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "sbi_apply",
+      "name": "State Bank of India Recruitment",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://recruitment.sbi.bank.in/",
+      "listUrls": [
+        "https://recruitment.sbi.bank.in/"
+      ],
+      "urls": [
+        "https://recruitment.sbi.bank.in/"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "rrb_apply",
+      "name": "Railway Recruitment Board Apply",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://www.rrbapply.gov.in/",
+      "listUrls": [
+        "https://www.rrbapply.gov.in/"
+      ],
+      "urls": [
+        "https://www.rrbapply.gov.in/"
+      ],
+      "priority": "P0",
+      "method": "browser_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": "browser",
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "rrb_chennai",
+      "name": "Railway Recruitment Board Chennai",
+      "category": "exam_board",
+      "orgType": "central",
+      "baseUrl": "https://www.rrbchennai.gov.in/",
+      "listUrls": [
+        "https://www.rrbchennai.gov.in/"
+      ],
+      "urls": [
+        "https://www.rrbchennai.gov.in/"
+      ],
+      "priority": "P0",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
       "render": null,
       "publishedJobs": 0,
       "lastScrape": null

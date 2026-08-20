@@ -1,0 +1,233 @@
+[
+  {
+    "id": "upsc-cse",
+    "board": "UPSC",
+    "name": "Civil Services Examination",
+    "cycle": "2026",
+    "sourceId": "upsc_calendar",
+    "officialUrl": "https://upsc.gov.in/examinations/exam-calendar",
+    "minEducation": "graduate",
+    "aliases": ["cse", "civil services preliminary", "ias"]
+  },
+  {
+    "id": "upsc-nda",
+    "board": "UPSC",
+    "name": "NDA & NA Examination",
+    "cycle": "2026",
+    "sourceId": "upsc_calendar",
+    "officialUrl": "https://upsc.gov.in/examinations/exam-calendar",
+    "minEducation": "12th",
+    "aliases": ["nda", "national defence academy"]
+  },
+  {
+    "id": "upsc-cds",
+    "board": "UPSC",
+    "name": "Combined Defence Services Examination",
+    "cycle": "2026",
+    "sourceId": "upsc_calendar",
+    "officialUrl": "https://upsc.gov.in/examinations/exam-calendar",
+    "minEducation": "graduate",
+    "aliases": ["cds"]
+  },
+  {
+    "id": "upsc-capf",
+    "board": "UPSC",
+    "name": "Central Armed Police Forces (ACs) Examination",
+    "cycle": "2026",
+    "sourceId": "upsc_calendar",
+    "officialUrl": "https://upsc.gov.in/examinations/exam-calendar",
+    "minEducation": "graduate",
+    "aliases": ["capf"]
+  },
+  {
+    "id": "upsc-ese",
+    "board": "UPSC",
+    "name": "Engineering Services Examination",
+    "cycle": "2026",
+    "sourceId": "upsc_calendar",
+    "officialUrl": "https://upsc.gov.in/examinations/exam-calendar",
+    "minEducation": "graduate",
+    "aliases": ["ese", "ies"]
+  },
+  {
+    "id": "ssc-cgl",
+    "board": "SSC",
+    "name": "Combined Graduate Level Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "graduate",
+    "aliases": ["cgl"]
+  },
+  {
+    "id": "ssc-chsl",
+    "board": "SSC",
+    "name": "Combined Higher Secondary Level Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "12th",
+    "aliases": ["chsl"]
+  },
+  {
+    "id": "ssc-mts",
+    "board": "SSC",
+    "name": "Multi Tasking (Non-Technical) Staff Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "10th",
+    "aliases": ["mts"]
+  },
+  {
+    "id": "ssc-cpo",
+    "board": "SSC",
+    "name": "Sub-Inspector in Delhi Police and CAPFs Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "graduate",
+    "aliases": ["cpo"]
+  },
+  {
+    "id": "ssc-gd",
+    "board": "SSC",
+    "name": "Constable (GD) in CAPFs Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "10th",
+    "aliases": ["gd constable", "constable gd"]
+  },
+  {
+    "id": "ssc-steno",
+    "board": "SSC",
+    "name": "Stenographer Grade C and D Examination",
+    "cycle": "2026",
+    "sourceId": "ssc_calendar",
+    "officialUrl": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "minEducation": "12th",
+    "aliases": ["steno"]
+  },
+  {
+    "id": "ibps-po",
+    "board": "IBPS",
+    "name": "CRP Probationary Officers / Management Trainees",
+    "cycle": "XVI",
+    "sourceId": "ibps_calendar",
+    "officialUrl": "https://www.ibps.in/index.php/crp-updates/",
+    "minEducation": "graduate",
+    "aliases": ["ibps po", "po/mt", "crp-po"]
+  },
+  {
+    "id": "ibps-csa",
+    "board": "IBPS",
+    "name": "CRP Customer Service Associates",
+    "cycle": "XVI",
+    "sourceId": "ibps_calendar",
+    "officialUrl": "https://www.ibps.in/index.php/crp-updates/",
+    "minEducation": "graduate",
+    "aliases": ["ibps clerk", "csa", "crp-csa"]
+  },
+  {
+    "id": "ibps-so",
+    "board": "IBPS",
+    "name": "CRP Specialist Officers",
+    "cycle": "XVI",
+    "sourceId": "ibps_calendar",
+    "officialUrl": "https://www.ibps.in/index.php/crp-updates/",
+    "minEducation": "graduate",
+    "aliases": ["ibps so", "spl", "crp-spl"]
+  },
+  {
+    "id": "ibps-rrb",
+    "board": "IBPS",
+    "name": "CRP RRBs",
+    "cycle": "2026",
+    "sourceId": "ibps_calendar",
+    "officialUrl": "https://www.ibps.in/index.php/crp-updates/",
+    "minEducation": "graduate",
+    "aliases": ["ibps rrb"]
+  },
+  {
+    "id": "sbi-po",
+    "board": "SBI",
+    "name": "Probationary Officers",
+    "cycle": "2026-27",
+    "sourceId": "sbi_openings",
+    "officialUrl": "https://sbi.co.in/web/careers/current-openings",
+    "minEducation": "graduate",
+    "aliases": ["sbi po"]
+  },
+  {
+    "id": "sbi-ja",
+    "board": "SBI",
+    "name": "Junior Associates (Customer Support & Sales)",
+    "cycle": "2026-27",
+    "sourceId": "sbi_openings",
+    "officialUrl": "https://sbi.co.in/web/careers/current-openings",
+    "minEducation": "graduate",
+    "aliases": ["sbi clerk", "junior associate"]
+  },
+  {
+    "id": "rrb-ntpc",
+    "board": "RRB",
+    "name": "NTPC",
+    "cycle": "2026",
+    "sourceId": "rrb_apply",
+    "officialUrl": "https://www.rrbapply.gov.in/",
+    "minEducation": "graduate",
+    "aliases": ["non technical popular categories"]
+  },
+  {
+    "id": "rrb-group-d",
+    "board": "RRB",
+    "name": "Group D / Level 1",
+    "cycle": "2026",
+    "sourceId": "rrb_apply",
+    "officialUrl": "https://www.rrbapply.gov.in/",
+    "minEducation": "10th",
+    "aliases": ["group d", "cen 09", "level 1"]
+  },
+  {
+    "id": "rrb-alp",
+    "board": "RRB",
+    "name": "Assistant Loco Pilot",
+    "cycle": "2026",
+    "sourceId": "rrb_apply",
+    "officialUrl": "https://www.rrbapply.gov.in/",
+    "minEducation": "10th",
+    "aliases": ["alp"]
+  },
+  {
+    "id": "rrb-je",
+    "board": "RRB",
+    "name": "Junior Engineer",
+    "cycle": "2026",
+    "sourceId": "rrb_apply",
+    "officialUrl": "https://www.rrbapply.gov.in/",
+    "minEducation": "diploma",
+    "aliases": ["rrb je"]
+  },
+  {
+    "id": "rrb-technician",
+    "board": "RRB",
+    "name": "Technician",
+    "cycle": "2026",
+    "sourceId": "rrb_apply",
+    "officialUrl": "https://www.rrbapply.gov.in/",
+    "minEducation": "iti",
+    "aliases": ["rrb technician"]
+  },
+  {
+    "id": "ugc-net",
+    "board": "NTA",
+    "name": "UGC NET",
+    "cycle": "2026",
+    "sourceId": "seed_manual",
+    "officialUrl": "https://ugcnet.nta.nic.in/",
+    "minEducation": "pg",
+    "applyNever": true,
+    "aliases": ["nta net", "national eligibility test"]
+  }
+]
