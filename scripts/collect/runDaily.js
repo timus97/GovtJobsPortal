@@ -14,6 +14,7 @@ const { collectIbps } = require('./collectors/ibps');
 const { collectSbi } = require('./collectors/sbi');
 const { collectRrb } = require('./collectors/rrb');
 const { collectGenericPsc } = require('./collectors/genericPsc');
+const { collectGenericBoard } = require('./collectors/genericBoard');
 
 const SPECIAL = {
   becil: collectBecil,
@@ -26,6 +27,7 @@ const SPECIAL = {
   sbi: collectSbi,
   rrb: collectRrb,
   genericPsc: collectGenericPsc,
+  genericBoard: collectGenericBoard,
 };
 
 function loadRegistry() {
@@ -94,6 +96,7 @@ async function main() {
       const records = (out.records || []).map((r) => ({
         ...r,
         sector: r.sector && r.sector !== 'Other' ? r.sector : source.sector || r.sector,
+        opportunityType: r.opportunityType || source.opportunityType || null,
       }));
       const stagingPath = writeStaging(source.sourceId, runId, records);
       const entry = {

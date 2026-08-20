@@ -6397,6 +6397,142 @@
       "rateLimitMs": 800,
       "robotsNotes": "Metadata + official URLs only.",
       "owner": "automation"
+    },
+    {
+      "sourceId": "rbi_opportunities",
+      "name": "Reserve Bank of India",
+      "category": "regulator",
+      "baseUrl": "https://opportunities.rbi.org.in/",
+      "listUrls": [
+        "https://opportunities.rbi.org.in/",
+        "https://www.rbi.org.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 1000,
+      "robotsNotes": "HTML/metadata only. Do not solve CAPTCHA on opportunities.rbi.org.in — paste-URL if blocked.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "nabard_careers",
+      "name": "NABARD",
+      "category": "regulator",
+      "baseUrl": "https://www.nabard.org/",
+      "listUrls": [
+        "https://www.nabard.org/careers-notices1.aspx?cid=693&id=26"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Career notices metadata only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "sebi_vacancies",
+      "name": "SEBI",
+      "category": "regulator",
+      "baseUrl": "https://www.sebi.gov.in/",
+      "listUrls": [
+        "https://www.sebi.gov.in/sebiweb/about/AboutAction.do?doVacancies=yes"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Vacancies list metadata only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "india_post",
+      "name": "India Post",
+      "category": "central",
+      "baseUrl": "https://www.indiapost.gov.in/",
+      "listUrls": [
+        "https://www.indiapost.gov.in/VAS/Pages/AboutUs/Recruitment.aspx",
+        "https://www.indiapost.gov.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Recruitment pages. Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "fci_recruitment",
+      "name": "Food Corporation of India",
+      "category": "psu_careers",
+      "baseUrl": "https://fci.gov.in/",
+      "listUrls": [
+        "https://fci.gov.in/"
+      ],
+      "orgTypeDefault": "psu",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "lic_careers",
+      "name": "Life Insurance Corporation of India",
+      "category": "psu_careers",
+      "baseUrl": "https://licindia.in/",
+      "listUrls": [
+        "https://licindia.in/web/guest/careers",
+        "https://licindia.in/"
+      ],
+      "orgTypeDefault": "psu",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Careers metadata only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "epfo_recruitment",
+      "name": "Employees Provident Fund Organisation",
+      "category": "central",
+      "baseUrl": "https://www.epfindia.gov.in/",
+      "listUrls": [
+        "https://www.epfindia.gov.in/site_en/Recruitments.php"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericBoard",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Recruitment notices metadata only.",
+      "owner": "automation"
     }
   ],
   "wikiSource": "https://en.wikipedia.org/wiki/Public_Sector_Undertakings_in_India",
