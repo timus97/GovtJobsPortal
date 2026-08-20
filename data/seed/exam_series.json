@@ -229,5 +229,27 @@
     "minEducation": "pg",
     "applyNever": true,
     "aliases": ["nta net", "national eligibility test"]
+  },
+  {
+    "id": "gate",
+    "board": "IIT",
+    "name": "GATE",
+    "cycle": "2027",
+    "sourceId": "gate_calendar",
+    "officialUrl": "https://gate2027.iitm.ac.in/",
+    "minEducation": "graduate",
+    "applyNever": true,
+    "aliases": ["graduate aptitude test in engineering"]
+  },
+  {
+    "id": "ctet",
+    "board": "CBSE",
+    "name": "CTET",
+    "cycle": "2026",
+    "sourceId": "ctet_calendar",
+    "officialUrl": "https://ctet.nic.in/",
+    "minEducation": "12th",
+    "applyNever": true,
+    "aliases": ["central teacher eligibility test"]
   }
 ]

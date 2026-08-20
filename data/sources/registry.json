@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-07-11",
+  "updatedAt": "2026-08-20",
   "sources": [
     {
       "sourceId": "seed_manual",
@@ -78,12 +78,15 @@
         "https://www.apprenticeshipindia.gov.in/"
       ],
       "orgTypeDefault": "central",
-      "priority": "P2",
-      "method": "manual",
+      "priority": "P1",
+      "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": false,
-      "robotsNotes": "Label clearly as apprenticeship, not regular post",
-      "owner": "curator"
+      "enabled": true,
+      "robotsNotes": "Label as apprenticeship. Do not mix with regular vacancies without opportunityType.",
+      "owner": "automation",
+      "collector": "genericCareers",
+      "opportunityType": "apprenticeship",
+      "autoPublish": false
     },
     {
       "sourceId": "psu_ongc",
@@ -6533,6 +6536,289 @@
       "rateLimitMs": 800,
       "robotsNotes": "Recruitment notices metadata only.",
       "owner": "automation"
+    },
+    {
+      "sourceId": "kvs_recruitment",
+      "name": "Kendriya Vidyalaya Sangathan",
+      "category": "school",
+      "baseUrl": "https://kvsangathan.nic.in/",
+      "listUrls": [
+        "https://kvsangathan.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "nvs_recruitment",
+      "name": "Navodaya Vidyalaya Samiti",
+      "category": "school",
+      "baseUrl": "https://navodaya.gov.in/",
+      "listUrls": [
+        "https://navodaya.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "dsssb_recruitment",
+      "name": "Delhi Subordinate Services Selection Board",
+      "category": "school",
+      "baseUrl": "https://dsssb.delhi.gov.in/",
+      "listUrls": [
+        "https://dsssb.delhi.gov.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "ctet_calendar",
+      "name": "CTET",
+      "category": "exam_board",
+      "baseUrl": "https://ctet.nic.in/",
+      "listUrls": [
+        "https://ctet.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Eligibility exam calendar. Persist as ExamSeries, not a vacancy.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "aiims_recruitment",
+      "name": "AIIMS",
+      "category": "health",
+      "baseUrl": "https://www.aiimsexams.ac.in/",
+      "listUrls": [
+        "https://www.aiimsexams.ac.in/",
+        "https://www.aiims.edu/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Many institutes. Metadata only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "esic_recruitment",
+      "name": "ESIC",
+      "category": "health",
+      "baseUrl": "https://www.esic.gov.in/",
+      "listUrls": [
+        "https://www.esic.gov.in/recruitments"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "nhm_recruitment",
+      "name": "National Health Mission",
+      "category": "health",
+      "baseUrl": "https://nhm.gov.in/",
+      "listUrls": [
+        "https://nhm.gov.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Discovery. State NHM pages via paste-URL.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "drdo_careers",
+      "name": "DRDO",
+      "category": "science",
+      "baseUrl": "https://www.drdo.gov.in/",
+      "listUrls": [
+        "https://www.drdo.gov.in/drdo/careers"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "isro_careers",
+      "name": "ISRO",
+      "category": "science",
+      "baseUrl": "https://www.isro.gov.in/",
+      "listUrls": [
+        "https://www.isro.gov.in/Careers"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "barc_careers",
+      "name": "BARC",
+      "category": "science",
+      "baseUrl": "https://www.barc.gov.in/",
+      "listUrls": [
+        "https://www.barc.gov.in/careers/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericCareers",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Metadata + official URLs only.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "gate_calendar",
+      "name": "GATE",
+      "category": "exam_board",
+      "baseUrl": "https://gate2027.iitm.ac.in/",
+      "listUrls": [
+        "https://gate2027.iitm.ac.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "GATE is a score, not a vacancy. Calendar only → ExamSeries.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "nta_ugc_net_calendar",
+      "name": "UGC NET",
+      "category": "exam_board",
+      "baseUrl": "https://ugcnet.nta.nic.in/",
+      "listUrls": [
+        "https://ugcnet.nta.nic.in/"
+      ],
+      "orgTypeDefault": "autonomous",
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "collector": "genericPsc",
+      "autoPublish": false,
+      "rateLimitMs": 800,
+      "robotsNotes": "Prepare-for ExamSeries only. Never publish as a vacancy.",
+      "owner": "automation"
+    },
+    {
+      "sourceId": "defence_army",
+      "name": "Join Indian Army",
+      "category": "defence",
+      "baseUrl": "https://joinindianarmy.nic.in/",
+      "listUrls": [
+        "https://joinindianarmy.nic.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
+      "collector": null,
+      "autoPublish": false,
+      "robotsNotes": "CAPTCHA. No CAPTCHA bypass. Calendar/manual / ops paste-URL only.",
+      "owner": "curator"
+    },
+    {
+      "sourceId": "defence_navy",
+      "name": "Join Indian Navy",
+      "category": "defence",
+      "baseUrl": "https://www.joinindiannavy.gov.in/",
+      "listUrls": [
+        "https://www.joinindiannavy.gov.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
+      "collector": null,
+      "autoPublish": false,
+      "robotsNotes": "Calendar/manual only. No CAPTCHA bypass.",
+      "owner": "curator"
+    },
+    {
+      "sourceId": "defence_airforce",
+      "name": "Indian Air Force careers",
+      "category": "defence",
+      "baseUrl": "https://careerairforce.nic.in/",
+      "listUrls": [
+        "https://careerairforce.nic.in/"
+      ],
+      "orgTypeDefault": "central",
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
+      "collector": null,
+      "autoPublish": false,
+      "robotsNotes": "Calendar/manual only. No CAPTCHA bypass.",
+      "owner": "curator"
     }
   ],
   "wikiSource": "https://en.wikipedia.org/wiki/Public_Sector_Undertakings_in_India",

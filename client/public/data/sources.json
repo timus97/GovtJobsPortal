@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11",
+  "updatedAt": "2026-08-20",
   "lastCollectAt": "2026-07-11T15:00:02.475Z",
   "sources": [
     {
@@ -120,10 +120,10 @@
       "urls": [
         "https://www.apprenticeshipindia.gov.in/"
       ],
-      "priority": "P2",
-      "method": "manual",
+      "priority": "P1",
+      "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": false,
+      "enabled": true,
       "render": null,
       "publishedJobs": 0,
       "lastScrape": null
@@ -9975,6 +9975,665 @@
       "method": "html_scrape",
       "cadence": "daily",
       "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_uppsc",
+      "name": "Uttar Pradesh Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://uppsc.up.nic.in/",
+      "listUrls": [
+        "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx",
+        "https://uppsc.up.nic.in/"
+      ],
+      "urls": [
+        "https://uppsc.up.nic.in/",
+        "https://uppsc.up.nic.in/CandidatePages/Notifications.aspx"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_bpsc",
+      "name": "Bihar Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://www.bpsc.bih.nic.in/",
+      "listUrls": [
+        "https://www.bpsc.bih.nic.in/"
+      ],
+      "urls": [
+        "https://www.bpsc.bih.nic.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_mpsc",
+      "name": "Maharashtra Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://mpsc.gov.in/",
+      "listUrls": [
+        "https://mpsc.gov.in/"
+      ],
+      "urls": [
+        "https://mpsc.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_tnpsc",
+      "name": "Tamil Nadu Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://www.tnpsc.gov.in/",
+      "listUrls": [
+        "https://tnpsc.gov.in/home.aspx",
+        "https://www.tnpsc.gov.in/"
+      ],
+      "urls": [
+        "https://www.tnpsc.gov.in/",
+        "https://tnpsc.gov.in/home.aspx"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_wbpsc",
+      "name": "West Bengal Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://psc.wb.gov.in/",
+      "listUrls": [
+        "https://psc.wb.gov.in/"
+      ],
+      "urls": [
+        "https://psc.wb.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_rpsc",
+      "name": "Rajasthan Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://rpsc.rajasthan.gov.in/",
+      "listUrls": [
+        "https://rpsc.rajasthan.gov.in/"
+      ],
+      "urls": [
+        "https://rpsc.rajasthan.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_gpsc",
+      "name": "Gujarat Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://gpsc.gujarat.gov.in/",
+      "listUrls": [
+        "https://gpsc.gujarat.gov.in/"
+      ],
+      "urls": [
+        "https://gpsc.gujarat.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_kpsc",
+      "name": "Karnataka Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://kpsc.kar.nic.in/",
+      "listUrls": [
+        "https://kpsc.kar.nic.in/"
+      ],
+      "urls": [
+        "https://kpsc.kar.nic.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_kerala",
+      "name": "Kerala Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://www.keralapsc.gov.in/",
+      "listUrls": [
+        "https://www.keralapsc.gov.in/"
+      ],
+      "urls": [
+        "https://www.keralapsc.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "psc_appsc",
+      "name": "Andhra Pradesh Public Service Commission",
+      "category": "state_psc",
+      "orgType": "autonomous",
+      "baseUrl": "https://psc.ap.gov.in/",
+      "listUrls": [
+        "https://psc.ap.gov.in/"
+      ],
+      "urls": [
+        "https://psc.ap.gov.in/"
+      ],
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "rbi_opportunities",
+      "name": "Reserve Bank of India",
+      "category": "regulator",
+      "orgType": "central",
+      "baseUrl": "https://opportunities.rbi.org.in/",
+      "listUrls": [
+        "https://opportunities.rbi.org.in/",
+        "https://www.rbi.org.in/"
+      ],
+      "urls": [
+        "https://opportunities.rbi.org.in/",
+        "https://www.rbi.org.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "nabard_careers",
+      "name": "NABARD",
+      "category": "regulator",
+      "orgType": "central",
+      "baseUrl": "https://www.nabard.org/",
+      "listUrls": [
+        "https://www.nabard.org/careers-notices1.aspx?cid=693&id=26"
+      ],
+      "urls": [
+        "https://www.nabard.org/",
+        "https://www.nabard.org/careers-notices1.aspx?cid=693&id=26"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "sebi_vacancies",
+      "name": "SEBI",
+      "category": "regulator",
+      "orgType": "central",
+      "baseUrl": "https://www.sebi.gov.in/",
+      "listUrls": [
+        "https://www.sebi.gov.in/sebiweb/about/AboutAction.do?doVacancies=yes"
+      ],
+      "urls": [
+        "https://www.sebi.gov.in/",
+        "https://www.sebi.gov.in/sebiweb/about/AboutAction.do?doVacancies=yes"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "india_post",
+      "name": "India Post",
+      "category": "central",
+      "orgType": "central",
+      "baseUrl": "https://www.indiapost.gov.in/",
+      "listUrls": [
+        "https://www.indiapost.gov.in/VAS/Pages/AboutUs/Recruitment.aspx",
+        "https://www.indiapost.gov.in/"
+      ],
+      "urls": [
+        "https://www.indiapost.gov.in/",
+        "https://www.indiapost.gov.in/VAS/Pages/AboutUs/Recruitment.aspx"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "fci_recruitment",
+      "name": "Food Corporation of India",
+      "category": "psu_careers",
+      "orgType": "psu",
+      "baseUrl": "https://fci.gov.in/",
+      "listUrls": [
+        "https://fci.gov.in/"
+      ],
+      "urls": [
+        "https://fci.gov.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "lic_careers",
+      "name": "Life Insurance Corporation of India",
+      "category": "psu_careers",
+      "orgType": "psu",
+      "baseUrl": "https://licindia.in/",
+      "listUrls": [
+        "https://licindia.in/web/guest/careers",
+        "https://licindia.in/"
+      ],
+      "urls": [
+        "https://licindia.in/",
+        "https://licindia.in/web/guest/careers"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "epfo_recruitment",
+      "name": "Employees Provident Fund Organisation",
+      "category": "central",
+      "orgType": "central",
+      "baseUrl": "https://www.epfindia.gov.in/",
+      "listUrls": [
+        "https://www.epfindia.gov.in/site_en/Recruitments.php"
+      ],
+      "urls": [
+        "https://www.epfindia.gov.in/",
+        "https://www.epfindia.gov.in/site_en/Recruitments.php"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "kvs_recruitment",
+      "name": "Kendriya Vidyalaya Sangathan",
+      "category": "school",
+      "orgType": "autonomous",
+      "baseUrl": "https://kvsangathan.nic.in/",
+      "listUrls": [
+        "https://kvsangathan.nic.in/"
+      ],
+      "urls": [
+        "https://kvsangathan.nic.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "nvs_recruitment",
+      "name": "Navodaya Vidyalaya Samiti",
+      "category": "school",
+      "orgType": "autonomous",
+      "baseUrl": "https://navodaya.gov.in/",
+      "listUrls": [
+        "https://navodaya.gov.in/"
+      ],
+      "urls": [
+        "https://navodaya.gov.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "dsssb_recruitment",
+      "name": "Delhi Subordinate Services Selection Board",
+      "category": "school",
+      "orgType": "autonomous",
+      "baseUrl": "https://dsssb.delhi.gov.in/",
+      "listUrls": [
+        "https://dsssb.delhi.gov.in/"
+      ],
+      "urls": [
+        "https://dsssb.delhi.gov.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "ctet_calendar",
+      "name": "CTET",
+      "category": "exam_board",
+      "orgType": "autonomous",
+      "baseUrl": "https://ctet.nic.in/",
+      "listUrls": [
+        "https://ctet.nic.in/"
+      ],
+      "urls": [
+        "https://ctet.nic.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "aiims_recruitment",
+      "name": "AIIMS",
+      "category": "health",
+      "orgType": "autonomous",
+      "baseUrl": "https://www.aiimsexams.ac.in/",
+      "listUrls": [
+        "https://www.aiimsexams.ac.in/",
+        "https://www.aiims.edu/"
+      ],
+      "urls": [
+        "https://www.aiimsexams.ac.in/",
+        "https://www.aiims.edu/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "esic_recruitment",
+      "name": "ESIC",
+      "category": "health",
+      "orgType": "autonomous",
+      "baseUrl": "https://www.esic.gov.in/",
+      "listUrls": [
+        "https://www.esic.gov.in/recruitments"
+      ],
+      "urls": [
+        "https://www.esic.gov.in/",
+        "https://www.esic.gov.in/recruitments"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "daily",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "nhm_recruitment",
+      "name": "National Health Mission",
+      "category": "health",
+      "orgType": "central",
+      "baseUrl": "https://nhm.gov.in/",
+      "listUrls": [
+        "https://nhm.gov.in/"
+      ],
+      "urls": [
+        "https://nhm.gov.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "drdo_careers",
+      "name": "DRDO",
+      "category": "science",
+      "orgType": "central",
+      "baseUrl": "https://www.drdo.gov.in/",
+      "listUrls": [
+        "https://www.drdo.gov.in/drdo/careers"
+      ],
+      "urls": [
+        "https://www.drdo.gov.in/",
+        "https://www.drdo.gov.in/drdo/careers"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "isro_careers",
+      "name": "ISRO",
+      "category": "science",
+      "orgType": "central",
+      "baseUrl": "https://www.isro.gov.in/",
+      "listUrls": [
+        "https://www.isro.gov.in/Careers"
+      ],
+      "urls": [
+        "https://www.isro.gov.in/",
+        "https://www.isro.gov.in/Careers"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "barc_careers",
+      "name": "BARC",
+      "category": "science",
+      "orgType": "central",
+      "baseUrl": "https://www.barc.gov.in/",
+      "listUrls": [
+        "https://www.barc.gov.in/careers/"
+      ],
+      "urls": [
+        "https://www.barc.gov.in/",
+        "https://www.barc.gov.in/careers/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "gate_calendar",
+      "name": "GATE",
+      "category": "exam_board",
+      "orgType": "autonomous",
+      "baseUrl": "https://gate2027.iitm.ac.in/",
+      "listUrls": [
+        "https://gate2027.iitm.ac.in/"
+      ],
+      "urls": [
+        "https://gate2027.iitm.ac.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "nta_ugc_net_calendar",
+      "name": "UGC NET",
+      "category": "exam_board",
+      "orgType": "autonomous",
+      "baseUrl": "https://ugcnet.nta.nic.in/",
+      "listUrls": [
+        "https://ugcnet.nta.nic.in/"
+      ],
+      "urls": [
+        "https://ugcnet.nta.nic.in/"
+      ],
+      "priority": "P1",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "defence_army",
+      "name": "Join Indian Army",
+      "category": "defence",
+      "orgType": "central",
+      "baseUrl": "https://joinindianarmy.nic.in/",
+      "listUrls": [
+        "https://joinindianarmy.nic.in/"
+      ],
+      "urls": [
+        "https://joinindianarmy.nic.in/"
+      ],
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "defence_navy",
+      "name": "Join Indian Navy",
+      "category": "defence",
+      "orgType": "central",
+      "baseUrl": "https://www.joinindiannavy.gov.in/",
+      "listUrls": [
+        "https://www.joinindiannavy.gov.in/"
+      ],
+      "urls": [
+        "https://www.joinindiannavy.gov.in/"
+      ],
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
+      "render": null,
+      "publishedJobs": 0,
+      "lastScrape": null
+    },
+    {
+      "sourceId": "defence_airforce",
+      "name": "Indian Air Force careers",
+      "category": "defence",
+      "orgType": "central",
+      "baseUrl": "https://careerairforce.nic.in/",
+      "listUrls": [
+        "https://careerairforce.nic.in/"
+      ],
+      "urls": [
+        "https://careerairforce.nic.in/"
+      ],
+      "priority": "P1",
+      "method": "manual",
+      "cadence": "manual",
+      "enabled": false,
       "render": null,
       "publishedJobs": 0,
       "lastScrape": null
