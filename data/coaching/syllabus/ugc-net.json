@@ -1,0 +1,15 @@
+{
+  "seriesId": "ugc-net",
+  "unofficial": true,
+  "topics": [
+    { "id": "teaching", "title": "Teaching aptitude", "weight": 1 },
+    { "id": "research", "title": "Research aptitude", "weight": 1 },
+    { "id": "comprehension", "title": "Comprehension", "weight": 1 },
+    { "id": "communication", "title": "Communication", "weight": 1 },
+    { "id": "reasoning", "title": "Reasoning and maths", "weight": 1 },
+    { "id": "di", "title": "Data interpretation", "weight": 1 },
+    { "id": "ict", "title": "Information and communication technology", "weight": 1 },
+    { "id": "environment", "title": "People, development and environment", "weight": 1 },
+    { "id": "paper2", "title": "Subject paper (Paper II)", "weight": 1 }
+  ]
+}

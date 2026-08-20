@@ -1,0 +1,14 @@
+{
+  "seriesId": "ssc-cgl",
+  "unofficial": true,
+  "topics": [
+    { "id": "quant", "title": "Quantitative aptitude", "weight": 1 },
+    { "id": "reasoning", "title": "General intelligence and reasoning", "weight": 1 },
+    { "id": "english", "title": "English comprehension", "weight": 1 },
+    { "id": "ga", "title": "General awareness", "weight": 1 },
+    { "id": "di", "title": "Data interpretation", "weight": 1 },
+    { "id": "current", "title": "Current affairs", "weight": 1 },
+    { "id": "computer", "title": "Computer awareness", "weight": 1 },
+    { "id": "stats", "title": "Statistics (selected posts)", "weight": 1 }
+  ]
+}

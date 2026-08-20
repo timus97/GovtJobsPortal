@@ -287,6 +287,15 @@ export default function DeskDetailPage() {
                 onRemove={onRemoveFile}
               />
             </div>
+            {item.kind === 'series' ? (
+              <p>
+                <Link to={`/desk/${item.id}/plan`} className="btn btn-primary">
+                  Open study plan
+                </Link>
+              </p>
+            ) : (
+              <p className="muted">Track a calendar from Prepare to get an unofficial syllabus.</p>
+            )}
           </section>
         </div>
       </div>

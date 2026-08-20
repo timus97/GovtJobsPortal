@@ -1,0 +1,16 @@
+{
+  "seriesId": "upsc-cse",
+  "unofficial": true,
+  "topics": [
+    { "id": "prelims-gs", "title": "Prelims general studies", "weight": 1 },
+    { "id": "csat", "title": "CSAT", "weight": 1 },
+    { "id": "gs1", "title": "GS I — history, geography, society", "weight": 1 },
+    { "id": "gs2", "title": "GS II — polity, governance, IR", "weight": 1 },
+    { "id": "gs3", "title": "GS III — economy, environment, science", "weight": 1 },
+    { "id": "gs4", "title": "GS IV — ethics", "weight": 1 },
+    { "id": "optional", "title": "Optional subject", "weight": 1 },
+    { "id": "essay", "title": "Essay", "weight": 1 },
+    { "id": "current", "title": "Current affairs", "weight": 1 },
+    { "id": "interview", "title": "Personality test", "weight": 1 }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "seriesId": "ibps-po",
+  "unofficial": true,
+  "topics": [
+    { "id": "quant", "title": "Quantitative aptitude", "weight": 1 },
+    { "id": "reasoning", "title": "Reasoning ability", "weight": 1 },
+    { "id": "english", "title": "English language", "weight": 1 },
+    { "id": "ga", "title": "General and banking awareness", "weight": 1 },
+    { "id": "computer", "title": "Computer aptitude", "weight": 1 },
+    { "id": "di", "title": "Data analysis and interpretation", "weight": 1 },
+    { "id": "descriptive", "title": "Descriptive English", "weight": 1 },
+    { "id": "current", "title": "Current affairs", "weight": 1 }
+  ]
+}

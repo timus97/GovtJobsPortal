@@ -6,6 +6,7 @@ const jobsRouter = require('./routes/jobs');
 const matchRouter = require('./routes/match');
 const opsRouter = require('./routes/ops');
 const { router: accountRouter, meRouter } = require('./routes/account');
+const { router: coachingRouter, mePlanRouter } = require('./routes/coaching');
 const operatorStore = require('./services/operatorStore');
 const studentStore = require('./services/studentStore');
 const collectQueue = require('./services/collectQueue');
@@ -44,6 +45,8 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/ops', opsRouter);
 app.use('/api/account', accountRouter);
 app.use('/api/me', meRouter);
+app.use('/api/coaching', coachingRouter);
+app.use('/api/me', mePlanRouter);
 app.use('/api', jobsRouter);
 app.use('/api', matchRouter);
 
