@@ -37,21 +37,27 @@ router.post('/match', async (req, res) => {
       excluded: excluded.slice(0, limitNum),
     };
     // Never log the profile body.
-    console.log(
-      JSON.stringify({
-        requestId,
-        route: 'POST /api/match',
+    const logger = require('../services/logger');
+    logger.info('match', 'Scored opportunities', logger.fromReq(req, {
+      requestId,
+      action: 'match.run',
+      meta: {
         matchCount: payload.matches.length,
         excludedCount: payload.excluded.length,
         candidateCount: payload.candidateCount,
-      })
-    );
+        usedSessionProfile: Boolean(session && (!body.profile || typeof body.profile !== 'object')),
+      },
+    }));
     return res.json(payload);
   } catch (err) {
     if (err && err.statusCode === 400) {
       return res.status(400).json({ error: err.message, errors: err.errors || [] });
     }
-    console.error(JSON.stringify({ requestId, route: 'POST /api/match', error: err.message }));
+    const logger = require('../services/logger');
+    logger.error('match', err.message || 'Failed to match', logger.fromReq(req, {
+      requestId,
+      action: 'match.error',
+    }));
     return res.status(500).json({ error: 'Failed to match' });
   }
 });

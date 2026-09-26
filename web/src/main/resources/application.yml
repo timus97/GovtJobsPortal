@@ -1,0 +1,95 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    session:
+      timeout: 12h
+      cookie:
+        http-only: true
+        same-site: lax
+        # Local HTTP (8080/8090) needs false. Set COOKIE_SECURE=true in production HTTPS.
+        secure: ${COOKIE_SECURE:false}
+
+spring:
+  application:
+    name: govt-jobs-portal
+  thymeleaf:
+    cache: ${THYMELEAF_CACHE:false}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  datasource:
+    url: ${STUDENT_JDBC_URL:jdbc:postgresql://127.0.0.1:5432/govtjobs_students}
+    username: ${STUDENT_DATABASE_USER:govtjobs}
+    password: ${STUDENT_DATABASE_PASSWORD:govtjobs}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USER:}
+    password: ${SMTP_PASS:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${SMTP_STARTTLS:true}
+
+govtjobs:
+  feature:
+    student: ${FEATURE_STUDENT:true}
+    server-match: true
+    prepare: true
+    unpublish: ${FEATURE_UNPUBLISH:true}
+  ops:
+    allowed-suffixes:
+      - .gov.in
+      - .nic.in
+    extra-hosts:
+      - ibps.in
+      - sbi.co.in
+      - sbi.bank.in
+      - bank.sbi
+      - recruitment.sbi.bank.in
+      - becil.com
+      - nta.ac.in
+      - rbi.org.in
+      - opportunities.rbi.org.in
+      - nabard.org
+      - licindia.in
+      - gate2027.iitm.ac.in
+      - aiimsexams.ac.in
+      - aiims.edu
+      - ongcindia.com
+    user-agent: NoExamSarkariBot/1.0
+    connect-timeout-seconds: 15
+    request-timeout-seconds: 20
+    max-body-bytes: 524288
+  student:
+    password-min: 10
+    max-file-bytes: 5242880
+    import-json: ${STUDENT_IMPORT_JSON:true}
+  session:
+    secret: ${SESSION_SECRET:}
+    student-ttl-days: 14
+    ops-ttl-hours: 12
+    cookie-secure: ${COOKIE_SECURE:false}
+  mail:
+    from: ${MAIL_FROM:${SMTP_FROM:Sarkari Desk <onboarding@resend.dev>}}
+    public-site-url: ${PUBLIC_SITE_URL:http://localhost:8090}
+    resend-api-key: ${RESEND_API_KEY:}
+    reset-ttl-hours: 1
+  catalog:
+    page-size: 12
+  rate-limit:
+    window-minutes: 15
+    login-max: 5
+    collect-max: 20
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level [%thread] %logger{36} rid=%X{requestId:--} - %msg%n"
+  level:
+    root: INFO
+    in.govtjobs: INFO
+    org.springframework.security: WARN

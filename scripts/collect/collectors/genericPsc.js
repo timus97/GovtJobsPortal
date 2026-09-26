@@ -6,6 +6,8 @@ const { fetchText, sleep } = require('../lib/http');
 const { saveRaw } = require('../lib/rawStore');
 const { extractLinks } = require('../lib/htmlLinks');
 const { toStagingRecord, dedupeByUrl } = require('../lib/toStaging');
+const { recordsFromNoticeLinks } = require('../lib/collectNotices');
+const { isKeepableJobLink } = require('../lib/jobLinkQuality');
 const {
   parseCalendarHtml,
   looksBlocked,
@@ -33,7 +35,8 @@ function candidateUrls(source) {
 function isPscNoticeLink(link) {
   const blob = `${link.title || ''} ${link.href || ''}`;
   if (SKIP_RE.test(blob)) return false;
-  return NOTICE_RE.test(blob);
+  if (!NOTICE_RE.test(blob) && !link.isPdf) return false;
+  return isKeepableJobLink(link) || Boolean(link.isPdf && NOTICE_RE.test(blob));
 }
 
 function toPscRecord(item, source, meta, extras = {}) {
@@ -119,15 +122,22 @@ async function collectGenericPsc(source, ctx) {
       for (const row of parsed.calendarRows) {
         records.push(calendarToRecord(row, source, url, collectedAt));
       }
-      for (const link of parsed.links) {
-        records.push(
-          toPscRecord({ ...link, sourceUrl: url }, source, {
-            collectedAt,
-            collectorVersion: 'scrape-v1',
-            listUrl: url,
-          })
-        );
-      }
+      const built = await recordsFromNoticeLinks(
+        parsed.links.map((link) => ({ ...link, sourceUrl: url })),
+        source,
+        ctx,
+        {
+          organization: source.name,
+          hasExam: true,
+          selectionProcess: 'written_multi_stage',
+          extraText: 'written examination multi stage state PSC',
+          eligibility: ['Eligibility must be verified on the official site.'],
+          eligibilityParse: { complete: false },
+          collectorVersion: 'scrape-v1',
+        }
+      );
+      errors.push(...built.errors);
+      records.push(...built.records);
     } catch (err) {
       errors.push({
         url: listUrl,

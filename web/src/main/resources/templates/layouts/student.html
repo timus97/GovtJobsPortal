@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:replace="${title}">Sarkari Desk</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+    <link rel="stylesheet" th:href="@{/css/mock.css}" />
+    <link rel="stylesheet" th:href="@{/css/study-plan.css}" />
+  </head>
+  <body>
+    <div class="app-shell theme-student">
+      <div class="disclaimer-bar">
+        Aggregator only — not an official eligibility decision. Always verify on the official site.
+      </div>
+      <header class="site-header">
+        <div class="container header-inner">
+          <a th:href="${flags.student} ? '/match' : '/jobs'" class="brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span>
+              <strong>Sarkari Desk</strong>
+              <span class="brand-sub">Your matches · search · prepare</span>
+            </span>
+          </a>
+          <nav class="nav" aria-label="Student">
+            <a th:if="${flags.student}" href="/match" th:class="${nav == 'match'} ? 'nav-link active' : 'nav-link'">Matches</a>
+            <a href="/jobs" th:class="${nav == 'jobs'} ? 'nav-link active' : 'nav-link'">Search</a>
+            <a href="/prepare" th:class="${nav == 'prepare'} ? 'nav-link active' : 'nav-link'">Prepare</a>
+            <a th:if="${flags.student}" href="/profile" th:class="${nav == 'profile'} ? 'nav-link active' : 'nav-link'">Profile</a>
+            <a th:if="${flags.student}" href="/dashboard" th:class="${nav == 'desk'} ? 'nav-link active' : 'nav-link'">Desk</a>
+            <span class="nav-user" th:if="${flags.student}" th:text="${currentEmail}">signed in</span>
+            <form th:if="${flags.student}" method="post" th:action="@{/account/logout}" style="display:inline">
+              <button class="nav-link" type="submit">Sign out</button>
+            </form>
+          </nav>
+        </div>
+      </header>
+      <main class="main" th:replace="${content}"></main>
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <p>Private exam desk on this host. Jobs are pointers to official notifications — apply on the board or PSU site.</p>
+          <p class="muted small">Operator? <a href="/ops/login">Open the admin console</a></p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

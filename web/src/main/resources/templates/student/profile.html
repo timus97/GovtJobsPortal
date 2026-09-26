@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Profile | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section">
+        <div class="container profile-layout">
+          <div>
+            <h1>Eligibility profile</h1>
+            <p class="muted">Reservation category is required. Age uses the notification as-on date. Never treated as an official decision.</p>
+            <p class="match-banner" th:if="${complete}">Profile is complete. <a href="/match">See matches</a>.</p>
+            <p class="muted" th:unless="${complete}">Fill the required fields to enable matching.</p>
+          </div>
+          <form class="panel profile-form" method="post" th:action="@{/profile}">
+            <label class="field">
+              <span>Date of birth *</span>
+              <input type="date" name="dob" required th:value="${profile['dob']}" />
+            </label>
+            <label class="field">
+              <span>Highest education *</span>
+              <select name="highestEducation" required>
+                <option value="">Select</option>
+                <option value="below_10" th:selected="${profile['highestEducation'] == 'below_10'}">Below 10th</option>
+                <option value="10th" th:selected="${profile['highestEducation'] == '10th'}">10th</option>
+                <option value="12th" th:selected="${profile['highestEducation'] == '12th'}">12th</option>
+                <option value="iti" th:selected="${profile['highestEducation'] == 'iti'}">ITI</option>
+                <option value="diploma" th:selected="${profile['highestEducation'] == 'diploma'}">Diploma</option>
+                <option value="graduate" th:selected="${profile['highestEducation'] == 'graduate'}">Graduate</option>
+                <option value="pg" th:selected="${profile['highestEducation'] == 'pg'}">Postgraduate</option>
+                <option value="phd" th:selected="${profile['highestEducation'] == 'phd'}">PhD</option>
+                <option value="experience" th:selected="${profile['highestEducation'] == 'experience'}">Experience only</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Discipline</span>
+              <select name="educationDiscipline">
+                <option value="">Not specified</option>
+                <option th:each="d : ${ {'any','engineering','commerce','arts','science','law','medical'} }" th:value="${d}" th:text="${d}" th:selected="${profile['educationDiscipline'] == d}"></option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Reservation category *</span>
+              <select name="reservationCategory" required>
+                <option value="">Select</option>
+                <option value="UR" th:selected="${profile['reservationCategory'] == 'UR'}">UR — Unreserved</option>
+                <option value="EWS" th:selected="${profile['reservationCategory'] == 'EWS'}">EWS</option>
+                <option value="OBC" th:selected="${profile['reservationCategory'] == 'OBC'}">OBC</option>
+                <option value="SC" th:selected="${profile['reservationCategory'] == 'SC'}">SC</option>
+                <option value="ST" th:selected="${profile['reservationCategory'] == 'ST'}">ST</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Birth state *</span>
+              <select name="birthState" required>
+                <option value="">Select</option>
+                <option th:each="st : ${states}" th:value="${st.key}" th:text="${st.value}" th:selected="${profile['birthState'] == st.key}"></option>
+              </select>
+            </label>
+            <fieldset class="field">
+              <legend>Domicile states *</legend>
+              <div class="domicile-grid">
+                <label class="check-inline" th:each="st : ${states}">
+                  <input type="checkbox" name="domicileStates" th:value="${st.key}" th:checked="${profile['domicileStates'] != null and #lists.contains(profile['domicileStates'], st.key)}" />
+                  <span th:text="${st.value}"></span>
+                </label>
+              </div>
+            </fieldset>
+            <label class="field">
+              <span>Gender</span>
+              <select name="gender">
+                <option value="">Not specified</option>
+                <option value="male" th:selected="${profile['gender'] == 'male'}">Male</option>
+                <option value="female" th:selected="${profile['gender'] == 'female'}">Female</option>
+                <option value="other" th:selected="${profile['gender'] == 'other'}">Other</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>PwBD</span>
+              <select name="pwbdHas">
+                <option value="no">No disability declared</option>
+                <option value="yes" th:selected="${profile['pwbd'] != null and profile['pwbd']['hasDisability']}">Has disability</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>PwBD category</span>
+              <select name="pwbdCategory">
+                <option value="">None</option>
+                <option value="VH">VH</option>
+                <option value="HH">HH</option>
+                <option value="OH">OH</option>
+                <option value="others">Others</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" type="submit">Save profile</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

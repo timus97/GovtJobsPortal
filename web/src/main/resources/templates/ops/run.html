@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Review item | Ops</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container" th:if="${job == null}"><p>Not found.</p></div>
+      <div class="section container" th:unless="${job == null}">
+        <p><a class="back-link" href="/ops/review">← Review</a></p>
+        <p class="badge" th:text="${job.state}"></p>
+        <p class="muted" th:text="${job.url}"></p>
+        <form class="panel" method="post" th:action="@{/ops/runs/{id}(id=${job.id})}">
+          <label class="field"><span>Title</span><input name="title" th:value="${job.extracted?.title}" /></label>
+          <label class="field"><span>Organisation</span><input name="organization" th:value="${job.extracted?.organization}" /></label>
+          <label class="field"><span>Official URL</span><input name="officialUrl" th:value="${job.extracted?.officialUrl}" /></label>
+          <label class="field"><span>Last date</span><input name="lastDate" placeholder="YYYY-MM-DD" th:value="${job.extracted?.lastDate}" /></label>
+          <label class="field"><span>Selection</span><input name="selectionProcess" th:value="${job.extracted?.selectionProcess}" /></label>
+          <label class="field"><span>Summary</span><textarea name="summary" th:text="${job.extracted?.summary}"></textarea></label>
+          <label class="check-inline"><input type="checkbox" name="hasExam" th:checked="${job.extracted?.hasExam}" /> Has exam</label>
+          <button class="btn btn-secondary" name="action" value="save" type="submit">Save facts</button>
+          <button class="btn btn-primary" name="action" value="publish" type="submit">Publish locally</button>
+          <button class="btn btn-secondary" name="action" value="unpublish" type="submit" th:if="${flags.unpublish}">Unpublish</button>
+          <label class="field"><span>Reject reason</span><input name="reason" /></label>
+          <button class="btn btn-secondary" name="action" value="reject" type="submit">Reject</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

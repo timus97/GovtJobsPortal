@@ -5,12 +5,10 @@
 const { fetchText } = require('../lib/http');
 const { saveRaw } = require('../lib/rawStore');
 const { extractLinks } = require('../lib/htmlLinks');
-const { toStagingRecord, dedupeByUrl } = require('../lib/toStaging');
+const { recordsFromNoticeLinks } = require('../lib/collectNotices');
+const { isKeepableJobLink } = require('../lib/jobLinkQuality');
+const { dedupeByUrl } = require('../lib/toStaging');
 const { looksBlocked } = require('../lib/calendarPdf');
-
-const NOTICE_RE =
-  /recruit|vacanc|notif|advert|advt|opening|career|apply|engagement|appointment|vacancy/i;
-const SKIP_RE = /login|captcha|facebook|twitter|youtube|tender only|rti/i;
 
 function candidateUrls(source) {
   const urls = [];
@@ -25,13 +23,11 @@ function candidateUrls(source) {
 }
 
 function isBoardNoticeLink(link) {
-  const blob = `${link.title || ''} ${link.href || ''}`;
-  if (SKIP_RE.test(blob)) return false;
-  return NOTICE_RE.test(blob);
+  return isKeepableJobLink(link);
 }
 
 function parseBoardPage(html, pageUrl) {
-  const links = extractLinks(html, pageUrl, { jobLikeOnly: false, limit: 80 }).filter(isBoardNoticeLink);
+  const links = extractLinks(html, pageUrl, { jobLikeOnly: true, limit: 80 }).filter(isBoardNoticeLink);
   return { links, parsed: links.length > 0 };
 }
 
@@ -62,22 +58,21 @@ async function collectGenericBoard(source, ctx) {
       const parsed = parseBoardPage(text, url);
       if (parsed.parsed) parsedOk += 1;
       linksFound += parsed.links.length;
-      for (const link of parsed.links) {
-        const rec = toStagingRecord(
-          {
-            ...link,
-            sourceUrl: url,
-            organization: source.name,
-            extraText: source.opportunityType === 'apprenticeship' ? 'apprenticeship' : '',
-            eligibility: ['Eligibility must be verified on the official site.'],
-          },
-          source,
-          { collectedAt, collectorVersion: 'scrape-v1', listUrl: url }
-        );
-        rec.eligibilityParse = { complete: false };
-        if (source.opportunityType) rec.opportunityType = source.opportunityType;
-        records.push(rec);
-      }
+      const built = await recordsFromNoticeLinks(
+        parsed.links.map((link) => ({ ...link, sourceUrl: url })),
+        source,
+        ctx,
+        {
+          organization: source.name,
+          extraText: source.opportunityType === 'apprenticeship' ? 'apprenticeship' : '',
+          eligibility: ['Eligibility must be verified on the official site.'],
+          eligibilityParse: { complete: false },
+          opportunityType: source.opportunityType,
+          collectorVersion: 'scrape-v1',
+        }
+      );
+      errors.push(...built.errors);
+      records.push(...built.records);
     } catch (err) {
       errors.push({ url: listUrl, message: err.message || String(err) });
     }

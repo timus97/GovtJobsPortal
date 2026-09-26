@@ -27,13 +27,13 @@ const HIGHLIGHTS_HTML = `
     <th>LAST DATE (DD/MM/YYYY)</th>
   </tr>
   <tr>
-    <td>FLUID CONTROL RESEARCH INSTITUTE</td>
+    <td><a href="https://www.fcriindia.com/recruitment/research-engineer">FLUID CONTROL RESEARCH INSTITUTE</a></td>
     <td>RESEARCH ENGINEER &amp; OTHERS</td>
     <td>Recruitment</td>
     <td>24/08/2026</td>
   </tr>
   <tr>
-    <td>NATIONAL COUNCIL FOR COOPERATIVE TRAINING</td>
+    <td><a href="https://ncct.ac.in/recruitment/consultant-legal">NATIONAL COUNCIL FOR COOPERATIVE TRAINING</a></td>
     <td>CONSULTANT (LEGAL)</td>
     <td>Recruitment</td>
     <td>23/08/2026</td>
@@ -85,6 +85,7 @@ function main() {
   const research = highlights.find((r) => /research engineer/i.test(r.title));
   assert.strictEqual(research.lastDate, '2026-08-24');
   assert.ok(!highlights.some((r) => /view more/i.test(r.title)), 'View More is not a vacancy');
+  assert.ok(!highlights.some((r) => /Home\.aspx#/i.test(r.officialUrl || '')), 'no Home.aspx# slugs');
   assert.ok(
     !highlights.some((r) => /\.pdf/i.test(r.officialUrl || '')),
     'highlights parser must not pick the e-paper PDF'

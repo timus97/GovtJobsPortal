@@ -66,7 +66,7 @@ function findLastDateHint(text) {
     const d = parseDateFromText(labeled[1]);
     if (d) return d;
   }
-  return parseDateFromText(s);
+  return null;
 }
 
 module.exports = { parseDateFromText, findLastDateHint };

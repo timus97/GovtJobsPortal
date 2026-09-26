@@ -191,7 +191,7 @@ export default function DeskDetailPage() {
   if (error && !item) {
     return (
       <div className="section container">
-        <p className="error-box">{error}</p>
+        <p className="muted">This desk item is unavailable right now.</p>
         <Link to="/dashboard">← Back to desk</Link>
       </div>
     )
@@ -213,7 +213,7 @@ export default function DeskDetailPage() {
             ← Back to dashboard
           </Link>
         </p>
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Could not update this item just now.</p>}
 
         <div className="desk-card-top">
           <div>

@@ -1,13 +1,16 @@
 {
-  "startedAt": "2026-07-11T15:00:08.972Z",
-  "finishedAt": "2026-07-11T15:00:09.051Z",
-  "durationMs": 80,
+  "startedAt": "2026-08-21T14:56:43.166Z",
+  "finishedAt": "2026-08-21T14:56:43.226Z",
+  "durationMs": 66,
   "inputSeed": 20,
-  "inputStaging": 788,
-  "inputTotal": 808,
-  "published": 627,
-  "quarantine": 1,
-  "droppedExam": 23,
-  "deduped": 157,
-  "sourcesMonitored": 200
+  "inputStaging": 643,
+  "inputTotal": 663,
+  "published": 27,
+  "quarantine": 636,
+  "droppedExam": 0,
+  "skippedCalendar": 0,
+  "keptPublished": 0,
+  "examSeries": 25,
+  "deduped": 0,
+  "sourcesMonitored": 168
 }

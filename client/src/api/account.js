@@ -55,6 +55,27 @@ export function meAccount() {
   return accountFetch('/account/me')
 }
 
+export function requestPasswordReset(email) {
+  return accountFetch('/account/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+export function peekResetToken(token) {
+  const qs = new URLSearchParams({ token: token || '' })
+  return accountFetch(`/account/reset-password?${qs.toString()}`)
+}
+
+export async function resetPassword(token, password) {
+  const body = await accountFetch('/account/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, password }),
+  })
+  notifyStudentSession()
+  return body
+}
+
 export function getServerProfile() {
   return accountFetch('/me/profile')
 }

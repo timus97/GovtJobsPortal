@@ -104,7 +104,7 @@ export default function MockPage() {
   if (error && !bank) {
     return (
       <div className="section container mock-page">
-        <p className="error-box">{error}</p>
+        <p className="muted">This mock is unavailable right now.</p>
         <Link to={`/desk/${id}`}>← Back to desk</Link>
       </div>
     )
@@ -133,7 +133,7 @@ export default function MockPage() {
         <p className="mock-disclaimer" role="note">
           Unofficial practice questions — not an official paper. Verify on the official website.
         </p>
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Could not save this attempt just now.</p>}
 
         <div className="mock-top">
           <div>

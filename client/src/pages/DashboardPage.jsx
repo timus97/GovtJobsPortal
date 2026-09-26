@@ -123,7 +123,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Your desk is unavailable right now. Try again in a moment.</p>}
 
         {showCustom && (
           <form className="panel desk-custom" onSubmit={onCustom}>

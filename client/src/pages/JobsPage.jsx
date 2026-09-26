@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { fetchFilters, fetchJobs } from '../api/jobs'
 import JobCard from '../components/JobCard'
 import JobFilters from '../components/JobFilters'
@@ -20,6 +20,8 @@ const defaultFilters = {
 }
 
 export default function JobsPage() {
+  const location = useLocation()
+  const adminCatalog = location.pathname.startsWith('/ops')
   const [searchParams] = useSearchParams()
   const [meta, setMeta] = useState({})
   const [values, setValues] = useState(() => ({
@@ -56,9 +58,11 @@ export default function JobsPage() {
       <div className="container">
         <div className="section-head">
           <div>
-            <h1>Job listings</h1>
+            <h1>{adminCatalog ? 'Catalog jobs' : 'Search jobs'}</h1>
             <p className="muted">
-              Central, PSU and government company openings — exam and interview routes
+              {adminCatalog
+                ? 'Full published catalog. Independent of any student profile.'
+                : 'Look up any open listing. This search does not use your profile — see Matches for ranked results.'}
             </p>
           </div>
           <p className="result-count">
@@ -74,7 +78,7 @@ export default function JobsPage() {
             onReset={() => setValues(defaultFilters)}
           />
           <div>
-            {error && <p className="error-box">{error}</p>}
+            {error && <p className="muted">Listings are unavailable right now. Try again in a moment.</p>}
             <div className="job-grid">
               {result.items.map((job) => (
                 <JobCard key={job.id} job={job} />

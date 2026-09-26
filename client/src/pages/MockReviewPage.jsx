@@ -39,7 +39,7 @@ export default function MockReviewPage() {
   if (error && !payload) {
     return (
       <div className="section container mock-page">
-        <p className="error-box">{error}</p>
+        <p className="muted">This review is unavailable right now.</p>
         <Link to={`/desk/${id}`}>← Back to desk</Link>
       </div>
     )

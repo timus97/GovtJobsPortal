@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import '../App.css'
 import { Link, useParams } from 'react-router-dom'
 import { fetchJob } from '../api/jobs'
+import { useCatalogBase } from '../lib/catalogBase'
 import TrackButton from '../components/TrackButton'
 import {
   ORG_TYPE_LABELS,
@@ -14,6 +15,7 @@ import {
 
 export default function JobDetailPage() {
   const { id } = useParams()
+  const jobsBase = useCatalogBase()
   const [job, setJob] = useState(null)
   const [error, setError] = useState('')
 
@@ -27,8 +29,8 @@ export default function JobDetailPage() {
   if (error) {
     return (
       <div className="section container">
-        <p className="error-box">{error}</p>
-        <Link to="/jobs">← Back to jobs</Link>
+        <p className="muted">This listing is unavailable right now.</p>
+        <Link to={jobsBase}>← Back to jobs</Link>
       </div>
     )
   }
@@ -45,7 +47,7 @@ export default function JobDetailPage() {
     <div className="section">
       <div className="container detail-layout">
         <p>
-          <Link to="/jobs" className="back-link">
+          <Link to={jobsBase} className="back-link">
             ← All jobs
           </Link>
         </p>

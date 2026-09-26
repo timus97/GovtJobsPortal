@@ -175,13 +175,13 @@ export default function ProfilePage() {
             <h1>Your profile</h1>
             <p className="muted">
               {student
-                ? `Signed in as ${student.email}. Facts are saved on this API host for match and your desk.`
-                : 'Stored in this browser until you sign in. Create an account to keep the profile on the API host.'}
+                ? `Signed in as ${student.email}. Matches use these facts. Reservation category is required.`
+                : 'Stored in this browser until you sign in.'}
             </p>
           </div>
         </div>
 
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Could not save just now. Try again in a moment.</p>}
         {importOffer && student && (
           <div className="match-banner" role="note">
             This browser has a saved profile.{' '}
@@ -364,10 +364,9 @@ export default function ProfilePage() {
             </p>
           )}
           {!complete && (
-            <p className="error-box">
+            <p className="muted small">
               Complete date of birth, highest education, reservation category, birth state, and at
-              least one domicile state before matching. Incomplete profiles are not sent to the
-              match API.
+              least one domicile state before matching.
             </p>
           )}
         </form>

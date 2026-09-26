@@ -53,17 +53,13 @@ async function extractJobLinksFromPage(page, listUrl) {
     /* ignore */
   }
 
-  const links = await page.evaluate(() => {
-    const JOB =
-      /career|recruit|vacanc|notification|opening|walk|apprentice|advertisement|advt|employment|job|apply|circular|consultant|contract|engagement/i;
+  const raw = await page.evaluate(() => {
     const out = [];
     const seen = new Set();
     for (const a of document.querySelectorAll('a[href]')) {
       const href = a.href;
       if (!href || href.startsWith('javascript') || href === '#' || seen.has(href)) continue;
       const text = (a.innerText || a.textContent || a.getAttribute('title') || '').replace(/\s+/g, ' ').trim();
-      const blob = `${text} ${href}`;
-      if (!JOB.test(blob)) continue;
       seen.add(href);
       out.push({
         title: (text || href).slice(0, 240),
@@ -72,9 +68,11 @@ async function extractJobLinksFromPage(page, listUrl) {
         isPdf: /\.pdf(\?|#|$)/i.test(href),
       });
     }
-    return out.slice(0, 80);
+    return out.slice(0, 200);
   });
 
+  const { filterJobLinks } = require('./jobLinkQuality');
+  const links = filterJobLinks(raw);
   const html = await page.content();
   return { links, html, finalUrl: page.url() };
 }

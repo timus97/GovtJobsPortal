@@ -9,8 +9,17 @@ const { classifySelectionText } = require(path.join(
 ));
 const { findLastDateHint } = require('./dates');
 
+function cleanTitle(raw) {
+  return String(raw || '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*\(\s*\|?\s*PDF\s*\|[^)]*\)/gi, '')
+    .replace(/\(पीडीएफ[^)]*\)/gi, '')
+    .replace(/\s*\|\s*(PDF|English|Hindi)\s*$/i, '')
+    .trim();
+}
+
 function toStagingRecord(item, source, meta = {}) {
-  const title = String(item.title || '').replace(/\s+/g, ' ').trim();
+  const title = cleanTitle(item.title);
   const officialUrl = item.href || item.officialUrl;
   const summary = String(item.summary || item.text || title).slice(0, 800);
   const blob = `${title} ${summary} ${item.extraText || ''} ${item.pdfText || ''}`;
@@ -58,8 +67,16 @@ function toStagingRecord(item, source, meta = {}) {
     hasExam = false;
   }
 
+  const selectionInferred = Boolean(
+    classified.selectionProcess && classified.reason && classified.reason !== 'unknown'
+  );
+
   const lastDate =
     item.lastDate || findLastDateHint(blob) || findLastDateHint(title) || null;
+
+  const nMatch = blob.match(
+    /(?:advt(?:ertisement)?|notification|vacancy)\s*(?:no\.?|number|#)?\s*[:\-]?\s*([A-Z0-9][A-Z0-9\/\-.]{3,40})/i
+  );
 
   const organization =
     item.organization ||
@@ -105,10 +122,27 @@ function toStagingRecord(item, source, meta = {}) {
           ]),
     documentsRequired: item.documentsRequired || [],
     needsReview: Boolean(needsReview || !lastDate),
+    selectionInferred,
+    notificationNo: item.notificationNo || (nMatch && nMatch[1]) || null,
     pdfHash: item.pdfHash || null,
     collectedAt: meta.collectedAt || new Date().toISOString(),
     collectorVersion: meta.collectorVersion || 'scrape-v1',
   };
+
+  try {
+    require('./collectProgress').noteFinding({
+      ...rec,
+      pageUrl: rec.sourceUrl,
+      url: rec.officialUrl,
+      kind: /pdf/i.test(rec.collectorVersion) ? 'pdf' : /highlight/i.test(rec.collectorVersion) ? 'html' : 'html',
+      status: 'kept',
+      excerpt: rec.summary,
+    });
+  } catch {
+    /* progress is optional */
+  }
+
+  return rec;
 }
 
 function dedupeByUrl(records) {

@@ -6,7 +6,28 @@ Not affiliated with the Government of India or any board or PSU. Every listing i
 
 **Repo:** https://github.com/timus97/GovtJobsPortal  
 **Default branch:** `master`  
-**Design (accepted):** [docs/ALL_GOVT_JOBS_DESIGN.md](docs/ALL_GOVT_JOBS_DESIGN.md) (PR01–PR10) · [docs/STUDENT_COACHING_DESIGN.md](docs/STUDENT_COACHING_DESIGN.md) (Stage 7 PR11–PR16)
+**Design (accepted):** [docs/ALL_GOVT_JOBS_DESIGN.md](docs/ALL_GOVT_JOBS_DESIGN.md) (PR01–PR10) · desk accounts in [docs/STUDENT_COACHING_DESIGN.md](docs/STUDENT_COACHING_DESIGN.md) (PR11–PR16). Coaching packs in that doc are **out of scope**.
+
+**Java 21 product host:** [docs/JAVA21_REWRITE.md](docs/JAVA21_REWRITE.md). Spring Boot + Thymeleaf (HTML/CSS). Node remains for collectors until the UI is done.
+
+This machine’s default `JAVA_HOME` is JDK 17. Temurin 21 is stored in `.grok/java-home.txt`. Always start the host with that JDK:
+
+```powershell
+.\scripts\start-web.ps1
+```
+
+That loads Temurin 21, starts Postgres 16 (`docker compose` `student-db`), packages `web` if needed, and binds **8090** (8080 is taken here). Open http://localhost:8090 — register, profile, match, jobs, prepare, desk, ops.
+
+Set `SESSION_SECRET` yourself before starting. The start script falls back to a shared local value when it is unset. Leave `RESEND_API_KEY` empty unless you have created your own key. `COOKIE_SECURE=true` is required before any public HTTPS host, or the forgot-password page prints the reset link.
+
+Student accounts live in Postgres. Password reset uses SMTP/Resend when configured; locally it prints a one-time link on `/account/forgot` (`mail=dev` on `/health`).
+
+For any other Maven/Java command:
+
+```powershell
+. .\scripts\java21.ps1
+.\mvnw.cmd test
+```
 
 ---
 
@@ -22,7 +43,7 @@ This portal is a **catalog + matcher + exam desk**, not a gazette and not an app
 | **Profile `/profile` + Match `/match`** | A candidate who will state DOB, education, state, and reservation category | Ranks currently open opportunities with pass / fail / unknown reasons. Not an official decision. Reservation category is required. |
 | **Prepare `/prepare`** | Someone starting UPSC / SSC / IBPS / NET / GATE / CTET study | Official calendar rows (ExamSeries). No “Apply” unless a linked vacancy is actually open. |
 | **Ops `/ops`** | Site operators only | Sign in, paste an official HTTPS URL, review extracted facts, publish or unpublish. |
-| **Student exam desk** | A student on the API host | Register, server profile, dashboard tracker, days-left, private admit/result files, unofficial syllabus/plan, unofficial mocks. |
+| **Student exam desk** | A student on the Java host | Register, server profile, dashboard tracker, days-left, private admit/result files. Syllabus, study plan, and mocks are **out of scope**. |
 
 ### In scope
 
@@ -33,7 +54,9 @@ This portal is a **catalog + matcher + exam desk**, not a gazette and not an app
 
 ### Out of scope (locked)
 
-- Student accounts on GitHub Pages. Accounts exist only on the always-on API host. No email verify, password reset, or OAuth in v1.
+- **Coaching** (syllabus packs, study plans, timed mocks). Four sample packs remain under `data/coaching/` and are not being extended.
+- **Hosting.** GitHub Pages is not the product. Deploy the Java host later, when the UI is complete. Do not refresh `client/public/data/` for Pages.
+- Email verify and OAuth. Password reset exists on the Java host (dev link locally; SMTP or Resend when configured).
 - Putting student PII or admit/result files in git, Pages, or `data/cache/portal.sqlite`.
 - Republishing official PDFs, hall tickets, or full gazette text.
 - Applying on the candidate’s behalf, OAuth to board sites, or fee payment.
@@ -45,18 +68,21 @@ This portal is a **catalog + matcher + exam desk**, not a gazette and not an app
 
 ---
 
-## Current snapshot (after design PR10, 2026-08-20)
+## Where the project is (2026-09-26)
 
-| Metric | Now | v1 envelope in the design |
-| --- | --- | --- |
-| Published jobs | 628 (563 open) | 2,000–10,000 opportunities |
-| Exam series | 25 | ~200 capacity |
-| Registry sources | 307 / 241 enabled | P0 boards + P1 verticals + existing PSU pages |
-| Match p95 (10k synthetic) | ~71 ms | < 200 ms |
-| Processed JSON + raw | ~1.8 MB | < 2 GB year 1 |
-| Last process run in git | 2026-07-11 | Daily collect on GHA |
+**Now:** build the Java UI and its design. **Next:** migrate collectors from Node to Java. **Later:** host the finished app. Coaching stays out.
 
-Collectors for UPSC, SSC, IBPS, SBI, RRB, 10 PSCs, and P1 boards **are registered**. The published `jobs.json` is still the pre-expansion snapshot plus one exam fixture until the next successful daily collect + process.
+| Area | State |
+| --- | --- |
+| Java UI: landing, `/jobs`, `/prepare`, `/profile`, `/match`, desk, ops paste | Usable locally on `:8090`. This is the work in progress. |
+| Student desk | Postgres 16, Flyway `V1__student_desk.sql`, signed `student_session` / `ops_session`, forgot/reset, files on disk |
+| Coaching | Out of scope. Packs exist for `upsc-cse`, `ssc-cgl`, `ibps-po`, `ugc-net` only. |
+| Ops | Local paste / review / publish. No source edit, no git ingest. Publish writes `jobs.json` and does not update `opportunities.json`, which Match prefers when that file is non-empty. |
+| Catalog in git | 27 jobs (1 open SSC fixture, last date 2026-09-30), 25 exam series, 636 quarantined. `stats.json` `lastPipelineRunAt` is 2026-08-21. Registry: 308 sources, 168 enabled. |
+| Collectors | Still Node (`scripts/collect/runDaily.js`). Java `collect process` only checks that the JSON files exist. |
+| Hosting | Not in progress. Ignore https://timus97.github.io/GovtJobsPortal/ until we choose a host. |
+
+Node `client/`, `server/`, and `scripts/collect/` stay in the tree until collector migration and cutover. Do not delete them in UI work.
 
 ---
 
@@ -68,9 +94,7 @@ Collectors for UPSC, SSC, IBPS, SBI, RRB, 10 PSCs, and P1 boards **are registere
 4. `/match` calls `POST /api/match`. Each row has chips (age, education, PwBD, category, last date). Unknown facts lower confidence; they do not fail the row.
 5. `/prepare` lists calendars. Apply only appears when a linked opportunity is open. **Track** adds the calendar to the desk.
 6. API host only: `/account/register` then `/dashboard`. Track jobs (or **I applied**), add a custom exam, see days-left. `/desk/:id` holds one private admit card and one result.
-7. `/desk/:id/plan` and `/desk/:id/mock` are unofficial syllabus/plan and unofficial timed mocks. Always verify the official site.
-
-Persistent copy on match and desk: **“Not an official eligibility decision.”** Mocks and syllabus are always labelled **unofficial**.
+Persistent copy on match and desk: **“Not an official eligibility decision.”** Desk plan and mock routes still exist from earlier work; they are not part of the current UI.
 
 ---
 
@@ -87,28 +111,39 @@ Persistent copy on match and desk: **“Not an official eligibility decision.”
 ## Architecture
 
 ```
-GitHub Actions (45 min)          Git (catalog SoR)              Always-on Express + SPA + disk
-----------------------           -----------------              -----------------------
-runDaily.js collectors  -->      data/processed/jobs.json       GET /api/jobs
-calendar PDF parser              data/processed/exam_series.json POST /api/match
-buildJobs.js (seed+staging)      data/sources/registry.json     /ops paste-URL queue
-prepareStaticData.js (Pages)     data/staging/ops_paste/        optional SQLite catalog cache
-                                 (never student PII)            student JSON + files on disk
+Node collectors (until the UI is done)     Git (catalog SoR)              Java 21 host (local)
+-------------------------------------      -----------------              -------------------
+scripts/collect/runDaily.js          -->   data/processed/jobs.json       Thymeleaf pages :8090
+scripts/process/buildJobs.js               exam_series.json               Match, desk, ops
+                                           data/sources/registry.json     Postgres 16 students
+                                           (never student PII)            admit/result files on disk
 ```
 
 | Layer | Path | Notes |
 | --- | --- | --- |
-| SPA | `client/` | React 19 + Vite 8. Routes in `client/src/App.jsx`. |
-| API | `server/src/` | Express on `:4000`. CORS + credentials. |
-| Shared rules | `shared/` | Job / opportunity / exam-series schemas; `eligibilityMatch.js` + `eligibilityFacts.js`. |
-| Collect | `scripts/collect/` | Registry-driven. Special collectors + `genericPsc` / `genericBoard` / `genericCareers`. |
-| Process | `scripts/process/buildJobs.js` | Rebuilds published JSON from **seed + staging**. Does not drop exams. |
-| Optional cache | `server/src/db/sqlite.js` | Catalog-only. Rebuilt by `scripts/migrate/jsonToSqlite.js` on boot. Never student tables. |
-| Student SoR | `STUDENT_STORE=json` or `postgres` | Configurable. JSON file **or** Docker Postgres. Files on disk. **Never** `portal.sqlite`. |
+| Product UI | `web/` | Spring Boot 3.4 + Thymeleaf. This is what we are designing. |
+| Rules | `domain/` | Schemas, match, desk rules. Port of `shared/`. |
+| Collect CLI | `collect/` | `process` does not rebuild the catalog yet. |
+| Collectors | `scripts/collect/` | Still the daily crawl. Migrate to Java after the UI. |
+| Previous UI | `client/` + `server/` | React + Express. Keep until cutover. Not the host. |
+| Student SoR | Postgres `govtjobs_students` | Flyway `web/src/main/resources/db/migration/`. Files under `STUDENT_FILES_DIR`. Never `portal.sqlite`. |
 
-**Catalog SoR is git JSON** (`data/processed/*.json`). Student accounts/tracker/scores persist in `STUDENT_STORE` (`json` default, or `postgres` via `npm run db:up`). Admit/result bytes stay under `STUDENT_FILES_DIR`. The catalog SQLite cache is discarded on rebuild — do not store students there.
+**Catalog SoR is git JSON** (`data/processed/*.json`). Student rows are Postgres. Admit/result bytes stay on disk.
 
-### SPA routes
+### Java pages
+
+| Path | Role |
+| --- | --- |
+| `/`, `/account/login`, `/account/register`, `/account/forgot`, `/account/reset` | Sign in, create account, reset |
+| `/jobs`, `/jobs/{id}` | Browse openings |
+| `/prepare` | ExamSeries calendars |
+| `/profile`, `/match` | Signed-in profile and match |
+| `/dashboard`, `/desk/{id}` | Tracker and one item, including private files |
+| `/ops`, `/ops/login` | Operator paste-URL |
+
+`/desk/{id}/plan` and `/desk/{id}/mock` are leftover coaching routes. Do not design or extend them.
+
+### Previous SPA routes (Node, kept until cutover)
 
 | Path | Role |
 | --- | --- |
@@ -131,9 +166,9 @@ prepareStaticData.js (Pages)     data/staging/ops_paste/        optional SQLite 
 | GET | `/api/stats`, `/api/sources`, `/api/pipeline`, `/api/health` | Counts, registry projection, last run, `sqliteCache`. |
 | POST | `/api/match` | Body = profile (anonymous). 400 if `reservationCategory` missing. Logged-in match uses the server profile. |
 
-### Student routes (`student_session`, `FEATURE_STUDENT`)
+### Student routes on the old Express API (`student_session`)
 
-`POST /api/account/register` · `login` · `logout` · `GET /api/account/me` · `GET/PUT /api/me/profile` · `GET/POST /api/me/items` · `PATCH/DELETE /api/me/items/:id` · file upload/download · `GET /api/coaching/syllabus/:seriesId` · `GET /api/coaching/mocks/:seriesId` · `POST /api/me/mocks/:seriesId/attempts`
+`POST /api/account/register` · `login` · `logout` · `GET /api/account/me` · `GET/PUT /api/me/profile` · `GET/POST /api/me/items` · `PATCH/DELETE /api/me/items/:id` · file upload/download. Coaching routes under `/api/coaching/` and `/api/me/mocks/` are out of scope.
 
 ### Ops routes (session cookie)
 
@@ -148,7 +183,7 @@ prepareStaticData.js (Pages)     data/staging/ops_paste/        optional SQLite 
 - **Source** — one row in `data/sources/registry.json` (`sourceId`, `listUrls`, `priority` P0–P3, `enabled`, `collector`).
 - **CollectJob** — paste-URL review state in `data/processed/collect-jobs.json` (not catalog SoR).
 
-Published files: `data/processed/jobs.json`, `exam_series.json`, `stats.json`. `prepareStaticData.js` copies them to `client/public/data/` for the Pages snapshot.
+Published files: `data/processed/jobs.json`, `exam_series.json`, `stats.json`, `opportunities.json`. Do not copy these to `client/public/data/` for GitHub Pages.
 
 ---
 

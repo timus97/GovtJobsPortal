@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Something went wrong | Sarkari Desk</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+  </head>
+  <body>
+    <main class="section container">
+      <h1>Something went wrong</h1>
+      <p class="muted">The page could not be rendered. Use the request id if you report this.</p>
+      <p th:if="${requestId}">Request id: <code th:text="${requestId}">—</code></p>
+      <p th:if="${path}" class="muted" th:text="${path}"></p>
+      <p><a href="/">Back to sign in</a> · <a href="/match">Matches</a></p>
+    </main>
+  </body>
+</html>

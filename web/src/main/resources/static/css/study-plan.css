@@ -1,0 +1,78 @@
+.plan-page {
+  max-width: 52rem;
+}
+
+.plan-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+
+.plan-progress-meta strong {
+  color: var(--navy);
+}
+
+.plan-progress {
+  height: 0.65rem;
+  background: #e8eef8;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 0 1rem;
+}
+
+.plan-progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 999px;
+  min-width: 0;
+}
+
+.plan-topics {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.plan-topic {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.plan-topic.is-done {
+  background: var(--green-soft);
+  border-color: #b7e0cc;
+}
+
+.plan-topic input[type='checkbox'] {
+  width: auto;
+  margin-top: 0.3rem;
+  accent-color: var(--green);
+}
+
+.plan-topic-title {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.plan-topic-dates {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 0.15rem;
+}
+
+.plan-note {
+  margin: 0 0 1rem;
+}

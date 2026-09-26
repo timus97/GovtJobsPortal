@@ -61,7 +61,7 @@ export default function AccountLoginPage() {
           <p className="eyebrow">Student desk</p>
           <h1>Sign in</h1>
           <p className="muted">Email and password. This is not an official board account.</p>
-          {error && <p className="error-box">{error}</p>}
+          {error && <p className="muted">{error}</p>}
           <label className="field">
             <span>Email</span>
             <input
@@ -86,6 +86,8 @@ export default function AccountLoginPage() {
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
           <p className="muted small" style={{ margin: '1rem 0 0' }}>
+            <Link to="/account/forgot">Forgot password?</Link>
+            {' · '}
             No account? <Link to="/account/register">Create one</Link>
           </p>
         </form>

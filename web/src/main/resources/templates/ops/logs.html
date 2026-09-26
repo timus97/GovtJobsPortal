@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Logs | Ops</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <h1>Ops log</h1>
+        <form method="get" action="/ops/logs">
+          <label class="field"><span>Filter</span><input name="q" th:value="${q}" /></label>
+          <button class="btn btn-secondary" type="submit">Refresh</button>
+        </form>
+        <p class="empty" th:if="${items.isEmpty()}">No events yet.</p>
+        <div class="table-wrap" th:unless="${items.isEmpty()}">
+          <table class="data-table">
+            <thead><tr><th>At</th><th>Unit</th><th>Message</th></tr></thead>
+            <tbody>
+              <tr th:each="e : ${items}">
+                <td th:text="${e.at}"></td>
+                <td th:text="${e.unit}"></td>
+                <td th:text="${e.message}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

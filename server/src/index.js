@@ -13,6 +13,9 @@ const studentStore = require('./services/studentStore');
 const collectQueue = require('./services/collectQueue');
 const sqlite = require('./db/sqlite');
 const { rebuildCache } = require('../../scripts/migrate/jsonToSqlite');
+const logger = require('./services/logger');
+const studentMail = require('./services/studentMail');
+const { attachRequestContext, requestLogger } = require('./middleware/requestContext');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -25,8 +28,17 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(attachRequestContext);
+app.use(requestLogger);
 
 const jobsJsonPath = path.join(__dirname, '..', '..', 'data', 'processed', 'jobs.json');
+
+app.get('/api/session', (req, res) => {
+  res.json({
+    student: req.student ? { id: req.student.uid, email: req.student.sub } : null,
+    ops: req.ops ? { username: req.ops.sub, role: req.ops.role || 'operator' } : null,
+  });
+});
 
 app.get('/api/health', (_req, res) => {
   let jsonReadable = false;
@@ -41,6 +53,7 @@ app.get('/api/health', (_req, res) => {
     time: new Date().toISOString(),
     sqliteCache: sqlite.getStatus(),
     studentStore: studentStore.BACKEND || studentStore.BACKEND_NAME,
+    mail: studentMail.status(),
   });
 });
 
@@ -69,17 +82,26 @@ function rebuildSqliteCache() {
   try {
     const report = rebuildCache();
     if (report.status === 'ok') {
-      console.log(
-        `SQLite cache ok: ${report.upserted.opportunities} opportunities, ${report.upserted.sources} sources`
-      );
+      logger.info('sqlite', 'Catalog cache rebuilt', {
+        role: 'system',
+        action: 'cache.rebuild',
+        meta: report.upserted,
+      });
     } else if (report.status === 'off') {
-      console.log('SQLite cache off');
+      logger.info('sqlite', 'Catalog cache off', { role: 'system', action: 'cache.off' });
     } else {
-      console.warn(`SQLite cache missing: ${report.reason || 'unavailable'}`);
+      logger.warn('sqlite', 'Catalog cache missing', {
+        role: 'system',
+        action: 'cache.missing',
+        meta: { reason: report.reason || 'unavailable' },
+      });
     }
     return report;
   } catch (err) {
-    console.warn(`SQLite cache rebuild skipped: ${err.message}`);
+    logger.warn('sqlite', `Catalog cache rebuild skipped: ${err.message}`, {
+      role: 'system',
+      action: 'cache.rebuild_failed',
+    });
     sqlite.setStatus('missing');
     return { status: 'missing', reason: err.message };
   }
@@ -89,37 +111,63 @@ async function start() {
   rebuildSqliteCache();
   try {
     const ready = await studentStore.ready();
-    console.log(`Student store: ${ready.backend}${ready.url ? ` (${ready.url})` : ''}`);
+    logger.info('student.store', `Student store ready (${ready.backend})`, {
+      role: 'system',
+      action: 'store.ready',
+      meta: { backend: ready.backend },
+    });
   } catch (err) {
-    console.warn(`Student store init skipped: ${err.message}`);
+    logger.warn('student.store', `Student store init skipped: ${err.message}`, {
+      role: 'system',
+      action: 'store.init_failed',
+    });
   }
   return app.listen(PORT, () => {
     try {
       const boot = operatorStore.bootstrapIfEmpty();
       if (boot.created) {
-        console.log('Bootstrapped first operator account: admin (rotate/remove OPERATOR_PASSWORD)');
+        logger.info('auth.ops', 'Bootstrapped first operator account: admin', {
+          role: 'system',
+          actor: 'admin',
+          action: 'ops.bootstrap',
+        });
       }
     } catch (err) {
-      console.warn(`Operator bootstrap skipped: ${err.message}`);
+      logger.warn('auth.ops', `Operator bootstrap skipped: ${err.message}`, {
+        role: 'system',
+        action: 'ops.bootstrap_failed',
+      });
     }
     try {
       studentStore.warnIfUnwritable();
     } catch (err) {
-      console.warn(`Student store check skipped: ${err.message}`);
+      logger.warn('student.store', `Student store check skipped: ${err.message}`, {
+        role: 'system',
+        action: 'store.check_failed',
+      });
     }
     try {
       collectQueue.resumePending();
     } catch (err) {
-      console.warn(`Collect queue resume skipped: ${err.message}`);
+      logger.warn('collect', `Collect queue resume skipped: ${err.message}`, {
+        role: 'system',
+        action: 'collect.resume_failed',
+      });
     }
-    console.log(`Govt Jobs Portal API listening on http://localhost:${PORT}`);
-    console.log(`  GET /api/jobs  POST /api/match  /api/stats  /api/health  /api/ops/me`);
+    logger.info('http', `API listening on http://localhost:${PORT}`, {
+      role: 'system',
+      action: 'server.listen',
+      meta: { port: PORT },
+    });
   });
 }
 
 if (require.main === module) {
   start().catch((err) => {
-    console.error(err);
+    logger.error('http', err.message || 'Server failed to start', {
+      role: 'system',
+      action: 'server.crash',
+    });
     process.exit(1);
   });
 }

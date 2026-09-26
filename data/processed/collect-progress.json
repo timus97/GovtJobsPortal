@@ -1,0 +1,317 @@
+{
+  "running": false,
+  "runId": "2026-08-21T15-20-22-704Z",
+  "startedAt": "2026-08-21T15:20:22.706Z",
+  "finishedAt": "2026-08-21T15:20:37.110Z",
+  "abortedAt": null,
+  "abortedSourceId": null,
+  "sourcesTotal": 5,
+  "sourcesDone": 5,
+  "sourcesOk": 5,
+  "sourcesFailed": 0,
+  "sourcesZero": 3,
+  "recordsWritten": 4,
+  "pdfsProcessed": 0,
+  "pdfsSkipped": 0,
+  "current": null,
+  "lastFinished": {
+    "sourceId": "psu_ongc",
+    "name": "Oil and Natural Gas Corporation () Careers",
+    "ok": true,
+    "written": 2,
+    "durationMs": 6718,
+    "url": "https://www.ongcindia.com/en/careers",
+    "kept": 2,
+    "skipped": 0,
+    "at": "2026-08-21T15:20:37.104Z"
+  },
+  "lastFinding": {
+    "at": "2026-08-21T15:20:37.081Z",
+    "sourceId": "psu_ongc",
+    "sourceName": "Oil and Natural Gas Corporation () Careers",
+    "pageUrl": "https://ongcindia.com/",
+    "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
+    "kind": "html",
+    "status": "kept",
+    "reason": null,
+    "title": "Apprenticeship Opportunities",
+    "organization": "Oil and Natural Gas Corporation ()",
+    "lastDate": null,
+    "vacancies": null,
+    "selectionProcess": "apprenticeship",
+    "excerpt": "Apprenticeship Opportunities"
+  },
+  "findings": [
+    {
+      "at": "2026-08-21T15:20:28.342Z",
+      "sourceId": "becil",
+      "sourceName": "BECIL Careers",
+      "pageUrl": "https://www.becil.com/careers",
+      "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
+      "kind": "pdf",
+      "status": "skipped",
+      "reason": "pdf_not_recruitment",
+      "title": "Engagement Of Apprentices under the Apprentices Act, 1961",
+      "organization": null,
+      "lastDate": null,
+      "vacancies": null,
+      "selectionProcess": null,
+      "excerpt": ""
+    },
+    {
+      "at": "2026-08-21T15:20:29.201Z",
+      "sourceId": "becil",
+      "sourceName": "BECIL Careers",
+      "pageUrl": "https://www.becil.com/careers",
+      "url": "http://www.becil.com/Vacancies",
+      "kind": "html",
+      "status": "kept",
+      "reason": null,
+      "title": "Vacancies",
+      "organization": "BECIL",
+      "lastDate": null,
+      "vacancies": null,
+      "selectionProcess": "interview_only",
+      "excerpt": "Vacancies"
+    },
+    {
+      "at": "2026-08-21T15:20:29.201Z",
+      "sourceId": "becil",
+      "sourceName": "BECIL Careers",
+      "pageUrl": "https://www.becil.com/careers",
+      "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
+      "kind": "pdf",
+      "status": "kept",
+      "reason": null,
+      "title": "Engagement Of Graduate Apprentice Trainee for the year 2023-24",
+      "organization": "BECIL",
+      "lastDate": "2024-04-16",
+      "vacancies": null,
+      "selectionProcess": "apprenticeship",
+      "excerpt": "1.ry qmffirr arrd-eu,ym.,m G2@ (qq-fl v{ qww qerdq d qfi-r-qrrd \\T.6n 6r s{q) (ftli rd -6q{) iClN - U32301UPt995G01017i41} ---!l ISO 900'l : 2015 BROADCAST ENGINEERING CONSULTANTS INDIA LIMITED .<A - (A Govemment of lndi"
+    },
+    {
+      "at": "2026-08-21T15:20:37.081Z",
+      "sourceId": "psu_ongc",
+      "sourceName": "Oil and Natural Gas Corporation () Careers",
+      "pageUrl": "https://ongcindia.com/",
+      "url": "https://ongcindia.com/web/eng/career/recruitment-notice",
+      "kind": "html",
+      "status": "kept",
+      "reason": null,
+      "title": "Recruitment Notices",
+      "organization": "Oil and Natural Gas Corporation ()",
+      "lastDate": null,
+      "vacancies": null,
+      "selectionProcess": "interview_only",
+      "excerpt": "Recruitment Notices"
+    },
+    {
+      "at": "2026-08-21T15:20:37.081Z",
+      "sourceId": "psu_ongc",
+      "sourceName": "Oil and Natural Gas Corporation () Careers",
+      "pageUrl": "https://ongcindia.com/",
+      "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
+      "kind": "html",
+      "status": "kept",
+      "reason": null,
+      "title": "Apprenticeship Opportunities",
+      "organization": "Oil and Natural Gas Corporation ()",
+      "lastDate": null,
+      "vacancies": null,
+      "selectionProcess": "apprenticeship",
+      "excerpt": "Apprenticeship Opportunities"
+    }
+  ],
+  "sourcesLog": [
+    {
+      "sourceId": "psu_ongc",
+      "name": "Oil and Natural Gas Corporation () Careers",
+      "ok": true,
+      "written": 2,
+      "durationMs": 6718,
+      "url": "https://www.ongcindia.com/en/careers",
+      "kept": 2,
+      "skipped": 0,
+      "at": "2026-08-21T15:20:37.104Z",
+      "errors": [
+        {
+          "url": "https://www.ongcindia.com/careers",
+          "message": "HTTP 404 for https://www.ongcindia.com/careers"
+        },
+        {
+          "url": "https://www.ongcindia.com/career",
+          "message": "HTTP 404 for https://www.ongcindia.com/career"
+        },
+        {
+          "url": "https://www.ongcindia.com/recruitment",
+          "message": "HTTP 404 for https://www.ongcindia.com/recruitment"
+        },
+        {
+          "url": "https://www.ongcindia.com/en/careers",
+          "message": "HTTP 404 for https://www.ongcindia.com/en/careers"
+        }
+      ],
+      "findings": [
+        {
+          "at": "2026-08-21T15:20:37.081Z",
+          "sourceId": "psu_ongc",
+          "sourceName": "Oil and Natural Gas Corporation () Careers",
+          "pageUrl": "https://ongcindia.com/",
+          "url": "https://ongcindia.com/web/eng/career/recruitment-notice",
+          "kind": "html",
+          "status": "kept",
+          "reason": null,
+          "title": "Recruitment Notices",
+          "organization": "Oil and Natural Gas Corporation ()",
+          "lastDate": null,
+          "vacancies": null,
+          "selectionProcess": "interview_only",
+          "excerpt": "Recruitment Notices"
+        },
+        {
+          "at": "2026-08-21T15:20:37.081Z",
+          "sourceId": "psu_ongc",
+          "sourceName": "Oil and Natural Gas Corporation () Careers",
+          "pageUrl": "https://ongcindia.com/",
+          "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
+          "kind": "html",
+          "status": "kept",
+          "reason": null,
+          "title": "Apprenticeship Opportunities",
+          "organization": "Oil and Natural Gas Corporation ()",
+          "lastDate": null,
+          "vacancies": null,
+          "selectionProcess": "apprenticeship",
+          "excerpt": "Apprenticeship Opportunities"
+        }
+      ]
+    },
+    {
+      "sourceId": "apprenticeship_india",
+      "name": "Apprenticeship India",
+      "ok": true,
+      "written": 0,
+      "durationMs": 1151,
+      "url": "https://www.apprenticeshipindia.gov.in/",
+      "kept": 0,
+      "skipped": 0,
+      "at": "2026-08-21T15:20:30.380Z",
+      "errors": [
+        {
+          "url": null,
+          "message": "no keepable notices"
+        }
+      ],
+      "findings": []
+    },
+    {
+      "sourceId": "becil",
+      "name": "BECIL Careers",
+      "ok": true,
+      "written": 2,
+      "durationMs": 3753,
+      "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
+      "kept": 2,
+      "skipped": 1,
+      "at": "2026-08-21T15:20:29.223Z",
+      "errors": [
+        {
+          "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
+          "message": "pdf_not_recruitment"
+        }
+      ],
+      "findings": [
+        {
+          "at": "2026-08-21T15:20:28.342Z",
+          "sourceId": "becil",
+          "sourceName": "BECIL Careers",
+          "pageUrl": "https://www.becil.com/careers",
+          "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
+          "kind": "pdf",
+          "status": "skipped",
+          "reason": "pdf_not_recruitment",
+          "title": "Engagement Of Apprentices under the Apprentices Act, 1961",
+          "organization": null,
+          "lastDate": null,
+          "vacancies": null,
+          "selectionProcess": null,
+          "excerpt": ""
+        },
+        {
+          "at": "2026-08-21T15:20:29.201Z",
+          "sourceId": "becil",
+          "sourceName": "BECIL Careers",
+          "pageUrl": "https://www.becil.com/careers",
+          "url": "http://www.becil.com/Vacancies",
+          "kind": "html",
+          "status": "kept",
+          "reason": null,
+          "title": "Vacancies",
+          "organization": "BECIL",
+          "lastDate": null,
+          "vacancies": null,
+          "selectionProcess": "interview_only",
+          "excerpt": "Vacancies"
+        },
+        {
+          "at": "2026-08-21T15:20:29.201Z",
+          "sourceId": "becil",
+          "sourceName": "BECIL Careers",
+          "pageUrl": "https://www.becil.com/careers",
+          "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
+          "kind": "pdf",
+          "status": "kept",
+          "reason": null,
+          "title": "Engagement Of Graduate Apprentice Trainee for the year 2023-24",
+          "organization": "BECIL",
+          "lastDate": "2024-04-16",
+          "vacancies": null,
+          "selectionProcess": "apprenticeship",
+          "excerpt": "1.ry qmffirr arrd-eu,ym.,m G2@ (qq-fl v{ qww qerdq d qfi-r-qrrd \\T.6n 6r s{q) (ftli rd -6q{) iClN - U32301UPt995G01017i41} ---!l ISO 900'l : 2015 BROADCAST ENGINEERING CONSULTANTS INDIA LIMITED .<A - (A Govemment of lndi"
+        }
+      ]
+    },
+    {
+      "sourceId": "employment_news",
+      "name": "Employment News",
+      "ok": true,
+      "written": 0,
+      "durationMs": 2172,
+      "url": "https://employmentnews.gov.in/newemp/AllJobs.aspx?k=All",
+      "kept": 0,
+      "skipped": 0,
+      "at": "2026-08-21T15:20:25.465Z",
+      "errors": [
+        {
+          "url": null,
+          "message": "no keepable notices"
+        }
+      ],
+      "findings": []
+    },
+    {
+      "sourceId": "ncs_gov",
+      "name": "National Career Service",
+      "ok": true,
+      "written": 0,
+      "durationMs": 578,
+      "url": "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true",
+      "kept": 0,
+      "skipped": 0,
+      "at": "2026-08-21T15:20:23.288Z",
+      "errors": [
+        {
+          "url": "browser",
+          "message": "browserType.launch: Executable doesn't exist at C:\\Users\\Timus97\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
+        },
+        {
+          "url": "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true",
+          "message": "Playwright returned no keepable NCS notices; HTTP homepage scrape skipped"
+        }
+      ],
+      "findings": []
+    }
+  ],
+  "pid": 16196
+}

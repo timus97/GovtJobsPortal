@@ -77,29 +77,30 @@ function parseWikiLists(text) {
 function findDomain(name, short, domains) {
   const keys = Object.keys(domains);
   const n = name.toLowerCase();
-  // exact
   if (domains[name]) return { key: name, ...domains[name] };
-  // short match
+
+  const nameTokens = new Set(n.split(/[^a-z0-9]+/).filter((t) => t.length > 2));
   if (short) {
+    const shortLc = short.toLowerCase();
+    const exactShort = [];
     for (const k of keys) {
       const d = domains[k];
-      if (d.short && d.short.toLowerCase() === short.toLowerCase()) return { key: k, ...d };
+      if (d.short && d.short.toLowerCase() === shortLc) exactShort.push({ key: k, ...d });
+    }
+    if (exactShort.length === 1) return exactShort[0];
+    if (exactShort.length > 1) {
+      const named = exactShort.find((d) => n.includes(d.key.toLowerCase()) || d.key.toLowerCase().includes(n));
+      if (named) return named;
     }
   }
-  // includes
-  for (const k of keys) {
-    const kl = k.toLowerCase();
-    if (n.includes(kl) || kl.includes(n) || n.includes((domains[k].short || '').toLowerCase())) {
-      return { key: k, ...domains[k] };
-    }
-  }
-  // token overlap
-  const tokens = n.split(/[^a-z0-9]+/).filter((t) => t.length > 3);
+
   let best = null;
   let bestScore = 0;
   for (const k of keys) {
-    const kt = k.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 3);
-    const score = tokens.filter((t) => kt.includes(t)).length;
+    const kl = k.toLowerCase();
+    if (n === kl) return { key: k, ...domains[k] };
+    const kt = kl.split(/[^a-z0-9]+/).filter((t) => t.length > 3);
+    const score = kt.filter((t) => nameTokens.has(t)).length;
     if (score > bestScore && score >= 2) {
       bestScore = score;
       best = { key: k, ...domains[k] };
@@ -145,7 +146,7 @@ function toSourceEntry(item, domain, priority) {
 
   return {
     sourceId,
-    name: `${item.name}${short ? ` (${short})` : ''} Careers`,
+    name: `${item.name}${short && !item.name.includes(`(${short})`) ? ` (${short})` : ''} Careers`,
     category: 'psu_careers',
     baseUrl: baseUrl || `https://en.wikipedia.org/wiki/${encodeURIComponent(item.name.replace(/ /g, '_'))}`,
     listUrls: uniq.slice(0, 8),
@@ -238,10 +239,24 @@ async function main() {
     const entry = toSourceEntry(item, domain, priorityFor(item.ratna));
     let id = entry.sourceId;
     let n = 2;
-    while (usedIds.has(id)) {
-      id = `${entry.sourceId}_${n++}`;
+    const hostOf = (url) => {
+      try {
+        return new URL(url).hostname.replace(/^www\./, '');
+      } catch {
+        return '';
+      }
+    };
+    const thisHost = hostOf(entry.baseUrl);
+    const hostTaken = thisHost && psuSources.some((s) => hostOf(s.baseUrl) === thisHost && s.enabled);
+    if (usedIds.has(id) || hostTaken) {
+      while (usedIds.has(id)) id = `${entry.sourceId}_${n++}`;
+      entry.sourceId = id;
+      entry.enabled = false;
+      entry.method = 'manual';
+      entry.robotsNotes = hostTaken
+        ? 'Disabled clone: another source already scrapes this host'
+        : 'Disabled duplicate sourceId suffix; do not scrape the same host twice';
     }
-    entry.sourceId = id;
     usedIds.add(id);
     psuSources.push(entry);
   }

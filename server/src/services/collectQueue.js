@@ -164,7 +164,7 @@ function updateJob(id, patch) {
   return next;
 }
 
-function createJob({ url, host, sourceLabel }) {
+function createJob({ url, host, sourceLabel, sourceId }) {
   const id = crypto.randomUUID();
   const createdAt = nowIso();
   const job = {
@@ -172,6 +172,7 @@ function createJob({ url, host, sourceLabel }) {
     url,
     host,
     sourceLabel: sourceLabel || '',
+    sourceId: sourceId || '',
     state: 'pending',
     reason: null,
     extracted: null,
@@ -381,7 +382,13 @@ async function kick() {
 function enqueue(id) {
   if (process.env.OPS_QUEUE_AUTO === 'off') return id;
   setImmediate(() => {
-    kick().catch((err) => console.warn(`collectQueue: ${err.message}`));
+    kick().catch((err) => {
+      const logger = require('./logger');
+      logger.warn('collect', `Queue worker failed: ${err.message}`, {
+        role: 'system',
+        action: 'collect.worker_failed',
+      });
+    });
   });
   return id;
 }
@@ -390,7 +397,7 @@ function resumePending() {
   if (loadJobs().some((j) => j.state === 'pending')) enqueue('resume');
 }
 
-function submit({ url, sourceLabel }) {
+function submit({ url, sourceLabel, sourceId }) {
   const parsed = parseHttpsUrl(url);
   if (!parsed.ok) {
     const err = new Error(parsed.error);
@@ -402,6 +409,7 @@ function submit({ url, sourceLabel }) {
     url: parsed.url,
     host: parsed.host,
     sourceLabel: typeof sourceLabel === 'string' ? sourceLabel.trim() : '',
+    sourceId: typeof sourceId === 'string' ? sourceId.trim() : '',
   });
   enqueue(job.id);
   return job;

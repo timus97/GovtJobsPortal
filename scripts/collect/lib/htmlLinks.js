@@ -1,13 +1,13 @@
 const cheerio = require('cheerio');
+const { scoreJobLink, looksLikeDocumentHref, GARBAGE_HREF_RE, isKeepableJobLink } = require('./jobLinkQuality');
 
 const JOB_HREF_RE =
-  /career|recruit|vacanc|notification|opening|walk[\s-]?in|apprentice|advertisement|advt|employment|job|apply|circular|engagement|consultant|contract|\.pdf/i;
+  /recruit|vacanc|notification|opening|walk[\s-]?in|apprentice|advertisement|advt|employment|circular|engagement|consultant|\.pdf/i;
 
 const JOB_TEXT_RE =
-  /recruit|vacanc|walk[\s-]?in|apprentice|notification|opening|consultant|contract|interview|engagement|post|advt|advertisement|apply online|job|career/i;
+  /recruit|vacanc|walk[\s-]?in|apprentice|notification|opening|consultant|interview|engagement|advt|advertisement|apply online|last date/i;
 
-const SKIP_HREF_RE =
-  /javascript:|#$|mailto:|tel:|facebook|twitter|linkedin|instagram|youtube|whatsapp|login|signup|privacy|terms|cookie/i;
+const SKIP_HREF_RE = GARBAGE_HREF_RE;
 
 function absoluteUrl(base, href) {
   if (!href) return null;
@@ -38,9 +38,14 @@ function extractLinks(html, pageUrl, options = {}) {
       $(el).attr('aria-label') ||
       decodeURIComponent(href.split('/').filter(Boolean).pop() || href);
 
+    const isPdf = /\.pdf(\?|#|$)/i.test(href) || looksLikeDocumentHref(href);
     const blob = `${title} ${href}`;
-    if (jobLikeOnly && !JOB_HREF_RE.test(blob) && !JOB_TEXT_RE.test(title)) {
-      return;
+    if (jobLikeOnly) {
+      const scored = scoreJobLink({ title, href, isPdf });
+      if (scored.score < 2 && !JOB_HREF_RE.test(blob) && !JOB_TEXT_RE.test(title) && !isPdf) {
+        return;
+      }
+      if (scored.score < 0) return;
     }
 
     seen.add(href);
@@ -48,11 +53,12 @@ function extractLinks(html, pageUrl, options = {}) {
       title: String(title).slice(0, 240),
       href,
       text: String(title).slice(0, 500),
-      isPdf: /\.pdf(\?|#|$)/i.test(href),
+      isPdf,
     });
   });
 
-  return links.slice(0, limit);
+  const keepable = links.filter((link) => isKeepableJobLink(link));
+  return (keepable.length ? keepable : links).slice(0, limit);
 }
 
 function extractPageTitle(html) {

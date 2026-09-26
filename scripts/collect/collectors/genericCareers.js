@@ -1,8 +1,8 @@
 const { fetchText } = require('../lib/http');
 const { saveRaw } = require('../lib/rawStore');
 const { extractLinks } = require('../lib/htmlLinks');
-const { toStagingRecord, dedupeByUrl } = require('../lib/toStaging');
-const { extractPdf, isPdfUrl } = require('../lib/pdfExtract');
+const { recordsFromNoticeLinks } = require('../lib/collectNotices');
+const { filterJobLinks } = require('../lib/jobLinkQuality');
 const { withBrowser, extractJobLinksFromPage } = require('../lib/browser');
 
 function candidateUrls(source) {
@@ -21,7 +21,10 @@ function candidateUrls(source) {
 async function collectGenericCareers(source, ctx) {
   const { runId, collectedAt, pdfCounter } = ctx;
   const errors = [];
-  const listUrls = candidateUrls(source);
+  const listUrls = candidateUrls(source).sort((a, b) => {
+    const score = (u) => (/career|recruit|vacanc/i.test(u) ? 0 : 1);
+    return score(a) - score(b);
+  });
   let links = [];
   const maxUrls = Number(process.env.COLLECT_MAX_URLS_PER_SOURCE || 5);
 
@@ -61,58 +64,53 @@ async function collectGenericCareers(source, ctx) {
           `list-${Buffer.from(listUrl).toString('base64url').slice(0, 32)}.html`,
           text
         );
-        const found = extractLinks(text, url, { limit: 50 }).map((l) => ({ ...l, sourceUrl: url }));
-        links.push(...found);
-        // Stop probing extra career paths once we have job-like links
-        if (found.length >= 3) break;
+        const found = extractLinks(text, url, { limit: 80 }).map((l) => ({ ...l, sourceUrl: url }));
+        const kept = filterJobLinks(found, source);
+        links.push(...kept);
+        if (kept.length >= 3) break;
       } catch (err) {
         errors.push({ url: listUrl, message: err.message });
       }
     }
   }
 
-  const records = [];
-  for (const item of links) {
-    if (isPdfUrl(item.href) && pdfCounter) {
-      try {
-        const pdf = await extractPdf(item.href, pdfCounter);
-        if (pdf.ok) {
-          records.push(
-            toStagingRecord(
-              {
-                ...item,
-                title: item.title || pdf.titleGuess,
-                summary: pdf.excerpt,
-                extraText: pdf.text?.slice(0, 4000),
-                pdfText: pdf.text?.slice(0, 8000),
-                lastDate: pdf.lastDate,
-                pdfHash: pdf.hash,
-                hasExam: pdf.classified?.hasExam === true ? true : undefined,
-                selectionProcess: pdf.classified?.selectionProcess || undefined,
-              },
-              source,
-              { collectedAt, collectorVersion: 'pdf-v1', listUrl: item.sourceUrl }
-            )
-          );
-          continue;
+  const spaHost = /ncs\.gov|careers\.bhel|careers\.ntpc|betacloud|job-listing/i.test(
+    `${source.baseUrl || ''} ${(source.listUrls || []).join(' ')}`
+  );
+  if (links.length === 0 && source.render !== 'browser' && spaHost) {
+    try {
+      links = await withBrowser(async ({ page }) => {
+        const all = [];
+        for (const listUrl of listUrls.slice(0, 2)) {
+          try {
+            const { links: pageLinks, html, finalUrl } = await extractJobLinksFromPage(page, listUrl);
+            saveRaw(
+              source.sourceId,
+              runId,
+              `spa-${Buffer.from(listUrl).toString('base64url').slice(0, 32)}.html`,
+              html
+            );
+            all.push(...pageLinks.map((l) => ({ ...l, sourceUrl: finalUrl })));
+          } catch (err) {
+            errors.push({ url: listUrl, message: `playwright: ${err.message}` });
+          }
         }
-      } catch (err) {
-        errors.push({ url: item.href, message: err.message });
-      }
+        return all;
+      });
+    } catch (err) {
+      errors.push({ url: 'browser', message: err.message });
     }
-    records.push(
-      toStagingRecord(item, source, {
-        collectedAt,
-        collectorVersion: source.render === 'browser' ? 'playwright-v1' : 'scrape-v1',
-        listUrl: item.sourceUrl,
-      })
-    );
   }
 
+  const built = await recordsFromNoticeLinks(links, source, { collectedAt, pdfCounter }, {
+    collectorVersion: source.render === 'browser' ? 'playwright-v1' : 'scrape-v1',
+  });
+  errors.push(...built.errors);
+
   return {
-    records: dedupeByUrl(records),
+    records: built.records,
     errors,
-    metrics: { links: links.length, written: dedupeByUrl(records).length },
+    metrics: { links: links.length, kept: built.kept, written: built.records.length },
   };
 }
 

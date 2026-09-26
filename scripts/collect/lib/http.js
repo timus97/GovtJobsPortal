@@ -1,6 +1,14 @@
 const DEFAULT_UA =
   'NoExamSarkariBot/1.0 (+https://github.com/local/govt-jobs-portal; research aggregator)';
 
+function noteFetch(url, phase) {
+  try {
+    require('./collectProgress').setCurrent({ url, phase: phase || 'fetch' });
+  } catch {
+    /* progress is optional */
+  }
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -24,6 +32,7 @@ async function fetchText(url, options = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
+      noteFetch(url, 'fetch');
       const res = await fetch(url, {
         signal: controller.signal,
         headers: {
@@ -64,6 +73,7 @@ async function fetchBuffer(url, options = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
+      noteFetch(url, 'pdf');
       const res = await fetch(url, {
         signal: controller.signal,
         headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/pdf,*/*' },
@@ -85,4 +95,27 @@ async function fetchBuffer(url, options = {}) {
   throw lastError || new Error(`Failed to fetch buffer ${url}`);
 }
 
-module.exports = { fetchText, fetchBuffer, sleep, DEFAULT_UA };
+async function contentTypeOf(url, options = {}) {
+  const { timeoutMs = 10000 } = options;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      signal: controller.signal,
+      headers: { 'User-Agent': DEFAULT_UA, Accept: '*/*' },
+      redirect: 'follow',
+    });
+    clearTimeout(timer);
+    return { url: res.url || url, status: res.status, contentType: res.headers.get('content-type') || '' };
+  } catch (err) {
+    clearTimeout(timer);
+    return { url, status: 0, contentType: '', error: err.message };
+  }
+}
+
+function isPdfContentType(contentType) {
+  return /application\/pdf|application\/x-pdf|application\/octet-stream/i.test(contentType || '');
+}
+
+module.exports = { fetchText, fetchBuffer, contentTypeOf, isPdfContentType, sleep, DEFAULT_UA };

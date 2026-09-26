@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Exam desk | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section">
+        <div class="container">
+          <h1>Exam desk</h1>
+          <p class="muted">Track calendars, applied jobs, and custom exams. Days-left uses exam date, else last date.</p>
+          <div class="desk-stats">
+            <div class="panel desk-stat"><strong th:text="${desk.stats.upcoming}">0</strong><span>Upcoming</span></div>
+            <div class="panel desk-stat"><strong th:text="${desk.stats.admitPending}">0</strong><span>Admit pending</span></div>
+            <div class="panel desk-stat"><strong th:text="${desk.stats.nearestDays} ?: '—'">—</strong><span>Nearest days</span></div>
+            <div class="panel desk-stat"><strong th:text="${desk.stats.mocksCompleted}">0</strong><span>Mocks done</span></div>
+          </div>
+          <div class="desk-filters">
+            <a class="chip" href="/dashboard">All</a>
+            <a class="chip" href="/dashboard?status=watching">Watching</a>
+            <a class="chip" href="/dashboard?status=applied">Applied</a>
+            <a class="chip" href="/dashboard?status=admit_ready">Admit ready</a>
+            <a class="chip" href="/dashboard?status=appeared">Appeared</a>
+            <a class="chip" href="/dashboard?status=result_in">Result in</a>
+            <a class="chip" href="/dashboard?status=done">Done</a>
+          </div>
+          <p class="empty panel" th:if="${desk.total == 0}">Nothing on the desk yet. Track a job or calendar, or add a custom exam.</p>
+          <div class="desk-list">
+            <a class="panel desk-card" th:each="item : ${desk.items}" th:href="@{/desk/{id}(id=${item.id})}">
+              <div>
+                <strong th:text="${item.title}">Title</strong>
+                <span class="badge badge-soft" th:text="${item.statusLabel}">status</span>
+                <span class="badge badge-muted" th:text="${item.kindLabel}">kind</span>
+              </div>
+              <div class="desk-days">
+                <strong th:text="${item.daysNumber}">—</strong>
+                <span th:text="${item.daysCaption}">days</span>
+              </div>
+              <p class="muted small" th:text="${item.nextStep}"></p>
+            </a>
+          </div>
+          <form class="panel desk-custom" method="post" th:action="@{/dashboard}">
+            <h2>Add a custom exam</h2>
+            <label class="field"><span>Name *</span><input name="title" required /></label>
+            <label class="field"><span>Board</span><input name="board" /></label>
+            <label class="field"><span>Exam date *</span><input type="date" name="examDate" required /></label>
+            <label class="field"><span>Official URL</span><input type="url" name="officialUrl" /></label>
+            <button class="btn btn-primary" type="submit">Add to desk</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

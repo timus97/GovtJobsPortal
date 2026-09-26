@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Unofficial mock | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <p><a class="back-link" th:href="@{/desk/{id}(id=${item.id})}">← Desk item</a></p>
+        <div class="match-banner panel" th:if="${missing}"><p>No unofficial mock bank for this series.</p></div>
+        <form th:unless="${missing}" class="mock-page" method="post" th:action="@{/desk/{id}/mock/{aid}(id=${item.id}, aid=${attempt.id})}" id="mock-form">
+          <header class="mock-head">
+            <h1>Unofficial mock</h1>
+            <p class="muted">Not an official paper. Timer auto-submits when it reaches zero.</p>
+            <p class="mock-timer" id="mock-timer" th:attr="data-minutes=${bank.durationMin}">—</p>
+          </header>
+          <fieldset class="mock-q" th:each="q, iter : ${bank.questions}">
+            <legend th:text="${iter.count} + '. ' + ${q.stem}"></legend>
+            <label th:each="c, ci : ${q.choices}">
+              <input type="radio" th:name="${'q_' + q.id}" th:value="${ci.index}" />
+              <span th:text="${c}"></span>
+            </label>
+          </fieldset>
+          <button class="btn btn-primary" type="submit">Submit mock</button>
+        </form>
+      </div>
+      <script src="/js/mock-timer.js" defer></script>
+    </main>
+  </body>
+</html>

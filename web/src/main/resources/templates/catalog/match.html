@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Matches | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section">
+        <div class="container">
+          <div class="match-banner panel" th:unless="${complete}">
+            <h1>Complete your profile to match</h1>
+            <p class="muted">Date of birth, highest education, reservation category, and states are required. This is not an official eligibility decision.</p>
+            <a class="btn btn-primary" href="/profile">Open profile</a>
+          </div>
+          <th:block th:if="${complete}">
+            <div class="section-head">
+              <div>
+                <h1>Matches from your profile</h1>
+                <p class="muted">Not an official eligibility decision. Unknown facts lower confidence; they do not fail a row.</p>
+              </div>
+            </div>
+            <h2>Ranked open windows</h2>
+            <div class="job-grid">
+              <article class="job-card match-card" th:each="row : ${matches}">
+                <div class="badge-row">
+                  <span class="badge badge-warn" th:if="${row.lowConfidence}" th:text="${verifyBadge}">verify</span>
+                  <span class="badge badge-soft" th:text="'Score ' + ${row.score} + ' · ' + ${#numbers.formatDecimal(row.confidence * 100, 1, 0)} + '% facts covered'"></span>
+                </div>
+                <h3 class="job-title"><a th:href="@{/jobs/{id}(id=${row.id})}" th:text="${row.title}">Title</a></h3>
+                <p class="job-org" th:text="${row.organization}"></p>
+                <div class="chip-row">
+                  <span th:each="r : ${row.reasons}" th:class="'chip chip-' + ${r.outcome}" th:text="${r.detail}"></span>
+                </div>
+                <div class="job-card-actions">
+                  <a class="btn btn-secondary" th:href="@{/jobs/{id}(id=${row.id})}">View details</a>
+                  <a class="btn btn-primary" th:if="${row.officialUrl != null and #strings.startsWith(#strings.toLowerCase(row.officialUrl), 'https://')}" th:href="${row.officialUrl}" target="_blank" rel="noopener noreferrer">Official site</a>
+                </div>
+              </article>
+            </div>
+            <h2 style="margin-top:2rem">Did not match</h2>
+            <div class="job-grid">
+              <article class="job-card match-card" th:each="row : ${excluded}">
+                <span class="badge badge-muted">Did not match</span>
+                <h3 class="job-title" th:text="${row.title}">Title</h3>
+                <div class="chip-row">
+                  <span th:each="r : ${row.reasons}" th:class="'chip chip-' + ${r.outcome}" th:text="${r.detail}"></span>
+                </div>
+              </article>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

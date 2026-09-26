@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title th:text="${item.title} + ' | Desk'">Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container desk-detail">
+        <p><a class="back-link" href="/dashboard">← Desk</a></p>
+        <header class="panel">
+          <div class="badge-row">
+            <span class="badge badge-soft" th:text="${item.statusLabel}"></span>
+            <span class="badge badge-muted" th:text="${item.kindLabel}"></span>
+          </div>
+          <h1 th:text="${item.title}">Title</h1>
+          <p class="muted" th:text="${item.nextStep}"></p>
+          <p th:if="${item.officialUrl != null and #strings.startsWith(#strings.toLowerCase(item.officialUrl), 'https://')}"><a th:href="${item.officialUrl}" target="_blank" rel="noopener noreferrer">Official site</a></p>
+        </header>
+        <form class="panel" method="post" th:action="@{/desk/{id}(id=${item.id})}">
+          <label class="field">
+            <span>Status</span>
+            <select name="status">
+              <option th:each="st : ${ {'watching','applied','admit_ready','appeared','result_in','done'} }" th:value="${st}" th:text="${st}" th:selected="${item.status == st}"></option>
+            </select>
+          </label>
+          <label class="field"><span>Exam date</span><input type="date" name="examDate" th:value="${item.examDate}" /></label>
+          <label class="field"><span>Last / apply date</span><input type="date" name="lastDate" th:value="${item.lastDate}" /></label>
+          <label class="field"><span>Notes</span><textarea name="notes" th:text="${item.notes}"></textarea></label>
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-secondary" type="submit" name="action" value="delete">Remove from desk</button>
+        </form>
+        <div class="desk-file-grid">
+          <form class="panel desk-file" method="post" th:action="@{/desk/{id}/files/admit(id=${item.id})}" enctype="multipart/form-data">
+            <h2>Admit card</h2>
+            <p th:if="${item.hasAdmit}">
+              <a th:href="@{/desk/{id}/files/admit(id=${item.id})}">Download admit card</a>
+            </p>
+            <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required />
+            <button class="btn btn-secondary" type="submit">Upload</button>
+          </form>
+          <form class="panel" method="post" th:if="${item.hasAdmit}" th:action="@{/desk/{id}/files/admit/delete(id=${item.id})}">
+            <button class="btn btn-secondary" type="submit">Remove admit card</button>
+          </form>
+          <form class="panel desk-file" method="post" th:action="@{/desk/{id}/files/result(id=${item.id})}" enctype="multipart/form-data">
+            <h2>Result</h2>
+            <p th:if="${item.hasResult}"><a th:href="@{/desk/{id}/files/result(id=${item.id})}">Download result</a></p>
+            <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required />
+            <button class="btn btn-secondary" type="submit">Upload</button>
+          </form>
+          <form class="panel" method="post" th:if="${item.hasResult}" th:action="@{/desk/{id}/files/result/delete(id=${item.id})}">
+            <button class="btn btn-secondary" type="submit">Remove result</button>
+          </form>
+        </div>
+        <p th:if="${item.kind == 'series'}">
+          <a class="btn btn-secondary" th:href="@{/desk/{id}/plan(id=${item.id})}">Unofficial study plan</a>
+          <a class="btn btn-secondary" th:href="@{/desk/{id}/mock(id=${item.id})}">Unofficial mock</a>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

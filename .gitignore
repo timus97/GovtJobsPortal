@@ -1,3 +1,7 @@
+target/
+.idea/
+*.iml
+
 node_modules/
 client/node_modules/
 server/node_modules/
@@ -17,6 +21,8 @@ data/student-files/**
 !data/student-files/.gitkeep
 data/cache/**
 !data/cache/.gitkeep
+data/logs/**
+!data/logs/.gitkeep
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm

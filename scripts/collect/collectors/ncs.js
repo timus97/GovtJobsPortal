@@ -1,7 +1,7 @@
 const { fetchText } = require('../lib/http');
 const { saveRaw } = require('../lib/rawStore');
 const { extractLinks } = require('../lib/htmlLinks');
-const { toStagingRecord, dedupeByUrl } = require('../lib/toStaging');
+const { recordsFromNoticeLinks } = require('../lib/collectNotices');
 const { withBrowser, extractJobLinksFromPage } = require('../lib/browser');
 
 async function collectNcs(source, ctx) {
@@ -32,42 +32,34 @@ async function collectNcs(source, ctx) {
     errors.push({ url: 'browser', message: err.message });
   }
 
-  // HTTP fallback
   if (links.length === 0) {
-    used = 'http-fallback';
-    for (const listUrl of listUrls) {
-      try {
-        const { text, url } = await fetchText(listUrl);
-        saveRaw(source.sourceId, runId, 'http-fallback.html', text);
-        links.push(...extractLinks(text, url, { limit: 60 }).map((l) => ({ ...l, sourceUrl: url })));
-      } catch (err) {
-        errors.push({ url: listUrl, message: err.message });
-      }
-    }
+    errors.push({
+      url: listUrls[0] || source.baseUrl || '',
+      message: 'Playwright returned no keepable NCS notices; HTTP homepage scrape skipped',
+    });
+    return {
+      records: [],
+      errors,
+      metrics: { method: used === 'playwright' ? 'playwright-empty' : 'playwright-failed', links: 0, kept: 0, written: 0 },
+    };
   }
 
-  const records = dedupeByUrl(
-    links.map((item) =>
-      toStagingRecord(
-        {
-          ...item,
-          organization: item.organization || 'Government of India (via NCS)',
-          orgType: 'central',
-        },
-        source,
-        {
-          collectedAt,
-          collectorVersion: used === 'playwright' ? 'playwright-v1' : 'scrape-v1',
-          listUrl: item.sourceUrl,
-        }
-      )
-    )
+  const built = await recordsFromNoticeLinks(
+    links,
+    source,
+    { collectedAt, pdfCounter: ctx.pdfCounter },
+    {
+      organization: 'Government of India (via NCS)',
+      orgType: 'central',
+      collectorVersion: used === 'playwright' ? 'playwright-v1' : 'scrape-v1',
+    }
   );
+  errors.push(...built.errors);
 
   return {
-    records,
+    records: built.records,
     errors,
-    metrics: { method: used, links: links.length, written: records.length },
+    metrics: { method: used, links: links.length, kept: built.kept, written: built.records.length },
   };
 }
 

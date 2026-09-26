@@ -78,7 +78,7 @@ export default function StudyPlanPage() {
   if (error && !item) {
     return (
       <div className="section container">
-        <p className="error-box">{error}</p>
+        <p className="muted">This plan is unavailable right now.</p>
         <Link to="/dashboard">← Back to desk</Link>
       </div>
     )
@@ -106,7 +106,7 @@ export default function StudyPlanPage() {
             ← Back to desk
           </Link>
         </p>
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Could not update the plan just now.</p>}
 
         <div className="desk-card-top">
           <div>

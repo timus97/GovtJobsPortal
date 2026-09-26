@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title th:text="${missing} ? 'Job unavailable' : (${job.title} + ' | Sarkari Desk')">Job</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container" th:if="${missing}">
+        <p class="muted">This listing is unavailable right now.</p>
+        <a href="/jobs">← Back to jobs</a>
+      </div>
+      <div class="section" th:unless="${missing}">
+        <div class="container detail-layout">
+          <p><a class="back-link" href="/jobs">← All jobs</a></p>
+          <header class="detail-header panel">
+            <div class="badge-row">
+              <span class="badge" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}"></span>
+              <span class="badge badge-soft" th:text="${selectionLabel[job.selectionProcess] ?: job.selectionProcess}"></span>
+              <span class="badge badge-exam" th:if="${job.hasExam == true}">Exam</span>
+              <span class="badge" th:classappend="${job.status == 'closing_soon'} ? ' badge-warn' : ' badge-muted'" th:text="${statusLabel[job.status] ?: job.status}"></span>
+            </div>
+            <h1 th:text="${job.title}">Title</h1>
+            <p class="job-org" th:text="${job.organization}">Org</p>
+            <p class="detail-summary" th:text="${job.summary}">Summary</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" th:if="${job.officialUrl != null and #strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://')}" th:href="${job.officialUrl}" target="_blank" rel="noopener noreferrer">Apply / read official notification</a>
+              <form th:if="${flags.student}" method="post" th:action="@{/desk/track}" style="display:inline">
+                <input type="hidden" name="kind" value="opportunity" />
+                <input type="hidden" name="refId" th:value="${job.id}" />
+                <input type="hidden" name="status" value="applied" />
+                <button class="btn btn-secondary" type="submit">I applied</button>
+              </form>
+              <form th:if="${flags.student}" method="post" th:action="@{/desk/track}" style="display:inline">
+                <input type="hidden" name="kind" value="opportunity" />
+                <input type="hidden" name="refId" th:value="${job.id}" />
+                <input type="hidden" name="status" value="watching" />
+                <button class="btn btn-secondary" type="submit">Track</button>
+              </form>
+            </div>
+            <p class="muted small">You will leave this site. Apply only on the official organisation website.</p>
+          </header>
+          <div class="detail-grid">
+            <section class="panel">
+              <h2>Key details</h2>
+              <dl class="detail-dl">
+                <div><dt>Location</dt><dd th:text="${job.location} ?: '—'">—</dd></div>
+                <div><dt>Sector</dt><dd th:text="${job.sector} ?: '—'">—</dd></div>
+                <div><dt>Vacancies</dt><dd th:text="${job.vacancies} ?: 'Not specified'">—</dd></div>
+                <div><dt>Qualification</dt><dd th:text="${qualLabel[job.qualification] ?: (job.qualification ?: '—')}">—</dd></div>
+                <div><dt>Last date</dt><dd th:text="${job.lastDate} ?: '—'">—</dd></div>
+                <div><dt>Notification</dt><dd th:text="${job.notificationDate} ?: '—'">—</dd></div>
+              </dl>
+            </section>
+            <section class="panel">
+              <h2>Provenance</h2>
+              <dl class="detail-dl">
+                <div><dt>Source</dt><dd th:text="${job.sourceName} ?: job.sourceId">—</dd></div>
+                <div><dt>Source URL</dt><dd><a th:if="${job.sourceUrl != null and #strings.startsWith(#strings.toLowerCase(job.sourceUrl), 'https://')}" th:href="${job.sourceUrl}" th:text="${job.sourceUrl}">url</a></dd></div>
+              </dl>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

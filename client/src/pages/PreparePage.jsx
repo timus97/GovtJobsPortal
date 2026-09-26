@@ -152,7 +152,7 @@ export default function PreparePage() {
           </select>
         </label>
 
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Calendars are unavailable right now. Try again in a moment.</p>}
 
         {ranked.recommended.length > 0 && (
           <section>

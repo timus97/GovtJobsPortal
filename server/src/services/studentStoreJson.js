@@ -94,6 +94,22 @@ function verifyPassword(email, password) {
   return s.publicStudent(row);
 }
 
+function setPassword(studentId, password) {
+  if (typeof password !== 'string' || password.length < s.MIN_PASSWORD) {
+    s.fail('VALIDATION', `Password must be at least ${s.MIN_PASSWORD} characters`);
+  }
+  const data = load();
+  const idx = data.students.findIndex((st) => st.id === studentId);
+  if (idx < 0) return null;
+  data.students[idx] = {
+    ...data.students[idx],
+    passwordHash: hash(password),
+    lastLoginAt: new Date().toISOString(),
+  };
+  save(data);
+  return s.publicStudent(data.students[idx]);
+}
+
 function getProfile(studentId) {
   return load().profiles[studentId] || null;
 }
@@ -318,6 +334,7 @@ module.exports = {
   findById,
   register,
   verifyPassword,
+  setPassword,
   getProfile,
   saveProfile,
   profileIsEmpty: s.profileIsEmpty,

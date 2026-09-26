@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Prepare | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <h1>Prepare-for calendars</h1>
+              <p class="muted">Official exam series. Apply only appears when a linked vacancy is actually open. Syllabus and mocks are unofficial.</p>
+            </div>
+          </div>
+          <form method="get" action="/prepare" class="panel" style="margin-bottom:1rem">
+            <label class="field">
+              <span>Board</span>
+              <select name="board" onchange="this.form.submit()">
+                <option value="">All boards</option>
+                <option th:each="b : ${filters.boards}" th:value="${b}" th:text="${b}" th:selected="${b == board}"></option>
+              </select>
+            </label>
+          </form>
+          <div class="job-grid">
+            <article class="job-card" th:each="s : ${series}">
+              <div class="job-card-top">
+                <div class="badge-row">
+                  <span class="badge badge-soft" th:text="${s.board}">Board</span>
+                  <span class="badge badge-exam">Prepare-for</span>
+                  <span class="badge badge-muted" th:if="${s.applyNever}">Not a vacancy</span>
+                  <span class="badge badge-muted" th:if="${s.cycle}" th:text="${s.cycle}"></span>
+                </div>
+                <h3 class="job-title" th:text="${s.name}">Name</h3>
+                <p class="job-org">Official calendar — not an apply-now listing</p>
+              </div>
+              <dl class="series-dates">
+                <div th:if="${s.expectedNotify}"><dt>Expected notification</dt><dd th:text="${s.expectedNotify}"></dd></div>
+                <div th:if="${s.expectedApply}"><dt>Expected apply window</dt><dd th:text="${s.expectedApply}"></dd></div>
+                <div th:if="${s.expectedExam}"><dt>Expected exam</dt><dd th:text="${s.expectedExam}"></dd></div>
+                <div th:if="${s.minEducation}"><dt>Typical education</dt><dd th:text="${s.minEducation}"></dd></div>
+              </dl>
+              <div class="job-card-actions">
+                <a class="btn btn-secondary" th:if="${s.officialUrl != null and #strings.startsWith(#strings.toLowerCase(s.officialUrl), 'https://')}" th:href="${s.officialUrl}" target="_blank" rel="noopener noreferrer">Official calendar</a>
+                <a class="btn btn-primary" th:if="${s.canApply and !s.linkedOpportunities.isEmpty()}" th:href="@{/jobs/{id}(id=${s.linkedOpportunities[0].id})}">Apply (open window)</a>
+                <form th:if="${flags.student}" method="post" th:action="@{/desk/track}">
+                  <input type="hidden" name="kind" value="series" />
+                  <input type="hidden" name="refId" th:value="${s.id}" />
+                  <button class="btn btn-secondary" type="submit">Track</button>
+                </form>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

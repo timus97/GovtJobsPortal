@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Review | Ops</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <h1>Review queue</h1>
+        <p class="empty panel" th:if="${items.isEmpty()}">Nothing waiting for review.</p>
+        <div class="table-wrap" th:unless="${items.isEmpty()}">
+          <table class="data-table">
+            <thead><tr><th>Title</th><th>Host</th><th>State</th></tr></thead>
+            <tbody>
+              <tr th:each="j : ${items}">
+                <td><a th:href="@{/ops/runs/{id}(id=${j.id})}" th:text="${j.extracted?.title ?: j.url}"></a></td>
+                <td th:text="${j.host}"></td>
+                <td th:text="${j.state}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

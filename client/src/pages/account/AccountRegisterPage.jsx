@@ -49,7 +49,7 @@ export default function AccountRegisterPage() {
             Email + password (at least 10 characters). No email verification in this version. Profile
             facts stay on this API host — not on GitHub Pages.
           </p>
-          {error && <p className="error-box">{error}</p>}
+          {error && <p className="muted">{error}</p>}
           <label className="field">
             <span>Email</span>
             <input

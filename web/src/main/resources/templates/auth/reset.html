@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/public :: layout(~{::title}, ~{::main})}"
+  lang="en"
+>
+  <head>
+    <title>Choose a new password | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="container">
+        <div class="auth-stage">
+          <section class="auth-intro">
+            <p class="eyebrow">Student desk</p>
+            <h1>Choose a new password</h1>
+            <p class="lead">At least 10 characters. You will be signed in after the change.</p>
+          </section>
+          <form class="panel auth-card" method="post" th:action="@{/account/reset}" th:if="${valid}">
+            <h2>New password</h2>
+            <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
+            <input type="hidden" name="token" th:value="${token}" />
+            <label class="field">
+              <span>Password</span>
+              <input type="password" name="password" autocomplete="new-password" minlength="10" required />
+            </label>
+            <button class="btn btn-primary btn-lg" type="submit">Save password</button>
+          </form>
+          <section class="panel auth-card" th:unless="${valid}">
+            <h2>Link expired</h2>
+            <p class="error-box" th:if="${notice}" th:text="${notice}">This reset link is invalid or has expired.</p>
+            <p><a class="btn btn-primary" href="/account/forgot">Request a new link</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

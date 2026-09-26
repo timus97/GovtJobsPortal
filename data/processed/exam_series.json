@@ -16,7 +16,7 @@
       "central teacher eligibility test"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ibps-csa",
@@ -37,7 +37,7 @@
       "crp-csa"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ibps-po",
@@ -58,7 +58,7 @@
       "crp-po"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ibps-rrb",
@@ -77,7 +77,7 @@
       "ibps rrb"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ibps-so",
@@ -98,7 +98,7 @@
       "crp-spl"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "gate",
@@ -117,7 +117,7 @@
       "graduate aptitude test in engineering"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ugc-net",
@@ -137,7 +137,7 @@
       "national eligibility test"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "rrb-alp",
@@ -156,7 +156,7 @@
       "alp"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "rrb-group-d",
@@ -177,7 +177,7 @@
       "level 1"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "rrb-je",
@@ -196,7 +196,7 @@
       "rrb je"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "rrb-ntpc",
@@ -215,7 +215,7 @@
       "non technical popular categories"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "rrb-technician",
@@ -234,7 +234,7 @@
       "rrb technician"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "sbi-ja",
@@ -254,7 +254,7 @@
       "junior associate"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "sbi-po",
@@ -273,7 +273,7 @@
       "sbi po"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-cgl",
@@ -292,9 +292,9 @@
       "cgl"
     ],
     "linkedOpportunityIds": [
-      "912c0026508e7dca"
+      "a567e4b783a647af"
     ],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-chsl",
@@ -313,7 +313,7 @@
       "chsl"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-gd",
@@ -333,7 +333,7 @@
       "constable gd"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-mts",
@@ -352,7 +352,7 @@
       "mts"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-steno",
@@ -371,7 +371,7 @@
       "steno"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "ssc-cpo",
@@ -390,7 +390,7 @@
       "cpo"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "upsc-capf",
@@ -409,7 +409,7 @@
       "capf"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "upsc-cse",
@@ -430,7 +430,7 @@
       "ias"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "upsc-cds",
@@ -449,7 +449,7 @@
       "cds"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "upsc-ese",
@@ -469,7 +469,7 @@
       "ies"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   },
   {
     "id": "upsc-nda",
@@ -489,6 +489,6 @@
       "national defence academy"
     ],
     "linkedOpportunityIds": [],
-    "updatedAt": "2026-08-20T16:02:36.460Z"
+    "updatedAt": "2026-08-21T14:56:43.226Z"
   }
 ]

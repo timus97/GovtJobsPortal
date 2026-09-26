@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Mock review | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <p><a class="back-link" th:href="@{/desk/{id}(id=${item.id})}">← Desk item</a></p>
+        <h1>Unofficial review</h1>
+        <p class="lead" th:text="'Score ' + ${review.score} + ' / ' + ${review.total}"></p>
+        <article class="panel" th:each="q : ${review.review}">
+          <p><strong th:text="${q.stem}"></strong>
+            <span th:class="${q.ok} ? 'chip chip-pass' : 'chip chip-fail'" th:text="${q.ok} ? 'Correct' : 'Incorrect'"></span>
+          </p>
+          <ol>
+            <li th:each="c, ci : ${q.choices}" th:text="${c}" th:class="${ci.index == q.answerIndex} ? 'chip-pass' : (${ci.index == q.chosen} ? 'chip-fail' : '')"></li>
+          </ol>
+          <p class="muted" th:if="${q.explain}" th:text="${q.explain}"></p>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

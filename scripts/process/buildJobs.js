@@ -20,6 +20,7 @@ const {
   isValidExamSeries,
   seriesMatchesJob,
 } = require(path.join(root, 'shared', 'examSeriesSchema'));
+const { isGarbageJob } = require(path.join(root, 'scripts', 'collect', 'lib', 'jobLinkQuality'));
 
 const paths = {
   seed: path.join(root, 'data', 'seed', 'jobs.json'),
@@ -48,35 +49,50 @@ function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
+function parseStagingFile(full) {
+  const name = path.basename(full);
+  const text = fs.readFileSync(full, 'utf8');
+  const records = [];
+  if (name.endsWith('.jsonl')) {
+    for (const line of text.split('\n')) {
+      if (!line.trim()) continue;
+      try {
+        records.push(JSON.parse(line));
+      } catch {
+        /* skip bad line */
+      }
+    }
+    return records;
+  }
+  const data = JSON.parse(text);
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data.records)) return data.records;
+  if (data) return [data];
+  return [];
+}
+
 function loadStagingRecords() {
   const records = [];
   if (!fs.existsSync(paths.stagingDir)) return records;
-  const walk = (dir) => {
-    for (const name of fs.readdirSync(dir)) {
-      const full = path.join(dir, name);
-      const stat = fs.statSync(full);
-      if (stat.isDirectory()) walk(full);
-      else if (name.endsWith('.json') || name.endsWith('.jsonl')) {
-        const text = fs.readFileSync(full, 'utf8');
-        if (name.endsWith('.jsonl')) {
-          for (const line of text.split('\n')) {
-            if (!line.trim()) continue;
-            try {
-              records.push(JSON.parse(line));
-            } catch {
-              /* skip bad line */
-            }
-          }
-        } else {
-          const data = JSON.parse(text);
-          if (Array.isArray(data)) records.push(...data);
-          else if (data && Array.isArray(data.records)) records.push(...data.records);
-          else if (data) records.push(data);
-        }
-      }
+  for (const name of fs.readdirSync(paths.stagingDir)) {
+    if (name === '.gitkeep') continue;
+    const full = path.join(paths.stagingDir, name);
+    const stat = fs.statSync(full);
+    if (stat.isDirectory()) {
+      const files = fs
+        .readdirSync(full)
+        .filter((n) => (n.endsWith('.json') || n.endsWith('.jsonl')) && n !== '.gitkeep')
+        .map((n) => {
+          const p = path.join(full, n);
+          return { p, t: fs.statSync(p).mtimeMs };
+        })
+        .sort((a, b) => b.t - a.t);
+      if (!files.length) continue;
+      records.push(...parseStagingFile(files[0].p));
+    } else if (name.endsWith('.json') || name.endsWith('.jsonl')) {
+      records.push(...parseStagingFile(full));
     }
-  };
-  walk(paths.stagingDir);
+  }
   return records;
 }
 
@@ -198,20 +214,33 @@ function enrichRecord(raw, aliases, collectedAt) {
     updatedAt: now,
   };
 
-  const isScrape = String(raw.collectorVersion || '').match(/scrape|playwright|pdf/i);
+  const isScrape = /scrape|playwright|pdf|highlights/i.test(String(raw.collectorVersion || ''));
 
-  // Scrape rows without lastDate can still publish if selection is clear.
-  // Unknown/ambiguous selection stays in quarantine for human review.
-  if (needsReview && isScrape && SELECTION_OK(selectionProcess)) {
-    // Clear review when collector already inferred a no-exam selection type
-    if (!/unknown|review/i.test(String(raw.summary || ''))) {
-      needsReview = false;
-      job.needsReview = false;
-    }
+  if (isScrape && !lastDate && !raw.walkInDate) {
+    job.needsReview = true;
+    return { quarantine: true, job, reason: 'dateless_scrape' };
+  }
+
+  // Default interview_only fallback is not a classified selection.
+  if (
+    needsReview &&
+    isScrape &&
+    raw.selectionInferred === true &&
+    lastDate &&
+    SELECTION_OK(selectionProcess) &&
+    !/unknown|review/i.test(String(raw.summary || ''))
+  ) {
+    needsReview = false;
+    job.needsReview = false;
   }
 
   if (needsReview) {
     return { quarantine: true, job, reason: 'needs_review' };
+  }
+
+  const junk = isGarbageJob(job);
+  if (junk.garbage) {
+    return { quarantine: true, job, reason: `garbage_url:${(junk.reasons || []).join(',')}` };
   }
 
   const errors = isValidJob(job);
@@ -443,13 +472,17 @@ function main() {
   const previous = readJson(paths.jobsOut, []);
   const replacePublished =
     process.env.REPLACE_PUBLISHED === '1' || process.argv.includes('--replace-published');
+  const wroteThisRun = new Set(staging.map((r) => r.sourceId).filter(Boolean));
   if (!replacePublished && previous.length > published.length) {
     const seen = new Set(published.map(dedupeKey));
     for (const job of previous) {
       const key = dedupeKey(job);
       if (seen.has(key)) continue;
+      if (!job.lastDate) continue;
+      if (wroteThisRun.has(job.sourceId)) continue;
       const errors = isValidJob(job);
       if (errors.length) continue;
+      if (isGarbageJob(job).garbage) continue;
       published.push(job);
       seen.add(key);
       keptPublished += 1;
@@ -517,4 +550,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { buildExamSeries };
+module.exports = { buildExamSeries, loadStagingRecords, enrichRecord };

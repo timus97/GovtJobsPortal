@@ -115,6 +115,22 @@ async function verifyPassword(email, password) {
   return s.publicStudent({ ...row, lastLoginAt });
 }
 
+async function setPassword(studentId, password) {
+  if (typeof password !== 'string' || password.length < s.MIN_PASSWORD) {
+    s.fail('VALIDATION', `Password must be at least ${s.MIN_PASSWORD} characters`);
+  }
+  const row = await findById(studentId);
+  if (!row) return null;
+  const passwordHash = hash(password);
+  const lastLoginAt = new Date().toISOString();
+  await pg.query('UPDATE students SET password_hash = $2, last_login_at = $3 WHERE id = $1', [
+    studentId,
+    passwordHash,
+    lastLoginAt,
+  ]);
+  return s.publicStudent({ ...row, lastLoginAt });
+}
+
 async function getProfile(studentId) {
   const { rows } = await pg.query('SELECT profile FROM student_profiles WHERE student_id = $1', [studentId]);
   return rows[0] ? rows[0].profile : null;
@@ -449,6 +465,7 @@ module.exports = {
   findById,
   register,
   verifyPassword,
+  setPassword,
   getProfile,
   saveProfile,
   profileIsEmpty: s.profileIsEmpty,

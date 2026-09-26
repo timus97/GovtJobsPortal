@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import '../App.css'
+import { jobPath, useCatalogBase } from '../lib/catalogBase'
 import {
   ORG_TYPE_LABELS,
   SELECTION_LABELS,
@@ -8,6 +9,8 @@ import {
 } from '../utils/labels'
 
 export default function JobCard({ job }) {
+  const base = useCatalogBase()
+  const href = jobPath(job.id, base)
   return (
     <article className="job-card">
       <div className="job-card-top">
@@ -23,7 +26,7 @@ export default function JobCard({ job }) {
           )}
         </div>
         <h3 className="job-title">
-          <Link to={`/jobs/${job.id}`}>{job.title}</Link>
+          <Link to={href}>{job.title}</Link>
         </h3>
         <p className="job-org">{job.organization}</p>
       </div>
@@ -48,7 +51,7 @@ export default function JobCard({ job }) {
         )}
       </dl>
       <div className="job-card-actions">
-        <Link to={`/jobs/${job.id}`} className="btn btn-secondary">
+        <Link to={href} className="btn btn-secondary">
           View details
         </Link>
         <a

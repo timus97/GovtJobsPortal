@@ -137,3 +137,52 @@ export function createOperator(username, password) {
     body: JSON.stringify({ username, password }),
   })
 }
+
+export function listOpsSources() {
+  return opsFetch('/sources')
+}
+
+export function getOpsSource(sourceId) {
+  return opsFetch(`/sources/${encodeURIComponent(sourceId)}`)
+}
+
+export function createSource(payload) {
+  return opsFetch('/sources', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function patchSource(sourceId, payload) {
+  return opsFetch(`/sources/${encodeURIComponent(sourceId)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function collectSource(sourceId) {
+  return opsFetch(`/sources/${encodeURIComponent(sourceId)}/collect`, {
+    method: 'POST',
+    body: '{}',
+  })
+}
+
+export function fetchCollectProgress() {
+  return opsFetch('/collect-progress')
+}
+
+export function startDailyCollect(payload = {}) {
+  return opsFetch('/collect/daily', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function fetchOpsLogs(params = {}) {
+  const qs = new URLSearchParams()
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== '') qs.set(k, v)
+  })
+  const q = qs.toString()
+  return opsFetch(`/logs${q ? `?${q}` : ''}`)
+}

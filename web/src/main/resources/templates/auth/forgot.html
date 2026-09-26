@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/public :: layout(~{::title}, ~{::main})}"
+  lang="en"
+>
+  <head>
+    <title>Forgot password | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="container">
+        <div class="auth-stage">
+          <section class="auth-intro">
+            <p class="eyebrow">Student desk</p>
+            <h1>Reset your password</h1>
+            <p class="lead">We email a one-time link. This is not a board or PSU account.</p>
+          </section>
+          <form class="panel auth-card" method="post" th:action="@{/account/forgot}">
+            <h2>Forgot password</h2>
+            <p class="muted" th:if="${sent}" th:text="${notice}">If that email is registered, we sent a reset link.</p>
+            <p class="error-box" th:if="${notice} and ${!sent}" th:text="${notice}"></p>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <button class="btn btn-primary btn-lg" type="submit">Send reset link</button>
+            <p class="muted small" style="margin: 1rem 0 0" th:if="${devResetUrl}">
+              <span th:text="${devHint}">Dev mail</span><br />
+              <a th:href="${devResetUrl}">Open the one-time reset link</a>
+            </p>
+            <p class="muted small" style="margin: 1rem 0 0"><a href="/">Back to sign in</a></p>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

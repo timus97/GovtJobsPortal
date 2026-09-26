@@ -5,6 +5,7 @@ const { fetchBuffer } = require('./http');
 const { ensureDir, root } = require('./rawStore');
 const { findLastDateHint } = require('./dates');
 const { classifySelectionText } = require(path.join(root, 'shared', 'jobSchema'));
+const { isRecruitmentPdfText, NOTICE_TEXT_RE } = require('./jobLinkQuality');
 
 const pdfDir = path.join(root, 'data', 'raw', 'pdfs');
 
@@ -23,12 +24,28 @@ function hashBuffer(buf) {
  * Download PDF (if needed), extract text, return structured result.
  * Enforces PDF_MAX_PER_RUN via counter object { count, max }.
  */
-async function extractPdf(url, counter = { count: 0, max: 25 }) {
+async function muteStderr(fn) {
+  const write = process.stderr.write;
+  process.stderr.write = () => true;
+  try {
+    return await fn();
+  } finally {
+    process.stderr.write = write;
+  }
+}
+
+async function extractPdf(url, counter = { count: 0, max: 200, perSourceMax: 6, perSource: {}, skipped: 0 }) {
   if (!pdfParse) {
     return { ok: false, error: 'pdf-parse not installed', url };
   }
-  if (counter.count >= counter.max) {
-    return { ok: false, error: 'PDF_MAX_PER_RUN reached', url, skipped: true };
+  const max = Number(counter.max || process.env.PDF_MAX_PER_RUN || 200);
+  const perMax = Number(counter.perSourceMax || process.env.PDF_MAX_PER_SOURCE || 6);
+  const sid = counter.sourceId || '_';
+  counter.perSource = counter.perSource || {};
+  const usedHere = Number(counter.perSource[sid] || 0);
+  if (counter.count >= max || usedHere >= perMax) {
+    counter.skipped = (counter.skipped || 0) + 1;
+    return { ok: false, error: 'PDF cap reached', url, skipped: true };
   }
 
   ensureDir(pdfDir);
@@ -36,11 +53,13 @@ async function extractPdf(url, counter = { count: 0, max: 25 }) {
   let buffer;
   let hash;
   try {
-    // Check existing by URL-derived temp is hard; always download then hash
     const res = await fetchBuffer(url, { maxBytes: 5 * 1024 * 1024 });
     buffer = res.buffer;
     hash = hashBuffer(buffer);
+    counter.count += 1;
+    counter.perSource[sid] = usedHere + 1;
   } catch (err) {
+    counter.skipped = (counter.skipped || 0) + 1;
     return { ok: false, error: err.message, url };
   }
 
@@ -49,7 +68,6 @@ async function extractPdf(url, counter = { count: 0, max: 25 }) {
 
   if (!fs.existsSync(pdfPath)) {
     fs.writeFileSync(pdfPath, buffer);
-    counter.count += 1;
   }
 
   let text = '';
@@ -57,10 +75,9 @@ async function extractPdf(url, counter = { count: 0, max: 25 }) {
     text = fs.readFileSync(txtPath, 'utf8');
   } else {
     try {
-      const parsed = await pdfParse(buffer);
+      const parsed = await muteStderr(() => pdfParse(buffer));
       text = (parsed.text || '').replace(/\r/g, '');
       fs.writeFileSync(txtPath, text, 'utf8');
-      if (!fs.existsSync(pdfPath)) counter.count += 1;
     } catch (err) {
       return { ok: false, error: `PDF parse failed: ${err.message}`, url, hash, pdfPath };
     }
@@ -68,11 +85,7 @@ async function extractPdf(url, counter = { count: 0, max: 25 }) {
 
   const classified = classifySelectionText(text);
   const lastDate = findLastDateHint(text);
-  const lines = text
-    .split('\n')
-    .map((l) => l.trim())
-    .filter(Boolean);
-  const titleGuess = lines.find((l) => l.length > 12 && l.length < 180) || null;
+  const fields = parsePdfJobFields(text);
 
   return {
     ok: true,
@@ -81,10 +94,41 @@ async function extractPdf(url, counter = { count: 0, max: 25 }) {
     pdfPath,
     txtPath,
     text,
-    excerpt: text.slice(0, 800).replace(/\s+/g, ' ').trim(),
-    titleGuess,
-    lastDate,
+    excerpt: fields.excerpt,
+    titleGuess: fields.title,
+    lastDate: lastDate || fields.lastDate,
+    vacancies: fields.vacancies,
     classified,
+    isJobNotice: fields.isJobNotice,
+  };
+}
+
+function parsePdfJobFields(text) {
+  const raw = String(text || '');
+  const compact = raw.replace(/\s+/g, ' ').trim();
+  const lines = raw
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const isJobNotice = isRecruitmentPdfText(raw);
+  const titled =
+    compact.match(
+      /(?:engagement|recruitment|walk-?in interview|advertisement|notification)\s+(?:of|for|:)\s+([^.]{12,160})/i
+    ) || null;
+  const title =
+    (titled && titled[1].trim()) ||
+    lines.find((l) => NOTICE_TEXT_RE.test(l) && l.length > 12 && l.length < 180) ||
+    lines.find((l) => l.length > 12 && l.length < 160) ||
+    null;
+  const vac = compact.match(
+    /(?:no\.?\s*of\s*posts?|number of posts?|vacancies|vacancy)\s*[:\-]?\s*(\d{1,5})/i
+  );
+  return {
+    isJobNotice,
+    title: title ? String(title).replace(/\s+/g, ' ').trim() : null,
+    vacancies: vac ? Number(vac[1]) : null,
+    lastDate: findLastDateHint(raw),
+    excerpt: compact.slice(0, 800),
   };
 }
 
@@ -92,4 +136,4 @@ function isPdfUrl(url) {
   return /\.pdf(\?|#|$)/i.test(url || '');
 }
 
-module.exports = { extractPdf, isPdfUrl, pdfDir };
+module.exports = { extractPdf, isPdfUrl, parsePdfJobFields, pdfDir };

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Sources | Ops</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <h1>Registry sources</h1>
+        <p class="muted">Read from data/sources/registry.json. Editing lands with the Java collect CLI.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Id</th><th>Name</th><th>Priority</th><th>Enabled</th><th>Collector</th></tr></thead>
+            <tbody>
+              <tr th:each="s : ${registry.sources}">
+                <td th:text="${s.sourceId}"></td>
+                <td th:text="${s.name}"></td>
+                <td th:text="${s.priority}"></td>
+                <td th:text="${s.enabled}"></td>
+                <td th:text="${s.collector} ?: s.method"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

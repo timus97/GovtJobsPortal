@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Search jobs | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <h1>Search jobs</h1>
+              <p class="muted">Look up any open listing. This search does not use your profile — see Matches for ranked results.</p>
+            </div>
+            <p class="result-count" th:text="${result.total} + ' result' + (${result.total} == 1 ? '' : 's')">0 results</p>
+          </div>
+          <div class="jobs-layout">
+            <aside class="filters panel">
+              <form method="get" action="/jobs">
+                <div class="filters-head">
+                  <h2>Filters</h2>
+                  <a class="link-btn" href="/jobs">Reset</a>
+                </div>
+                <label class="field">
+                  <span>Search</span>
+                  <input type="search" name="q" placeholder="Title, org, location…" th:value="${query.q()}" />
+                </label>
+                <label class="field">
+                  <span>Exam</span>
+                  <select name="hasExam">
+                    <option value="all" th:selected="${query.hasExam() == 'all'}">All jobs</option>
+                    <option value="yes" th:selected="${query.hasExam() == 'yes'}">Exam-based</option>
+                    <option value="no" th:selected="${query.hasExam() == 'no'}">No written exam</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Organisation type</span>
+                  <select name="orgType">
+                    <option value="">All</option>
+                    <option th:each="t : ${filters.orgTypes}" th:value="${t}" th:text="${orgTypeLabel[t] ?: t}" th:selected="${t == query.orgType()}"></option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Sector</span>
+                  <select name="sector">
+                    <option value="">All</option>
+                    <option th:each="s : ${filters.sectors}" th:value="${s}" th:text="${s}" th:selected="${s == query.sector()}"></option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Qualification</span>
+                  <select name="qualification">
+                    <option value="">All</option>
+                    <option th:each="q : ${filters.qualifications}" th:value="${q}" th:text="${qualLabel[q] ?: q}" th:selected="${q == query.qualification()}"></option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Selection</span>
+                  <select name="selectionProcess">
+                    <option value="">All selection types</option>
+                    <option th:each="s : ${filters.selectionProcesses}" th:value="${s}" th:text="${selectionLabel[s] ?: s}" th:selected="${s == query.selectionProcess()}"></option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Status</span>
+                  <select name="status">
+                    <option value="" th:selected="${query.status() == null}">Open + closing soon</option>
+                    <option value="open" th:selected="${query.status() == 'open'}">Open</option>
+                    <option value="closing_soon" th:selected="${query.status() == 'closing_soon'}">Closing Soon</option>
+                    <option value="closed" th:selected="${query.status() == 'closed'}">Closed</option>
+                    <option value="open,closing_soon,closed" th:selected="${query.status() == 'open,closing_soon,closed'}">All including closed</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Location contains</span>
+                  <input type="text" name="location" placeholder="e.g. Delhi, All India" th:value="${query.location()}" />
+                </label>
+                <label class="field">
+                  <span>Sort</span>
+                  <select name="sort">
+                    <option value="lastDate" th:selected="${query.sort() == 'lastDate'}">Last date (soonest)</option>
+                    <option value="newest" th:selected="${query.sort() == 'newest'}">Newest notification</option>
+                  </select>
+                </label>
+                <button class="btn btn-secondary" type="submit">Apply filters</button>
+              </form>
+            </aside>
+            <div>
+              <p class="empty panel" th:if="${result.total == 0}">No jobs match these filters.</p>
+              <div class="job-grid">
+                <article class="job-card" th:each="job : ${result.items}">
+                  <div class="job-card-top">
+                    <div class="badge-row">
+                      <span class="badge" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}">Org</span>
+                      <span class="badge badge-soft" th:text="${selectionLabel[job.selectionProcess] ?: job.selectionProcess}">Sel</span>
+                      <span class="badge badge-exam" th:if="${job.hasExam == true}">Exam</span>
+                      <span class="badge badge-warn" th:if="${job.status == 'closing_soon'}">Closing Soon</span>
+                      <span class="badge badge-muted" th:if="${job.status == 'closed'}">Closed</span>
+                    </div>
+                    <h3 class="job-title"><a th:href="@{/jobs/{id}(id=${job.id})}" th:text="${job.title}">Title</a></h3>
+                    <p class="job-org" th:text="${job.organization}">Org</p>
+                  </div>
+                  <dl class="job-meta">
+                    <div><dt>Location</dt><dd th:text="${job.location} ?: '—'">—</dd></div>
+                    <div><dt>Last date</dt><dd th:text="${job.lastDate} ?: '—'">—</dd></div>
+                    <div><dt>Sector</dt><dd th:text="${job.sector} ?: '—'">—</dd></div>
+                  </dl>
+                  <div class="job-card-actions">
+                    <a class="btn btn-secondary" th:href="@{/jobs/{id}(id=${job.id})}">View details</a>
+                    <a class="btn btn-primary" th:if="${job.officialUrl != null and #strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://')}" th:href="${job.officialUrl}" target="_blank" rel="noopener noreferrer">Official site</a>
+                  </div>
+                </article>
+              </div>
+              <nav class="pagination" th:if="${result.totalPages > 1}">
+                <a th:if="${result.page > 1}" th:href="@{/jobs(page=${result.page - 1}, q=${query.q()}, hasExam=${query.hasExam()}, orgType=${query.orgType()}, sector=${query.sector()}, qualification=${query.qualification()}, selectionProcess=${query.selectionProcess()}, status=${query.status()}, location=${query.location()}, sort=${query.sort()})}">Previous</a>
+                <span th:text="'Page ' + ${result.page} + ' of ' + ${result.totalPages}"></span>
+                <a th:if="${result.page < result.totalPages}" th:href="@{/jobs(page=${result.page + 1}, q=${query.q()}, hasExam=${query.hasExam()}, orgType=${query.orgType()}, sector=${query.sector()}, qualification=${query.qualification()}, selectionProcess=${query.selectionProcess()}, status=${query.status()}, location=${query.location()}, sort=${query.sort()})}">Next</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-08-20",
+  "updatedAt": "2026-08-21",
   "sources": [
     {
       "sourceId": "seed_manual",
@@ -59,7 +59,8 @@
       "category": "staffing",
       "baseUrl": "https://www.becil.com/",
       "listUrls": [
-        "https://www.becil.com/"
+        "https://www.becil.com/careers",
+        "https://www.becil.com/current-openings"
       ],
       "orgTypeDefault": "govt_company",
       "priority": "P0",
@@ -90,7 +91,7 @@
     },
     {
       "sourceId": "psu_ongc",
-      "name": "Oil and Natural Gas Corporation (ONGC) (ONGC) Careers",
+      "name": "Oil and Natural Gas Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.ongcindia.com/",
       "listUrls": [
@@ -115,7 +116,7 @@
     },
     {
       "sourceId": "psu_bhel",
-      "name": "Bharat Heavy Electricals Limited (BHEL) (BHEL) Careers",
+      "name": "Bharat Heavy Electricals Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bhel.com/",
       "listUrls": [
@@ -140,7 +141,7 @@
     },
     {
       "sourceId": "psu_bpcl",
-      "name": "Bharat Petroleum (BPCL) (BPCL) Careers",
+      "name": "Bharat Petroleum () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bharatpetroleum.in/",
       "listUrls": [
@@ -165,7 +166,7 @@
     },
     {
       "sourceId": "psu_cil",
-      "name": "Coal India (CIL) (CIL) Careers",
+      "name": "Coal India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.coalindia.in/",
       "listUrls": [
@@ -215,7 +216,7 @@
     },
     {
       "sourceId": "psu_hpcl",
-      "name": "Hindustan Petroleum (HPCL) (HPCL) Careers",
+      "name": "Hindustan Petroleum () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.hindustanpetroleum.com/",
       "listUrls": [
@@ -240,7 +241,7 @@
     },
     {
       "sourceId": "psu_iocl",
-      "name": "Indian Oil (IOCL) (IOCL) Careers",
+      "name": "Indian Oil () Careers",
       "category": "psu_careers",
       "baseUrl": "https://iocl.com/",
       "listUrls": [
@@ -290,7 +291,7 @@
     },
     {
       "sourceId": "psu_pgcil",
-      "name": "Power Grid Corporation of India (PGCIL) (PGCIL) Careers",
+      "name": "Power Grid Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.powergrid.in/",
       "listUrls": [
@@ -315,7 +316,7 @@
     },
     {
       "sourceId": "psu_pfc",
-      "name": "Power Finance Corporation Limited (PFC) (PFC) Careers",
+      "name": "Power Finance Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.pfcindia.com/",
       "listUrls": [
@@ -365,7 +366,7 @@
     },
     {
       "sourceId": "psu_sail",
-      "name": "Steel Authority of India Limited (SAIL) (SAIL) Careers",
+      "name": "Steel Authority of India Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.sail.co.in/",
       "listUrls": [
@@ -390,7 +391,7 @@
     },
     {
       "sourceId": "psu_oil",
-      "name": "Oil India (OIL) (OIL) Careers",
+      "name": "Oil India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.oil-india.com/",
       "listUrls": [
@@ -415,7 +416,7 @@
     },
     {
       "sourceId": "psu_hal",
-      "name": "Hindustan Aeronautics Limited (HAL) (HAL) Careers",
+      "name": "Hindustan Aeronautics Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://hal-india.co.in/",
       "listUrls": [
@@ -440,7 +441,7 @@
     },
     {
       "sourceId": "psu_bel",
-      "name": "Bharat Electronics (BEL) (BEL) Careers",
+      "name": "Bharat Electronics () Careers",
       "category": "psu_careers",
       "baseUrl": "https://bel-india.in/",
       "listUrls": [
@@ -465,7 +466,7 @@
     },
     {
       "sourceId": "psu_concor",
-      "name": "Container Corporation of India (CONCOR) (CONCOR) Careers",
+      "name": "Container Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.concorindia.co.in/",
       "listUrls": [
@@ -490,7 +491,7 @@
     },
     {
       "sourceId": "psu_eil",
-      "name": "Engineers India (EIL) (EIL) Careers",
+      "name": "Engineers India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://engineersindia.com/",
       "listUrls": [
@@ -515,7 +516,7 @@
     },
     {
       "sourceId": "psu_mtnl",
-      "name": "Mahanagar Telephone Nigam Limited (MTNL) (MTNL) Careers",
+      "name": "Mahanagar Telephone Nigam Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://mtnl.in/",
       "listUrls": [
@@ -540,7 +541,7 @@
     },
     {
       "sourceId": "psu_nalco",
-      "name": "National Aluminium Company (NALCO) (NALCO) Careers",
+      "name": "National Aluminium Company () Careers",
       "category": "psu_careers",
       "baseUrl": "https://nalcoindia.com/",
       "listUrls": [
@@ -640,7 +641,7 @@
     },
     {
       "sourceId": "psu_rinl",
-      "name": "Rashtriya Ispat Nigam (RINL) (RINL) Careers",
+      "name": "Rashtriya Ispat Nigam () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.vizagsteel.com/",
       "listUrls": [
@@ -665,7 +666,7 @@
     },
     {
       "sourceId": "psu_sci",
-      "name": "Shipping Corporation of India (SCI) (SCI) Careers",
+      "name": "Shipping Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.shipindia.com/",
       "listUrls": [
@@ -690,7 +691,7 @@
     },
     {
       "sourceId": "psu_rvnl",
-      "name": "Rail Vikas Nigam (RVNL) (RVNL) Careers",
+      "name": "Rail Vikas Nigam () Careers",
       "category": "psu_careers",
       "baseUrl": "https://rvnl.org/",
       "listUrls": [
@@ -715,7 +716,7 @@
     },
     {
       "sourceId": "psu_ovl",
-      "name": "ONGC Videsh Limited (OVL) (OVL) Careers",
+      "name": "ONGC Videsh Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.ongcindia.com/",
       "listUrls": [
@@ -740,7 +741,7 @@
     },
     {
       "sourceId": "psu_rcf",
-      "name": "Rashtriya Chemicals and Fertilizers (RCF) (RCF) Careers",
+      "name": "Rashtriya Chemicals and Fertilizers () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.rcfltd.com/",
       "listUrls": [
@@ -765,7 +766,7 @@
     },
     {
       "sourceId": "psu_ircon",
-      "name": "Ircon International (IRCON) (IRCON) Careers",
+      "name": "Ircon International () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.ircon.org/",
       "listUrls": [
@@ -815,7 +816,7 @@
     },
     {
       "sourceId": "psu_nfl",
-      "name": "National Fertilizers Limited (NFL) (NFL) Careers",
+      "name": "National Fertilizers Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nationalfertilizers.com/",
       "listUrls": [
@@ -840,7 +841,7 @@
     },
     {
       "sourceId": "psu_hudco",
-      "name": "Housing And Urban Development Corporation Limited (HUDCO) (HUDCO) Careers",
+      "name": "Housing And Urban Development Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.hudco.org.in/",
       "listUrls": [
@@ -865,7 +866,7 @@
     },
     {
       "sourceId": "psu_ireda",
-      "name": "Indian Renewable Energy Development Agency (IREDA) (IREDA) Careers",
+      "name": "Indian Renewable Energy Development Agency () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.ireda.in/",
       "listUrls": [
@@ -890,7 +891,7 @@
     },
     {
       "sourceId": "psu_cwc",
-      "name": "Central Warehousing Corporation (CWC) (CWC) Careers",
+      "name": "Central Warehousing Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://cewacor.nic.in/",
       "listUrls": [
@@ -915,7 +916,7 @@
     },
     {
       "sourceId": "psu_mdl",
-      "name": "Mazagon Dockyard Limited (MDL) (MDL) Careers",
+      "name": "Mazagon Dockyard Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://mazagondock.in/",
       "listUrls": [
@@ -940,7 +941,7 @@
     },
     {
       "sourceId": "psu_rcil",
-      "name": "RailTel Corporation of India Limited (RCIL) (RCIL) Careers",
+      "name": "RailTel Corporation of India Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.coalindia.in/",
       "listUrls": [
@@ -965,7 +966,7 @@
     },
     {
       "sourceId": "psu_sjvn",
-      "name": "SJVN Limited (SJVN) (SJVN) Careers",
+      "name": "SJVN Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://sjvn.nic.in/",
       "listUrls": [
@@ -1015,7 +1016,7 @@
     },
     {
       "sourceId": "psu_seci",
-      "name": "Solar Energy Corporation of India (SECI) (SECI) Careers",
+      "name": "Solar Energy Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.seci.co.in/",
       "listUrls": [
@@ -1040,7 +1041,7 @@
     },
     {
       "sourceId": "psu_irctc",
-      "name": "Indian Railway Catering and Tourism Corporation (IRCTC) (IRCTC) Careers",
+      "name": "Indian Railway Catering and Tourism Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.irctc.com/",
       "listUrls": [
@@ -1065,7 +1066,7 @@
     },
     {
       "sourceId": "psu_irfc",
-      "name": "Indian Railway Finance Corporation (IRFC) (IRFC) Careers",
+      "name": "Indian Railway Finance Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://irfc.co.in/",
       "listUrls": [
@@ -1090,7 +1091,7 @@
     },
     {
       "sourceId": "psu_nrl",
-      "name": "Numaligarh Refinery (NRL) (NRL) Careers",
+      "name": "Numaligarh Refinery () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nrl.co.in/",
       "listUrls": [
@@ -1115,7 +1116,7 @@
     },
     {
       "sourceId": "psu_cpcl",
-      "name": "Chennai Petroleum Corporation Limited (CPCL) (CPCL) Careers",
+      "name": "Chennai Petroleum Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.cpcl.co.in/",
       "listUrls": [
@@ -1140,7 +1141,7 @@
     },
     {
       "sourceId": "psu_grse",
-      "name": "Garden Reach Shipbuilders & Engineers Limited (GRSE) (GRSE) Careers",
+      "name": "Garden Reach Shipbuilders & Engineers Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://grse.in/",
       "listUrls": [
@@ -1165,7 +1166,7 @@
     },
     {
       "sourceId": "psu_aai",
-      "name": "Airports Authority of India (AAI) (AAI) Careers",
+      "name": "Airports Authority of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.aai.aero/",
       "listUrls": [
@@ -1209,13 +1210,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "ONGC Videsh Limited"
+      "wikiName": "ONGC Videsh Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_antrix",
-      "name": "Antrix Corporation (ANTRIX) (ANTRIX) Careers",
+      "name": "Antrix Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.antrix.co.in/",
       "listUrls": [
@@ -1281,7 +1283,7 @@
     },
     {
       "sourceId": "psu_bccl",
-      "name": "Bharat Coking Coal Limited (BCCL) (BCCL) Careers",
+      "name": "Bharat Coking Coal Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bcclweb.in/",
       "listUrls": [
@@ -1306,7 +1308,7 @@
     },
     {
       "sourceId": "psu_bdl",
-      "name": "Bharat Dynamics Limited (BDL) (BDL) Careers",
+      "name": "Bharat Dynamics Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://bdl-india.in/",
       "listUrls": [
@@ -1331,7 +1333,7 @@
     },
     {
       "sourceId": "psu_beml",
-      "name": "Bharat Earth Movers Limited (BEML) (BEML) Careers",
+      "name": "Bharat Earth Movers Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bemlindia.in/",
       "listUrls": [
@@ -1356,7 +1358,7 @@
     },
     {
       "sourceId": "psu_bsnl",
-      "name": "Bharat Sanchar Nigam Limited (BSNL) (BSNL) Careers",
+      "name": "Bharat Sanchar Nigam Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bsnl.co.in/",
       "listUrls": [
@@ -1406,7 +1408,7 @@
     },
     {
       "sourceId": "psu_cel",
-      "name": "Central Electronics Limited (CEL) (CEL) Careers",
+      "name": "Central Electronics Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.celindia.co.in/",
       "listUrls": [
@@ -1431,7 +1433,7 @@
     },
     {
       "sourceId": "psu_ccl",
-      "name": "Central Coalfields Limited (CCL) (CCL) Careers",
+      "name": "Central Coalfields Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.centralcoalfields.in/",
       "listUrls": [
@@ -1475,13 +1477,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Central Mine Planning & Design Institute Limited"
+      "wikiName": "Central Mine Planning & Design Institute Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_midhani",
-      "name": "Mishra Dhatu Nigam Limited (MIDHANI) (MIDHANI) Careers",
+      "name": "Mishra Dhatu Nigam Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://midhani-india.in/",
       "listUrls": [
@@ -1506,7 +1509,7 @@
     },
     {
       "sourceId": "psu_cpcl_2",
-      "name": "Chennai Petroleum Corporation (CPCL) (CPCL) Careers",
+      "name": "Chennai Petroleum Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.cpcl.co.in/",
       "listUrls": [
@@ -1525,13 +1528,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Chennai Petroleum Corporation (CPCL)"
+      "wikiName": "Chennai Petroleum Corporation (CPCL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_csl",
-      "name": "Cochin Shipyard (CSL) (CSL) Careers",
+      "name": "Cochin Shipyard () Careers",
       "category": "psu_careers",
       "baseUrl": "https://cochinshipyard.in/",
       "listUrls": [
@@ -1556,21 +1560,15 @@
     },
     {
       "sourceId": "psu_ccil",
-      "name": "Cotton Corporation of India Limited (CCIL) (CCIL) Careers",
+      "name": "Cotton Corporation of India Limited (CCI) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.coalindia.in/",
+      "baseUrl": "https://cotcorp.org.in/",
       "listUrls": [
-        "https://www.coalindia.in/career",
-        "https://www.coalindia.in",
-        "https://www.coalindia.in/careers",
-        "https://www.coalindia.in/recruitment",
-        "https://www.coalindia.in/jobs",
-        "https://www.coalindia.in/en/careers",
-        "https://www.coalindia.in/en/career",
-        "https://www.coalindia.in/careers/current-openings"
+        "https://cotcorp.org.in/Career.aspx",
+        "https://cotcorp.org.in/careers"
       ],
       "orgTypeDefault": "psu",
-      "sector": "Mining",
+      "sector": "Agriculture",
       "ratna": "miniratna_i",
       "priority": "P2",
       "method": "html_scrape",
@@ -1583,26 +1581,20 @@
       "sourceId": "psu_cil_2",
       "name": "EdCIL (India) Limited (EdCIL) (CIL) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.coalindia.in/",
+      "baseUrl": "https://www.edcilindia.co.in/",
       "listUrls": [
-        "https://www.coalindia.in/career",
-        "https://www.coalindia.in",
-        "https://www.coalindia.in/careers",
-        "https://www.coalindia.in/recruitment",
-        "https://www.coalindia.in/jobs",
-        "https://www.coalindia.in/en/careers",
-        "https://www.coalindia.in/en/career",
-        "https://www.coalindia.in/careers/current-openings"
+        "https://www.edcilindia.co.in/career"
       ],
       "orgTypeDefault": "psu",
-      "sector": "Mining",
+      "sector": "Education",
       "ratna": "miniratna_i",
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "EdCIL (India) Limited (EdCIL)"
+      "wikiName": "EdCIL (India) Limited (EdCIL)",
+      "robotsNotes": "Disabled Coal India collision. Use psu_edcil."
     },
     {
       "sourceId": "psu_grse_2",
@@ -1625,13 +1617,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Garden Reach Shipbuilders & Engineers (GRSE) (to be upgraded to Navratna)"
+      "wikiName": "Garden Reach Shipbuilders & Engineers (GRSE) (to be upgraded to Navratna)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_gsl",
-      "name": "Goa Shipyard (GSL) (GSL) Careers",
+      "name": "Goa Shipyard () Careers",
       "category": "psu_careers",
       "baseUrl": "https://goashipyard.in/",
       "listUrls": [
@@ -1656,18 +1649,11 @@
     },
     {
       "sourceId": "psu_hcl",
-      "name": "Hindustan Copper (HCL) (HCL) Careers",
+      "name": "Hindustan Copper () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.hindustancopper.com/",
       "listUrls": [
-        "https://www.hindustancopper.com/Page/Career",
-        "https://www.hindustancopper.com",
-        "https://www.hindustancopper.com/careers",
-        "https://www.hindustancopper.com/career",
-        "https://www.hindustancopper.com/recruitment",
-        "https://www.hindustancopper.com/jobs",
-        "https://www.hindustancopper.com/en/careers",
-        "https://www.hindustancopper.com/en/career"
+        "https://www.hindustancopper.com/Page/Career"
       ],
       "orgTypeDefault": "psu",
       "sector": "Mining",
@@ -1741,9 +1727,10 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hindustan Paper Corporation Limited"
+      "wikiName": "Hindustan Paper Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hindustan_steelworks_construction_ltd",
@@ -1782,13 +1769,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "HSCC India Limited"
+      "wikiName": "HSCC India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_itdc",
-      "name": "Indian Tourism Development Corporation (ITDC) (ITDC) Careers",
+      "name": "Indian Tourism Development Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://itdc.co.in/",
       "listUrls": [
@@ -1813,7 +1801,7 @@
     },
     {
       "sourceId": "psu_ire",
-      "name": "Indian Rare Earths (IRE) (IRE) Careers",
+      "name": "Indian Rare Earths () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.irel.co.in/",
       "listUrls": [
@@ -1838,7 +1826,7 @@
     },
     {
       "sourceId": "psu_itpo",
-      "name": "India Trade Promotion Organisation (ITPO) (ITPO) Careers",
+      "name": "India Trade Promotion Organisation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://indiatradefair.com/",
       "listUrls": [
@@ -1863,7 +1851,7 @@
     },
     {
       "sourceId": "psu_kiocl",
-      "name": "Kudremukh Iron Ore Company (KIOCL) (KIOCL) Careers",
+      "name": "Kudremukh Iron Ore Company () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.kioclltd.in/",
       "listUrls": [
@@ -1888,7 +1876,7 @@
     },
     {
       "sourceId": "psu_mcl",
-      "name": "Mahanadi Coalfields (MCL) (MCL) Careers",
+      "name": "Mahanadi Coalfields () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mahanadicoal.in/",
       "listUrls": [
@@ -1913,7 +1901,7 @@
     },
     {
       "sourceId": "psu_moil",
-      "name": "MOIL Limited (MOIL) (MOIL) Careers",
+      "name": "MOIL Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://moil.nic.in/",
       "listUrls": [
@@ -1938,7 +1926,7 @@
     },
     {
       "sourceId": "psu_mrpl",
-      "name": "Mangalore Refinery and Petrochemicals Limited (MRPL) (MRPL) Careers",
+      "name": "Mangalore Refinery and Petrochemicals Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mrpl.co.in/",
       "listUrls": [
@@ -1963,7 +1951,7 @@
     },
     {
       "sourceId": "psu_mecl",
-      "name": "Mineral Exploration Corporation Limited (MECL) (MECL) Careers",
+      "name": "Mineral Exploration Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mecl.co.in/",
       "listUrls": [
@@ -2007,13 +1995,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Mishra Dhatu Nigam"
+      "wikiName": "Mishra Dhatu Nigam",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_mmtc",
-      "name": "MMTC Ltd. (MMTC) (MMTC) Careers",
+      "name": "MMTC Ltd. () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mmtclimited.com/",
       "listUrls": [
@@ -2063,7 +2052,7 @@
     },
     {
       "sourceId": "psu_nfl_2",
-      "name": "National Fertilizers (NFL) (NFL) Careers",
+      "name": "National Fertilizers () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nationalfertilizers.com/",
       "listUrls": [
@@ -2082,9 +2071,10 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Fertilizers (NFL)"
+      "wikiName": "National Fertilizers (NFL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nsic",
@@ -2113,7 +2103,7 @@
     },
     {
       "sourceId": "psu_nsic_2",
-      "name": "National Small Industries Corporation (NSIC) (NSIC) Careers",
+      "name": "National Small Industries Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nsic.co.in/",
       "listUrls": [
@@ -2132,13 +2122,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Small Industries Corporation (NSIC)"
+      "wikiName": "National Small Industries Corporation (NSIC)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nsc",
-      "name": "National Seed Corporation (NSC) (NSC) Careers",
+      "name": "National Seed Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.indiaseeds.com/",
       "listUrls": [
@@ -2163,7 +2154,7 @@
     },
     {
       "sourceId": "psu_ncl",
-      "name": "Northern Coalfields (NCL) (NCL) Careers",
+      "name": "Northern Coalfields () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nclcil.in/",
       "listUrls": [
@@ -2188,7 +2179,7 @@
     },
     {
       "sourceId": "psu_neepcl",
-      "name": "North Eastern Electric Power Corporation Limited (NEEPCL) (NEEPCL) Careers",
+      "name": "North Eastern Electric Power Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://neepco.co.in/",
       "listUrls": [
@@ -2238,7 +2229,7 @@
     },
     {
       "sourceId": "psu_pdil",
-      "name": "Projects and Development India Limited (PDIL) (PDIL) Careers",
+      "name": "Projects and Development India Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.pdilin.com/",
       "listUrls": [
@@ -2263,7 +2254,7 @@
     },
     {
       "sourceId": "psu_rcf_2",
-      "name": "Rashtriya Chemicals & Fertilizers (RCF) (RCF) Careers",
+      "name": "Rashtriya Chemicals & Fertilizers () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.rcfltd.com/",
       "listUrls": [
@@ -2282,9 +2273,10 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Rashtriya Chemicals & Fertilizers (RCF)"
+      "wikiName": "Rashtriya Chemicals & Fertilizers (RCF)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_spmcil",
@@ -2313,7 +2305,7 @@
     },
     {
       "sourceId": "psu_secl",
-      "name": "South Eastern Coalfields (SECL) (SECL) Careers",
+      "name": "South Eastern Coalfields () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.secl-cil.in/",
       "listUrls": [
@@ -2338,7 +2330,7 @@
     },
     {
       "sourceId": "psu_tcil",
-      "name": "Telecommunications Consultants India (TCIL) (TCIL) Careers",
+      "name": "Telecommunications Consultants India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.tcil.net.in/",
       "listUrls": [
@@ -2388,7 +2380,7 @@
     },
     {
       "sourceId": "psu_wcl",
-      "name": "Western Coalfields (WCL) (WCL) Careers",
+      "name": "Western Coalfields () Careers",
       "category": "psu_careers",
       "baseUrl": "https://westerncoal.in/",
       "listUrls": [
@@ -2457,9 +2449,10 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Artificial Limbs Manufacturing Corporation of India"
+      "wikiName": "Artificial Limbs Manufacturing Corporation of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_becil",
@@ -2573,13 +2566,14 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Medicines Pharmaceutical Corporation Limited"
+      "wikiName": "Indian Medicines Pharmaceutical Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_fsnl",
-      "name": "Ferro Scrap Nigam Limited (FSNL) (FSNL) Careers",
+      "name": "Ferro Scrap Nigam Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://mtnl.in/",
       "listUrls": [
@@ -2629,7 +2623,7 @@
     },
     {
       "sourceId": "psu_nfdc",
-      "name": "National Film Development Corporation of India (NFDC) (NFDC) Careers",
+      "name": "National Film Development Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nfdcindia.com/",
       "listUrls": [
@@ -2673,9 +2667,10 @@
       "priority": "P2",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Rajasthan Electronics and Instruments Limited"
+      "wikiName": "Rajasthan Electronics and Instruments Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_advanced_weapons_and_equipment_india",
@@ -2730,9 +2725,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "AFC India Limited"
+      "wikiName": "AFC India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_mtnl_2",
@@ -2755,9 +2751,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Anushakti Vidhyut Nigam Limited"
+      "wikiName": "Anushakti Vidhyut Nigam Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pfc_4",
@@ -2780,9 +2777,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Aravali Power Company Private Limited (APCPL) Jharli, Jhajjar"
+      "wikiName": "Aravali Power Company Private Limited (APCPL) Jharli, Jhajjar",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_armoured_vehicles_nigam",
@@ -2834,7 +2832,7 @@
     },
     {
       "sourceId": "psu_bbnl",
-      "name": "Bharat Broadband Network (BBNL) (BBNL) Careers",
+      "name": "Bharat Broadband Network () Careers",
       "category": "psu_careers",
       "baseUrl": "https://bbnl.nic.in/",
       "listUrls": [
@@ -2859,7 +2857,7 @@
     },
     {
       "sourceId": "psu_bcgcl",
-      "name": "Bharat Coal Gasification and Chemicals Ltd (BCGCL) (BCGCL) Careers",
+      "name": "Bharat Coal Gasification and Chemicals Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bcclweb.in/",
       "listUrls": [
@@ -2903,9 +2901,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Bharat Gold Mines Limited"
+      "wikiName": "Bharat Gold Mines Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_bharat_immunologicals_and_biologicals_corporatio",
@@ -2944,9 +2943,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Bharat Refractories Limited, Bokaro"
+      "wikiName": "Bharat Refractories Limited, Bokaro",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_bharat_wagon_and_engineering",
@@ -3017,13 +3017,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "BEML Midwest ltd."
+      "wikiName": "BEML Midwest ltd.",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_eml",
-      "name": "BHEL Electrical Machines Ltd. (EML) (EML) Careers",
+      "name": "BHEL Electrical Machines Ltd. () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.bhel.com/",
       "listUrls": [
@@ -3092,13 +3093,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Biotech Consortium India Limited"
+      "wikiName": "Biotech Consortium India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_bvfcl",
-      "name": "Brahmaputra Valley Fertilizer Corporation Ltd (BVFCL) (BVFCL) Careers",
+      "name": "Brahmaputra Valley Fertilizer Corporation Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.dvc.gov.in/",
       "listUrls": [
@@ -3224,9 +3226,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "CSC e-Governance Services India Limited"
+      "wikiName": "CSC e-Governance Services India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_cci_cement",
@@ -3255,7 +3258,7 @@
     },
     {
       "sourceId": "psu_ciwtc",
-      "name": "Central Inland Water Transport Corporation Limited (CIWTC) (CIWTC) Careers",
+      "name": "Central Inland Water Transport Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.pfcindia.com/",
       "listUrls": [
@@ -3299,9 +3302,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Certification Engineers International Limited"
+      "wikiName": "Certification Engineers International Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hudco_2",
@@ -3324,9 +3328,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "City and Industrial Development Corporation"
+      "wikiName": "City and Industrial Development Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_chenab_valley_power_projects",
@@ -3346,7 +3351,7 @@
     },
     {
       "sourceId": "psu_dvc",
-      "name": "Damodar Valley Corporation (DVC) (DVC) Careers",
+      "name": "Damodar Valley Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.dvc.gov.in/",
       "listUrls": [
@@ -3396,7 +3401,7 @@
     },
     {
       "sourceId": "psu_dmrc",
-      "name": "Delhi Metro Rail Corporation (DMRC) (DMRC) Careers",
+      "name": "Delhi Metro Rail Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.delhimetrorail.com/",
       "listUrls": [
@@ -3440,9 +3445,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Delhi Transco Limited"
+      "wikiName": "Delhi Transco Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_dmrc_2",
@@ -3465,9 +3471,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Delhi Transport Corporation"
+      "wikiName": "Delhi Transport Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_ecgc",
@@ -3515,9 +3522,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Digital India Corporation"
+      "wikiName": "Digital India Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_dci",
@@ -3546,7 +3554,7 @@
     },
     {
       "sourceId": "psu_ecil",
-      "name": "Electronics Corporation of India Limited (ECIL) (ECIL) Careers",
+      "name": "Electronics Corporation of India Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.ecil.co.in/",
       "listUrls": [
@@ -3571,7 +3579,7 @@
     },
     {
       "sourceId": "psu_eesl_2",
-      "name": "Energy Efficiency Services Limited (EESL) (EESL) Careers",
+      "name": "Energy Efficiency Services Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://eeslindia.org/",
       "listUrls": [
@@ -3590,9 +3598,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Energy Efficiency Services Limited (EESL)"
+      "wikiName": "Energy Efficiency Services Limited (EESL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_ecgc_2",
@@ -3615,9 +3624,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Export Credit Guarantee Corporation of India"
+      "wikiName": "Export Credit Guarantee Corporation of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_fertilisers_and_chemicals_travancore_limited",
@@ -3656,13 +3666,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Fertilizer Corporation of India"
+      "wikiName": "Fertilizer Corporation of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_fci_2",
-      "name": "Food Corporation of India (FCI) (FCI) Careers",
+      "name": "Food Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://fci.gov.in/",
       "listUrls": [
@@ -3681,9 +3692,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Food Corporation of India (FCI)"
+      "wikiName": "Food Corporation of India (FCI)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_fresh_and_healthy_enterprises_limited",
@@ -3754,9 +3766,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Green Valley Renewable Energy Limited"
+      "wikiName": "Green Valley Renewable Energy Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_grid_conductors_ltd",
@@ -3795,9 +3808,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hemisphere Properties India Limited"
+      "wikiName": "Hemisphere Properties India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hal_pharma",
@@ -3826,7 +3840,7 @@
     },
     {
       "sourceId": "psu_hfcl",
-      "name": "Hindustan Fertilizers Corporation Limited (HFCL) (HFCL) Careers",
+      "name": "Hindustan Fertilizers Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.pfcindia.com/",
       "listUrls": [
@@ -3867,7 +3881,7 @@
     },
     {
       "sourceId": "psu_hocl",
-      "name": "Hindustan Organic Chemicals Limited (HOCL) (HOCL) Careers",
+      "name": "Hindustan Organic Chemicals Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://hal-india.co.in/",
       "listUrls": [
@@ -3911,9 +3925,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hindustan Prefab Limited"
+      "wikiName": "Hindustan Prefab Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hal_3",
@@ -3936,9 +3951,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hindustan Salts Limited"
+      "wikiName": "Hindustan Salts Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hal_4",
@@ -3961,13 +3977,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hindustan Shipyard Limited (HSL)"
+      "wikiName": "Hindustan Shipyard Limited (HSL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_htl",
-      "name": "Hindustan Teleprinters Limited (HTL) (HTL) Careers",
+      "name": "Hindustan Teleprinters Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://hal-india.co.in/",
       "listUrls": [
@@ -4027,9 +4044,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Hindustan Vegetable Oils Corporation"
+      "wikiName": "Hindustan Vegetable Oils Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_gail_7",
@@ -4052,9 +4070,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "HSCC (India) Limited"
+      "wikiName": "HSCC (India) Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_bpcl_2",
@@ -4077,13 +4096,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "IHB Limited (a joint venture of IOCL, HPCL & BPCL)"
+      "wikiName": "IHB Limited (a joint venture of IOCL, HPCL & BPCL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_idmc",
-      "name": "Indian Dairy Machinery Company Ltd. (IDMC) (IDMC) Careers",
+      "name": "Indian Dairy Machinery Company Ltd. () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Indian_Dairy_Machinery_Company_Ltd._(IDMC)",
       "listUrls": [],
@@ -4099,7 +4119,7 @@
     },
     {
       "sourceId": "psu_idrcl",
-      "name": "India Debt Resolution Company Limited (IDRCL) (IDRCL) Careers",
+      "name": "India Debt Resolution Company Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://gailonline.com/",
       "listUrls": [
@@ -4140,7 +4160,7 @@
     },
     {
       "sourceId": "psu_iifcl",
-      "name": "India Infrastructure Finance Company Limited (IIFCL) (IIFCL) Careers",
+      "name": "India Infrastructure Finance Company Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://gailonline.com/",
       "listUrls": [
@@ -4200,9 +4220,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "India Ports Global Limited"
+      "wikiName": "India Ports Global Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_rec_2",
@@ -4225,9 +4246,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "India SME Asset Reconstruction Company Limited"
+      "wikiName": "India SME Asset Reconstruction Company Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_indian_financial_technology_and_allied_services",
@@ -4247,7 +4269,7 @@
     },
     {
       "sourceId": "psu_ihmcl",
-      "name": "Indian Highway Management Company Limited (IHMCL) (IHMCL) Careers",
+      "name": "Indian Highway Management Company Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mahanadicoal.in/",
       "listUrls": [
@@ -4316,9 +4338,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Medicine Pharmaceutical Corporation Ltd."
+      "wikiName": "Indian Medicine Pharmaceutical Corporation Ltd.",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pfc_5",
@@ -4341,9 +4364,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Port Rail Corporation Limited(IPRCL)"
+      "wikiName": "Indian Port Rail Corporation Limited(IPRCL)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_isprl_2",
@@ -4366,9 +4390,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Potash Limited"
+      "wikiName": "Indian Potash Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_isprl_3",
@@ -4391,9 +4416,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Strategic Petroleum Reserves Ltd"
+      "wikiName": "Indian Strategic Petroleum Reserves Ltd",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_cci",
@@ -4416,9 +4442,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Indian Vaccine Corporation Limited"
+      "wikiName": "Indian Vaccine Corporation Limited",
+      "robotsNotes": "Disabled: CCI acronym stole Cotton Corporation host."
     },
     {
       "sourceId": "psu_indraprastha_gas_limited",
@@ -4438,7 +4465,7 @@
     },
     {
       "sourceId": "psu_iggl",
-      "name": "Indradhanush Gas Grid Limited (IGGL) (IGGL) Careers",
+      "name": "Indradhanush Gas Grid Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Indradhanush_Gas_Grid_Limited_(IGGL)",
       "listUrls": [],
@@ -4489,9 +4516,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Industrial Finance Corporation of India Limited"
+      "wikiName": "Industrial Finance Corporation of India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_inland_and_coastal_shipping_ltd",
@@ -4530,9 +4558,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Inland Waterways Authority of India"
+      "wikiName": "Inland Waterways Authority of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_instrumentation_limited",
@@ -4552,7 +4581,7 @@
     },
     {
       "sourceId": "psu_icsil",
-      "name": "Intelligent Communication Systems India Limited (ICSIL) (ICSIL) Careers",
+      "name": "Intelligent Communication Systems India Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://gailonline.com/",
       "listUrls": [
@@ -4596,9 +4625,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Irrigation and Water Resources Finance Corporation Limited"
+      "wikiName": "Irrigation and Water Resources Finance Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pgcil_5",
@@ -4621,9 +4651,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Jal Power Corporation Ltd."
+      "wikiName": "Jal Power Corporation Ltd.",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pgcil_6",
@@ -4646,9 +4677,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Jute Corporation of India"
+      "wikiName": "Jute Corporation of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_karnataka_soaps_and_detergents_limited",
@@ -4687,9 +4719,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Karnataka Vijayanagar Steel Limited, NMDC Steel"
+      "wikiName": "Karnataka Vijayanagar Steel Limited, NMDC Steel",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_khadi_natural",
@@ -4744,9 +4777,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Kolkata Metro Rail Corporation"
+      "wikiName": "Kolkata Metro Rail Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_irctc_3",
@@ -4769,9 +4803,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Konkan Railway Corporation"
+      "wikiName": "Konkan Railway Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_konkan_lng",
@@ -4880,7 +4915,7 @@
     },
     {
       "sourceId": "psu_munpl",
-      "name": "Meja Urja Nigam Private Limited (MUNPL) (MUNPL) Careers",
+      "name": "Meja Urja Nigam Private Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://mtnl.in/",
       "listUrls": [
@@ -4924,13 +4959,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Capital Region Transport Corporation"
+      "wikiName": "National Capital Region Transport Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nhidcl",
-      "name": "National Highways and Infrastructure Development Corporation Limited (NHIDCL) (NHIDCL) Careers",
+      "name": "National Highways and Infrastructure Development Corporation Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.hudco.org.in/",
       "listUrls": [
@@ -4974,13 +5010,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Highways Logistics Management Company"
+      "wikiName": "National Highways Logistics Management Company",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nhtpl",
-      "name": "National High Power Test Laboratory (NHTPL) (NHTPL) Careers",
+      "name": "National High Power Test Laboratory () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/National_High_Power_Test_Laboratory_(NHTPL)",
       "listUrls": [],
@@ -5015,9 +5052,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Narmada Hydroelectric Development Corporation"
+      "wikiName": "Narmada Hydroelectric Development Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_hudco_4",
@@ -5040,13 +5078,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Industrial Corridor Development Corporation Limited"
+      "wikiName": "National Industrial Corridor Development Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nic",
-      "name": "National Informatics Centre Services Inc. (NIC) (NIC) Careers",
+      "name": "National Informatics Centre Services Inc. () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/National_Informatics_Centre_Services_Inc._(NIC)",
       "listUrls": [],
@@ -5081,13 +5120,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Jute Manufactures Corporation Limited"
+      "wikiName": "National Jute Manufactures Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nlmc",
-      "name": "National Land Monetisation Corporation (NLMC) (NLMC) Careers",
+      "name": "National Land Monetisation Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nsic.co.in/",
       "listUrls": [
@@ -5112,7 +5152,7 @@
     },
     {
       "sourceId": "psu_npci",
-      "name": "National Payments Corporation of India (NPCI) (NPCI) Careers",
+      "name": "National Payments Corporation of India () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nfdcindia.com/",
       "listUrls": [
@@ -5137,7 +5177,7 @@
     },
     {
       "sourceId": "psu_npcc",
-      "name": "National Projects Construction Corporation Ltd (NPCC) (NPCC) Careers",
+      "name": "National Projects Construction Corporation Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.nsic.co.in/",
       "listUrls": [
@@ -5181,9 +5221,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "National Textile Corporation"
+      "wikiName": "National Textile Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pfc_9",
@@ -5206,9 +5247,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "NIIF Infrastructure Finance Limited"
+      "wikiName": "NIIF Infrastructure Finance Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_gail_9",
@@ -5231,9 +5273,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "NewSpace India Limited"
+      "wikiName": "NewSpace India Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nepa_mills_ltd",
@@ -5288,9 +5331,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "NSPCL (NTPC- SAIL Power Company Limited)"
+      "wikiName": "NSPCL (NTPC- SAIL Power Company Limited)",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_open_network_for_digital_commerce",
@@ -5310,7 +5354,7 @@
     },
     {
       "sourceId": "psu_odcl",
-      "name": "Orissa Drugs & Chemicals Ltd (ODCL) (ODCL) Careers",
+      "name": "Orissa Drugs & Chemicals Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Orissa_Drugs_%26_Chemicals_Ltd_(ODCL)",
       "listUrls": [],
@@ -5342,7 +5386,7 @@
     },
     {
       "sourceId": "psu_prcl",
-      "name": "Pipavav Railway Corporation Ltd. (PRCL) (PRCL) Careers",
+      "name": "Pipavav Railway Corporation Ltd. () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.irctc.com/",
       "listUrls": [
@@ -5386,9 +5430,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Power System Operation Corporation"
+      "wikiName": "Power System Operation Corporation",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_praga_tools",
@@ -5427,9 +5472,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Prize Petroleum Company Limited"
+      "wikiName": "Prize Petroleum Company Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_protean_egov_technologies_ltd",
@@ -5481,7 +5527,7 @@
     },
     {
       "sourceId": "psu_remcl",
-      "name": "Railway Energy Management Company Limited (REMCL) (REMCL) Careers",
+      "name": "Railway Energy Management Company Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.mahanadicoal.in/",
       "listUrls": [
@@ -5506,7 +5552,7 @@
     },
     {
       "sourceId": "psu_rdpl",
-      "name": "Rajasthan Drugs & Pharmaceuticals Limited (RDPL) (RDPL) Careers",
+      "name": "Rajasthan Drugs & Pharmaceuticals Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Rajasthan_Drugs_%26_Pharmaceuticals_Limited_(RDPL)",
       "listUrls": [],
@@ -5541,9 +5587,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Ramagundam Fertilizers and Chemicals Limited"
+      "wikiName": "Ramagundam Fertilizers and Chemicals Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_ratnagiri_gas_and_power",
@@ -5563,7 +5610,7 @@
     },
     {
       "sourceId": "psu_rhpc",
-      "name": "Ratle Hydroelectric Power Corporation (RHPC) (RHPC) Careers",
+      "name": "Ratle Hydroelectric Power Corporation () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.powergrid.in/",
       "listUrls": [
@@ -5588,7 +5635,7 @@
     },
     {
       "sourceId": "psu_rxil",
-      "name": "Receivables Exchange of India Ltd (RXIL) (RXIL) Careers",
+      "name": "Receivables Exchange of India Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://www.recindia.nic.in/",
       "listUrls": [
@@ -5680,13 +5727,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Sethusamudram Corporation Limited"
+      "wikiName": "Sethusamudram Corporation Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_siil",
-      "name": "Sponge Iron India Ltd (SIIL) (SIIL) Careers",
+      "name": "Sponge Iron India Ltd () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Sponge_Iron_India_Ltd_(SIIL)",
       "listUrls": [],
@@ -5721,9 +5769,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "STCI Finance Limited"
+      "wikiName": "STCI Finance Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pgcil_8",
@@ -5746,9 +5795,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "State Farms Corporation of India"
+      "wikiName": "State Farms Corporation of India",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nfl_3",
@@ -5771,9 +5821,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Talcher Fertilizers Limited."
+      "wikiName": "Talcher Fertilizers Limited.",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_pgcil_9",
@@ -5796,9 +5847,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Tourism Finance Corporation Of India Ltd."
+      "wikiName": "Tourism Finance Corporation Of India Ltd.",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_nicl_2",
@@ -5821,13 +5873,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "The Industrial Credit Company Limited"
+      "wikiName": "The Industrial Credit Company Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_utiitsl",
-      "name": "UTI Infrastructure Technology and Services Limited (UTIITSL) (UTIITSL) Careers",
+      "name": "UTI Infrastructure Technology and Services Limited () Careers",
       "category": "psu_careers",
       "baseUrl": "https://eeslindia.org/",
       "listUrls": [
@@ -5887,9 +5940,10 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "Utkarsha Aluminium Dhatu Nigam Limited"
+      "wikiName": "Utkarsha Aluminium Dhatu Nigam Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_rec_3",
@@ -5912,13 +5966,14 @@
       "priority": "P3",
       "method": "html_scrape",
       "cadence": "weekly",
-      "enabled": true,
+      "enabled": false,
       "owner": "automation",
-      "wikiName": "UV Asset Reconstruction Company Limited"
+      "wikiName": "UV Asset Reconstruction Company Limited",
+      "robotsNotes": "Disabled clone (_2/_3); do not scrape the same host twice."
     },
     {
       "sourceId": "psu_irrpl",
-      "name": "Indo-Russia Rifles (IRRPL) (IRRPL) Careers",
+      "name": "Indo-Russia Rifles () Careers",
       "category": "psu_careers",
       "baseUrl": "https://en.wikipedia.org/wiki/Indo-Russia_Rifles_(IRRPL)",
       "listUrls": [],
@@ -6819,6 +6874,24 @@
       "autoPublish": false,
       "robotsNotes": "Calendar/manual only. No CAPTCHA bypass.",
       "owner": "curator"
+    },
+    {
+      "sourceId": "psu_edcil",
+      "name": "EdCIL (India) Limited Careers",
+      "category": "psu_careers",
+      "baseUrl": "https://www.edcilindia.co.in/",
+      "listUrls": [
+        "https://www.edcilindia.co.in/career",
+        "https://www.edcilindia.co.in/"
+      ],
+      "orgTypeDefault": "psu",
+      "sector": "Education",
+      "priority": "P2",
+      "method": "html_scrape",
+      "cadence": "weekly",
+      "enabled": true,
+      "owner": "automation",
+      "wikiName": "EdCIL (India) Limited"
     }
   ],
   "wikiSource": "https://en.wikipedia.org/wiki/Public_Sector_Undertakings_in_India",

@@ -8,7 +8,6 @@ const { saveRaw } = require('../lib/rawStore');
 const { absoluteUrl } = require('../lib/htmlLinks');
 const { toStagingRecord, dedupeByUrl } = require('../lib/toStaging');
 const { parseDateFromText } = require('../lib/dates');
-const { officialUrlForRow } = require('../lib/calendarPdf');
 
 function candidateUrls(source) {
   const urls = [];
@@ -82,7 +81,8 @@ function parseJobHighlights(html, pageUrl) {
       const blob = `${values.organization} ${values.post}`.replace(/\s+/g, ' ').trim();
       if (!blob || /view\s*more|^organisation\b/i.test(blob)) return;
 
-      const officialUrl = values.href || officialUrlForRow({ name: blob }, pageUrl);
+      const officialUrl = values.href;
+      if (!officialUrl || /Home\.aspx#|AllJobs\.aspx#/i.test(officialUrl)) return;
       const key = `${blob}|${officialUrl}`;
       if (seen.has(key)) return;
       seen.add(key);

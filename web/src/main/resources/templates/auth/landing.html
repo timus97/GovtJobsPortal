@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/public :: layout(~{::title}, ~{::main})}"
+  lang="en"
+>
+  <head>
+    <title>Sarkari Desk | Match, search, prepare</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="container">
+        <p class="eyebrow" style="margin-top: 1.25rem">Java 21 rewrite · slice 1</p>
+        <div class="auth-stage">
+          <section class="auth-intro">
+            <p class="eyebrow">For candidates</p>
+            <h1>Sign in to see jobs that fit you</h1>
+            <p class="lead">
+              Create an account, save your profile, and we rank currently open government and PSU
+              windows against those facts. Search any listing separately. Prepare-for calendars stay
+              unofficial.
+            </p>
+            <ul class="check-list">
+              <li>Editable profile (reservation category required for match)</li>
+              <li>Matches from your profile — not an official decision</li>
+              <li>Independent job search and exam calendars</li>
+            </ul>
+          </section>
+          <form
+            class="panel auth-card"
+            method="post"
+            th:if="${flags.student}"
+            th:action="${register} ? @{/account/register} : @{/account/login}"
+          >
+            <div class="auth-tabs" role="tablist">
+              <a
+                role="tab"
+                th:href="@{/(tab=login)}"
+                th:aria-selected="${!register}"
+                th:class="${!register} ? 'auth-tab active' : 'auth-tab'"
+                >Sign in</a
+              >
+              <a
+                role="tab"
+                th:href="@{/(tab=register)}"
+                th:aria-selected="${register}"
+                th:class="${register} ? 'auth-tab active' : 'auth-tab'"
+                >Create account</a
+              >
+            </div>
+            <h2 th:text="${register} ? 'Create an account' : 'Welcome back'">Welcome back</h2>
+            <p class="muted" th:if="${register}">
+              Email + password (at least 10 characters). No email verification in this version.
+            </p>
+            <p class="muted" th:unless="${register}">This is not a board or PSU account.</p>
+            <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input
+                type="password"
+                name="password"
+                th:autocomplete="${register} ? 'new-password' : 'current-password'"
+                th:minlength="${register} ? 10 : null"
+                required
+              />
+            </label>
+            <button class="btn btn-primary btn-lg" type="submit" th:text="${register} ? 'Create account' : 'Sign in'">
+              Sign in
+            </button>
+            <p class="muted small" style="margin: 0.85rem 0 0" th:unless="${register}">
+              <a href="/account/forgot">Forgot password?</a>
+            </p>
+            <p class="muted small" style="margin: 1rem 0 0">
+              Site operators use a separate login. <a href="/ops/login">Admin console</a>
+            </p>
+          </form>
+          <section class="panel auth-card" th:unless="${flags.student}">
+            <h2>Search the catalog</h2>
+            <p class="muted">Student accounts are off on this host. Job search and prepare calendars stay public.</p>
+            <p><a class="btn btn-primary" href="/jobs">Search jobs</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

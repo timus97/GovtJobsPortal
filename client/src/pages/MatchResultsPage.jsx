@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
+import { getServerProfile } from '../api/account'
 import { postMatch } from '../api/jobs'
+import { jobPath, useCatalogBase } from '../lib/catalogBase'
 import { VERIFY_BADGE } from '../lib/eligibilityMatch'
-import { isProfileComplete, loadProfile } from '../lib/profile'
+import { emptyProfile, isProfileComplete, loadProfile } from '../lib/profile'
 
 function Chip({ reason }) {
   return (
@@ -13,7 +15,7 @@ function Chip({ reason }) {
   )
 }
 
-function ResultCard({ row, kind }) {
+function ResultCard({ row, kind, base }) {
   return (
     <article className="job-card match-card">
       <div className="job-card-top">
@@ -29,7 +31,7 @@ function ResultCard({ row, kind }) {
           )}
         </div>
         <h3 className="job-title">
-          {row.id ? <Link to={`/jobs/${row.id}`}>{row.title || row.id}</Link> : row.title || row.id}
+          {row.id ? <Link to={jobPath(row.id, base)}>{row.title || row.id}</Link> : row.title || row.id}
         </h3>
         {row.organization && <p className="job-org">{row.organization}</p>}
       </div>
@@ -40,7 +42,7 @@ function ResultCard({ row, kind }) {
       </div>
       <div className="job-card-actions">
         {row.id && (
-          <Link to={`/jobs/${row.id}`} className="btn btn-secondary">
+          <Link to={jobPath(row.id, base)} className="btn btn-secondary">
             View details
           </Link>
         )}
@@ -60,14 +62,34 @@ function ResultCard({ row, kind }) {
 }
 
 export default function MatchResultsPage() {
-  const [profile] = useState(() => loadProfile())
+  const base = useCatalogBase()
+  const [profile, setProfile] = useState(() => loadProfile())
+  const [ready, setReady] = useState(false)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const complete = isProfileComplete(profile)
 
   useEffect(() => {
-    if (!complete) return undefined
+    let cancelled = false
+    getServerProfile()
+      .then((body) => {
+        if (cancelled) return
+        if (body.profile && (body.profile.dob || body.profile.reservationCategory)) {
+          setProfile({ ...emptyProfile, ...body.profile, pwbd: { ...emptyProfile.pwbd, ...(body.profile.pwbd || {}) } })
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setReady(true)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!ready || !complete) return undefined
     let cancelled = false
     setLoading(true)
     setError('')
@@ -84,7 +106,7 @@ export default function MatchResultsPage() {
     return () => {
       cancelled = true
     }
-  }, [complete, profile])
+  }, [ready, complete, profile])
 
   return (
     <div className="section">
@@ -95,11 +117,10 @@ export default function MatchResultsPage() {
 
         <div className="section-head">
           <div>
-            <h1>Match results</h1>
+            <h1>Jobs that match your profile</h1>
             <p className="muted">
-              Ranked against currently listed opportunities. Unknown facts lower confidence — they
-              do not fail a row. Post-wise PwBD and reserved-only apply only when those facts are
-              structured on the notification. Always verify on the official site.
+              Ranked from the profile you saved. Unknown facts lower confidence — they do not fail
+              a row. This is not an official eligibility decision. Use Search to look up any job.
             </p>
           </div>
           <Link to="/profile" className="btn btn-secondary">
@@ -108,16 +129,15 @@ export default function MatchResultsPage() {
         </div>
 
         {!complete && (
-          <p className="error-box">
+          <p className="muted">
             Complete date of birth, highest education, reservation category, birth state, and at
             least one domicile state on the <Link to="/profile">profile page</Link> before
-            matching. Incomplete profiles are not sent to the match API. Category is required for
-            printed age-relaxation tables.
+            matching.
           </p>
         )}
 
         {loading && <p className="muted">Matching listed opportunities…</p>}
-        {error && <p className="error-box">{error}</p>}
+        {error && <p className="muted">Matches are unavailable right now. Try again in a moment.</p>}
 
         {!loading && !error && complete && data && data.matches.length === 0 && (
           <p className="empty panel">
@@ -134,7 +154,7 @@ export default function MatchResultsPage() {
             </p>
             <div className="job-grid">
               {data.matches.map((row) => (
-                <ResultCard key={row.id} row={row} kind="match" />
+                <ResultCard key={row.id} row={row} kind="match" base={base} />
               ))}
             </div>
           </section>
@@ -146,7 +166,7 @@ export default function MatchResultsPage() {
             <p className="muted small">Hard-fail rules only. Truncated to the request limit.</p>
             <div className="job-grid">
               {data.excluded.map((row) => (
-                <ResultCard key={row.id} row={row} kind="excluded" />
+                <ResultCard key={row.id} row={row} kind="excluded" base={base} />
               ))}
             </div>
           </section>

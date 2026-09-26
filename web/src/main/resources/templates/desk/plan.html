@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/student :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Study plan | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container plan-page">
+        <p><a class="back-link" th:href="@{/desk/{id}(id=${item.id})}">← Desk item</a></p>
+        <div class="match-banner panel" th:if="${missing}">
+          <p>No unofficial syllabus pack for this series yet.</p>
+        </div>
+        <th:block th:unless="${missing}">
+          <h1>Unofficial study plan</h1>
+          <p class="muted">Even-split by topic weight. Always verify the official syllabus.</p>
+          <p class="muted" th:if="${plan.note}" th:text="${plan.note}"></p>
+          <div class="plan-topics">
+            <form class="plan-topic panel" th:each="topic : ${plan.topics}" method="post" th:action="@{/desk/{id}/plan(id=${item.id})}">
+              <input type="hidden" name="topicId" th:value="${topic.id}" />
+              <label class="check-inline">
+                <input type="checkbox" name="done" value="true" th:checked="${progress[topic.id] != null}" onchange="this.form.submit()" />
+                <strong th:text="${topic.title}">Topic</strong>
+              </label>
+              <p class="muted small" th:if="${topic.startDate}" th:text="${topic.startDate} + ' → ' + ${topic.endDate} + ' (' + ${topic.days} + 'd)'"></p>
+            </form>
+          </div>
+        </th:block>
+      </div>
+    </main>
+  </body>
+</html>

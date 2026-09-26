@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head>
+    <title>Ops | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="section container">
+        <h1>Collectors</h1>
+        <p class="muted ops-legal">Paste an official https:// URL. Review facts before publish. Never a gazette republish.</p>
+        <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
+        <form class="panel ops-card ops-paste-bar" method="post" th:action="@{/ops/collect}">
+          <label class="field"><span>Official URL</span><input type="url" name="url" required placeholder="https://…gov.in/…" /></label>
+          <label class="field"><span>Label</span><input name="sourceLabel" placeholder="Optional source label" /></label>
+          <button class="btn btn-primary" type="submit">Queue for review</button>
+        </form>
+        <div class="collect-progress-card panel" data-progress-url="/ops/collect-progress">
+          <p class="muted">Daily collect progress (Java CLI / Node pipeline). This page does not start pipeline:daily.</p>
+          <pre class="ops-json" th:text="${progress}">{}</pre>
+        </div>
+        <h2>Recent paste jobs</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>State</th><th>URL</th><th>Updated</th></tr></thead>
+            <tbody>
+              <tr th:each="j : ${jobs}">
+                <td th:text="${j.state}"></td>
+                <td><a th:href="@{/ops/runs/{id}(id=${j.id})}" th:text="${j.url}"></a></td>
+                <td th:text="${j.updatedAt}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <form class="panel ops-card" method="post" th:action="@{/ops/operators}" th:if="${isAdmin}">
+          <h2>Add operator</h2>
+          <label class="field"><span>Username</span><input name="username" required /></label>
+          <label class="field"><span>Password</span><input type="password" name="password" minlength="10" required /></label>
+          <button class="btn btn-secondary" type="submit">Create operator</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

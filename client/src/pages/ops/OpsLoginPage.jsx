@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { login, me, probeOpsApi } from '../../api/ops'
+import { useAuth } from '../../lib/authContext'
 import OpsRequiresApi from './OpsRequiresApi'
 
 export default function OpsLoginPage() {
   const navigate = useNavigate()
+  const { refresh } = useAuth()
   const [apiOk, setApiOk] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -18,7 +20,9 @@ export default function OpsLoginPage() {
       setApiOk(ok)
       if (!ok) return
       me()
-        .then(() => {
+        .then(async () => {
+          if (cancelled) return
+          await refresh()
           if (!cancelled) navigate('/ops', { replace: true })
         })
         .catch(() => {})
@@ -34,6 +38,7 @@ export default function OpsLoginPage() {
     setBusy(true)
     try {
       await login(username, password)
+      await refresh()
       navigate('/ops', { replace: true })
     } catch (err) {
       setError(err.message || 'Login failed')
@@ -90,7 +95,7 @@ export default function OpsLoginPage() {
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
           <p className="muted small" style={{ margin: '1rem 0 0' }}>
-            <Link to="/">Back to public site</Link>
+            <Link to="/">Student sign in</Link>
           </p>
         </form>
       </div>

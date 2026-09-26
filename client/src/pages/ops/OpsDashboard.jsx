@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { fetchSources } from '../../api/jobs'
-import { createOperator, listOpsJobs, logout, me, pasteUrlError, probeOpsApi, submitCollect } from '../../api/ops'
+import { createOperator, listOpsJobs, me, pasteUrlError, probeOpsApi, submitCollect } from '../../api/ops'
+import CollectProgressBar from '../../components/CollectProgressBar'
 import { formatDateTime } from '../../utils/labels'
 import OpsRequiresApi from './OpsRequiresApi'
 
@@ -93,15 +94,6 @@ export default function OpsDashboard() {
     }
   }
 
-  async function onLogout() {
-    try {
-      await logout()
-    } catch {
-      /* still leave */
-    }
-    navigate('/ops/login', { replace: true })
-  }
-
   async function onAddOperator(e) {
     e.preventDefault()
     setAddMsg('')
@@ -153,16 +145,21 @@ export default function OpsDashboard() {
             </p>
           </div>
           <div className="hero-actions">
+            <Link to="/ops/sources" className="btn btn-primary">
+              Edit sources
+            </Link>
             <Link to="/ops/review" className="btn btn-secondary">
               Review queue
             </Link>
-            <button type="button" className="btn btn-secondary" onClick={onLogout}>
-              Sign out
-            </button>
+            <Link to="/ops/logs" className="btn btn-secondary">
+              Logs
+            </Link>
           </div>
         </div>
 
         {error && <p className="error-box">{error}</p>}
+
+        <CollectProgressBar />
 
         <div className="panel ops-card" style={{ marginBottom: '1.25rem' }}>
           <h2>Paste a careers URL</h2>
@@ -198,6 +195,7 @@ export default function OpsDashboard() {
               <thead>
                 <tr>
                   <th>Job ID</th>
+                  <th>Source</th>
                   <th>Host</th>
                   <th>State</th>
                   <th>Started</th>
@@ -207,7 +205,7 @@ export default function OpsDashboard() {
               <tbody>
                 {jobs.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="muted">
+                    <td colSpan={6} className="muted">
                       No paste-URL jobs yet.
                     </td>
                   </tr>
@@ -218,6 +216,13 @@ export default function OpsDashboard() {
                         <Link to={`/ops/runs/${encodeURIComponent(job.id || job.jobId)}`}>
                           {job.id || job.jobId}
                         </Link>
+                      </td>
+                      <td>
+                        {job.sourceId ? (
+                          <Link to={`/ops/sources/${encodeURIComponent(job.sourceId)}`}>{job.sourceId}</Link>
+                        ) : (
+                          job.sourceLabel || '—'
+                        )}
                       </td>
                       <td>{job.host || '—'}</td>
                       <td>{job.state || '—'}</td>
@@ -253,8 +258,8 @@ export default function OpsDashboard() {
         <div className="panel ops-card" style={{ marginBottom: '1.25rem' }}>
           <h2>Source health</h2>
           <p className="muted small">
-            From public <code>GET /api/sources</code>. Last collect:{' '}
-            {formatDateTime(sourcesPayload.lastCollectAt)}
+            Same registry as <Link to="/ops/sources">Sources</Link>. Collect from a row to open the
+            run in this queue. Last collect: {formatDateTime(sourcesPayload.lastCollectAt)}
           </p>
           <div className="table-wrap" style={{ marginTop: '0.75rem' }}>
             <table className="data-table">
@@ -281,7 +286,9 @@ export default function OpsDashboard() {
                     return (
                       <tr key={s.sourceId}>
                         <td>
-                          <strong>{s.name}</strong>
+                          <Link to={`/ops/sources/${encodeURIComponent(s.sourceId)}`}>
+                            <strong>{s.name}</strong>
+                          </Link>
                           <div className="muted small">{s.sourceId}</div>
                         </td>
                         <td>{s.priority || '—'}</td>
