@@ -326,13 +326,9 @@ PR14 syllabus/plan and PR15 unofficial mocks are specified in [docs/STUDENT_COAC
 
 ## Hosting
 
-| Host | Role | Notes |
-| --- | --- | --- |
-| **Always-on Express** (Render or equivalent) | **Product host** | Match + ops + student desk. **Persistent disk required** for accounts/files. `render.yaml` is still the free plan (sleeps; ephemeral disk wipes the desk) until upgraded. |
-| **GitHub Pages** | Snapshot without accounts | `client/public/data/*.json`. No match/ops/desk. Keep `VITE_FEATURE_STUDENT` off unless `VITE_API_BASE` points at the API host. |
-| **GitHub Actions** | Daily collect | `.github/workflows/daily-collect.yml` (~06:00 IST, 45 min). Commits processed JSON. Does **not** install SQLite. |
+Not in this sprint. Run the Java host locally with `.\scripts\start-web.ps1`. GitHub Pages and the old Render blueprint are not the product. Daily collect stays in `.github/workflows/daily-collect.yml` until the Java pipeline replaces it.
 
-See [docs/HOSTING.md](docs/HOSTING.md) and [docs/DATA_AND_STATUS.md](docs/DATA_AND_STATUS.md).
+Catalog files on disk are described in [docs/DATA_AND_STATUS.md](docs/DATA_AND_STATUS.md).
 
 ---
 
@@ -350,12 +346,11 @@ This is **not** a board account. Aggregator only — verify the official site. T
 - Design: [docs/STUDENT_COACHING_DESIGN.md](docs/STUDENT_COACHING_DESIGN.md) · UX: [docs/STUDENT_DESK_UX.md](docs/STUDENT_DESK_UX.md)
 - Routes: `/account/register`, `/account/login`, `/dashboard`, `/desk/:id`, `/desk/:id/plan`, `/desk/:id/mock`, `/profile`
 - Student SoR: host JSON under `STUDENT_DATA_DIR` and files under `STUDENT_FILES_DIR` (both gitignored). **Never** `portal.sqlite`.
-- Production needs a **persistent disk**. Free Render sleep/redeploy wipes those dirs. See [docs/HOSTING.md](docs/HOSTING.md).
-- GitHub Pages is a catalog snapshot without accounts.
+- Student rows are in Postgres. Admit and result files stay on disk under `STUDENT_FILES_DIR`.
 
 ## Design status
 
-Catalog PR01–PR10 and Stage 7 PR11–PR16 are on `master`. Student data is `STUDENT_STORE=json` or `postgres` (Docker). Next work is operational (live collect, PDF TTL, always-on host + disk/Postgres), not another design PR. Session handoff: [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md).
+Catalog design is [docs/ALL_GOVT_JOBS_DESIGN.md](docs/ALL_GOVT_JOBS_DESIGN.md). The Java host plan is [docs/JAVA21_REWRITE.md](docs/JAVA21_REWRITE.md). Next sprint is the crawl, build, and publish pipeline. Coaching stays out of scope.
 
 ---
 

@@ -42,7 +42,7 @@ Student accounts, profiles, tracker rows, mock scores, and admit/result files ar
 | Student SoR | `STUDENT_STORE=json` or `postgres` | JSON file or Docker/hosted Postgres. Configurable. |
 | Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card + result bytes. Gitignored. |
 
-**Never** put student tables in `data/cache/portal.sqlite`. That cache is catalog-only and is discarded on rebuild / free-tier sleep. Production desk needs a persistent disk — see [HOSTING.md](HOSTING.md).
+**Never** put student tables in `data/cache/portal.sqlite`. That cache is catalog-only and is discarded on rebuild / free-tier sleep. Production desk needs a persistent disk. Hosting is not set up yet.
 
 ---
 
@@ -197,7 +197,7 @@ git push
 
 ## 7. Related docs
 
-- `docs/HOSTING.md` — public URL and free hosting  
+- `README.md` — how to run the Java host locally  
 - `docs/collection-runbook.md` — how to run collectors  
 - `docs/sources.md` — source tiers  
 - `docs/classification-rules.md` — no-exam filter  

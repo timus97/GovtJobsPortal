@@ -33,3 +33,5 @@ data/logs/**
 .playwright-mcp/
 *.log
 /*.png
+reports/qa-report.md
+reports/qa-report.json

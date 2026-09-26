@@ -10,8 +10,7 @@
 | Author | Systems Architecture |
 | Audience | Engineers operating and extending the shipped v1 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
-| Session knowledge | [docs/knowledge/2026-08-19-session-all-govt-jobs-expansion.md](knowledge/2026-08-19-session-all-govt-jobs-expansion.md) |
-| Next stage | **Stage 7 complete** ([STUDENT_COACHING_DESIGN.md](STUDENT_COACHING_DESIGN.md) PR11–PR16 + `STUDENT_STORE`). Remaining work is operational: live collect / PDF TTL / always-on host + disk or Postgres. |
+| Next stage | Java host is the product UI. Next sprint is crawl, build, and publish. Coaching is out of scope. See [JAVA21_REWRITE.md](JAVA21_REWRITE.md). |
 
 ---
 
