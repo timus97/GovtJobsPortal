@@ -58,15 +58,14 @@
                 <option th:each="st : ${states}" th:value="${st.key}" th:text="${st.value}" th:selected="${profile['birthState'] == st.key}"></option>
               </select>
             </label>
-            <fieldset class="field">
-              <legend>Domicile states *</legend>
-              <div class="domicile-grid">
-                <label class="check-inline" th:each="st : ${states}">
-                  <input type="checkbox" name="domicileStates" th:value="${st.key}" th:checked="${profile['domicileStates'] != null and #lists.contains(profile['domicileStates'], st.key)}" />
-                  <span th:text="${st.value}"></span>
-                </label>
-              </div>
-            </fieldset>
+            <label class="field">
+              <span>Domicile state *</span>
+              <select name="domicileState" required>
+                <option value="">Select</option>
+                <option th:each="st : ${states}" th:value="${st.key}" th:text="${st.value}" th:selected="${st.key == domicileState}"></option>
+              </select>
+              <span class="field-hint">The state you belong to for domicile rules. One state, same list as birth state.</span>
+            </label>
             <label class="field">
               <span>Gender</span>
               <select name="gender">
@@ -80,18 +79,20 @@
               <span>PwBD</span>
               <select name="pwbdHas">
                 <option value="no">No disability declared</option>
-                <option value="yes" th:selected="${profile['pwbd'] != null and profile['pwbd']['hasDisability']}">Has disability</option>
+                <option value="yes" th:selected="${profile['pwbd'] != null and profile['pwbd']['hasDisability']}">Has a benchmark disability</option>
               </select>
+              <span class="field-hint">PwBD means a person with benchmark disability, as printed on the notification.</span>
             </label>
             <label class="field">
               <span>PwBD category</span>
               <select name="pwbdCategory">
                 <option value="">None</option>
-                <option value="VH">VH</option>
-                <option value="HH">HH</option>
-                <option value="OH">OH</option>
-                <option value="others">Others</option>
+                <option value="VH" th:selected="${profile['pwbd'] != null and profile['pwbd']['category'] == 'VH'}">VH — blindness and low vision</option>
+                <option value="HH" th:selected="${profile['pwbd'] != null and profile['pwbd']['category'] == 'HH'}">HH — deaf and hard of hearing</option>
+                <option value="OH" th:selected="${profile['pwbd'] != null and profile['pwbd']['category'] == 'OH'}">OH — locomotor disability</option>
+                <option value="others" th:selected="${profile['pwbd'] != null and profile['pwbd']['category'] == 'others'}">Others — autism, intellectual disability, mental illness, or multiple disabilities</option>
               </select>
+              <span class="field-hint">VH, HH, and OH are the short codes used on most notices. Pick Others only when the notice lists a disability outside those three.</span>
             </label>
             <button class="btn btn-primary" type="submit">Save profile</button>
           </form>

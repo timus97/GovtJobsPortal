@@ -23,7 +23,7 @@ class HomeControllerTest {
     void landingRendersSignIn() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Sign in to see jobs that fit you")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("A quieter way to look at open windows")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Create account")));
     }
 

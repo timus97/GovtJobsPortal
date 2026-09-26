@@ -46,7 +46,7 @@ public class SecurityConfig {
     @Bean
     @Order(1)
     SecurityFilterChain opsChain(HttpSecurity http) throws Exception {
-        CookieCsrfTokenRepository csrfRepo = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        CookieCsrfTokenRepository csrfRepo = csrfRepo();
         CsrfTokenRequestAttributeHandler handler = new CsrfTokenRequestAttributeHandler();
         http.securityMatcher("/ops/**")
                 .csrf(c -> c.csrfTokenRepository(csrfRepo).csrfTokenRequestHandler(handler))
@@ -70,7 +70,7 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     SecurityFilterChain appChain(HttpSecurity http) throws Exception {
-        CookieCsrfTokenRepository csrfRepo = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        CookieCsrfTokenRepository csrfRepo = csrfRepo();
         CsrfTokenRequestAttributeHandler handler = new CsrfTokenRequestAttributeHandler();
         http.csrf(c -> c.csrfTokenRepository(csrfRepo).csrfTokenRequestHandler(handler))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -103,6 +103,12 @@ public class SecurityConfig {
         return http.build();
     }
 
+    private static CookieCsrfTokenRepository csrfRepo() {
+        CookieCsrfTokenRepository repo = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        repo.setCookieCustomizer(builder -> builder.sameSite("Lax").secure(false).httpOnly(false).path("/"));
+        return repo;
+    }
+
     private static OncePerRequestFilter csrfCookieFilter() {
         return new OncePerRequestFilter() {
             @Override
@@ -110,10 +116,38 @@ public class SecurityConfig {
                     HttpServletRequest request, HttpServletResponse response, jakarta.servlet.FilterChain filterChain)
                     throws java.io.IOException, jakarta.servlet.ServletException {
                 CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-                if (token != null) {
-                    token.getToken();
+                String value = token == null ? "" : token.getToken();
+                HttpServletResponse wrapped = new jakarta.servlet.http.HttpServletResponseWrapper(response) {
+                    private boolean keep(String header, String headerValue) {
+                        if (!"Set-Cookie".equalsIgnoreCase(header) || headerValue == null) {
+                            return true;
+                        }
+                        if (!headerValue.startsWith("XSRF-TOKEN=")) {
+                            return true;
+                        }
+                        return !headerValue.startsWith("XSRF-TOKEN=;") && !headerValue.contains("Max-Age=0");
+                    }
+
+                    @Override
+                    public void addHeader(String name, String headerValue) {
+                        if (keep(name, headerValue)) {
+                            super.addHeader(name, headerValue);
+                        }
+                    }
+
+                    @Override
+                    public void setHeader(String name, String headerValue) {
+                        if (keep(name, headerValue)) {
+                            super.setHeader(name, headerValue);
+                        }
+                    }
+                };
+                filterChain.doFilter(request, wrapped);
+                if (!value.isBlank()) {
+                    response.addHeader(
+                            "Set-Cookie",
+                            "XSRF-TOKEN=" + value + "; Path=/; SameSite=Lax");
                 }
-                filterChain.doFilter(request, response);
             }
         };
     }

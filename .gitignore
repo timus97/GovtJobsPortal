@@ -32,3 +32,4 @@ data/logs/**
 .playwright/
 .playwright-mcp/
 *.log
+/*.png

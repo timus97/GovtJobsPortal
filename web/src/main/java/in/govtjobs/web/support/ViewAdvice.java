@@ -2,6 +2,8 @@ package in.govtjobs.web.support;
 
 import in.govtjobs.domain.labels.Labels;
 import in.govtjobs.web.config.FeatureFlags;
+import in.govtjobs.web.config.GovtJobsProperties;
+import in.govtjobs.web.store.CatalogStore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,9 +13,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class ViewAdvice {
 
     private final FeatureFlags flags;
+    private final GovtJobsProperties props;
+    private final CatalogStore catalog;
 
-    public ViewAdvice(FeatureFlags flags) {
+    public ViewAdvice(FeatureFlags flags, GovtJobsProperties props, CatalogStore catalog) {
         this.flags = flags;
+        this.props = props;
+        this.catalog = catalog;
+    }
+
+    @ModelAttribute("sampleCatalog")
+    public boolean sampleCatalog() {
+        return "postgres".equalsIgnoreCase(props.getCatalog().getSource()) && catalog.sampleMode();
     }
 
     @ModelAttribute("flags")

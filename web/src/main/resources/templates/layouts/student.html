@@ -13,13 +13,15 @@
     />
     <link rel="stylesheet" th:href="@{/css/index.css}" />
     <link rel="stylesheet" th:href="@{/css/app.css}" />
-    <link rel="stylesheet" th:href="@{/css/mock.css}" />
-    <link rel="stylesheet" th:href="@{/css/study-plan.css}" />
+
   </head>
   <body>
     <div class="app-shell theme-student">
       <div class="disclaimer-bar">
-        Aggregator only — not an official eligibility decision. Always verify on the official site.
+        A calm place to compare windows. This is not an official eligibility decision. The official notice is the one that counts.
+      </div>
+      <div class="sample-banner" th:if="${sampleCatalog}">
+        Sample catalog for practice. These cards are not live recruitments. When a real notice is published, open its official site before you apply.
       </div>
       <header class="site-header">
         <div class="container header-inner">
@@ -27,7 +29,7 @@
             <span class="brand-mark" aria-hidden="true"></span>
             <span>
               <strong>Sarkari Desk</strong>
-              <span class="brand-sub">Your matches · search · prepare</span>
+              <span class="brand-sub">Check the notice. Keep your own list.</span>
             </span>
           </a>
           <nav class="nav" aria-label="Student">

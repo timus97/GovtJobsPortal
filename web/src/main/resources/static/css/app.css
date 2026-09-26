@@ -136,6 +136,15 @@
   font-weight: 400;
 }
 
+.field-hint {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 450;
+  line-height: 1.4;
+}
+
 .domicile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr));

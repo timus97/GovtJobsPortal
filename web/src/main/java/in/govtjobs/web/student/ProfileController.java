@@ -4,7 +4,6 @@ import in.govtjobs.domain.match.EligibilityFacts;
 import in.govtjobs.web.store.StudentStore;
 import in.govtjobs.web.support.IndiaStates;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,7 @@ public class ProfileController {
         }
         model.addAttribute("nav", "profile");
         model.addAttribute("profile", profile);
+        model.addAttribute("domicileState", firstDomicile(profile.get("domicileStates")));
         model.addAttribute("states", IndiaStates.STATES);
         model.addAttribute("complete", EligibilityFacts.validateMatchProfile(profile).ok());
         return "student/profile";
@@ -46,9 +46,10 @@ public class ProfileController {
             @RequestParam String highestEducation,
             @RequestParam String reservationCategory,
             @RequestParam String birthState,
+            @RequestParam(required = false) String domicileState,
             @RequestParam(required = false) String educationDiscipline,
             @RequestParam(required = false) String gender,
-            @RequestParam(required = false) List<String> domicileStates,
+
             @RequestParam(required = false) String pwbdHas,
             @RequestParam(required = false) String pwbdCategory,
             Model model) {
@@ -59,12 +60,21 @@ public class ProfileController {
         profile.put("birthState", birthState);
         profile.put("educationDiscipline", educationDiscipline);
         profile.put("gender", gender);
-        profile.put("domicileStates", domicileStates == null ? List.of() : domicileStates);
+        profile.put(
+                "domicileStates",
+                domicileState == null || domicileState.isBlank() ? List.of() : List.of(domicileState));
         Map<String, Object> pwbd = new LinkedHashMap<>();
         pwbd.put("hasDisability", "yes".equals(pwbdHas));
         pwbd.put("category", pwbdCategory);
         profile.put("pwbd", pwbd);
         students.saveProfile(current.requireId(principal), profile);
         return "redirect:/profile?saved=1";
+    }
+
+    private static String firstDomicile(Object raw) {
+        if (raw instanceof List<?> list && !list.isEmpty() && list.get(0) != null) {
+            return String.valueOf(list.get(0));
+        }
+        return "";
     }
 }

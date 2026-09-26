@@ -81,6 +81,8 @@ govtjobs:
     reset-ttl-hours: 1
   catalog:
     page-size: 12
+    source: postgres
+    seed-dummy: true
   rate-limit:
     window-minutes: 15
     login-max: 5

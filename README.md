@@ -78,7 +78,7 @@ This portal is a **catalog + matcher + exam desk**, not a gazette and not an app
 | Student desk | Postgres 16, Flyway `V1__student_desk.sql`, signed `student_session` / `ops_session`, forgot/reset, files on disk |
 | Coaching | Out of scope. Packs exist for `upsc-cse`, `ssc-cgl`, `ibps-po`, `ugc-net` only. |
 | Ops | Local paste / review / publish. No source edit, no git ingest. Publish writes `jobs.json` and does not update `opportunities.json`, which Match prefers when that file is non-empty. |
-| Catalog in git | 27 jobs (1 open SSC fixture, last date 2026-09-30), 25 exam series, 636 quarantined. `stats.json` `lastPipelineRunAt` is 2026-08-21. Registry: 308 sources, 168 enabled. |
+| Catalog the UI reads | Postgres schema `catalog`, approved rows only. Local boot seeds 5 sample notices and 3 calendars when the table is empty (`govtjobs.catalog.seed-dummy`). A `needs_review` row stays hidden. Git JSON remains the collector inbox until the collector port. |
 | Collectors | Still Node (`scripts/collect/runDaily.js`). Java `collect process` only checks that the JSON files exist. |
 | Hosting | Not in progress. Ignore https://timus97.github.io/GovtJobsPortal/ until we choose a host. |
 

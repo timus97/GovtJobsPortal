@@ -238,6 +238,8 @@ public class GovtJobsProperties {
 
     public static class Catalog {
         private int pageSize = 12;
+        private String source = "json";
+        private boolean seedDummy = false;
 
         public int getPageSize() {
             return pageSize;
@@ -245,6 +247,22 @@ public class GovtJobsProperties {
 
         public void setPageSize(int pageSize) {
             this.pageSize = pageSize;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
+        public boolean isSeedDummy() {
+            return seedDummy;
+        }
+
+        public void setSeedDummy(boolean seedDummy) {
+            this.seedDummy = seedDummy;
         }
     }
 

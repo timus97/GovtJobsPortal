@@ -20,13 +20,16 @@
   </head>
   <body>
     <div class="app-shell theme-auth">
+      <div class="sample-banner" th:if="${sampleCatalog}">
+        Sample catalog for practice. These cards are not live recruitments.
+      </div>
       <header class="site-header auth-header">
         <div class="container header-inner">
           <a href="/" class="brand">
             <span class="brand-mark" aria-hidden="true"></span>
             <span>
               <strong>Sarkari Desk</strong>
-              <span class="brand-sub">Match · search · prepare</span>
+              <span class="brand-sub">Check the notice. Keep your own list.</span>
             </span>
           </a>
           <nav class="nav" aria-label="Public">

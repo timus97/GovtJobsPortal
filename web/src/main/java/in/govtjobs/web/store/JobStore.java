@@ -3,6 +3,7 @@ package in.govtjobs.web.store;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.domain.RepoPaths;
+import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.support.JsonFiles;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,18 +27,37 @@ public class JobStore {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JobStore.class);
 
     private final ObjectMapper mapper;
+    private final CatalogStore catalog;
+    private final GovtJobsProperties props;
     private final Object lock = new Object();
     private volatile Snapshot snapshot;
 
     public JobStore(ObjectMapper mapper) {
+        this(mapper, null, null);
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public JobStore(ObjectMapper mapper, CatalogStore catalog, GovtJobsProperties props) {
         this.mapper = mapper;
+        this.catalog = catalog;
+        this.props = props;
+    }
+
+    private boolean postgresCatalog() {
+        return catalog != null && props != null && "postgres".equalsIgnoreCase(props.getCatalog().getSource());
     }
 
     public List<Map<String, Object>> getJobs() {
+        if (postgresCatalog()) {
+            return catalog.approvedJobs();
+        }
         return snapshot().jobs;
     }
 
     public List<Map<String, Object>> getOpportunities() {
+        if (postgresCatalog()) {
+            return catalog.approvedJobs();
+        }
         List<Map<String, Object>> opps = snapshot().opportunities;
         return opps.isEmpty() ? getJobs() : opps;
     }
@@ -57,12 +77,23 @@ public class JobStore {
     }
 
     public List<Map<String, Object>> getExamSeriesRaw() {
+        if (postgresCatalog()) {
+            return catalog.approvedSeries();
+        }
         return snapshot().series;
     }
 
     public Map<String, Object> catalogHealth() {
-        Snapshot snap = snapshot();
         Map<String, Object> out = new LinkedHashMap<>();
+        if (postgresCatalog()) {
+            out.put("source", "postgres");
+            out.put("jobs", catalog.approvedJobs().size());
+            out.put("examSeries", catalog.approvedSeries().size());
+            out.put("sample", catalog.sampleMode());
+            return out;
+        }
+        Snapshot snap = snapshot();
+        out.put("source", "json");
         out.put("jobs", snap.jobs.size());
         out.put("examSeries", snap.series.size());
         return out;

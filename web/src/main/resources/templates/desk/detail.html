@@ -51,10 +51,7 @@
             <button class="btn btn-secondary" type="submit">Remove result</button>
           </form>
         </div>
-        <p th:if="${item.kind == 'series'}">
-          <a class="btn btn-secondary" th:href="@{/desk/{id}/plan(id=${item.id})}">Unofficial study plan</a>
-          <a class="btn btn-secondary" th:href="@{/desk/{id}/mock(id=${item.id})}">Unofficial mock</a>
-        </p>
+
       </div>
     </main>
   </body>
