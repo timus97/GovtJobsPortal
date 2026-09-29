@@ -6,7 +6,8 @@
   <body>
     <main class="main">
       <div class="section container">
-        <h1>Review queue</h1>
+        <h1>Paste review</h1>
+        <p class="muted">Crawl notices are on the <a href="/ops/pipeline/review">pipeline review queue</a>. This page is only for pasted URLs.</p>
         <p class="empty panel" th:if="${items.isEmpty()}">Nothing waiting for review.</p>
         <div class="table-wrap" th:unless="${items.isEmpty()}">
           <table class="data-table">

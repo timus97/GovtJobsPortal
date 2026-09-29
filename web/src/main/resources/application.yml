@@ -78,6 +78,7 @@ govtjobs:
     from: ${MAIL_FROM:${SMTP_FROM:Sarkari Desk <onboarding@resend.dev>}}
     public-site-url: ${PUBLIC_SITE_URL:http://localhost:8090}
     resend-api-key: ${RESEND_API_KEY:}
+    smtp-host: ${SMTP_HOST:}
     reset-ttl-hours: 1
   catalog:
     page-size: 12

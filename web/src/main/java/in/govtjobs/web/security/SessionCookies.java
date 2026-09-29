@@ -15,8 +15,12 @@ public class SessionCookies {
         this.tokens = tokens;
     }
 
-    public void setStudent(HttpServletResponse response, String studentId, String email) {
-        write(response, SignedCookieService.STUDENT_COOKIE, tokens.signStudent(studentId, email), tokens.studentTtl());
+    public void setStudent(HttpServletResponse response, String studentId, String email, long sessionEpoch) {
+        write(
+                response,
+                SignedCookieService.STUDENT_COOKIE,
+                tokens.signStudent(studentId, email, sessionEpoch),
+                tokens.studentTtl());
         clear(response, SignedCookieService.OPS_COOKIE);
     }
 
@@ -37,14 +41,22 @@ public class SessionCookies {
         if (payload == null) {
             return;
         }
-        write(response, SignedCookieService.STUDENT_COOKIE, tokens.signStudent(payload.uid(), payload.sub()), tokens.studentTtl());
+        write(
+                response,
+                SignedCookieService.STUDENT_COOKIE,
+                tokens.signStudent(payload.uid(), payload.sub(), payload.epoch()),
+                tokens.studentTtl());
     }
 
     public void refreshOps(HttpServletResponse response, SignedCookieService.Payload payload) {
         if (payload == null) {
             return;
         }
-        write(response, SignedCookieService.OPS_COOKIE, tokens.signOps(payload.uid(), payload.sub(), payload.role()), tokens.opsTtl());
+        write(
+                response,
+                SignedCookieService.OPS_COOKIE,
+                tokens.signOps(payload.uid(), payload.sub(), payload.role()),
+                tokens.opsTtl());
     }
 
     public String read(HttpServletRequest request, String name) {

@@ -143,12 +143,18 @@ public class StudentStore {
         }
         Instant now = Instant.now();
         jdbc.update(
-                "UPDATE students SET password_hash = ?, last_login_at = ? WHERE id = ?",
+                "UPDATE students SET password_hash = ?, last_login_at = ?, session_epoch = session_epoch + 1 WHERE id = ?",
                 passwords.hash(password),
                 Timestamp.from(now),
                 studentId);
         log.info("student.password_set id={}", studentId);
         return publicStudent(row);
+    }
+
+    public long sessionEpoch(String id) {
+        Map<String, Object> row = findInternalById(id);
+        Object epoch = row == null ? null : row.get("sessionEpoch");
+        return epoch instanceof Number n ? n.longValue() : 0L;
     }
 
     public Map<String, Object> findById(String id) {
@@ -884,6 +890,7 @@ public class StudentStore {
         row.put("passwordHash", rs.getString("password_hash"));
         row.put("createdAt", isoTs(rs.getTimestamp("created_at")));
         row.put("lastLoginAt", isoTs(rs.getTimestamp("last_login_at")));
+        row.put("sessionEpoch", rs.getLong("session_epoch"));
         return row;
     };
 

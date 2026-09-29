@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import jakarta.servlet.http.Cookie;
 import org.springframework.mock.web.MockMultipartFile;
@@ -44,7 +44,7 @@ class SecurityAuditTest {
     void dashboardRequiresStudent() throws Exception {
         mvc.perform(get("/dashboard"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/"));
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test

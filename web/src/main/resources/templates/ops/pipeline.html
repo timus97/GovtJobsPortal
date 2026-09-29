@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Pipeline | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <p class="muted">Collect</p>
+          <a href="/ops/pipeline" class="active">Pipeline</a>
+          <a href="/ops/pipeline/review">Review queue</a>
+          <a href="/ops/pipeline/priority">Crawl priority</a>
+          <p>Students see a row only after approval.</p>
+        </aside>
+        <section>
+          <h1>Pipeline</h1>
+          <p class="muted">Each crawl writes Postgres. This desk shows the run, what it kept, and what is waiting for you.</p>
+          <div class="desk-stats">
+            <div class="desk-stat"><strong class="tone-teal" th:text="${summary.running}">0</strong><span>Running now</span></div>
+            <div class="desk-stat"><strong class="tone-warn" th:text="${summary.waiting}">0</strong><a href="/ops/pipeline/review">Waiting for review</a></div>
+            <div class="desk-stat"><strong class="tone-teal" th:text="${summary.approvedToday}">0</strong><span>Approved today</span></div>
+            <div class="desk-stat"><strong class="tone-clay" th:text="${summary.failed}">0</strong><span>Sources failed today</span></div>
+          </div>
+          <form method="post" th:action="@{/ops/pipeline/runs}" style="margin-bottom:1rem">
+            <button class="btn btn-primary" type="submit">Start crawl</button>
+          </form>
+          <div class="desk-split">
+            <div class="desk-card">
+              <h2>Runs</h2>
+              <div class="desk-row" th:each="run : ${runs}" th:classappend="${run.status == 'running'} ? 'selected' : ''">
+                <div>
+                  <a th:href="@{/ops/pipeline/runs/{id}(id=${run.id})}" th:text="${#dates.format(run.startedAt, 'dd MMM HH:mm')}">time</a>
+                  <p class="muted" th:text="|${run.sourcesTotal} sources · ${run.kept} kept · ${run.reviewCount} review · ${run.failed} failed|">meta</p>
+                </div>
+                <div><span class="pill" th:classappend="${run.status == 'running'} ? 'live' : ''" th:text="${run.status}">done</span></div>
+              </div>
+              <p class="muted" th:if="${#lists.isEmpty(runs)}">No crawls yet.</p>
+            </div>
+            <div class="desk-card" th:if="${liveRun != null}">
+              <h2>This run</h2>
+              <p th:each="line : ${liveLog}" th:text="|${line.phase} ${line.sourceName} ${line.message}|">log</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

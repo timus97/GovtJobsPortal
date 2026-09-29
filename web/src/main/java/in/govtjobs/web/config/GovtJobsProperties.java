@@ -201,6 +201,7 @@ public class GovtJobsProperties {
         private String from = "Sarkari Desk <onboarding@resend.dev>";
         private String publicSiteUrl = "http://localhost:8090";
         private String resendApiKey = "";
+        private String smtpHost = "";
         private int resetTtlHours = 1;
 
         public String getFrom() {
@@ -225,6 +226,14 @@ public class GovtJobsProperties {
 
         public void setResendApiKey(String resendApiKey) {
             this.resendApiKey = resendApiKey;
+        }
+
+        public String getSmtpHost() {
+            return smtpHost;
+        }
+
+        public void setSmtpHost(String smtpHost) {
+            this.smtpHost = smtpHost;
         }
 
         public int getResetTtlHours() {

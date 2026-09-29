@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Crawl priority | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <a href="/ops/pipeline">Pipeline</a>
+          <a href="/ops/pipeline/review">Review queue</a>
+          <a href="/ops/pipeline/priority" class="active">Crawl priority</a>
+        </aside>
+        <section>
+          <h1>Crawl priority</h1>
+          <p class="muted">The crawler tries these links first. Keywords decide which links on a page are kept.</p>
+          <p class="error-box" th:if="${notice}" th:text="${notice}">error</p>
+          <div class="desk-split">
+            <div class="desk-card">
+              <h2>Keywords, in order</h2>
+              <div class="desk-row" th:each="word, iter : ${keywords}">
+                <span class="tone-teal" th:text="${iter.count}">1</span>
+                <span th:text="${word.phrase}">recruitment</span>
+              </div>
+              <form method="post" th:action="@{/ops/pipeline/keywords}" class="desk-actions">
+                <label class="field"><span>Keyword</span><input name="phrase" required minlength="2" maxlength="40" /></label>
+                <button class="btn btn-primary" type="submit">Add keyword</button>
+              </form>
+            </div>
+            <div class="desk-card">
+              <h2>Priority links</h2>
+              <div class="desk-row" th:each="link, iter : ${links}">
+                <div>
+                  <span class="tone-teal" th:text="${iter.count}">1</span>
+                  <a th:href="${link.url}" th:text="${link.url}">url</a>
+                  <p class="muted" th:text="|${link.label} · tried before the rest of the registry|">label</p>
+                </div>
+              </div>
+              <form method="post" th:action="@{/ops/pipeline/links}" class="desk-actions">
+                <label class="field"><span>https link</span><input type="url" name="url" required placeholder="https://ssc.gov.in/" /></label>
+                <label class="field"><span>Label</span><input name="label" placeholder="SSC" /></label>
+                <button class="btn btn-primary" type="submit">Add link</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

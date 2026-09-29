@@ -9,6 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class OpsController {
+
+    private static final Logger log = LoggerFactory.getLogger(OpsController.class);
 
     private final CollectQueue queue;
     private final JobStore jobs;
@@ -50,6 +55,9 @@ public class OpsController {
             HttpServletResponse response,
             Model model) {
         if (!operators.verify(username, password)) {
+            String reason = operators.findByUsername(username) == null ? "unknown_user" : "bad_password";
+            log.warn("ops.login_failed username={} reason={}", safeUsername(username), reason);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             model.addAttribute("notice", "Username or password is not correct.");
             return "auth/ops-login";
         }
@@ -60,7 +68,16 @@ public class OpsController {
                 String.valueOf(row.get("username")),
                 String.valueOf(row.getOrDefault("role", "operator")));
         logs.info("ops", "Operator signed in " + username);
+        log.info("ops.login_ok username={}", safeUsername(username));
         return "redirect:/ops";
+    }
+
+    private static String safeUsername(String username) {
+        if (username == null) {
+            return "";
+        }
+        String cleaned = username.replaceAll("[\\r\\n]", "").trim();
+        return cleaned.length() > 32 ? cleaned.substring(0, 32) : cleaned;
     }
 
     @PostMapping("/ops/logout")

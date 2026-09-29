@@ -25,6 +25,36 @@ class DeskAndCoachingTest {
     }
 
     @Test
+    void deskGuidanceCoversDateAndNextStepBranches() {
+        assertThat(DeskGuidance.parseIsoDate(null)).isNull();
+        assertThat(DeskGuidance.parseIsoDate("   ")).isNull();
+        assertThat(DeskGuidance.parseIsoDate("bad-date")).isNull();
+        assertThat(DeskGuidance.parseIsoDate("2026-13-40")).isNull();
+        assertThat(DeskGuidance.formatIsoDate(LocalDate.of(2026, 9, 26))).isEqualTo("2026-09-26");
+        assertThat(DeskGuidance.formatIsoDate("nope")).isNull();
+        assertThat(DeskGuidance.pickAnchor(null)).isNull();
+        assertThat(DeskGuidance.pickAnchor(Map.of("lastDate", "2026-10-01"))).isEqualTo("2026-10-01");
+        assertThat(DeskGuidance.daysLeftLabel(null).get("caption")).isEqualTo("Add exam date");
+        assertThat(DeskGuidance.daysLeftLabel(0).get("caption")).isEqualTo("today");
+        assertThat(DeskGuidance.daysLeftLabel(1).get("caption")).isEqualTo("day left");
+        assertThat(DeskGuidance.daysLeftLabel(-1).get("caption")).isEqualTo("day ago");
+        assertThat(DeskGuidance.daysLeft("2026-09-26", new java.util.Date(0))).isNotNull();
+        assertThat(DeskGuidance.daysLeft("2026-09-26", "not-a-date")).isNotNull();
+        assertThat(DeskGuidance.daysLeft("2026-09-26")).isNotNull();
+
+        assertThat(DeskGuidance.nextStep(Map.of("status", "watching", "applyOpen", true)))
+                .contains("Apply");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "watching"))).contains("Prepare");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "applied"))).contains("admit");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready", "daysLeft", 1))).contains("Exam in 1 day");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready", "daysLeft", 3))).contains("days");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready"))).contains("Admit card");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "appeared"))).contains("result");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "done"))).contains("Review");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "other"))).contains("desk");
+    }
+
+    @Test
     void studyPlan_evenSplitInclusiveDays() {
         LocalDate today = LocalDate.of(2026, 1, 1);
         String exam = "2026-01-08";

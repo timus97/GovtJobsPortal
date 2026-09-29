@@ -67,12 +67,12 @@ public class SignedCookieService {
         return props.getSession().isCookieSecure();
     }
 
-    public String signStudent(String studentId, String email) {
-        return sign(STUDENT_AUD, studentId, email, "student", studentTtl());
+    public String signStudent(String studentId, String email, long sessionEpoch) {
+        return sign(STUDENT_AUD, studentId, email, "student", studentTtl(), sessionEpoch);
     }
 
     public String signOps(String operatorId, String username, String role) {
-        return sign(OPS_AUD, operatorId, username, role == null ? "operator" : role, opsTtl());
+        return sign(OPS_AUD, operatorId, username, role == null ? "operator" : role, opsTtl(), 0);
     }
 
     public Payload parseStudent(String token) {
@@ -83,10 +83,10 @@ public class SignedCookieService {
         return parse(token, OPS_AUD);
     }
 
-    String sign(String aud, String uid, String sub, String role, Duration ttl) {
+    String sign(String aud, String uid, String sub, String role, Duration ttl, long epoch) {
         try {
             long now = System.currentTimeMillis() / 1000L;
-            Payload payload = new Payload(1, aud, uid, sub, role, now, now + Math.max(60, ttl.toSeconds()));
+            Payload payload = new Payload(1, aud, uid, sub, role, now, now + Math.max(60, ttl.toSeconds()), epoch);
             String body = B64.encodeToString(mapper.writeValueAsBytes(payload));
             return body + "." + B64.encodeToString(hmac(body));
         } catch (Exception e) {
@@ -134,5 +134,5 @@ public class SignedCookieService {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record Payload(int v, String aud, String uid, String sub, String role, long iat, long exp) {}
+    public record Payload(int v, String aud, String uid, String sub, String role, long iat, long exp, long epoch) {}
 }

@@ -30,6 +30,11 @@ public class HomeController {
         this.resets = resets;
     }
 
+    @GetMapping("/favicon.ico")
+    public String favicon() {
+        return "redirect:/favicon.svg";
+    }
+
     @GetMapping({"/", "/account/login", "/account/register"})
     public String home(
             @RequestParam(name = "tab", required = false) String tab,
@@ -55,7 +60,8 @@ public class HomeController {
         }
         try {
             var student = students.register(email, password);
-            cookies.setStudent(response, String.valueOf(student.get("id")), String.valueOf(student.get("email")));
+            String studentId = String.valueOf(student.get("id"));
+            cookies.setStudent(response, studentId, String.valueOf(student.get("email")), students.sessionEpoch(studentId));
             return "redirect:/profile";
         } catch (StoreException e) {
             model.addAttribute("register", true);
@@ -80,7 +86,11 @@ public class HomeController {
             model.addAttribute("notice", "Email or password is not correct.");
             return "auth/landing";
         }
-        cookies.setStudent(response, String.valueOf(student.get("id")), String.valueOf(student.get("email")));
+        cookies.setStudent(
+                response,
+                String.valueOf(student.get("id")),
+                String.valueOf(student.get("email")),
+                students.sessionEpoch(String.valueOf(student.get("id"))));
         return "redirect:/match";
     }
 
@@ -125,7 +135,8 @@ public class HomeController {
             Model model) {
         try {
             Map<String, Object> student = resets.consume(token, password);
-            cookies.setStudent(response, String.valueOf(student.get("id")), String.valueOf(student.get("email")));
+            String studentId = String.valueOf(student.get("id"));
+            cookies.setStudent(response, studentId, String.valueOf(student.get("email")), students.sessionEpoch(studentId));
             return "redirect:/profile";
         } catch (StoreException e) {
             model.addAttribute("token", token);

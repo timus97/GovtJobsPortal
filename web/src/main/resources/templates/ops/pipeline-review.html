@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Review queue | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <a href="/ops/pipeline">Pipeline</a>
+          <a href="/ops/pipeline/review" class="active">Review queue</a>
+          <a href="/ops/pipeline/priority">Crawl priority</a>
+        </aside>
+        <section>
+          <h1>Review queue</h1>
+          <p class="muted">Nothing here is on the student Search, Match, or Prepare screens.</p>
+          <p>
+            <a th:href="@{/ops/pipeline/review(status=waiting)}">Waiting</a>
+            <a th:href="@{/ops/pipeline/review(status=held)}">Held</a>
+            <a th:href="@{/ops/pipeline/review(status=rejected)}">Rejected</a>
+          </p>
+          <div class="desk-card">
+            <div class="desk-row" th:each="item : ${notices}">
+              <div>
+                <a th:href="@{/ops/pipeline/notices/{id}(id=${item.id})}" th:text="${item.title}">title</a>
+                <p class="muted" th:text="${item.sourceName}">source</p>
+                <p class="tone-warn" th:text="${item.waitReason}">reason</p>
+              </div>
+              <form method="post" th:action="@{/ops/pipeline/notices/{id}(id=${item.id})}" class="desk-actions">
+                <button class="btn btn-primary" name="decision" value="approved" type="submit" th:if="${status != 'rejected'}">Approve</button>
+                <button class="btn" name="decision" value="rejected" type="submit" th:if="${status != 'rejected'}">Remove</button>
+              </form>
+            </div>
+            <p class="muted" th:if="${#lists.isEmpty(notices)}">This list is empty.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

@@ -44,22 +44,33 @@ public class SignedAuthFilter extends OncePerRequestFilter {
             if (payload != null) {
                 Map<String, Object> row = operators.findByUsername(payload.sub());
                 if (row != null) {
+                    String role = String.valueOf(row.get("role"));
                     List<SimpleGrantedAuthority> roles = new ArrayList<>();
                     roles.add(new SimpleGrantedAuthority("ROLE_OPS"));
-                    if ("admin".equals(row.get("role")) || "admin".equals(payload.role())) {
+                    if ("admin".equals(role)) {
                         roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                     }
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(payload.sub(), null, roles);
                     auth.setDetails(payload.uid());
                     SecurityContextHolder.getContext().setAuthentication(auth);
-                    cookies.refreshOps(response, payload);
+                    cookies.refreshOps(
+                            response,
+                            new SignedCookieService.Payload(
+                                    payload.v(),
+                                    payload.aud(),
+                                    payload.uid(),
+                                    payload.sub(),
+                                    role,
+                                    payload.iat(),
+                                    payload.exp(),
+                                    payload.epoch()));
                 }
             }
         } else {
             SignedCookieService.Payload payload =
                     tokens.parseStudent(cookies.read(request, SignedCookieService.STUDENT_COOKIE));
-            if (payload != null && students.findById(payload.uid()) != null) {
+            if (payload != null && students.sessionEpoch(payload.uid()) == payload.epoch() && students.findById(payload.uid()) != null) {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         payload.sub(), null, List.of(new SimpleGrantedAuthority("ROLE_STUDENT")));
                 auth.setDetails(payload.uid());

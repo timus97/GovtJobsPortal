@@ -29,6 +29,7 @@ data/logs/**
 *.tmp
 .DS_Store
 .env
+.local/
 .playwright/
 .playwright-mcp/
 *.log

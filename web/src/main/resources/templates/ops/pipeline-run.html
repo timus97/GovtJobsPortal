@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Run | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <a href="/ops/pipeline" class="active">Pipeline</a>
+          <a href="/ops/pipeline/review">Review queue</a>
+          <a href="/ops/pipeline/priority">Crawl priority</a>
+        </aside>
+        <section>
+          <h1 th:text="${#dates.format(run.startedAt, 'dd MMM HH:mm')}">Run</h1>
+          <p class="muted" th:text="|${run.status}. ${run.sourcesTotal} sources. Output is in Postgres.|">meta</p>
+          <div class="desk-stats">
+            <div class="desk-stat"><strong th:text="${run.kept}">0</strong><span>Kept</span></div>
+            <div class="desk-stat"><strong class="tone-warn" th:text="${run.reviewCount}">0</strong><span>Review</span></div>
+            <div class="desk-stat"><strong class="tone-clay" th:text="${run.failed}">0</strong><span>Failed</span></div>
+          </div>
+          <div class="desk-split">
+            <div class="desk-card">
+              <h2>Sources</h2>
+              <a class="desk-row" th:each="source : ${sources}" th:href="@{/ops/pipeline/runs/{id}(id=${run.id}, source=${source.id})}" th:classappend="${source.id == selected} ? 'selected' : ''">
+                <span th:text="${source.sourceName}">SSC</span>
+                <span th:if="${source.outcome == 'failed'}" class="tone-clay">failed</span>
+                <span th:if="${source.outcome != 'failed'}" class="tone-teal" th:text="|${source.kept} kept · ${source.reviewCount} review · ${source.dropped} dropped|">0</span>
+              </a>
+            </div>
+            <div class="desk-card">
+              <h2 th:text="${selectedSource != null} ? ${selectedSource.sourceName} : 'Output'">Output</h2>
+              <p class="tone-clay" th:if="${selectedSource != null and !#strings.isEmpty(selectedSource.error)}" th:text="${selectedSource.error}">error</p>
+              <div class="desk-row" th:each="item : ${output}">
+                <div>
+                  <strong th:text="${item.disposition}">kept</strong>
+                  <a th:href="@{/ops/pipeline/notices/{id}(id=${item.id})}" th:text="${item.title}">title</a>
+                  <p class="muted" th:text="${item.waitReason}">reason</p>
+                </div>
+                <span th:text="${item.lastDate}">date</span>
+              </div>
+              <h3>Job log</h3>
+              <p th:each="line : ${log}" th:text="|${line.level} ${line.phase} ${line.message}|">line</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

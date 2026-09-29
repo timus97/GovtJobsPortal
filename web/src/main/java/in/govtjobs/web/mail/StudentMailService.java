@@ -42,7 +42,7 @@ public class StudentMailService {
     }
 
     public boolean allowDevLink() {
-        return !props.getSession().isCookieSecure();
+        return !props.getSession().isCookieSecure() && "dev".equals(provider());
     }
 
     public SendResult sendPasswordReset(String to, String url, String expiresAt) {
@@ -98,9 +98,8 @@ public class StudentMailService {
     }
 
     private boolean smtpReady() {
-        return mailSender != null
-                && props.getMail() != null
-                && System.getenv().getOrDefault("SMTP_HOST", "").length() > 0;
+        String host = props.getMail().getSmtpHost();
+        return mailSender != null && host != null && !host.isBlank();
     }
 
     private String resendKey() {

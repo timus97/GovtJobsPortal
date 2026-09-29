@@ -49,6 +49,27 @@ public class OperatorStore {
         return row != null && passwords.verify(password, String.valueOf(row.get("passwordHash")));
     }
 
+    public void setPassword(String username, String password) {
+        int min = passwordMin();
+        if (password == null || password.length() < min) {
+            throw new StoreException("VALIDATION", "Password must be at least " + min + " characters");
+        }
+        synchronized (lock) {
+            Map<String, Object> data = load();
+            List<Map<String, Object>> ops = operatorsOf(data);
+            Map<String, Object> row = ops.stream()
+                    .filter(o -> username != null && username.equalsIgnoreCase(String.valueOf(o.get("username"))))
+                    .findFirst()
+                    .orElse(null);
+            if (row == null) {
+                throw new StoreException("NOT_FOUND", "Operator not found");
+            }
+            row.put("passwordHash", passwords.hash(password));
+            save(data);
+            log.info("ops.password_reset username={}", row.get("username"));
+        }
+    }
+
     public Map<String, Object> create(String username, String password) {
         if (username == null || !username.matches("^[A-Za-z0-9._-]{3,32}$")) {
             throw new StoreException("VALIDATION", "Username must be 3–32 letters, digits, dot, underscore or hyphen");

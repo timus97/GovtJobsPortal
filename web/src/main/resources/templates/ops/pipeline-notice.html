@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Notice | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <a href="/ops/pipeline/review" class="active">Review queue</a>
+        </aside>
+        <section>
+          <p><a href="/ops/pipeline/review">Back to queue</a></p>
+          <p class="error-box" th:if="${decisionError}" th:text="${decisionError}"></p>
+          <h1 th:text="${notice.title}">Title</h1>
+          <p class="muted" th:text="|${notice.organization} · ${notice.reviewStatus}|">org</p>
+          <div class="desk-split">
+            <div class="desk-card">
+              <h2>What the crawler stored</h2>
+              <p class="muted">Organization</p>
+              <p th:text="${notice.organization}">org</p>
+              <p class="muted">Last date</p>
+              <p th:text="${#strings.isEmpty(notice.lastDate)} ? 'Missing' : ${notice.lastDate}">date</p>
+              <p class="muted">Selection</p>
+              <p th:text="${notice.selectionProcess}">selection</p>
+              <p class="muted">Exam</p>
+              <p th:text="${notice.hasExam} ? 'Yes, as read from the notice' : 'Not marked as an exam'">exam</p>
+              <p class="muted">Official link</p>
+              <p><a th:href="${notice.officialUrl}" th:text="${notice.officialUrl}" rel="noopener">url</a></p>
+              <p class="muted">Approving this puts it on Search, Match, and Prepare. Holding or rejecting keeps it hidden.</p>
+              <form class="desk-actions" method="post" th:action="@{/ops/pipeline/notices/{id}(id=${notice.id})}" th:if="${notice.reviewStatus != 'approved'}">
+                <button class="btn btn-primary" name="decision" value="approved" type="submit">Approve</button>
+                <button class="btn" name="decision" value="held" type="submit">Hold</button>
+                <button class="btn" name="decision" value="rejected" type="submit">Reject</button>
+              </form>
+              <p th:if="${notice.reviewStatus == 'approved'}">Approved. Students can see this listing.</p>
+            </div>
+            <div class="desk-card">
+              <h2>Excerpt from the notice</h2>
+              <p th:text="${notice.excerpt}">excerpt</p>
+              <p class="tone-warn" th:if="${!#strings.isEmpty(notice.waitReason)}" th:text="${notice.waitReason}">reason</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

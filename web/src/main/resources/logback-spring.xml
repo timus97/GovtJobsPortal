@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <property name="COLLECT_PATTERN" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level [collect] %msg%n"/>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="COLLECT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${COLLECT_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="in.govtjobs.collect" level="INFO" additivity="false">
+    <appender-ref ref="COLLECT"/>
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

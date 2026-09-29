@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
@@ -49,6 +50,7 @@ public class SecurityConfig {
         CookieCsrfTokenRepository csrfRepo = csrfRepo();
         CsrfTokenRequestAttributeHandler handler = new CsrfTokenRequestAttributeHandler();
         http.securityMatcher("/ops/**")
+                .headers(SecurityConfig::securityHeaders)
                 .csrf(c -> c.csrfTokenRepository(csrfRepo).csrfTokenRequestHandler(handler))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(
@@ -72,7 +74,8 @@ public class SecurityConfig {
     SecurityFilterChain appChain(HttpSecurity http) throws Exception {
         CookieCsrfTokenRepository csrfRepo = csrfRepo();
         CsrfTokenRequestAttributeHandler handler = new CsrfTokenRequestAttributeHandler();
-        http.csrf(c -> c.csrfTokenRepository(csrfRepo).csrfTokenRequestHandler(handler))
+        http.headers(SecurityConfig::securityHeaders)
+                .csrf(c -> c.csrfTokenRepository(csrfRepo).csrfTokenRequestHandler(handler))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(
                         new SignedAuthFilter(tokens, cookies, students, operators, false),
@@ -80,7 +83,7 @@ public class SecurityConfig {
                 .addFilterAfter(csrfCookieFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e -> e.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")))
                 .authorizeHttpRequests(a -> {
-                    a.requestMatchers("/", "/health", "/css/**", "/js/**", "/favicon.svg", "/error")
+                    a.requestMatchers("/", "/health", "/css/**", "/js/**", "/favicon.svg", "/favicon.ico", "/error")
                             .permitAll()
                             .requestMatchers("/jobs", "/jobs/**", "/prepare")
                             .permitAll();
@@ -103,13 +106,24 @@ public class SecurityConfig {
         return http.build();
     }
 
-    private static CookieCsrfTokenRepository csrfRepo() {
+    private static void securityHeaders(org.springframework.security.config.annotation.web.configurers.HeadersConfigurer<HttpSecurity> headers) {
+        headers.contentSecurityPolicy(csp -> csp.policyDirectives(
+                        "default-src 'self'; img-src 'self' data:; "
+                                + "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+                                + "font-src 'self' https://fonts.gstatic.com; "
+                                + "script-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'"))
+                .referrerPolicy(r -> r.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                .frameOptions(f -> f.deny());
+    }
+
+    private CookieCsrfTokenRepository csrfRepo() {
         CookieCsrfTokenRepository repo = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        repo.setCookieCustomizer(builder -> builder.sameSite("Lax").secure(false).httpOnly(false).path("/"));
+        boolean secure = tokens.cookieSecure();
+        repo.setCookieCustomizer(builder -> builder.sameSite("Lax").secure(secure).httpOnly(false).path("/"));
         return repo;
     }
 
-    private static OncePerRequestFilter csrfCookieFilter() {
+    private OncePerRequestFilter csrfCookieFilter() {
         return new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(
@@ -144,9 +158,10 @@ public class SecurityConfig {
                 };
                 filterChain.doFilter(request, wrapped);
                 if (!value.isBlank()) {
+                    String secure = tokens.cookieSecure() ? "; Secure" : "";
                     response.addHeader(
                             "Set-Cookie",
-                            "XSRF-TOKEN=" + value + "; Path=/; SameSite=Lax");
+                            "XSRF-TOKEN=" + value + "; Path=/; SameSite=Lax" + secure);
                 }
             }
         };

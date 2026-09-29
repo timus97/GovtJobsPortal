@@ -14,6 +14,13 @@ import java.util.List;
 public final class CollectCli {
 
     public static void main(String[] args) throws Exception {
+        int code = run(args);
+        if (code != 0) {
+            System.exit(code);
+        }
+    }
+
+    static int run(String[] args) throws Exception {
         String cmd = args.length > 0 ? args[0] : "help";
         if ("help".equals(cmd) || "-h".equals(cmd) || "--help".equals(cmd)) {
             System.out.println(
@@ -25,14 +32,14 @@ public final class CollectCli {
                     Repo root: %s
                     """
                             .formatted(RepoPaths.root()));
-            return;
+            return 0;
         }
         if ("process".equals(cmd) || "qa".equals(cmd)) {
             Path jobs = RepoPaths.data().resolve("processed").resolve("jobs.json");
             Path series = RepoPaths.data().resolve("processed").resolve("exam_series.json");
             if (!Files.isRegularFile(jobs)) {
                 System.err.println("Missing " + jobs);
-                System.exit(1);
+                return 1;
             }
             System.out.println("Validated catalog at " + jobs + " (" + Files.size(jobs) + " bytes)");
             if (Files.isRegularFile(series)) {
@@ -40,9 +47,9 @@ public final class CollectCli {
             }
             System.out.println("Job statuses: " + String.join(", ", JobSchema.STATUSES));
             System.out.println("Boards: " + String.join(", ", ExamSeriesSchema.BOARDS));
-            return;
+            return 0;
         }
         System.err.println("Unknown command: " + cmd);
-        System.exit(2);
+        return 2;
     }
 }

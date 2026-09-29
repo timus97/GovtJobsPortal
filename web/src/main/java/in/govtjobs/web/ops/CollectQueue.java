@@ -124,9 +124,7 @@ public class CollectQueue {
                     job.put("state", state);
                     if (reason != null) job.put("reason", reason);
                     job.put("updatedAt", Instant.now().toString());
-                    List<Map<String, Object>> tl = job.get("timeline") instanceof List<?> l
-                            ? new ArrayList<>((List<Map<String, Object>>) l)
-                            : new ArrayList<>();
+                    List<Map<String, Object>> tl = copyMapList(job.get("timeline"));
                     tl.add(Map.of("at", Instant.now().toString(), "state", state, "detail", reason == null ? state : reason));
                     job.put("timeline", tl);
                     save(data);
@@ -150,11 +148,8 @@ public class CollectQueue {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void publishLocal(Map<String, Object> job) {
-        Map<String, Object> extracted = job.get("extracted") instanceof Map<?, ?> m
-                ? new LinkedHashMap<>((Map<String, Object>) m)
-                : new LinkedHashMap<>();
+        Map<String, Object> extracted = copyStringKeyMap(job.get("extracted"));
         String title = String.valueOf(extracted.getOrDefault("title", "Pasted opportunity"));
         String org = String.valueOf(extracted.getOrDefault("organization", job.get("host")));
         String url = String.valueOf(extracted.getOrDefault("officialUrl", job.get("url")));
@@ -187,6 +182,32 @@ public class CollectQueue {
         }
         jobs.removePublishedJob(String.valueOf(oppId));
         log.info("ops.unpublished_local id={} jobId={}", job.get("id"), oppId);
+    }
+
+    private static List<Map<String, Object>> copyMapList(Object value) {
+        List<Map<String, Object>> copy = new ArrayList<>();
+        if (!(value instanceof List<?> raw)) {
+            return copy;
+        }
+        for (Object item : raw) {
+            if (item instanceof Map<?, ?>) {
+                copy.add(copyStringKeyMap(item));
+            }
+        }
+        return copy;
+    }
+
+    private static Map<String, Object> copyStringKeyMap(Object value) {
+        Map<String, Object> copy = new LinkedHashMap<>();
+        if (!(value instanceof Map<?, ?> raw)) {
+            return copy;
+        }
+        for (Map.Entry<?, ?> entry : raw.entrySet()) {
+            if (entry.getKey() instanceof String key) {
+                copy.put(key, entry.getValue());
+            }
+        }
+        return copy;
     }
 
     private Map<String, Object> extract(String url) {

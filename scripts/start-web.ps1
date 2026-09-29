@@ -22,7 +22,18 @@ $env:STUDENT_DATABASE_URL = "jdbc:postgresql://127.0.0.1:5432/govtjobs_students"
 $env:STUDENT_DATABASE_USER = "govtjobs"
 $env:STUDENT_DATABASE_PASSWORD = "govtjobs"
 if (-not $env:SESSION_SECRET) {
-    $env:SESSION_SECRET = "local-dev-session-secret-change-me"
+    $secretDir = Join-Path $RepoRoot ".local"
+    $secretFile = Join-Path $secretDir "session-secret"
+    if (Test-Path -LiteralPath $secretFile) {
+        $env:SESSION_SECRET = (Get-Content -LiteralPath $secretFile -Raw).Trim()
+    }
+    if (-not $env:SESSION_SECRET) {
+        New-Item -ItemType Directory -Force -Path $secretDir | Out-Null
+        $bytes = New-Object byte[] 32
+        [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
+        $env:SESSION_SECRET = ([Convert]::ToHexString($bytes)).ToLowerInvariant()
+        Set-Content -LiteralPath $secretFile -Value $env:SESSION_SECRET -NoNewline
+    }
 }
 if (-not $env:PUBLIC_SITE_URL) {
     $env:PUBLIC_SITE_URL = "http://localhost:8090"

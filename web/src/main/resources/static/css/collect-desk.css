@@ -1,0 +1,20 @@
+.desk-grid { display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; align-items: start; }
+.desk-rail { background: var(--navy); color: #d5e4e2; border-radius: 22px; padding: 1.25rem 1rem; min-height: 28rem; }
+.desk-rail a { display: block; color: #d5e4e2; text-decoration: none; padding: 0.55rem 0.75rem; border-radius: 12px; margin-top: 0.25rem; }
+.desk-rail a.active, .desk-rail a:hover { background: #2a4a46; color: #fff; }
+.desk-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+.desk-stat { background: var(--surface); border-radius: 18px; padding: 0.9rem 1rem; }
+.desk-stat strong { display: block; font-size: 1.6rem; }
+.tone-warn { color: var(--warn); }
+.tone-clay { color: var(--saffron); }
+.tone-teal { color: var(--green); }
+.desk-split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 0.9rem; }
+.desk-card { background: var(--surface); border-radius: 20px; padding: 1rem 1.1rem; }
+.desk-row { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 0.5rem; background: var(--bg); border-radius: 14px; padding: 0.75rem 0.9rem; margin-top: 0.55rem; }
+.desk-row.selected { background: var(--green-soft); }
+.pill { display: inline-block; border-radius: 999px; padding: 0.15rem 0.65rem; color: #fff; background: var(--navy); font-size: 0.8rem; }
+.pill.live { background: var(--green); }
+.desk-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+@media (max-width: 900px) {
+  .desk-grid, .desk-stats, .desk-split { grid-template-columns: 1fr; }
+}
