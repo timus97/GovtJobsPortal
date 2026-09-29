@@ -73,7 +73,10 @@ class CatalogStoreTest {
     @Test
     void approvedListsHideNeedsReviewAndKeepMissingDatesAndBlankLinks() {
         insertJob(prefix + "-open", "Coverage open post", "Open Board", "central", "CovSector", "Pune", "graduate",
-                "written_multi_stage", true, "2030-06-01", "approved", true);
+                "written_multi_stage", true, "2030-06-01", "approved", false);
+        insertJob(prefix + "-sample-only", "Coverage sample only", "Sample Board", "central", "CovSector", "Pune",
+                "graduate", "cbt", true, "2030-06-01", "approved", true);
+        jdbc.update("UPDATE catalog.opportunities SET source_id = 'sample' WHERE id = ?", prefix + "-open");
         insertJob(prefix + "-soon", "Coverage soon post", "Soon Board", "state", "CovSector", "Pune City", "12th",
                 "cbt", true, java.time.LocalDate.now().plusDays(2).toString(), "approved", false);
         insertJob(prefix + "-closed", "Coverage closed post", "Closed Board", "psu", "Other", "Delhi", "diploma",
@@ -108,14 +111,16 @@ class CatalogStoreTest {
         List<Map<String, Object>> jobs = store.approvedJobs();
         assertThat(jobs).extracting(row -> row.get("id"))
                 .contains(prefix + "-open", prefix + "-soon", prefix + "-closed", prefix + "-nodate")
-                .doesNotContain(prefix + "-review");
+                .doesNotContain(prefix + "-review", prefix + "-sample-only");
+        assertThat(jobs).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
+        assertThat(store.sampleMode()).isFalse();
         Map<String, Object> open = jobs.stream().filter(row -> (prefix + "-open").equals(row.get("id"))).findFirst().orElseThrow();
         assertThat(open.get("orgType")).isEqualTo("central");
         assertThat(open.get("hasExam")).isEqualTo(true);
         assertThat(open.get("lastDate")).isEqualTo("2030-06-01");
         assertThat(open.get("status")).isEqualTo("open");
         assertThat(open.get("sourceId")).isEqualTo("sample");
-        assertThat(open.get("sample")).isEqualTo(true);
+        assertThat(open.get("sample")).isEqualTo(false);
         Map<String, Object> nodate = jobs.stream().filter(row -> (prefix + "-nodate").equals(row.get("id"))).findFirst().orElseThrow();
         assertThat(nodate.get("lastDate")).isEqualTo("");
         assertThat(nodate.get("status")).isEqualTo("open");
@@ -131,16 +136,31 @@ class CatalogStoreTest {
     }
 
     @Test
-    void sampleModeIsTrueWhenAnApprovedSampleRowExists() {
-        Integer existing = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM catalog.opportunities WHERE sample = TRUE AND review_status = 'approved'",
+    void sampleModeIsTrueOnlyWhileThePublicCatalogIsSamples() {
+        Integer real = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM catalog.opportunities WHERE sample = FALSE AND review_status = 'approved'",
                 Integer.class);
-        if (existing == null || existing == 0) {
-            assertThat(store.sampleMode()).isFalse();
-        }
         insertJob(prefix + "-sample", "Sample flag", "Board", "central", "CovSector", "Pune", "graduate",
                 "cbt", true, "2031-01-01", "approved", true);
-        assertThat(store.sampleMode()).isTrue();
+        if (real != null && real > 0) {
+            assertThat(store.sampleMode()).isFalse();
+            assertThat(store.approvedJobs()).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
+        } else {
+            assertThat(store.sampleMode()).isTrue();
+            assertThat(store.approvedJobs()).extracting(row -> row.get("id")).contains(prefix + "-sample");
+        }
+    }
+
+    @Test
+    void blankSourceIdOnASampleReadsAsSample() {
+        assertThat(CatalogStore.sourceIdFor(null, true)).isEqualTo("sample");
+        assertThat(CatalogStore.sourceIdFor("  ", true)).isEqualTo("sample");
+        assertThat(CatalogStore.sourceIdFor(null, false)).isEmpty();
+        assertThat(CatalogStore.sourceIdFor("seed_manual", true)).isEqualTo("seed_manual");
+        assertThat(CatalogStore.sourceUrlFor(null, "https://ssc.gov.in/")).isEqualTo("https://ssc.gov.in/");
+        assertThat(CatalogStore.sourceUrlFor("  ", null)).isEmpty();
+        assertThat(CatalogStore.sourceUrlFor("https://ssc.gov.in/a", "https://ssc.gov.in/"))
+                .isEqualTo("https://ssc.gov.in/a");
     }
 
     private void insertJob(

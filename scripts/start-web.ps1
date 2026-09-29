@@ -31,7 +31,7 @@ if (-not $env:SESSION_SECRET) {
         New-Item -ItemType Directory -Force -Path $secretDir | Out-Null
         $bytes = New-Object byte[] 32
         [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
-        $env:SESSION_SECRET = ([Convert]::ToHexString($bytes)).ToLowerInvariant()
+        $env:SESSION_SECRET = -join ($bytes | ForEach-Object { $_.ToString("x2") })
         Set-Content -LiteralPath $secretFile -Value $env:SESSION_SECRET -NoNewline
     }
 }

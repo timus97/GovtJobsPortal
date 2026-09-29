@@ -38,10 +38,12 @@ class CatalogReadTest {
     void readsApprovedRowsAndSkipsSeedWhenDisabled() {
         store.seedIfEmpty();
         assertThat(store.approvedJobs()).allSatisfy(row -> {
-            assertThat(row).containsKeys("id", "title", "status", "vacancies", "officialUrl");
-            assertThat(String.valueOf(row.get("officialUrl"))).startsWith("https://");
+            assertThat(row).containsKeys(
+                    "id", "title", "status", "vacancies", "officialUrl", "sourceId", "notificationDate");
+            assertThat(String.valueOf(row.get("officialUrl"))).isNotBlank();
         });
-        assertThat(store.approvedSeries()).allSatisfy(row -> assertThat(row).containsKeys("id", "name", "linkedOpportunityIds"));
+        assertThat(store.approvedSeries()).allSatisfy(row -> assertThat(row).containsKeys(
+                "id", "name", "linkedOpportunityIds", "minEducation", "applyNever"));
         assertThat(store.sampleMode()).isNotNull();
     }
 

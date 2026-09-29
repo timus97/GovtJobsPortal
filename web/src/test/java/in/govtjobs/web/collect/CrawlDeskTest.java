@@ -75,9 +75,13 @@ class CrawlDeskTest {
                 .orElseThrow();
         store.decide(noticeId, "approved");
         Integer approved = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM catalog.opportunities WHERE title = 'Stenographer Grade C and D' AND review_status = 'approved'",
+                "SELECT COUNT(*) FROM catalog.opportunities WHERE title = 'Stenographer Grade C and D'",
                 Integer.class);
-        assertThat(approved).isEqualTo(1);
+        assertThat(approved).isZero();
+        Map<String, Object> decided = jdbc.queryForMap(
+                "SELECT review_status, catalog_id FROM collect.notices WHERE id = ?", noticeId);
+        assertThat(decided.get("review_status")).isEqualTo("approved");
+        assertThat(decided.get("catalog_id")).isNull();
         assertThat(store.queue("waiting")).extracting(row -> row.get("id")).doesNotContain(noticeId);
         List<Map<String, Object>> log = new CrawlJobLogger(jdbc).forRun(runId);
         assertThat(log).anyMatch(row -> String.valueOf(row.get("message")).contains("Stenographer"));

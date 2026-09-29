@@ -1,6 +1,5 @@
 package in.govtjobs.web.collect;
 
-import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.web.ops.OfficialUrlPolicy;
 import in.govtjobs.web.store.StoreException;
 import java.sql.Date;
@@ -330,10 +329,8 @@ public class CrawlDeskStore {
             throw new StoreException("VALIDATION", "This notice is already closed");
         }
         if ("approved".equals(decision)) {
-            String catalogId = publish(notice);
             jdbc.update(
-                    "UPDATE collect.notices SET review_status = 'approved', catalog_id = ? WHERE id = ?",
-                    catalogId,
+                    "UPDATE collect.notices SET review_status = 'approved', catalog_id = NULL WHERE id = ?",
                     noticeId);
             return;
         }
@@ -342,36 +339,6 @@ public class CrawlDeskStore {
             return;
         }
         throw new StoreException("VALIDATION", "Decision must be approved, held, or rejected");
-    }
-
-    private String publish(Map<String, Object> notice) {
-        String url = urls.requireAllowed(String.valueOf(notice.get("officialUrl"))).toString();
-        String title = String.valueOf(notice.get("title"));
-        String organization = String.valueOf(notice.get("organization"));
-        String lastDate = String.valueOf(notice.get("lastDate"));
-        String id = JobSchema.stableJobId(organization, title, lastDate, url);
-        jdbc.update(
-                """
-                INSERT INTO catalog.opportunities
-                  (id, title, organization, org_type, sector, location, qualification, selection_process,
-                   has_exam, last_date, official_url, source_name, review_status, summary, sample)
-                VALUES (?, ?, ?, 'central', '', 'All India', '', ?, ?, ?, ?, ?, 'approved', ?, FALSE)
-                ON CONFLICT (id) DO UPDATE SET
-                  review_status = 'approved',
-                  title = EXCLUDED.title,
-                  last_date = EXCLUDED.last_date,
-                  summary = EXCLUDED.summary
-                """,
-                id,
-                title,
-                organization,
-                String.valueOf(notice.get("selectionProcess")),
-                Boolean.TRUE.equals(notice.get("hasExam")),
-                lastDate.isBlank() ? null : Date.valueOf(lastDate),
-                url,
-                String.valueOf(notice.getOrDefault("sourceName", "crawl")),
-                String.valueOf(notice.getOrDefault("excerpt", "")));
-        return id;
     }
 
     private static Map<String, Object> runRow(java.sql.ResultSet rs) throws java.sql.SQLException {

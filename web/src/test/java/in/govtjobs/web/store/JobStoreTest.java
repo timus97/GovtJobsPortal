@@ -242,8 +242,8 @@ class JobStoreTest {
                 """
                 INSERT INTO catalog.opportunities
                   (id, title, organization, org_type, sector, location, qualification, selection_process,
-                   has_exam, last_date, official_url, source_name, review_status, summary, sample)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,'Sample catalog',?,?,FALSE)
+                   has_exam, last_date, official_url, source_name, source_id, review_status, summary, sample)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,'Sample catalog','sample',?,?,FALSE)
                 """,
                 id, title, org, orgType, sector, location, qual, selection, hasExam,
                 java.sql.Date.valueOf(last), "https://ssc.gov.in/", review, "summary text");

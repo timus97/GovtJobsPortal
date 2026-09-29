@@ -115,6 +115,9 @@ public class JobStore {
             JsonFiles.writeAtomic(jobsPath, jobs, mapper, log);
             writePasteStaging(id, row);
             snapshot = null;
+            if (postgresCatalog()) {
+                catalog.upsertLiveJob(row);
+            }
             return row;
         }
     }
@@ -127,10 +130,11 @@ public class JobStore {
             boolean removed = removeIdFromList(processed("jobs.json"), id);
             removeIdFromList(processed("opportunities.json"), id);
             deletePasteStaging(id);
-            if (removed) {
+            boolean droppedLive = postgresCatalog() && catalog.removeLiveJob(id);
+            if (removed || droppedLive) {
                 snapshot = null;
             }
-            return removed;
+            return removed || droppedLive;
         }
     }
 
