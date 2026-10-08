@@ -10,11 +10,12 @@
           <a href="/ops/pipeline" class="active">Pipeline</a>
           <a href="/ops/pipeline/review">Review queue</a>
           <a href="/ops/pipeline/priority">Crawl priority</a>
-          <p>Students see a row only after approval.</p>
+          <a href="/ops/fetch">Fetch</a>
+          <p>Approval stays on this desk. Fetch runs the registry collector and can rebuild Search.</p>
         </aside>
         <section>
           <h1>Pipeline</h1>
-          <p class="muted">Each crawl writes Postgres. This desk shows the run, what it kept, and what is waiting for you.</p>
+          <p class="muted">Each priority-link crawl writes Postgres and stays off Search until you publish it another way. <a href="/ops/fetch">Fetch</a> runs the Java registry collector and can rebuild the student catalog.</p>
           <div class="desk-stats">
             <div class="desk-stat"><strong class="tone-teal" th:text="${summary.running}">0</strong><span>Running now</span></div>
             <div class="desk-stat"><strong class="tone-warn" th:text="${summary.waiting}">0</strong><a href="/ops/pipeline/review">Waiting for review</a></div>

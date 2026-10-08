@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
+  <head><title>Fetch sources | Sarkari Desk</title></head>
+  <body>
+    <main class="main">
+      <div class="section container desk-grid">
+        <aside class="desk-rail">
+          <strong>Sarkari Desk</strong>
+          <p class="muted">Collect</p>
+          <a href="/ops/pipeline">Pipeline</a>
+          <a href="/ops/pipeline/review">Review queue</a>
+          <a href="/ops/pipeline/priority">Crawl priority</a>
+          <a href="/ops/fetch" class="active">Fetch</a>
+        </aside>
+        <section
+          id="catalog-fetch"
+          th:attr="data-running=${status.running}"
+          data-status-url="/ops/fetch/status"
+        >
+          <h1>Fetch sources</h1>
+          <p class="muted">
+            This runs the Java collector on the registry. It does not start the Node daily pipeline.
+            <span th:text="${enabledCount}">0</span> sources are enabled.
+            A full run fetches each enabled source, then rebuilds the student catalog only when at least one source succeeds.
+            One source writes staging only. Rebuild catalog is the step that students see.
+          </p>
+          <p class="error-box" th:if="${notice}" th:text="${notice}">notice</p>
+          <div class="desk-stats">
+            <div class="desk-stat">
+              <strong class="tone-teal" data-fetch-state th:text="${status.running ? 'Running' : 'Idle'}">Idle</strong>
+              <span>This host</span>
+            </div>
+            <div class="desk-stat">
+              <strong data-fetch-progress th:text="|${status.completed} / ${status.total}|">0 / 0</strong>
+              <span>Sources finished</span>
+            </div>
+            <div class="desk-stat">
+              <strong data-fetch-current th:text="${status.currentSource} ?: '—'">—</strong>
+              <span>Current source</span>
+            </div>
+            <div class="desk-stat">
+              <strong th:text="${status.startedBy} ?: '—'">—</strong>
+              <span>Started by</span>
+            </div>
+          </div>
+          <p class="muted" data-fetch-summary th:text="${status.running ? '' : status.lastSummary}">Last run</p>
+          <div class="desk-actions" data-fetch-actions>
+            <form method="post" th:action="@{/ops/fetch/daily}">
+              <button class="btn btn-primary" type="submit" th:disabled="${status.running}">Run enabled sources</button>
+            </form>
+            <form method="post" th:action="@{/ops/fetch/process}">
+              <button class="btn btn-secondary" type="submit" th:disabled="${status.running}">Rebuild catalog</button>
+            </form>
+          </div>
+          <form class="panel" method="post" th:action="@{/ops/fetch/source}" style="margin-top:1rem">
+            <label class="field">
+              <span>One source</span>
+              <select name="sourceId">
+                <option value="">Choose a source</option>
+                <option th:each="s : ${sources}" th:value="${s.sourceId}" th:text="${s.label}">source</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary" type="submit" th:disabled="${status.running}">Run this source</button>
+          </form>
+          <div class="desk-card" style="margin-top:1rem" th:if="${status.report != null and status.report['sources'] != null}">
+            <h2>Last collect report</h2>
+            <p class="muted" th:text="${status.report['startedAt']}">started</p>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Source</th><th>Result</th><th>Records</th><th>Note</th></tr></thead>
+                <tbody>
+                  <tr th:each="row : ${status.report['sources']}">
+                    <td th:text="${row['sourceId']}">id</td>
+                    <td th:text="${row['ok'] ? 'ok' : 'error'}">ok</td>
+                    <td th:text="${row['records']}">0</td>
+                    <td th:text="${row['message']}">note</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="muted" th:if="${#lists.isEmpty(status.report['sources'])}">No source rows in the last report.</p>
+          </div>
+        </section>
+      </div>
+      <script src="/js/catalog-fetch.js" defer></script>
+    </main>
+  </body>
+</html>

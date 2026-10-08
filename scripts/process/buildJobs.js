@@ -4,7 +4,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const root = path.join(__dirname, '..', '..');
+const repoRoot = path.join(__dirname, '..', '..');
+// Fixture runs set this so the Java port can be compared without writing the repo catalog.
+const root = process.env.BUILD_JOBS_DATA_ROOT || repoRoot;
 const {
   classifySelectionText,
   isValidJob,
@@ -12,15 +14,16 @@ const {
   stableJobId,
   ORG_TYPES,
   SELECTION_PROCESSES,
-} = require(path.join(root, 'shared', 'jobSchema'));
+} = require(path.join(repoRoot, 'shared', 'jobSchema'));
 const {
   isCuetName,
   looksLikeCalendarRow,
   normalizeExamSeries,
   isValidExamSeries,
   seriesMatchesJob,
-} = require(path.join(root, 'shared', 'examSeriesSchema'));
-const { isGarbageJob } = require(path.join(root, 'scripts', 'collect', 'lib', 'jobLinkQuality'));
+} = require(path.join(repoRoot, 'shared', 'examSeriesSchema'));
+const { isGarbageJob } = require(path.join(repoRoot, 'scripts', 'collect', 'lib', 'jobLinkQuality'));
+const { cleanTitle } = require(path.join(repoRoot, 'scripts', 'collect', 'lib', 'toStaging'));
 
 const paths = {
   seed: path.join(root, 'data', 'seed', 'jobs.json'),
@@ -88,6 +91,10 @@ function loadStagingRecords() {
         })
         .sort((a, b) => b.t - a.t);
       if (!files.length) continue;
+      if (name === 'ops_paste') {
+        for (const file of files) records.push(...parseStagingFile(file.p));
+        continue;
+      }
       records.push(...parseStagingFile(files[0].p));
     } else if (name.endsWith('.json') || name.endsWith('.jsonl')) {
       records.push(...parseStagingFile(full));
@@ -181,7 +188,7 @@ function enrichRecord(raw, aliases, collectedAt) {
 
   const job = {
     id,
-    title: String(raw.title || '').trim(),
+    title: cleanTitle(raw.title),
     organization,
     orgType,
     sector,
@@ -200,7 +207,7 @@ function enrichRecord(raw, aliases, collectedAt) {
     sourceId: raw.sourceId || 'seed_manual',
     sourceName: raw.sourceName || 'Manual curator seed',
     sourceUrl: raw.sourceUrl || officialUrl || '',
-    summary: raw.summary || '',
+    summary: cleanTitle(raw.summary || ''),
     eligibility: Array.isArray(raw.eligibility) ? raw.eligibility : [],
     processSteps: Array.isArray(raw.processSteps) ? raw.processSteps : [],
     documentsRequired: Array.isArray(raw.documentsRequired) ? raw.documentsRequired : [],
@@ -219,6 +226,10 @@ function enrichRecord(raw, aliases, collectedAt) {
   if (isScrape && !lastDate && !raw.walkInDate) {
     job.needsReview = true;
     return { quarantine: true, job, reason: 'dateless_scrape' };
+  }
+
+  if (staleScrape(job)) {
+    return { quarantine: true, job, reason: 'stale_scrape' };
   }
 
   // Default interview_only fallback is not a classified selection.
@@ -253,6 +264,19 @@ function enrichRecord(raw, aliases, collectedAt) {
 
 function SELECTION_OK(code) {
   return SELECTION_PROCESSES.includes(code);
+}
+
+function staleScrape(job) {
+  const version = String((job && job.collectorVersion) || '');
+  if (!/scrape|playwright|pdf|highlights/i.test(version)) return false;
+  const rawDate = String((job && job.lastDate) || '');
+  if (!/^\d{4}-\d{2}-\d{2}/.test(rawDate)) return false;
+  const cutoff = new Date();
+  cutoff.setMonth(cutoff.getMonth() - 18);
+  const iso = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}-${String(
+    cutoff.getDate()
+  ).padStart(2, '0')}`;
+  return rawDate.slice(0, 10) < iso;
 }
 
 function dedupeKey(job) {
@@ -323,6 +347,15 @@ function boardFromSource(raw) {
 function seriesFromCalendarRaw(raw, now) {
   const name = raw.title || raw.name;
   if (!name || isCuetName(name)) return null;
+  if (
+    isGarbageJob({
+      title: String(name).trim(),
+      officialUrl: 'https://example.gov.in/calendar/row',
+      collectorVersion: 'calendar-v1',
+    }).garbage
+  ) {
+    return null;
+  }
   const board = raw.board || boardFromSource(raw);
   if (!board) return null;
   return normalizeExamSeries(
@@ -483,6 +516,7 @@ function main() {
       const errors = isValidJob(job);
       if (errors.length) continue;
       if (isGarbageJob(job).garbage) continue;
+      if (staleScrape(job)) continue;
       published.push(job);
       seen.add(key);
       keptPublished += 1;

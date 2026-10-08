@@ -1,4 +1,6 @@
 .desk-grid { display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; align-items: start; }
+.desk-grid > * { min-width: 0; }
+.desk-grid select { width: 100%; max-width: 100%; }
 .desk-rail { background: var(--navy); color: #d5e4e2; border-radius: 22px; padding: 1.25rem 1rem; min-height: 28rem; }
 .desk-rail a { display: block; color: #d5e4e2; text-decoration: none; padding: 0.55rem 0.75rem; border-radius: 12px; margin-top: 0.25rem; }
 .desk-rail a.active, .desk-rail a:hover { background: #2a4a46; color: #fff; }
@@ -14,7 +16,8 @@
 .desk-row.selected { background: var(--green-soft); }
 .pill { display: inline-block; border-radius: 999px; padding: 0.15rem 0.65rem; color: #fff; background: var(--navy); font-size: 0.8rem; }
 .pill.live { background: var(--green); }
-.desk-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+.desk-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+.desk-stat strong { overflow-wrap: anywhere; }
 @media (max-width: 900px) {
   .desk-grid, .desk-stats, .desk-split { grid-template-columns: 1fr; }
 }

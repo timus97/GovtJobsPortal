@@ -61,7 +61,10 @@ public class RateLimitFilter extends OncePerRequestFilter {
                 || "/ops/login".equals(path)) {
             return props.getRateLimit().getLoginMax();
         }
-        if ("/ops/collect".equals(path)) {
+        if ("/ops/collect".equals(path)
+                || "/ops/fetch/daily".equals(path)
+                || "/ops/fetch/source".equals(path)
+                || "/ops/fetch/process".equals(path)) {
             return props.getRateLimit().getCollectMax();
         }
         return 0;

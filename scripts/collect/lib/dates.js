@@ -60,7 +60,7 @@ function findLastDateHint(text) {
   if (!text) return null;
   const s = String(text);
   const labeled = s.match(
-    /(?:last\s*date|closing\s*date|apply\s*by|last\s*date\s*to\s*apply|walk[\s-]?in\s*date|date\s*of\s*walk)[:\s-]*([^\n|;]{6,50})/i
+    /(?:last\s*date|closing\s*date|apply\s*by|last\s*date\s*to\s*apply|extended\s+(?:till|upto|up\s*to)|walk[\s-]?in\s*date|date\s*of\s*walk)[:\s-]*([^\n|;]{6,90})/i
   );
   if (labeled) {
     const d = parseDateFromText(labeled[1]);

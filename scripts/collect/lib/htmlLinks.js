@@ -12,7 +12,7 @@ const SKIP_HREF_RE = GARBAGE_HREF_RE;
 function absoluteUrl(base, href) {
   if (!href) return null;
   try {
-    return new URL(href, base).href;
+    return new URL(String(href).trim().replace(/ /g, '%20'), base).href;
   } catch {
     return null;
   }
@@ -32,11 +32,25 @@ function extractLinks(html, pageUrl, options = {}) {
     if (seen.has(href)) return;
 
     const text = $(el).text().replace(/\s+/g, ' ').trim();
-    const title =
+    const alt = $(el).find('img[alt]').first().attr('alt') || '';
+    let title =
       text ||
       $(el).attr('title') ||
       $(el).attr('aria-label') ||
+      alt.replace(/\s+/g, ' ').trim() ||
       decodeURIComponent(href.split('/').filter(Boolean).pop() || href);
+    const row = $(el).closest('tr').text().replace(/\s+/g, ' ').trim();
+    const weakTitle =
+      /^(english|hindi|download|view|view details?|click here|figure)(\s*\(.*\))?$/i.test(title) ||
+      /[\w.+-]+\.pdf$/i.test(title);
+    if (
+      weakTitle &&
+      row.length > String(title).length &&
+      row.length <= 400 &&
+      /recruit|vacanc|notification|advertisement|walk-?in|post of|requirement of/i.test(row)
+    ) {
+      title = row.slice(0, 240).trim();
+    }
 
     const isPdf = /\.pdf(\?|#|$)/i.test(href) || looksLikeDocumentHref(href);
     const blob = `${title} ${href}`;
@@ -58,7 +72,7 @@ function extractLinks(html, pageUrl, options = {}) {
   });
 
   const keepable = links.filter((link) => isKeepableJobLink(link));
-  return (keepable.length ? keepable : links).slice(0, limit);
+  return keepable.slice(0, limit);
 }
 
 function extractPageTitle(html) {

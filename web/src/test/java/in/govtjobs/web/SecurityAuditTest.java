@@ -10,7 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import in.govtjobs.web.security.SignedCookieService;
 import in.govtjobs.web.store.StudentStore;
+import jakarta.servlet.Filter;
+import jakarta.servlet.http.Cookie;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,10 +21,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import jakarta.servlet.http.Cookie;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -34,6 +40,12 @@ class SecurityAuditTest {
 
     @Autowired
     private StudentStore students;
+
+    @Autowired
+    private SignedCookieService tokens;
+
+    @Autowired
+    private List<SecurityFilterChain> chains;
 
     @Test
     void publicCatalogDoesNotRequireLogin() throws Exception {
@@ -106,6 +118,35 @@ class SecurityAuditTest {
     }
 
     @Test
+    void signedInStudentStylesheetKeepsTheOpsCsrfCookie() throws Exception {
+        // .with(csrf()) replaces the live CsrfFilter repository for later requests.
+        // Put the cookie repository back so this follows the browser's cookie.
+        useCookieCsrfRepository();
+        MvcResult login = mvc.perform(get("/ops/login")).andExpect(status().isOk()).andReturn();
+        String issued = login.getResponse().getHeader("Set-Cookie");
+        assertThat(issued).startsWith("XSRF-TOKEN=");
+        String token = issued.substring("XSRF-TOKEN=".length(), issued.indexOf(';'));
+        Cookie csrf = new Cookie("XSRF-TOKEN", token);
+        Cookie student = registerWithCookie(csrf, token, "csrf-css-" + UUID.randomUUID() + "@example.com");
+        MvcResult css = mvc.perform(get("/css/index.css").cookie(csrf, student))
+                .andExpect(status().isOk())
+                .andReturn();
+        for (String header : css.getResponse().getHeaders("Set-Cookie")) {
+            assertThat(header).doesNotContain("XSRF-TOKEN=;");
+            if (header.startsWith("XSRF-TOKEN=")) {
+                assertThat(header).startsWith("XSRF-TOKEN=" + token);
+            }
+        }
+        mvc.perform(post("/ops/login")
+                        .cookie(csrf, student)
+                        .param("_csrf", token)
+                        .param("username", "admin")
+                        .param("password", "wrong-password"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("not correct")));
+    }
+
+    @Test
     void studentCannotPostOpsOperator() throws Exception {
         mvc.perform(post("/ops/operators")
                         .with(csrf())
@@ -125,5 +166,32 @@ class SecurityAuditTest {
         Cookie cookie = result.getResponse().getCookie("student_session");
         assertThat(cookie).isNotNull();
         return cookie;
+    }
+
+    private Cookie registerWithCookie(Cookie csrf, String token, String email) throws Exception {
+        MvcResult result = mvc.perform(post("/account/register")
+                        .cookie(csrf)
+                        .param("_csrf", token)
+                        .param("email", email)
+                        .param("password", "password1234"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        Cookie cookie = result.getResponse().getCookie("student_session");
+        assertThat(cookie).isNotNull();
+        return cookie;
+    }
+
+    private void useCookieCsrfRepository() {
+        for (SecurityFilterChain chain : chains) {
+            for (Filter filter : chain.getFilters()) {
+                if (filter instanceof CsrfFilter csrfFilter) {
+                    CookieCsrfTokenRepository repo = CookieCsrfTokenRepository.withHttpOnlyFalse();
+                    boolean secure = tokens.cookieSecure();
+                    repo.setCookieCustomizer(
+                            builder -> builder.sameSite("Lax").secure(secure).httpOnly(false).path("/"));
+                    ReflectionTestUtils.setField(csrfFilter, "tokenRepository", repo);
+                }
+            }
+        }
     }
 }

@@ -20,9 +20,9 @@
       "sourceId": "ncs_gov",
       "name": "National Career Service",
       "category": "aggregator",
-      "baseUrl": "https://www.ncs.gov.in/",
+      "baseUrl": "https://ncs.gov.in/",
       "listUrls": [
-        "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true"
+        "https://ncs.gov.in/job-listing?isGovernmentJob=true"
       ],
       "orgTypeDefault": "central",
       "priority": "P0",
@@ -95,14 +95,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.ongcindia.com/",
       "listUrls": [
-        "https://www.ongcindia.com/wps/wcm/connect/en/career",
-        "https://www.ongcindia.com/careers",
-        "https://www.ongcindia.com/career",
-        "https://www.ongcindia.com/recruitment",
-        "https://www.ongcindia.com/jobs",
-        "https://www.ongcindia.com/en/careers",
-        "https://www.ongcindia.com/en/career",
-        "https://www.ongcindia.com/careers/current-openings"
+        "https://ongcindia.com/web/eng/career/recruitment-notice"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -118,16 +111,9 @@
       "sourceId": "psu_bhel",
       "name": "Bharat Heavy Electricals Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.bhel.com/",
+      "baseUrl": "https://careers.bhel.in/",
       "listUrls": [
-        "https://www.bhel.com/careers",
-        "https://careers.bhel.in",
-        "https://www.bhel.com/career",
-        "https://www.bhel.com/recruitment",
-        "https://www.bhel.com/jobs",
-        "https://www.bhel.com/en/careers",
-        "https://www.bhel.com/en/career",
-        "https://www.bhel.com/careers/current-openings"
+        "https://careers.bhel.in/index.jsp"
       ],
       "orgTypeDefault": "psu",
       "sector": "Heavy Engineering",
@@ -145,14 +131,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.bharatpetroleum.in/",
       "listUrls": [
-        "https://www.bharatpetroleum.in/careers/current-openings.aspx",
-        "https://www.bpclcareers.in",
-        "https://www.bharatpetroleum.in/careers",
-        "https://www.bharatpetroleum.in/career",
-        "https://www.bharatpetroleum.in/recruitment",
-        "https://www.bharatpetroleum.in/jobs",
-        "https://www.bharatpetroleum.in/en/careers",
-        "https://www.bharatpetroleum.in/en/career"
+        "https://www.bharatpetroleum.in/careers/job-openings"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -193,16 +172,9 @@
       "sourceId": "psu_gail",
       "name": "GAIL (India) Limited (GAIL) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://gailonline.com/",
+      "baseUrl": "https://www.gailonline.com/",
       "listUrls": [
-        "https://gailonline.com/ZBCareergail.html",
-        "https://gailonline.com",
-        "https://gailonline.com/careers",
-        "https://gailonline.com/career",
-        "https://gailonline.com/recruitment",
-        "https://gailonline.com/jobs",
-        "https://gailonline.com/en/careers",
-        "https://gailonline.com/en/career"
+        "https://www.gailonline.com/vacancies.html"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -268,16 +240,9 @@
       "sourceId": "psu_ntpc",
       "name": "NTPC Limited (NTPC) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.ntpc.co.in/",
+      "baseUrl": "https://careers.ntpc.co.in/",
       "listUrls": [
-        "https://www.ntpc.co.in/en/careers",
-        "https://careers.ntpc.co.in",
-        "https://www.ntpc.co.in/careers",
-        "https://www.ntpc.co.in/career",
-        "https://www.ntpc.co.in/recruitment",
-        "https://www.ntpc.co.in/jobs",
-        "https://www.ntpc.co.in/en/career",
-        "https://www.ntpc.co.in/careers/current-openings"
+        "https://careers.ntpc.co.in/recruitment/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Power",
@@ -295,14 +260,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.powergrid.in/",
       "listUrls": [
-        "https://www.powergrid.in/en/career",
-        "https://www.powergrid.in/careers",
-        "https://www.powergrid.in/career",
-        "https://www.powergrid.in/recruitment",
-        "https://www.powergrid.in/jobs",
-        "https://www.powergrid.in/en/careers",
-        "https://www.powergrid.in/careers/current-openings",
-        "https://www.powergrid.in/human-resources/careers"
+        "https://www.powergrid.in/en/job-opportunities1"
       ],
       "orgTypeDefault": "psu",
       "sector": "Power",
@@ -570,14 +528,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.nbccindia.in/",
       "listUrls": [
-        "https://www.nbccindia.in/webEnglish/career",
-        "https://www.nbccindia.in",
-        "https://www.nbccindia.in/careers",
-        "https://www.nbccindia.in/career",
-        "https://www.nbccindia.in/recruitment",
-        "https://www.nbccindia.in/jobs",
-        "https://www.nbccindia.in/en/careers",
-        "https://www.nbccindia.in/en/career"
+        "https://www.nbccindia.in/webEnglish/jobs"
       ],
       "orgTypeDefault": "psu",
       "sector": "Construction",
@@ -843,16 +794,9 @@
       "sourceId": "psu_hudco",
       "name": "Housing And Urban Development Corporation Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.hudco.org.in/",
+      "baseUrl": "https://hudco.org.in/",
       "listUrls": [
-        "https://www.hudco.org.in/Site/FormTemplete/frmTemp1PLargeTC1C_2.aspx?MnId=46&ParentID=22",
-        "https://www.hudco.org.in",
-        "https://www.hudco.org.in/careers",
-        "https://www.hudco.org.in/career",
-        "https://www.hudco.org.in/recruitment",
-        "https://www.hudco.org.in/jobs",
-        "https://www.hudco.org.in/en/careers",
-        "https://www.hudco.org.in/en/career"
+        "https://hudco.org.in/careers"
       ],
       "orgTypeDefault": "psu",
       "sector": "Housing",
@@ -868,16 +812,9 @@
       "sourceId": "psu_ireda",
       "name": "Indian Renewable Energy Development Agency () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.ireda.in/",
+      "baseUrl": "https://ireda.in/",
       "listUrls": [
-        "https://www.ireda.in/career",
-        "https://www.ireda.in",
-        "https://www.ireda.in/careers",
-        "https://www.ireda.in/recruitment",
-        "https://www.ireda.in/jobs",
-        "https://www.ireda.in/en/careers",
-        "https://www.ireda.in/en/career",
-        "https://www.ireda.in/careers/current-openings"
+        "https://ireda.in/IredaWebPortal/careers/recruitment-notifications"
       ],
       "orgTypeDefault": "psu",
       "sector": "Energy",
@@ -995,14 +932,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.nhpcindia.com/",
       "listUrls": [
-        "https://www.nhpcindia.com/Default.aspx?id=122&lg=eng",
-        "https://www.nhpcindia.com",
-        "https://www.nhpcindia.com/careers",
-        "https://www.nhpcindia.com/career",
-        "https://www.nhpcindia.com/recruitment",
-        "https://www.nhpcindia.com/jobs",
-        "https://www.nhpcindia.com/en/careers",
-        "https://www.nhpcindia.com/en/career"
+        "https://www.nhpcindia.com/welcome/job"
       ],
       "orgTypeDefault": "psu",
       "sector": "Power",
@@ -1120,14 +1050,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.cpcl.co.in/",
       "listUrls": [
-        "https://www.cpcl.co.in/careers",
-        "https://www.cpcl.co.in",
-        "https://www.cpcl.co.in/career",
-        "https://www.cpcl.co.in/recruitment",
-        "https://www.cpcl.co.in/jobs",
-        "https://www.cpcl.co.in/en/careers",
-        "https://www.cpcl.co.in/en/career",
-        "https://www.cpcl.co.in/careers/current-openings"
+        "https://www.cpcl.co.in/company/people/careers/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -1539,14 +1462,7 @@
       "category": "psu_careers",
       "baseUrl": "https://cochinshipyard.in/",
       "listUrls": [
-        "https://cochinshipyard.in/career",
-        "https://cochinshipyard.in",
-        "https://cochinshipyard.in/careers",
-        "https://cochinshipyard.in/recruitment",
-        "https://cochinshipyard.in/jobs",
-        "https://cochinshipyard.in/en/careers",
-        "https://cochinshipyard.in/en/career",
-        "https://cochinshipyard.in/careers/current-openings"
+        "https://cochinshipyard.in/Careers"
       ],
       "orgTypeDefault": "psu",
       "sector": "Defence",
@@ -1628,14 +1544,7 @@
       "category": "psu_careers",
       "baseUrl": "https://goashipyard.in/",
       "listUrls": [
-        "https://goashipyard.in/career",
-        "https://goashipyard.in",
-        "https://goashipyard.in/careers",
-        "https://goashipyard.in/recruitment",
-        "https://goashipyard.in/jobs",
-        "https://goashipyard.in/en/careers",
-        "https://goashipyard.in/en/career",
-        "https://goashipyard.in/careers/current-openings"
+        "https://goashipyard.in/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Defence",
@@ -1653,7 +1562,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.hindustancopper.com/",
       "listUrls": [
-        "https://www.hindustancopper.com/Page/Career"
+        "https://www.hindustancopper.com/Page/Career_new"
       ],
       "orgTypeDefault": "psu",
       "sector": "Mining",
@@ -2307,16 +2216,9 @@
       "sourceId": "psu_secl",
       "name": "South Eastern Coalfields () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.secl-cil.in/",
+      "baseUrl": "https://secl-cil.in/",
       "listUrls": [
-        "https://www.secl-cil.in",
-        "https://www.secl-cil.in/career",
-        "https://www.secl-cil.in/careers",
-        "https://www.secl-cil.in/recruitment",
-        "https://www.secl-cil.in/jobs",
-        "https://www.secl-cil.in/en/careers",
-        "https://www.secl-cil.in/en/career",
-        "https://www.secl-cil.in/careers/current-openings"
+        "https://secl-cil.in/index"
       ],
       "orgTypeDefault": "psu",
       "sector": "Mining",
@@ -2407,16 +2309,9 @@
       "sourceId": "psu_wapcos",
       "name": "WAPCOS Limited (WAPCOS) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.wapcos.gov.in/",
+      "baseUrl": "https://www.wapcos.co.in/",
       "listUrls": [
-        "https://www.wapcos.gov.in/career",
-        "https://www.wapcos.gov.in",
-        "https://www.wapcos.gov.in/careers",
-        "https://www.wapcos.gov.in/recruitment",
-        "https://www.wapcos.gov.in/jobs",
-        "https://www.wapcos.gov.in/en/careers",
-        "https://www.wapcos.gov.in/en/career",
-        "https://www.wapcos.gov.in/careers/current-openings"
+        "https://www.wapcos.co.in/english/career/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Consulting",
@@ -2483,16 +2378,9 @@
       "sourceId": "psu_epi",
       "name": "Engineering Projects (India) Limited (EPI) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.engineeringprojects.com/",
+      "baseUrl": "https://epi.gov.in/",
       "listUrls": [
-        "https://www.engineeringprojects.com/career",
-        "https://www.engineeringprojects.com",
-        "https://www.engineeringprojects.com/careers",
-        "https://www.engineeringprojects.com/recruitment",
-        "https://www.engineeringprojects.com/jobs",
-        "https://www.engineeringprojects.com/en/careers",
-        "https://www.engineeringprojects.com/en/career",
-        "https://www.engineeringprojects.com/careers/current-openings"
+        "https://epi.gov.in/career"
       ],
       "orgTypeDefault": "psu",
       "sector": "Engineering",
@@ -3051,16 +2939,9 @@
       "sourceId": "psu_kpl",
       "name": "Bhor Sagar Port Limited (KPL) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.ennoreport.gov.in/",
+      "baseUrl": "https://www.kamarajarport.in/",
       "listUrls": [
-        "https://www.ennoreport.gov.in",
-        "https://www.ennoreport.gov.in/careers",
-        "https://www.ennoreport.gov.in/career",
-        "https://www.ennoreport.gov.in/recruitment",
-        "https://www.ennoreport.gov.in/jobs",
-        "https://www.ennoreport.gov.in/en/careers",
-        "https://www.ennoreport.gov.in/en/career",
-        "https://www.ennoreport.gov.in/careers/current-openings"
+        "https://www.kamarajarport.in/career"
       ],
       "orgTypeDefault": "psu",
       "sector": "Ports",
@@ -3145,14 +3026,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.brahmos.com/",
       "listUrls": [
-        "https://www.brahmos.com/content.php?id=13",
-        "https://www.brahmos.com",
-        "https://www.brahmos.com/careers",
-        "https://www.brahmos.com/career",
-        "https://www.brahmos.com/recruitment",
-        "https://www.brahmos.com/jobs",
-        "https://www.brahmos.com/en/careers",
-        "https://www.brahmos.com/en/career"
+        "https://www.brahmos.com/career-opening"
       ],
       "orgTypeDefault": "psu",
       "sector": "Defence",
@@ -3380,14 +3254,7 @@
       "category": "psu_careers",
       "baseUrl": "https://dfccil.com/",
       "listUrls": [
-        "https://dfccil.com/Home/DynamicPages?MenuId=48",
-        "https://dfccil.com",
-        "https://dfccil.com/careers",
-        "https://dfccil.com/career",
-        "https://dfccil.com/recruitment",
-        "https://dfccil.com/jobs",
-        "https://dfccil.com/en/careers",
-        "https://dfccil.com/en/career"
+        "https://dfccil.com/Carrer/index?Id=1"
       ],
       "orgTypeDefault": "psu",
       "sector": "Railways",
@@ -3480,16 +3347,9 @@
       "sourceId": "psu_ecgc",
       "name": "Deposit Insurance and Credit Guarantee Corporation (ECGC) Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.ecgc.in/",
+      "baseUrl": "https://main.ecgc.in/",
       "listUrls": [
-        "https://www.ecgc.in/career",
-        "https://www.ecgc.in",
-        "https://www.ecgc.in/careers",
-        "https://www.ecgc.in/recruitment",
-        "https://www.ecgc.in/jobs",
-        "https://www.ecgc.in/en/careers",
-        "https://www.ecgc.in/en/career",
-        "https://www.ecgc.in/careers/current-openings"
+        "https://main.ecgc.in/career-with-ecgc/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Finance",
@@ -3558,14 +3418,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.ecil.co.in/",
       "listUrls": [
-        "https://www.ecil.co.in/career.html",
-        "https://www.ecil.co.in",
-        "https://www.ecil.co.in/careers",
-        "https://www.ecil.co.in/career",
-        "https://www.ecil.co.in/recruitment",
-        "https://www.ecil.co.in/jobs",
-        "https://www.ecil.co.in/en/careers",
-        "https://www.ecil.co.in/en/career"
+        "https://www.ecil.co.in/jobopenings"
       ],
       "orgTypeDefault": "psu",
       "sector": "Electronics",
@@ -4162,16 +4015,9 @@
       "sourceId": "psu_iifcl",
       "name": "India Infrastructure Finance Company Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://gailonline.com/",
+      "baseUrl": "https://iifcl.in/",
       "listUrls": [
-        "https://gailonline.com/ZBCareergail.html",
-        "https://gailonline.com",
-        "https://gailonline.com/careers",
-        "https://gailonline.com/career",
-        "https://gailonline.com/recruitment",
-        "https://gailonline.com/jobs",
-        "https://gailonline.com/en/careers",
-        "https://gailonline.com/en/career"
+        "https://iifcl.in/Careers"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -4271,16 +4117,9 @@
       "sourceId": "psu_ihmcl",
       "name": "Indian Highway Management Company Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.mahanadicoal.in/",
+      "baseUrl": "https://ihmcl.co.in/",
       "listUrls": [
-        "https://www.mahanadicoal.in/career.php",
-        "https://www.mahanadicoal.in",
-        "https://www.mahanadicoal.in/careers",
-        "https://www.mahanadicoal.in/career",
-        "https://www.mahanadicoal.in/recruitment",
-        "https://www.mahanadicoal.in/jobs",
-        "https://www.mahanadicoal.in/en/careers",
-        "https://www.mahanadicoal.in/en/career"
+        "https://ihmcl.co.in/careers/"
       ],
       "orgTypeDefault": "psu",
       "sector": "Mining",
@@ -4298,14 +4137,7 @@
       "category": "psu_careers",
       "baseUrl": "https://www.isprlindia.com/",
       "listUrls": [
-        "https://www.isprlindia.com",
-        "https://www.isprlindia.com/careers",
-        "https://www.isprlindia.com/career",
-        "https://www.isprlindia.com/recruitment",
-        "https://www.isprlindia.com/jobs",
-        "https://www.isprlindia.com/en/careers",
-        "https://www.isprlindia.com/en/career",
-        "https://www.isprlindia.com/careers/current-openings"
+        "https://www.isprlindia.com/career.asp"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -4583,16 +4415,9 @@
       "sourceId": "psu_icsil",
       "name": "Intelligent Communication Systems India Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://gailonline.com/",
+      "baseUrl": "https://www.icsil.in/",
       "listUrls": [
-        "https://gailonline.com/ZBCareergail.html",
-        "https://gailonline.com",
-        "https://gailonline.com/careers",
-        "https://gailonline.com/career",
-        "https://gailonline.com/recruitment",
-        "https://gailonline.com/jobs",
-        "https://gailonline.com/en/careers",
-        "https://gailonline.com/en/career"
+        "https://www.icsil.in/requirement-careers"
       ],
       "orgTypeDefault": "psu",
       "sector": "Oil & Gas",
@@ -4968,16 +4793,9 @@
       "sourceId": "psu_nhidcl",
       "name": "National Highways and Infrastructure Development Corporation Limited () Careers",
       "category": "psu_careers",
-      "baseUrl": "https://www.hudco.org.in/",
+      "baseUrl": "https://nhidcl.com/",
       "listUrls": [
-        "https://www.hudco.org.in/Site/FormTemplete/frmTemp1PLargeTC1C_2.aspx?MnId=46&ParentID=22",
-        "https://www.hudco.org.in",
-        "https://www.hudco.org.in/careers",
-        "https://www.hudco.org.in/career",
-        "https://www.hudco.org.in/recruitment",
-        "https://www.hudco.org.in/jobs",
-        "https://www.hudco.org.in/en/careers",
-        "https://www.hudco.org.in/en/career"
+        "https://nhidcl.com/current-jobs"
       ],
       "orgTypeDefault": "psu",
       "sector": "Housing",
@@ -6055,9 +5873,9 @@
       "sourceId": "upsc_calendar",
       "name": "Union Public Service Commission",
       "category": "exam_board",
-      "baseUrl": "https://upsc.gov.in/",
+      "baseUrl": "https://www.upsc.gov.in/",
       "listUrls": [
-        "https://upsc.gov.in/examinations/exam-calendar"
+        "https://www.upsc.gov.in/examinations/exam-calendar"
       ],
       "orgTypeDefault": "central",
       "priority": "P0",
@@ -6074,9 +5892,9 @@
       "sourceId": "upsc_active",
       "name": "Union Public Service Commission",
       "category": "exam_board",
-      "baseUrl": "https://upsc.gov.in/",
+      "baseUrl": "https://www.upsc.gov.in/",
       "listUrls": [
-        "https://upsc.gov.in/examinations/active-exams"
+        "https://www.upsc.gov.in/examinations/active-exams"
       ],
       "orgTypeDefault": "central",
       "priority": "P0",
@@ -6191,9 +6009,9 @@
       "sourceId": "sbi_openings",
       "name": "State Bank of India Careers",
       "category": "exam_board",
-      "baseUrl": "https://sbi.co.in/web/careers/current-openings",
+      "baseUrl": "https://sbi.bank.in/",
       "listUrls": [
-        "https://sbi.co.in/web/careers/current-openings"
+        "https://sbi.bank.in/web/careers/current-openings"
       ],
       "orgTypeDefault": "central",
       "priority": "P0",
@@ -6249,9 +6067,9 @@
       "sourceId": "rrb_chennai",
       "name": "Railway Recruitment Board Chennai",
       "category": "exam_board",
-      "baseUrl": "https://www.rrbchennai.gov.in/",
+      "baseUrl": "https://rrb.indianrailways.gov.in/",
       "listUrls": [
-        "https://www.rrbchennai.gov.in/"
+        "https://rrb.indianrailways.gov.in/chennai"
       ],
       "orgTypeDefault": "central",
       "priority": "P0",
@@ -6577,9 +6395,9 @@
       "sourceId": "epfo_recruitment",
       "name": "Employees Provident Fund Organisation",
       "category": "central",
-      "baseUrl": "https://www.epfindia.gov.in/",
+      "baseUrl": "https://www.epfo.gov.in/",
       "listUrls": [
-        "https://www.epfindia.gov.in/site_en/Recruitments.php"
+        "https://www.epfo.gov.in/recruitments/"
       ],
       "orgTypeDefault": "central",
       "priority": "P1",
@@ -6730,9 +6548,10 @@
       "sourceId": "drdo_careers",
       "name": "DRDO",
       "category": "science",
-      "baseUrl": "https://www.drdo.gov.in/",
+      "baseUrl": "https://rac.gov.in/",
       "listUrls": [
-        "https://www.drdo.gov.in/drdo/careers"
+        "https://rac.gov.in/index.php?lang=en&id=0",
+        "https://www.drdo.gov.in/drdo/offerings/vacancies"
       ],
       "orgTypeDefault": "central",
       "priority": "P1",
@@ -6806,9 +6625,9 @@
       "sourceId": "nta_ugc_net_calendar",
       "name": "UGC NET",
       "category": "exam_board",
-      "baseUrl": "https://ugcnet.nta.nic.in/",
+      "baseUrl": "https://ugcnet.nta.ac.in/",
       "listUrls": [
-        "https://ugcnet.nta.nic.in/"
+        "https://ugcnet.nta.ac.in/"
       ],
       "orgTypeDefault": "autonomous",
       "priority": "P1",

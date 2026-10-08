@@ -14,6 +14,8 @@ function cleanTitle(raw) {
     .replace(/\s+/g, ' ')
     .replace(/\s*\(\s*\|?\s*PDF\s*\|[^)]*\)/gi, '')
     .replace(/\(पीडीएफ[^)]*\)/gi, '')
+    .replace(/[-–—]?\s*PDF size:\s*\([^)]*\)\s*\.?/gi, '')
+    .replace(/\s*PDF\s*\(\s*Size:[^)]*\)/gi, '')
     .replace(/\s*\|\s*(PDF|English|Hindi)\s*$/i, '')
     .trim();
 }
@@ -148,11 +150,12 @@ function toStagingRecord(item, source, meta = {}) {
 function dedupeByUrl(records) {
   const map = new Map();
   for (const r of records) {
-    const key = (r.officialUrl || '').toLowerCase().split('?')[0];
-    if (!key) continue;
+    const url = (r.officialUrl || '').toLowerCase().split('?')[0];
+    if (!url) continue;
+    const key = `${url}|${String(r.title || '').toLowerCase()}|${String(r.organization || '').toLowerCase()}`;
     if (!map.has(key)) map.set(key, r);
   }
   return [...map.values()];
 }
 
-module.exports = { toStagingRecord, dedupeByUrl };
+module.exports = { toStagingRecord, dedupeByUrl, cleanTitle };
