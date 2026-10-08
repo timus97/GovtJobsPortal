@@ -15,9 +15,11 @@ class WebExceptionHandlerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Referer", "https://evil.example/phish");
         request.setRequestURI("/desk/1");
-        String view = handler.store(new StoreException("VALIDATION", "bad"), request, new RedirectAttributesModelMap());
+        RedirectAttributesModelMap redirect = new RedirectAttributesModelMap();
+        String view = handler.store(new StoreException("VALIDATION", "bad"), request, redirect);
         assertThat(view).isEqualTo("redirect:/dashboard");
         assertThat(view).doesNotContain("evil");
+        assertThat(redirect.getFlashAttributes().get("notice")).isEqualTo("bad");
     }
 
     @Test

@@ -7,6 +7,7 @@
     <main class="main">
       <div class="section container desk-detail">
         <p><a class="back-link" href="/dashboard">← Desk</a></p>
+        <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
         <header class="panel">
           <div class="badge-row">
             <span class="badge badge-soft" th:text="${item.statusLabel}"></span>

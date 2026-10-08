@@ -8,6 +8,7 @@
       <div class="section container" th:if="${job == null}"><p>Not found.</p></div>
       <div class="section container" th:unless="${job == null}">
         <p><a class="back-link" href="/ops/review">← Review</a></p>
+        <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
         <p class="badge" th:text="${job.state}"></p>
         <p class="muted" th:text="${job.url}"></p>
         <form class="panel" method="post" th:action="@{/ops/runs/{id}(id=${job.id})}">

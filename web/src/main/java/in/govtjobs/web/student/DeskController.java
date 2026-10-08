@@ -45,7 +45,8 @@ public class DeskController {
             @RequestParam String title,
             @RequestParam(required = false) String board,
             @RequestParam String examDate,
-            @RequestParam(required = false) String officialUrl) {
+            @RequestParam(required = false) String officialUrl,
+            RedirectAttributes redirect) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("kind", "custom");
         body.put("title", title);
@@ -53,7 +54,11 @@ public class DeskController {
         body.put("examDate", examDate);
         body.put("officialUrl", officialUrl);
         body.put("status", "watching");
-        students.createItem(studentId(principal), body);
+        try {
+            students.createItem(studentId(principal), body);
+        } catch (StoreException e) {
+            redirect.addFlashAttribute("notice", e.getMessage());
+        }
         return "redirect:/dashboard";
     }
 
@@ -62,12 +67,17 @@ public class DeskController {
             Principal principal,
             @RequestParam String kind,
             @RequestParam String refId,
-            @RequestParam(defaultValue = "watching") String status) {
+            @RequestParam(defaultValue = "watching") String status,
+            RedirectAttributes redirect) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("kind", kind);
         body.put("refId", refId);
         body.put("status", status);
-        students.createItem(studentId(principal), body);
+        try {
+            students.createItem(studentId(principal), body);
+        } catch (StoreException e) {
+            redirect.addFlashAttribute("notice", e.getMessage());
+        }
         return "redirect:/dashboard";
     }
 
@@ -88,7 +98,8 @@ public class DeskController {
             @RequestParam(required = false) String examDate,
             @RequestParam(required = false) String lastDate,
             @RequestParam(required = false) String notes,
-            @RequestParam(required = false) String action) {
+            @RequestParam(required = false) String action,
+            RedirectAttributes redirect) {
         String sid = studentId(principal);
         if ("delete".equals(action)) {
             students.deleteItem(sid, id);
@@ -99,7 +110,11 @@ public class DeskController {
         if (examDate != null) patch.put("examDate", examDate);
         if (lastDate != null) patch.put("lastDate", lastDate);
         if (notes != null) patch.put("notes", notes);
-        students.patchItem(sid, id, patch);
+        try {
+            students.patchItem(sid, id, patch);
+        } catch (StoreException e) {
+            redirect.addFlashAttribute("notice", e.getMessage());
+        }
         return "redirect:/desk/" + id;
     }
 

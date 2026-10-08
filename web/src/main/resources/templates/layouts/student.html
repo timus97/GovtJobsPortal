@@ -25,7 +25,7 @@
       </div>
       <header class="site-header">
         <div class="container header-inner">
-          <a th:href="${flags.student} ? '/match' : '/jobs'" class="brand">
+          <a th:href="${isStudent and flags.student} ? '/match' : '/jobs'" class="brand">
             <span class="brand-mark" aria-hidden="true"></span>
             <span>
               <strong>Sarkari Desk</strong>
@@ -33,15 +33,16 @@
             </span>
           </a>
           <nav class="nav" aria-label="Student">
-            <a th:if="${flags.student}" href="/match" th:class="${nav == 'match'} ? 'nav-link active' : 'nav-link'">Matches</a>
+            <a th:if="${isStudent and flags.student}" href="/match" th:class="${nav == 'match'} ? 'nav-link active' : 'nav-link'">Matches</a>
             <a href="/jobs" th:class="${nav == 'jobs'} ? 'nav-link active' : 'nav-link'">Search</a>
             <a href="/prepare" th:class="${nav == 'prepare'} ? 'nav-link active' : 'nav-link'">Prepare</a>
-            <a th:if="${flags.student}" href="/profile" th:class="${nav == 'profile'} ? 'nav-link active' : 'nav-link'">Profile</a>
-            <a th:if="${flags.student}" href="/dashboard" th:class="${nav == 'desk'} ? 'nav-link active' : 'nav-link'">Desk</a>
-            <span class="nav-user" th:if="${flags.student}" th:text="${currentEmail}">signed in</span>
-            <form th:if="${flags.student}" method="post" th:action="@{/account/logout}" style="display:inline">
+            <a th:if="${isStudent and flags.student}" href="/profile" th:class="${nav == 'profile'} ? 'nav-link active' : 'nav-link'">Profile</a>
+            <a th:if="${isStudent and flags.student}" href="/dashboard" th:class="${nav == 'desk'} ? 'nav-link active' : 'nav-link'">Desk</a>
+            <span class="nav-user" th:if="${isStudent}" th:text="${currentEmail}">signed in</span>
+            <form th:if="${isStudent}" method="post" th:action="@{/account/logout}" style="display:inline">
               <button class="nav-link" type="submit">Sign out</button>
             </form>
+            <a th:unless="${isStudent}" href="/account/login" class="nav-link">Sign in</a>
           </nav>
         </div>
       </header>

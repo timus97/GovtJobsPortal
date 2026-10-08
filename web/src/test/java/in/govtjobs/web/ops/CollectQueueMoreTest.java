@@ -113,7 +113,7 @@ class CollectQueueMoreTest {
             assertThat(jobs.getJobById(id)).isNotNull();
             assertThat(jobs.getJobById(id).get("hasExam")).isEqualTo(true);
 
-            Map<String, Object> bare = job("pub-2", "needs_review", null);
+            Map<String, Object> bare = job("pub-2", "needs_review", mapOf("lastDate", "2099-06-01"));
             bare.put("host", "ssc.gov.in");
             bare.put("url", "https://ssc.gov.in/other");
             writeJobs(root, List.of(bare));

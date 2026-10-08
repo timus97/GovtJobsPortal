@@ -86,17 +86,35 @@ class StudentControllersTest {
         controller.dashboard(student(), "watching", filtered);
         assertThat(filtered.getAttribute("status")).isEqualTo("watching");
 
-        assertThat(controller.addCustom(student(), "My exam", "SSC", "2099-01-01", "https://ssc.gov.in/"))
+        RedirectAttributesModelMap added = new RedirectAttributesModelMap();
+        assertThat(controller.addCustom(student(), "My exam", "SSC", "2099-01-01", "https://ssc.gov.in/", added))
                 .isEqualTo("redirect:/dashboard");
-        assertThat(controller.track(student(), "series", "ssc-cgl", "watching")).isEqualTo("redirect:/dashboard");
+        assertThat(added.getFlashAttributes()).doesNotContainKey("notice");
+        when(students.createItem(eq("stu-1"), any()))
+                .thenThrow(new StoreException("VALIDATION", "officialUrl must be https"));
+        RedirectAttributesModelMap rejected = new RedirectAttributesModelMap();
+        assertThat(controller.addCustom(student(), "My exam", "SSC", "2099-01-01", "http://ssc.gov.in/", rejected))
+                .isEqualTo("redirect:/dashboard");
+        assertThat(rejected.getFlashAttributes().get("notice")).isEqualTo("officialUrl must be https");
+        when(students.createItem(eq("stu-1"), any())).thenReturn(Map.of("id", "item-1"));
+        RedirectAttributesModelMap tracked = new RedirectAttributesModelMap();
+        assertThat(controller.track(student(), "series", "ssc-cgl", "watching", tracked))
+                .isEqualTo("redirect:/dashboard");
         assertThat(controller.detail(student(), "missing", new ExtendedModelMap())).isEqualTo("redirect:/dashboard");
         ExtendedModelMap detail = new ExtendedModelMap();
         assertThat(controller.detail(student(), "item-1", detail)).isEqualTo("desk/detail");
         assertThat(detail.getAttribute("item")).isNotNull();
 
-        assertThat(controller.update(student(), "item-1", "applied", "2099-02-01", "2099-01-01", "note", null))
+        RedirectAttributesModelMap updated = new RedirectAttributesModelMap();
+        assertThat(controller.update(student(), "item-1", "applied", "2099-02-01", "2099-01-01", "note", null, updated))
                 .isEqualTo("redirect:/desk/item-1");
-        assertThat(controller.update(student(), "item-1", null, null, null, null, "delete"))
+        when(students.patchItem(eq("stu-1"), eq("item-1"), any()))
+                .thenThrow(new StoreException("VALIDATION", "invalid status"));
+        RedirectAttributesModelMap badUpdate = new RedirectAttributesModelMap();
+        assertThat(controller.update(student(), "item-1", "nope", null, null, null, null, badUpdate))
+                .isEqualTo("redirect:/desk/item-1");
+        assertThat(badUpdate.getFlashAttributes().get("notice")).isEqualTo("invalid status");
+        assertThat(controller.update(student(), "item-1", null, null, null, null, "delete", new RedirectAttributesModelMap()))
                 .isEqualTo("redirect:/dashboard");
         verify(students).deleteItem("stu-1", "item-1");
 

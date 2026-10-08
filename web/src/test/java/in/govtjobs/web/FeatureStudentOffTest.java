@@ -4,6 +4,9 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,5 +35,35 @@ class FeatureStudentOffTest {
                         .param("password", "password1234"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    void featureOffHidesDeskLinksButSignedInStudentCanStillSignOut() throws Exception {
+        mvc.perform(get("/jobs"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("href=\"/jobs\"")))
+                .andExpect(content().string(containsString("href=\"/prepare\"")))
+                .andExpect(content().string(containsString("href=\"/account/login\"")))
+                .andExpect(content().string(not(containsString("href=\"/match\""))))
+                .andExpect(content().string(not(containsString("href=\"/profile\""))))
+                .andExpect(content().string(not(containsString("href=\"/dashboard\""))))
+                .andExpect(content().string(not(containsString("action=\"/account/logout\""))))
+                .andExpect(content().string(not(containsString("Sign out"))));
+
+        mvc.perform(get("/prepare"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("href=\"/match\""))))
+                .andExpect(content().string(containsString("href=\"/account/login\"")));
+
+        mvc.perform(get("/jobs").with(user("student@example.com").roles("STUDENT")))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("href=\"/jobs\"")))
+                .andExpect(content().string(containsString("href=\"/prepare\"")))
+                .andExpect(content().string(containsString("action=\"/account/logout\"")))
+                .andExpect(content().string(containsString("Sign out")))
+                .andExpect(content().string(not(containsString("href=\"/match\""))))
+                .andExpect(content().string(not(containsString("href=\"/profile\""))))
+                .andExpect(content().string(not(containsString("href=\"/dashboard\""))))
+                .andExpect(content().string(not(containsString("href=\"/account/login\""))));
     }
 }

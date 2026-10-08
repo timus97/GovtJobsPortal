@@ -9,6 +9,7 @@
         <div class="container">
           <h1>Exam desk</h1>
           <p class="muted">Track calendars, applied jobs, and custom exams. Days-left uses exam date, else last date.</p>
+          <p class="error-box" th:if="${notice}" th:text="${notice}"></p>
           <div class="desk-stats">
             <div class="panel desk-stat"><strong th:text="${desk.stats.upcoming}">0</strong><span>Upcoming</span></div>
             <div class="panel desk-stat"><strong th:text="${desk.stats.admitPending}">0</strong><span>Admit pending</span></div>

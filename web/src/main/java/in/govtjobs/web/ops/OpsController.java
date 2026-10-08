@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class OpsController {
@@ -142,28 +143,49 @@ public class OpsController {
             @RequestParam(required = false) String selectionProcess,
             @RequestParam(required = false) String summary,
             @RequestParam(required = false) String hasExam,
-            @RequestParam(required = false) String reason) {
-        if ("save".equals(action)) {
-            Map<String, Object> extracted = new LinkedHashMap<>();
-            extracted.put("title", title);
-            extracted.put("organization", organization);
-            extracted.put("officialUrl", officialUrl);
-            extracted.put("lastDate", lastDate);
-            extracted.put("selectionProcess", selectionProcess);
-            extracted.put("summary", summary);
-            extracted.put("hasExam", "on".equals(hasExam) || "true".equals(hasExam));
-            queue.patchExtracted(id, extracted);
-        } else if ("publish".equals(action)) {
-            queue.setState(id, "published_local", "Published locally");
-        } else if ("unpublish".equals(action)) {
-            if (!flags.isUnpublish()) {
-                throw new StoreException("FEATURE", "Unpublish is disabled");
+            @RequestParam(required = false) String reason,
+            RedirectAttributes redirect) {
+        try {
+            if ("save".equals(action)) {
+                queue.patchExtracted(id, submittedFacts(
+                        title, organization, officialUrl, lastDate, selectionProcess, summary, hasExam));
+            } else if ("publish".equals(action)) {
+                queue.publishSubmitted(id, submittedFacts(
+                        title, organization, officialUrl, lastDate, selectionProcess, summary, hasExam));
+            } else if ("unpublish".equals(action)) {
+                if (!flags.isUnpublish()) {
+                    throw new StoreException("FEATURE", "Unpublish is disabled");
+                }
+                queue.setState(id, "unpublished", "Unpublished");
+            } else if ("reject".equals(action)) {
+                queue.setState(id, "rejected", reason == null ? "Rejected" : reason);
             }
-            queue.setState(id, "unpublished", "Unpublished");
-        } else if ("reject".equals(action)) {
-            queue.setState(id, "rejected", reason == null ? "Rejected" : reason);
+        } catch (StoreException ex) {
+            if (!"VALIDATION".equals(ex.code())) {
+                throw ex;
+            }
+            redirect.addFlashAttribute("notice", ex.getMessage());
         }
         return "redirect:/ops/runs/" + id;
+    }
+
+    private static Map<String, Object> submittedFacts(
+            String title,
+            String organization,
+            String officialUrl,
+            String lastDate,
+            String selectionProcess,
+            String summary,
+            String hasExam) {
+        Map<String, Object> extracted = new LinkedHashMap<>();
+        extracted.put("title", title);
+        extracted.put("organization", organization);
+        extracted.put("officialUrl", officialUrl);
+        extracted.put("lastDate", lastDate);
+        extracted.put("selectionProcess", selectionProcess);
+        extracted.put("summary", summary);
+        extracted.put("hasExam", "on".equals(hasExam) || "true".equals(hasExam));
+        return extracted;
     }
 
     @GetMapping("/ops/sources")

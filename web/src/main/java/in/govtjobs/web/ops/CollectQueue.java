@@ -6,6 +6,7 @@ import in.govtjobs.domain.RepoPaths;
 import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.store.JobStore;
+import in.govtjobs.web.store.StoreException;
 import in.govtjobs.web.support.JsonFiles;
 import in.govtjobs.web.support.JsonMaps;
 import java.io.InputStream;
@@ -18,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -37,6 +40,10 @@ public class CollectQueue {
     private static final Logger log = LoggerFactory.getLogger(CollectQueue.class);
     private static final TypeReference<Map<String, Object>> MAP = new TypeReference<>() {};
     private static final Pattern TITLE = Pattern.compile("(?is)<title[^>]*>(.*?)</title>");
+    // Catalog status is only open, closing_soon, or closed. computeStatus labels a blank
+    // or unparseable last date as open, so local publish refuses it instead of inventing one.
+    static final String LAST_DATE_REQUIRED =
+            "Last date must be YYYY-MM-DD before this can be published. A missing date is not published as open.";
     private final ObjectMapper mapper;
     private final OfficialUrlPolicy urls;
     private final GovtJobsProperties props;
@@ -121,16 +128,30 @@ public class CollectQueue {
                     } else if ("unpublished".equals(state)) {
                         unpublishLocal(job);
                     }
-                    job.put("state", state);
-                    if (reason != null) job.put("reason", reason);
-                    job.put("updatedAt", Instant.now().toString());
-                    List<Map<String, Object>> tl = copyMapList(job.get("timeline"));
-                    tl.add(Map.of("at", Instant.now().toString(), "state", state, "detail", reason == null ? state : reason));
-                    job.put("timeline", tl);
+                    applyState(job, state, reason);
                     save(data);
-                    log.info("ops.job_state id={} state={}", id, state);
                     return job;
                 }
+            }
+            return null;
+        }
+    }
+
+    public Map<String, Object> publishSubmitted(String id, Map<String, Object> submitted) {
+        synchronized (lock) {
+            Map<String, Object> data = load();
+            for (Map<String, Object> job : jobsOf(data)) {
+                if (!id.equals(job.get("id"))) {
+                    continue;
+                }
+                Map<String, Object> extracted = copyStringKeyMap(job.get("extracted"));
+                if (submitted != null) {
+                    extracted.putAll(submitted);
+                }
+                publishPrepared(job, extracted, true);
+                applyState(job, "published_local", "Published locally");
+                save(data);
+                return job;
             }
             return null;
         }
@@ -149,30 +170,115 @@ public class CollectQueue {
     }
 
     private void publishLocal(Map<String, Object> job) {
-        Map<String, Object> extracted = copyStringKeyMap(job.get("extracted"));
-        String title = String.valueOf(extracted.getOrDefault("title", "Pasted opportunity"));
-        String org = String.valueOf(extracted.getOrDefault("organization", job.get("host")));
-        String url = String.valueOf(extracted.getOrDefault("officialUrl", job.get("url")));
-        urls.requireAllowed(url);
-        String lastDate = extracted.get("lastDate") == null ? null : String.valueOf(extracted.get("lastDate"));
+        publishPrepared(job, copyStringKeyMap(job.get("extracted")), false);
+    }
+
+    private void publishPrepared(Map<String, Object> job, Map<String, Object> extracted, boolean storeExtracted) {
+        String title = present(extracted.get("title"));
+        extracted.put("title", title == null ? "Pasted opportunity" : title);
+        String org = present(extracted.get("organization"));
+        if (org == null) {
+            org = present(job.get("host"));
+        }
+        extracted.put("organization", org == null ? "" : org);
+        String url = present(extracted.get("officialUrl"));
+        if (url == null) {
+            url = present(job.get("url"));
+        }
+        extracted.put("officialUrl", url == null ? "" : url);
+        String selection = present(extracted.get("selectionProcess"));
+        extracted.put("selectionProcess", selection == null ? "direct_recruitment" : selection);
+        String lastDate = requirePublishableLastDate(extracted.get("lastDate"));
+        extracted.put("lastDate", lastDate);
+        String officialUrl = String.valueOf(extracted.get("officialUrl"));
+        try {
+            urls.requireAllowed(officialUrl);
+        } catch (IllegalArgumentException ex) {
+            throw new StoreException("VALIDATION", ex.getMessage());
+        }
+        String organization = String.valueOf(extracted.get("organization"));
+        String publishedTitle = String.valueOf(extracted.get("title"));
         Map<String, Object> row = new LinkedHashMap<>();
         row.put("id", JobSchema.stableJobId(Map.of(
-                "organization", org, "title", title, "lastDate", lastDate == null ? "" : lastDate, "officialUrl", url)));
-        row.put("title", title);
-        row.put("organization", org);
+                "organization", organization,
+                "title", publishedTitle,
+                "lastDate", lastDate,
+                "officialUrl", officialUrl)));
+        row.put("title", publishedTitle);
+        row.put("organization", organization);
         row.put("orgType", extracted.getOrDefault("orgType", "central"));
-        row.put("selectionProcess", extracted.getOrDefault("selectionProcess", "direct_recruitment"));
+        row.put("selectionProcess", extracted.get("selectionProcess"));
         row.put("hasExam", Boolean.TRUE.equals(extracted.get("hasExam")));
-        row.put("officialUrl", url);
+        row.put("officialUrl", officialUrl);
         row.put("sourceId", "ops_paste");
         row.put("sourceName", job.getOrDefault("sourceLabel", "Ops paste"));
-        row.put("sourceUrl", url);
+        row.put("sourceUrl", officialUrl);
         row.put("status", JobSchema.computeStatus(lastDate));
         row.put("lastDate", lastDate);
         row.put("summary", extracted.get("summary"));
+        String previousId = present(job.get("opportunityId"));
         jobs.upsertPublishedJob(row);
-        job.put("opportunityId", row.get("id"));
-        log.info("ops.published_local id={} jobId={}", job.get("id"), row.get("id"));
+        String newId = String.valueOf(row.get("id"));
+        if (previousId != null && !previousId.equals(newId)) {
+            jobs.removePublishedJob(previousId);
+        }
+        job.put("opportunityId", newId);
+        if (storeExtracted) {
+            job.put("extracted", extracted);
+        }
+        log.info("ops.published_local id={} jobId={}", job.get("id"), newId);
+    }
+
+    private void applyState(Map<String, Object> job, String state, String reason) {
+        job.put("state", state);
+        if (reason != null) {
+            job.put("reason", reason);
+        }
+        job.put("updatedAt", Instant.now().toString());
+        List<Map<String, Object>> timeline = copyMapList(job.get("timeline"));
+        timeline.add(Map.of(
+                "at", Instant.now().toString(),
+                "state", state,
+                "detail", reason == null ? state : reason));
+        job.put("timeline", timeline);
+        log.info("ops.job_state id={} state={}", job.get("id"), state);
+    }
+
+    private static String requirePublishableLastDate(Object raw) {
+        if (raw == null) {
+            throw new StoreException("VALIDATION", LAST_DATE_REQUIRED);
+        }
+        String text = String.valueOf(raw).trim();
+        if (text.isEmpty() || "null".equals(text)) {
+            throw new StoreException("VALIDATION", LAST_DATE_REQUIRED);
+        }
+        LocalDate parsed = parseIsoDay(text);
+        if (parsed == null) {
+            throw new StoreException("VALIDATION", LAST_DATE_REQUIRED);
+        }
+        return parsed.toString();
+    }
+
+    private static LocalDate parseIsoDay(String value) {
+        try {
+            if (value.length() >= 10 && value.charAt(4) == '-' && value.charAt(7) == '-') {
+                return LocalDate.parse(value.substring(0, 10));
+            }
+            return LocalDate.parse(value);
+        } catch (DateTimeParseException ex) {
+            return null;
+        }
+    }
+
+    private static String present(Object value) {
+        if (value == null) {
+            return null;
+        }
+        String text = String.valueOf(value);
+        if (text.trim().isEmpty()) {
+            return null;
+        }
+        return text;
     }
 
     private void unpublishLocal(Map<String, Object> job) {
