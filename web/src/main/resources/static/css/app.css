@@ -217,6 +217,20 @@
   color: var(--warn);
 }
 
+.prepare-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.prepare-filter .field {
+  margin: 0;
+  min-width: 14rem;
+  flex: 1;
+}
+
 .series-dates {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));

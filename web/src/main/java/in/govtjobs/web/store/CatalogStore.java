@@ -62,9 +62,10 @@ public class CatalogStore {
 
     private static final String SERIES_UPSERT = """
             INSERT INTO catalog.exam_series
-              (id, name, board, cycle, apply_never, official_url, expected_exam, review_status,
+              (id, name, board, cycle, apply_never, official_url, expected_exam,
+               expected_notify_text, expected_apply_text, expected_exam_text, review_status,
                linked_ids, summary, source_id, min_education, sample)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,FALSE)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,FALSE)
             ON CONFLICT (id) DO UPDATE SET
               name = EXCLUDED.name,
               board = EXCLUDED.board,
@@ -72,6 +73,9 @@ public class CatalogStore {
               apply_never = EXCLUDED.apply_never,
               official_url = EXCLUDED.official_url,
               expected_exam = EXCLUDED.expected_exam,
+              expected_notify_text = EXCLUDED.expected_notify_text,
+              expected_apply_text = EXCLUDED.expected_apply_text,
+              expected_exam_text = EXCLUDED.expected_exam_text,
               review_status = EXCLUDED.review_status,
               linked_ids = EXCLUDED.linked_ids,
               summary = EXCLUDED.summary,
@@ -188,14 +192,27 @@ public class CatalogStore {
             log.info("catalog.sync.skipped table={} reason={}", SERIES, rows == null ? "missing" : "empty");
             return 0;
         }
-        List<LiveSeries> series = liveSeries(rows);
-        if (series.isEmpty()) {
+        int upserted = upsertPublishedSeries(rows);
+        if (upserted == 0) {
             log.info("catalog.sync.skipped table={} reason=empty", SERIES);
             return 0;
         }
+        List<String> ids = liveSeries(rows).stream().map(LiveSeries::id).toList();
+        int removed = deleteMissing(SERIES, ids);
+        log.info("catalog.sync.series upserted={} removed={}", upserted, removed);
+        return upserted;
+    }
+
+    /**
+     * Writes calendar rows without deleting the rest. A partial list must not call
+     * {@link #replacePublishedSeries}, which removes every other non-sample series.
+     */
+    int upsertPublishedSeries(List<Map<String, Object>> rows) {
+        List<LiveSeries> series = liveSeries(rows == null ? List.of() : rows);
+        if (series.isEmpty()) {
+            return 0;
+        }
         upsertSeries(series);
-        int removed = deleteMissing(SERIES, series.stream().map(LiveSeries::id).toList());
-        log.info("catalog.sync.series upserted={} removed={}", series.size(), removed);
         return series.size();
     }
 
@@ -245,7 +262,8 @@ public class CatalogStore {
     public List<Map<String, Object>> approvedSeries() {
         return jdbc.query(
                 """
-                SELECT id, name, board, cycle, apply_never, official_url, expected_exam, linked_ids,
+                SELECT id, name, board, cycle, apply_never, official_url, expected_exam,
+                       expected_notify_text, expected_apply_text, expected_exam_text, linked_ids,
                        summary, sample, source_id, min_education
                 FROM catalog.exam_series
                 WHERE review_status = 'approved'
@@ -259,15 +277,19 @@ public class CatalogStore {
                     Date exam = rs.getDate("expected_exam");
                     String sourceId = rs.getString("source_id");
                     String minEducation = rs.getString("min_education");
+                    String examText = text(rs.getString("expected_exam_text"));
+                    if (examText.isBlank() && exam != null) {
+                        examText = exam.toLocalDate().toString();
+                    }
                     row.put("id", rs.getString("id"));
                     row.put("name", rs.getString("name"));
                     row.put("board", rs.getString("board"));
                     row.put("cycle", rs.getString("cycle"));
                     row.put("applyNever", rs.getBoolean("apply_never"));
                     row.put("officialUrl", rs.getString("official_url"));
-                    row.put("expectedExam", exam == null ? "" : exam.toLocalDate().toString());
-                    row.put("expectedNotify", "");
-                    row.put("expectedApply", "");
+                    row.put("expectedExam", examText);
+                    row.put("expectedNotify", text(rs.getString("expected_notify_text")));
+                    row.put("expectedApply", text(rs.getString("expected_apply_text")));
                     row.put("sourceId", sourceId == null ? "" : sourceId);
                     row.put("minEducation", minEducation == null ? "" : minEducation);
                     row.put("summary", rs.getString("summary"));
@@ -357,6 +379,7 @@ public class CatalogStore {
             if (id.isBlank() || url.isBlank()) {
                 continue;
             }
+            String examText = field(row, "expectedExam", "expected_exam", "examDate");
             series.add(new LiveSeries(
                     id,
                     text(row.get("name")),
@@ -364,12 +387,15 @@ public class CatalogStore {
                     text(row.get("cycle")),
                     flag(row.get("applyNever")),
                     url,
-                    parseDate(row.get("expectedExam")),
+                    parseDate(examText),
+                    field(row, "expectedNotify", "expected_notify", "notificationDate"),
+                    field(row, "expectedApply", "expected_apply", "lastDate"),
+                    examText,
                     flag(row.get("needsReview")) ? "needs_review" : "approved",
                     linkedIds(row.get("linkedOpportunityIds")),
                     text(row.get("summary")),
                     text(row.get("sourceId")),
-                    text(row.get("minEducation"))));
+                    field(row, "minEducation", "min_education")));
         }
         return series;
     }
@@ -418,11 +444,14 @@ public class CatalogStore {
                 ps.setBoolean(5, row.applyNever());
                 ps.setString(6, row.officialUrl());
                 setDate(ps, 7, row.expectedExam());
-                ps.setString(8, row.reviewStatus());
-                ps.setString(9, row.linkedIds());
-                ps.setString(10, row.summary());
-                ps.setString(11, row.sourceId());
-                ps.setString(12, row.minEducation());
+                ps.setString(8, row.expectedNotify());
+                ps.setString(9, row.expectedApply());
+                ps.setString(10, row.expectedExamText());
+                ps.setString(11, row.reviewStatus());
+                ps.setString(12, row.linkedIds());
+                ps.setString(13, row.summary());
+                ps.setString(14, row.sourceId());
+                ps.setString(15, row.minEducation());
             }
 
             @Override
@@ -468,6 +497,16 @@ public class CatalogStore {
         return String.valueOf(value).trim();
     }
 
+    private static String field(Map<String, Object> row, String... keys) {
+        for (String key : keys) {
+            String value = text(row.get(key));
+            if (!value.isBlank()) {
+                return value;
+            }
+        }
+        return "";
+    }
+
     private static boolean flag(Object value) {
         if (value instanceof Boolean bool) {
             return bool;
@@ -475,17 +514,16 @@ public class CatalogStore {
         return "true".equalsIgnoreCase(text(value));
     }
 
+    /** A calendar day only. Prose such as "May 2026" stays text and is not turned into a day. */
     private static Date parseDate(Object value) {
         String raw = text(value);
-        if (raw.length() >= 10) {
-            raw = raw.substring(0, 10);
-        }
-        if (raw.isBlank()) {
+        if (raw.length() != 10 || raw.charAt(4) != '-' || raw.charAt(7) != '-') {
             return null;
         }
         try {
-            return Date.valueOf(raw);
-        } catch (IllegalArgumentException ex) {
+            // Date.valueOf(String) is lenient and turns 2026-02-31 into 3 March.
+            return Date.valueOf(LocalDate.parse(raw));
+        } catch (RuntimeException ex) {
             return null;
         }
     }
@@ -562,6 +600,9 @@ public class CatalogStore {
             boolean applyNever,
             String officialUrl,
             Date expectedExam,
+            String expectedNotify,
+            String expectedApply,
+            String expectedExamText,
             String reviewStatus,
             String linkedIds,
             String summary,

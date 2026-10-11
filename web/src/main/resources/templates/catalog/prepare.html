@@ -13,15 +13,22 @@
               <p class="muted">Calendars you can follow. Apply shows up only when a linked window is still open. A score exam such as GATE never gets an Apply button.</p>
             </div>
           </div>
-          <form method="get" action="/prepare" class="panel" style="margin-bottom:1rem">
+          <form method="get" action="/prepare" class="panel prepare-filter">
             <label class="field">
               <span>Board</span>
-              <select name="board" onchange="this.form.submit()">
+              <select name="board">
                 <option value="">All boards</option>
+                <option
+                  th:if="${!#strings.isEmpty(board) and !#lists.contains(filters.boards, board)}"
+                  th:value="${board}"
+                  th:text="${board}"
+                  selected="selected"></option>
                 <option th:each="b : ${filters.boards}" th:value="${b}" th:text="${b}" th:selected="${b == board}"></option>
               </select>
             </label>
+            <button class="btn btn-secondary" type="submit">Show calendars</button>
           </form>
+          <p class="empty panel" th:if="${!#strings.isEmpty(board) and #lists.isEmpty(series)}">No calendars match</p>
           <div class="job-grid">
             <article class="job-card" th:each="s : ${series}">
               <div class="job-card-top">
@@ -29,16 +36,26 @@
                   <span class="badge badge-soft" th:text="${s.board}">Board</span>
                   <span class="badge badge-exam">Prepare-for</span>
                   <span class="badge badge-muted" th:if="${s.applyNever}">Not a vacancy</span>
-                  <span class="badge badge-muted" th:if="${s.cycle}" th:text="${s.cycle}"></span>
+                  <span class="badge badge-muted" th:if="${!#strings.isEmpty(s.cycle)}" th:text="${s.cycle}"></span>
                 </div>
                 <h3 class="job-title" th:text="${s.name}">Name</h3>
                 <p class="job-org">Official calendar — not an apply-now listing</p>
               </div>
-              <dl class="series-dates">
-                <div th:if="${s.expectedNotify}"><dt>Expected notification</dt><dd th:text="${s.expectedNotify}"></dd></div>
-                <div th:if="${s.expectedApply}"><dt>Expected apply window</dt><dd th:text="${s.expectedApply}"></dd></div>
-                <div th:if="${s.expectedExam}"><dt>Expected exam</dt><dd th:text="${s.expectedExam}"></dd></div>
-                <div th:if="${s.minEducation}"><dt>Typical education</dt><dd th:text="${s.minEducation}"></dd></div>
+              <p class="muted" th:unless="${s.datesOnFile}">No notification, apply, or exam date is on file.</p>
+              <dl class="series-dates" th:if="${s.datesOnFile or !#strings.isEmpty(s.educationLabel)}">
+                <div th:if="${!#strings.isEmpty(s.expectedNotify)}">
+                  <dt th:text="${s.expectedNotifyLabel}">Expected notification</dt>
+                  <dd th:text="${s.expectedNotifyDisplay}"></dd>
+                </div>
+                <div th:if="${!#strings.isEmpty(s.expectedApply)}">
+                  <dt th:text="${s.expectedApplyLabel}">Expected apply window</dt>
+                  <dd th:text="${s.expectedApplyDisplay}"></dd>
+                </div>
+                <div th:if="${!#strings.isEmpty(s.expectedExam)}">
+                  <dt th:text="${s.expectedExamLabel}">Expected exam</dt>
+                  <dd th:text="${s.expectedExamDisplay}"></dd>
+                </div>
+                <div th:if="${!#strings.isEmpty(s.educationLabel)}"><dt>Typical education</dt><dd th:text="${s.educationLabel}"></dd></div>
               </dl>
               <div class="job-card-actions">
                 <a class="btn btn-secondary" th:if="${s.officialUrl != null and #strings.startsWith(#strings.toLowerCase(s.officialUrl), 'https://')}" th:href="${s.officialUrl}" target="_blank" rel="noopener noreferrer">Official calendar</a>

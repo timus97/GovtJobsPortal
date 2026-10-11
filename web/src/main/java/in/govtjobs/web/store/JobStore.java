@@ -3,6 +3,9 @@ package in.govtjobs.web.store;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.domain.RepoPaths;
+import in.govtjobs.domain.desk.DeskGuidance;
+import in.govtjobs.domain.job.JobSchema;
+import in.govtjobs.domain.labels.Labels;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.support.JsonFiles;
 import java.nio.file.Files;
@@ -311,7 +314,7 @@ public class JobStore {
             for (Object id : list) {
                 Map<String, Object> job = byId.get(String.valueOf(id));
                 if (job == null) continue;
-                String status = val(job, "status");
+                String status = JobSchema.computeStatus(val(job, "lastDate"));
                 if (!"open".equals(status) && !"closing_soon".equals(status)) continue;
                 Map<String, Object> row = new LinkedHashMap<>();
                 row.put("id", job.get("id"));
@@ -324,7 +327,29 @@ public class JobStore {
         }
         out.put("linkedOpportunities", linked);
         out.put("canApply", !Boolean.TRUE.equals(series.get("applyNever")) && !linked.isEmpty());
+        presentDate(out, "expectedNotify", "Expected notification");
+        presentDate(out, "expectedApply", "Expected apply window");
+        presentDate(out, "expectedExam", "Expected exam");
+        String education = val(out, "minEducation");
+        out.put("educationLabel", education.isBlank() ? "" : Labels.QUAL_LABELS.getOrDefault(education, education));
+        out.put(
+                "datesOnFile",
+                !val(out, "expectedNotify").isBlank()
+                        || !val(out, "expectedApply").isBlank()
+                        || !val(out, "expectedExam").isBlank());
         return out;
+    }
+
+    private static void presentDate(Map<String, Object> out, String key, String label) {
+        String raw = val(out, key);
+        boolean prose = !raw.isBlank() && !isoDate(raw);
+        out.put(key + "Label", prose ? label + " (not a single day)" : label);
+        out.put(key + "Display", raw.isBlank() || prose ? raw : Labels.formatDate(raw));
+        out.put(key + "Prose", prose);
+    }
+
+    private static boolean isoDate(String raw) {
+        return DeskGuidance.parseIsoDate(raw) != null && raw.length() == 10;
     }
 
     private List<String> distinct(List<Map<String, Object>> jobs, String key) {

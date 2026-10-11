@@ -2,7 +2,11 @@ package in.govtjobs.web.store;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import in.govtjobs.domain.labels.Labels;
 import in.govtjobs.web.config.GovtJobsProperties;
+import java.sql.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -136,6 +140,73 @@ class CatalogStoreTest {
     }
 
     @Test
+    void proseCalendarTextSurvivesSyncAndAnIsoDateStaysADate() {
+        String proseId = prefix + "-prose";
+        String isoId = prefix + "-iso";
+        String invalidId = prefix + "-invalid";
+        Map<String, Object> prose = seriesRow(proseId, "Prose calendar", "SSC");
+        prose.put("expectedNotify", "May 2026");
+        prose.put("expectedApply", "April-May,2024");
+        prose.put("expectedExam", "May 2026");
+        prose.put("minEducation", "graduate");
+        Map<String, Object> iso = seriesRow(isoId, "ISO calendar", "UPSC");
+        iso.put("expectedExam", "2026-05-20");
+        Map<String, Object> invalid = seriesRow(invalidId, "Invalid day", "SSC");
+        invalid.put("expectedExam", "2026-02-31");
+
+        assertThat(store.upsertPublishedSeries(List.of(prose, iso, invalid))).isEqualTo(3);
+
+        Map<String, Object> storedProse = seriesById(proseId);
+        assertThat(storedProse.get("expectedExam")).isEqualTo("May 2026");
+        assertThat(storedProse.get("expectedNotify")).isEqualTo("May 2026");
+        assertThat(storedProse.get("expectedApply")).isEqualTo("April-May,2024");
+        assertThat(storedDate(proseId)).isNull();
+
+        Map<String, Object> storedIso = seriesById(isoId);
+        assertThat(storedIso.get("expectedExam")).isEqualTo("2026-05-20");
+        assertThat(storedDate(isoId)).isEqualTo(Date.valueOf("2026-05-20"));
+        assertThat(storedIso.get("expectedNotify")).isEqualTo("");
+        assertThat(storedIso.get("expectedApply")).isEqualTo("");
+
+        assertThat(seriesById(invalidId).get("expectedExam")).isEqualTo("2026-02-31");
+        assertThat(storedDate(invalidId)).isNull();
+
+        jdbc.update(
+                """
+                INSERT INTO catalog.exam_series
+                  (id, name, board, cycle, apply_never, official_url, expected_exam, review_status, linked_ids, summary, sample)
+                VALUES (?,?,?,?,?,?,?,'approved','','',FALSE)
+                """,
+                prefix + "-date-only", "Date only", "SSC", "", false, "https://ssc.gov.in/",
+                Date.valueOf("2026-11-02"));
+        assertThat(seriesById(prefix + "-date-only").get("expectedExam")).isEqualTo("2026-11-02");
+
+        props.getCatalog().setSource("postgres");
+        JobStore jobs = new JobStore(new ObjectMapper(), store, props);
+        Map<String, Object> shownProse = jobs.getExamSeriesById(proseId);
+        assertThat(shownProse.get("expectedExamDisplay")).isEqualTo("May 2026");
+        assertThat(shownProse.get("expectedApplyDisplay")).isEqualTo("April-May,2024");
+        assertThat(shownProse.get("expectedExamProse")).isEqualTo(true);
+        assertThat(shownProse.get("expectedExamLabel")).isEqualTo("Expected exam (not a single day)");
+        assertThat(shownProse.get("expectedApplyLabel")).isEqualTo("Expected apply window (not a single day)");
+        assertThat(shownProse.get("educationLabel")).isEqualTo("Graduate");
+        assertThat(shownProse.get("datesOnFile")).isEqualTo(true);
+
+        Map<String, Object> shownIso = jobs.getExamSeriesById(isoId);
+        assertThat(shownIso.get("expectedExamDisplay")).isEqualTo("20 May 2026");
+        assertThat(Labels.formatDate("2026-05-20")).isEqualTo("20 May 2026");
+        assertThat(shownIso.get("expectedExamProse")).isEqualTo(false);
+        assertThat(shownIso.get("datesOnFile")).isEqualTo(true);
+
+        Map<String, Object> blank = seriesRow(prefix + "-blank", "Blank calendar", "SSC");
+        store.upsertPublishedSeries(List.of(blank));
+        Map<String, Object> shownBlank = jobs.getExamSeriesById(prefix + "-blank");
+        assertThat(shownBlank.get("expectedExam")).isEqualTo("");
+        assertThat(shownBlank.get("datesOnFile")).isEqualTo(false);
+        assertThat(shownBlank.get("educationLabel")).isEqualTo("");
+    }
+
+    @Test
     void sampleModeIsTrueOnlyWhileThePublicCatalogIsSamples() {
         Integer real = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM catalog.opportunities WHERE sample = FALSE AND review_status = 'approved'",
@@ -161,6 +232,26 @@ class CatalogStoreTest {
         assertThat(CatalogStore.sourceUrlFor("  ", null)).isEmpty();
         assertThat(CatalogStore.sourceUrlFor("https://ssc.gov.in/a", "https://ssc.gov.in/"))
                 .isEqualTo("https://ssc.gov.in/a");
+    }
+
+    private Map<String, Object> seriesById(String id) {
+        return store.approvedSeries().stream().filter(row -> id.equals(row.get("id"))).findFirst().orElseThrow();
+    }
+
+    private Date storedDate(String id) {
+        return jdbc.query(
+                "SELECT expected_exam FROM catalog.exam_series WHERE id = ?",
+                rs -> rs.next() ? rs.getDate(1) : null,
+                id);
+    }
+
+    private static Map<String, Object> seriesRow(String id, String name, String board) {
+        Map<String, Object> row = new LinkedHashMap<>();
+        row.put("id", id);
+        row.put("name", name);
+        row.put("board", board);
+        row.put("officialUrl", "https://ssc.gov.in/");
+        return row;
     }
 
     private void insertJob(

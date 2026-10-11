@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.domain.RepoPaths;
+import in.govtjobs.domain.labels.Labels;
 import in.govtjobs.web.config.GovtJobsProperties;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +48,7 @@ class JobStoreTest {
         props.getCatalog().setSeedDummy(false);
         catalog = new CatalogStore(jdbc, props);
         prefix = "covj-" + UUID.randomUUID().toString().substring(0, 8);
-        String openLast = java.time.LocalDate.now().plusDays(40).toString();
+        String openLast = openLast();
         String soonLast = java.time.LocalDate.now().plusDays(3).toString();
         insertJob(prefix + "-open", prefix + " Coverage Alpha Clerk", "Alpha Org", "central", prefix, "Pune", "graduate",
                 "written_multi_stage", true, openLast, "approved");
@@ -157,9 +158,16 @@ class JobStoreTest {
         assertThat(options.get("sectors")).asList().contains(prefix);
         assertThat(options.get("boards")).asList().contains("COVBOARD");
 
+        jdbc.update("UPDATE catalog.exam_series SET min_education = 'graduate' WHERE id = ?", prefix + "-series");
         List<Map<String, Object>> series = store.listExamSeries("covboard", "alpha");
         assertThat(series).hasSize(1);
         assertThat(series.get(0).get("canApply")).isEqualTo(true);
+        assertThat(series.get(0).get("expectedExamDisplay")).isEqualTo(Labels.formatDate(openLast()));
+        assertThat(series.get(0).get("expectedExamDisplay")).isNotEqualTo(openLast());
+        assertThat(series.get(0).get("expectedExamProse")).isEqualTo(false);
+        assertThat(series.get(0).get("datesOnFile")).isEqualTo(true);
+        assertThat(series.get(0).get("educationLabel")).isEqualTo("Graduate");
+        assertThat(store.getExamSeriesById(prefix + "-never").get("datesOnFile")).isEqualTo(false);
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> linked = (List<Map<String, Object>>) series.get(0).get("linkedOpportunities");
         assertThat(linked).extracting(row -> row.get("id")).containsExactly(prefix + "-open");
@@ -233,6 +241,10 @@ class JobStoreTest {
             restore(opps, oppBytes);
             Files.deleteIfExists(paste);
         }
+    }
+
+    private static String openLast() {
+        return java.time.LocalDate.now().plusDays(40).toString();
     }
 
     private void insertJob(

@@ -738,8 +738,8 @@ public class StudentStore {
             out.put("title", series.get("name"));
             out.put("board", series.get("board"));
             out.put("officialUrl", series.get("officialUrl"));
-            out.put("examDate", series.get("expectedExam"));
-            out.put("lastDate", series.get("expectedApply"));
+            out.put("examDate", DeskGuidance.formatIsoDate(series.get("expectedExam")));
+            out.put("lastDate", DeskGuidance.formatIsoDate(series.get("expectedApply")));
             out.put("applyOpen", Boolean.TRUE.equals(series.get("canApply")));
             return out;
         }
