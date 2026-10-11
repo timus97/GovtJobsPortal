@@ -14,9 +14,12 @@
           <section class="auth-intro">
             <p class="eyebrow">For candidates</p>
             <h1>A quieter way to look at open windows</h1>
-            <p class="lead">
+            <p class="lead" th:if="${sampleCatalog}">
               Save your facts once. We line them up against sample notices and show what passed,
               what failed, and what we do not know yet. The official notice is still the decision.
+            </p>
+            <p class="lead" th:unless="${sampleCatalog}">
+              Save your facts once. We line them up against approved notices and show what passed, what failed, and what we do not know yet. The official notice is still the decision.
             </p>
             <ul class="check-list">
               <li>Your profile stays on this desk. Reservation category is required to match.</li>

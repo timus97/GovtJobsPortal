@@ -3,6 +3,7 @@ package in.govtjobs.web.catalog;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.JobStore.JobQuery;
+import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,7 @@ public class JobsController {
         model.addAttribute("result", result);
         model.addAttribute("query", query);
         model.addAttribute("filters", jobs.filterOptions());
+        model.addAttribute("statusCounts", statusCounts(jobs.getJobs()));
         return "catalog/jobs";
     }
 
@@ -59,5 +61,22 @@ public class JobsController {
         model.addAttribute("job", job);
         model.addAttribute("missing", false);
         return "catalog/job-detail";
+    }
+
+    private static Map<String, Integer> statusCounts(List<Map<String, Object>> rows) {
+        int open = 0;
+        int closingSoon = 0;
+        int closed = 0;
+        for (Map<String, Object> job : rows) {
+            String status = String.valueOf(job.get("status"));
+            if ("open".equals(status)) {
+                open++;
+            } else if ("closing_soon".equals(status)) {
+                closingSoon++;
+            } else if ("closed".equals(status)) {
+                closed++;
+            }
+        }
+        return Map.of("open", open, "closing_soon", closingSoon, "closed", closed);
     }
 }
