@@ -3,6 +3,8 @@ package in.govtjobs.web.store;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.nio.file.attribute.AclEntry;
 import java.nio.file.attribute.AclEntryPermission;
 import java.nio.file.attribute.AclEntryType;
@@ -17,6 +19,7 @@ import java.util.regex.Pattern;
 /** Package-visible path rules for student admit/result files. */
 final class StudentFilePaths {
 
+    private static final Logger log = LoggerFactory.getLogger(StudentFilePaths.class);
     private static final Pattern SAFE_ID = Pattern.compile("[A-Za-z0-9._-]+");
     private static final Pattern FILE_NAME = Pattern.compile("(admit|result)\\.(pdf|jpg|png)");
 
@@ -64,22 +67,23 @@ final class StudentFilePaths {
         return resolveUnder(filesDir, studentId + "/" + itemId);
     }
 
-    static void restrictOwnerReadWrite(Path path) {
+    /**
+     * Best-effort owner-only mode. A failure is logged without the file bytes or a student email.
+     * Callers must not describe the file as owner-only unless this returns true.
+     */
+    static boolean restrictOwnerReadWrite(Path path) {
         if (path == null || !Files.exists(path)) {
-            return;
-        }
-        if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
-            try {
-                Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rw-------"));
-            } catch (Exception ignored) {
-                // best-effort
-            }
-            return;
+            return false;
         }
         try {
+            if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
+                Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rw-------"));
+                return true;
+            }
             AclFileAttributeView view = Files.getFileAttributeView(path, AclFileAttributeView.class);
             if (view == null) {
-                return;
+                log.warn("desk.file_acl_unavailable");
+                return false;
             }
             UserPrincipal owner = view.getOwner();
             AclEntry entry = AclEntry.newBuilder()
@@ -98,8 +102,10 @@ final class StudentFilePaths {
                             AclEntryPermission.SYNCHRONIZE))
                     .build();
             view.setAcl(List.of(entry));
-        } catch (Exception ignored) {
-            // Windows ACL is best-effort
+            return true;
+        } catch (Exception ex) {
+            log.warn("desk.file_acl_failed");
+            return false;
         }
     }
 

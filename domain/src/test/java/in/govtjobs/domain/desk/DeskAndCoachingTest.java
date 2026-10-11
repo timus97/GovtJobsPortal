@@ -47,7 +47,12 @@ class DeskAndCoachingTest {
         assertThat(DeskGuidance.nextStep(Map.of("status", "watching"))).contains("Prepare");
         assertThat(DeskGuidance.nextStep(Map.of("status", "applied"))).contains("admit");
         assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready", "daysLeft", 1))).contains("Exam in 1 day");
-        assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready", "daysLeft", 3))).contains("days");
+        assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready", "daysLeft", 3)))
+                .contains("days")
+                .doesNotContain("plan");
+        assertThat(DeskGuidance.KIND_LABELS.get("opportunity")).isEqualTo("Job");
+        Map<String, Object> watchingJob = DeskGuidance.decorateItem(Map.of("kind", "opportunity", "status", "watching"));
+        assertThat(String.valueOf(watchingJob.get("kindLabel")).toLowerCase()).doesNotContain("applied");
         assertThat(DeskGuidance.nextStep(Map.of("status", "admit_ready"))).contains("Admit card");
         assertThat(DeskGuidance.nextStep(Map.of("status", "appeared"))).contains("result");
         assertThat(DeskGuidance.nextStep(Map.of("status", "done"))).contains("Review");

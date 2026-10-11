@@ -99,7 +99,7 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/"))
                         .accessDeniedHandler(csrfDenied()))
                 .authorizeHttpRequests(a -> {
-                    a.requestMatchers("/", "/health", "/css/**", "/js/**", "/favicon.svg", "/favicon.ico", "/error")
+                    a.requestMatchers("/", "/health", "/css/**", "/js/**", "/favicon.svg", "/favicon.ico", "/error", "/error/upload")
                             .permitAll()
                             .requestMatchers("/jobs", "/jobs/**", "/prepare")
                             .permitAll();

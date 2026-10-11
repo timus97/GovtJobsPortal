@@ -1,5 +1,10 @@
 server:
   port: ${PORT:8080}
+  # Tomcat's own post limit defaults to 2MB and answers 413 before Spring can
+  # redirect an oversize admit or result back to the desk item.
+  tomcat:
+    max-http-form-post-size: 8MB
+    max-swallow-size: 8MB
   servlet:
     session:
       timeout: 12h

@@ -1,5 +1,6 @@
 package in.govtjobs.web.student;
 
+import in.govtjobs.domain.desk.DeskGuidance;
 import in.govtjobs.web.store.StoreException;
 import in.govtjobs.web.store.StudentStore;
 import java.security.Principal;
@@ -36,6 +37,8 @@ public class DeskController {
         model.addAttribute("nav", "desk");
         model.addAttribute("status", status == null ? "" : status);
         model.addAttribute("desk", students.listItems(id, status));
+        model.addAttribute("deskStatuses", DeskGuidance.STATUSES);
+        model.addAttribute("deskStatusLabel", DeskGuidance.STATUS_LABELS);
         return "desk/dashboard";
     }
 
@@ -74,11 +77,25 @@ public class DeskController {
         body.put("refId", refId);
         body.put("status", status);
         try {
-            students.createItem(studentId(principal), body);
+            Map<String, Object> item = students.createItem(studentId(principal), body);
+            redirect.addFlashAttribute("notice", trackNotice(item));
+            return "redirect:/desk/" + item.get("id");
         } catch (StoreException e) {
             redirect.addFlashAttribute("notice", e.getMessage());
+            return "redirect:/dashboard";
         }
-        return "redirect:/dashboard";
+    }
+
+    private static String trackNotice(Map<String, Object> item) {
+        boolean repeated = item != null && Boolean.TRUE.equals(item.get("repeated"));
+        boolean changed = item != null && Boolean.TRUE.equals(item.get("statusChanged"));
+        if (!repeated) {
+            return "Added to your desk.";
+        }
+        if (changed) {
+            return "Already on your desk. The status was updated.";
+        }
+        return "Already on your desk.";
     }
 
     @GetMapping("/desk/{id}")
@@ -87,6 +104,8 @@ public class DeskController {
         if (item == null) return "redirect:/dashboard";
         model.addAttribute("nav", "desk");
         model.addAttribute("item", item);
+        model.addAttribute("deskStatuses", DeskGuidance.STATUSES);
+        model.addAttribute("deskStatusLabel", DeskGuidance.STATUS_LABELS);
         return "desk/detail";
     }
 

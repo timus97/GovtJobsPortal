@@ -99,7 +99,15 @@ class StudentControllersTest {
         when(students.createItem(eq("stu-1"), any())).thenReturn(Map.of("id", "item-1"));
         RedirectAttributesModelMap tracked = new RedirectAttributesModelMap();
         assertThat(controller.track(student(), "series", "ssc-cgl", "watching", tracked))
-                .isEqualTo("redirect:/dashboard");
+                .isEqualTo("redirect:/desk/item-1");
+        assertThat(tracked.getFlashAttributes().get("notice")).isEqualTo("Added to your desk.");
+        when(students.createItem(eq("stu-1"), any()))
+                .thenReturn(Map.of("id", "item-1", "repeated", true, "statusChanged", true));
+        RedirectAttributesModelMap again = new RedirectAttributesModelMap();
+        assertThat(controller.track(student(), "series", "ssc-cgl", "applied", again))
+                .isEqualTo("redirect:/desk/item-1");
+        assertThat(again.getFlashAttributes().get("notice"))
+                .isEqualTo("Already on your desk. The status was updated.");
         assertThat(controller.detail(student(), "missing", new ExtendedModelMap())).isEqualTo("redirect:/dashboard");
         ExtendedModelMap detail = new ExtendedModelMap();
         assertThat(controller.detail(student(), "item-1", detail)).isEqualTo("desk/detail");

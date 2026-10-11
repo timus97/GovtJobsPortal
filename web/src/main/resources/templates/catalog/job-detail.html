@@ -25,19 +25,28 @@
             <div class="hero-actions">
               <a class="btn btn-primary btn-lg" th:if="${job.officialUrl != null and #strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://') and job.status == 'closed'}" th:href="${job.officialUrl}" target="_blank" rel="noopener noreferrer">Read the official notice</a>
               <a class="btn btn-primary btn-lg" th:if="${job.officialUrl != null and #strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://') and job.status != 'closed'}" th:href="${job.officialUrl}" target="_blank" rel="noopener noreferrer">Apply / read official notification</a>
-              <form th:if="${flags.student}" method="post" th:action="@{/desk/track}" style="display:inline">
-                <input type="hidden" name="kind" value="opportunity" />
-                <input type="hidden" name="refId" th:value="${job.id}" />
-                <input type="hidden" name="status" value="applied" />
-                <button class="btn btn-secondary" type="submit">I applied</button>
-              </form>
-              <form th:if="${flags.student}" method="post" th:action="@{/desk/track}" style="display:inline">
-                <input type="hidden" name="kind" value="opportunity" />
-                <input type="hidden" name="refId" th:value="${job.id}" />
-                <input type="hidden" name="status" value="watching" />
-                <button class="btn btn-secondary" type="submit">Track</button>
-              </form>
+              <th:block th:if="${flags.student and isStudent}">
+                <form method="post" th:action="@{/desk/track}" style="display:inline">
+                  <input type="hidden" name="kind" value="opportunity" />
+                  <input type="hidden" name="refId" th:value="${job.id}" />
+                  <input type="hidden" name="status" value="applied" />
+                  <button class="btn btn-secondary" type="submit">I applied</button>
+                </form>
+                <form method="post" th:action="@{/desk/track}" style="display:inline">
+                  <input type="hidden" name="kind" value="opportunity" />
+                  <input type="hidden" name="refId" th:value="${job.id}" />
+                  <input type="hidden" name="status" value="watching" />
+                  <button class="btn btn-secondary" type="submit">Track</button>
+                </form>
+              </th:block>
+              <a
+                class="btn btn-secondary"
+                th:if="${flags.student and !isStudent}"
+                th:href="@{/account/login(next=${'/jobs/' + job.id})}"
+                >Sign in to track</a
+              >
             </div>
+            <p class="muted small" th:if="${flags.student and isStudent}">I applied is your own note. This site does not apply for you.</p>
             <p class="muted small" th:if="${job.officialUrl != null and !#strings.isEmpty(#strings.trim(job.officialUrl)) and !#strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://')}">This official link is not https, so it is not shown.</p>
             <p class="muted small" th:if="${job.status == 'closed'}">This window is closed.</p>
             <p class="muted small" th:if="${(job.status == 'open' or job.status == 'closing_soon') and job.officialUrl != null and #strings.startsWith(#strings.toLowerCase(job.officialUrl), 'https://')}">You will leave this site. Apply only on the official organisation website.</p>
@@ -49,7 +58,7 @@
                 <div><dt>Location</dt><dd th:text="${job.location} ?: '—'">—</dd></div>
                 <div><dt>Sector</dt><dd th:text="${job.sector} ?: '—'">—</dd></div>
                 <div><dt>Vacancies</dt><dd th:text="${job.vacancies} ?: 'Not specified'">—</dd></div>
-                <div><dt>Qualification</dt><dd th:text="${qualLabel[job.qualification] ?: (job.qualification ?: '—')}">—</dd></div>
+                <div><dt>Qualification</dt><dd th:text="${job.qualification == null or #strings.isEmpty(job.qualification)} ? '—' : (${qualLabel[job.qualification] ?: job.qualification})">—</dd></div>
                 <div><dt>Last date</dt><dd th:text="${job.lastDate} ?: '—'">—</dd></div>
                 <div><dt>Notification</dt><dd th:text="${job.notificationDate} ?: '—'">—</dd></div>
               </dl>

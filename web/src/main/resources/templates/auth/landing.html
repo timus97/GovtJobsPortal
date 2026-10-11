@@ -49,6 +49,7 @@
                 >Create account</a
               >
             </div>
+            <input type="hidden" name="next" th:if="${next != null}" th:value="${next}" />
             <h2 th:text="${register} ? 'Create an account' : 'Welcome back'">Welcome back</h2>
             <p class="muted" th:if="${register}">
               Email + password (at least 10 characters). No email verification in this version.

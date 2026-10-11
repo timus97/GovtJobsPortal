@@ -38,6 +38,12 @@
   border: 0;
   cursor: pointer;
   font: inherit;
+  text-decoration: none;
+}
+
+.desk-filters .chip-selected {
+  background: var(--navy);
+  color: #fff;
 }
 
 .desk-list {

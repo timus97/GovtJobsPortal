@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.security.PasswordService;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.flywaydb.core.Flyway;
@@ -168,6 +169,14 @@ class StudentStoreMoreTest {
         assertThat(((Number) stats.get("upcoming")).intValue()).isGreaterThanOrEqualTo(1);
         assertThat(store.listItems(id, "applied").get("total")).isEqualTo(1);
         assertThat(store.listItems(id, "watching").get("total")).isEqualTo(1);
+        Map<String, Object> noneDone = store.listItems(id, "done");
+        assertThat(noneDone.get("total")).isEqualTo(0);
+        @SuppressWarnings("unchecked")
+        Map<String, Long> counts = (Map<String, Long>) noneDone.get("counts");
+        assertThat(counts.get("all")).isEqualTo(2L);
+        assertThat(counts.get("applied")).isEqualTo(1L);
+        assertThat(counts.get("watching")).isEqualTo(1L);
+        assertThat(counts.get("done")).isEqualTo(0L);
 
         assertThat(store.patchItem(id, "missing-item", Map.of("notes", "x"))).isNull();
         Map<String, Object> patched = store.patchItem(id, customId, null);
@@ -199,10 +208,19 @@ class StudentStoreMoreTest {
             Map<String, Object> first = store.createItem(id, Map.of("kind", "series", "refId", ref, "status", "watching"));
             assertThat(first.get("kind")).isEqualTo("series");
             assertThat(first.get("title")).isNotNull();
+            assertThat(first.get("repeated")).isEqualTo(false);
+            assertThat(String.valueOf(first.get("kindLabel")).toLowerCase()).doesNotContain("applied");
             Map<String, Object> same = store.createItem(id, Map.of("kind", "series", "refId", ref, "status", "watching"));
             assertThat(same.get("id")).isEqualTo(first.get("id"));
+            assertThat(same.get("repeated")).isEqualTo(true);
+            assertThat(same.get("statusChanged")).isEqualTo(false);
             Map<String, Object> moved = store.createItem(id, Map.of("kind", "series", "refId", ref, "status", "applied"));
             assertThat(moved.get("status")).isEqualTo("applied");
+            assertThat(moved.get("repeated")).isEqualTo(true);
+            assertThat(moved.get("statusChanged")).isEqualTo(true);
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> rows = (List<Map<String, Object>>) store.listItems(id, null).get("items");
+            assertThat(rows.stream().filter(row -> first.get("id").equals(row.get("id"))).count()).isEqualTo(1L);
             assertThat(store.patchItem(id, String.valueOf(first.get("id")), Map.of("title", "ignored", "board", "ignored"))
                     .get("kind")).isEqualTo("series");
         }

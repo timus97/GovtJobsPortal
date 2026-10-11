@@ -29,7 +29,7 @@ public final class DeskGuidance {
 
     public static final Map<String, String> KIND_LABELS = Map.of(
             "series", "Calendar",
-            "opportunity", "Job applied",
+            "opportunity", "Job",
             "custom", "Custom");
 
     public static LocalDate parseIsoDate(Object value) {
@@ -138,7 +138,7 @@ public final class DeskGuidance {
             return "Upload the admit card when the board releases it.";
         }
         if (("admit_ready".equals(status) || hasAdmit) && days != null && days > 0) {
-            return "Exam in " + days + " day" + (days == 1 ? "" : "s") + " — follow your plan.";
+            return "Exam in " + days + " day" + (days == 1 ? "" : "s") + ". The admit card is on file.";
         }
         if ("admit_ready".equals(status) && (days == null || days <= 0)) {
             return "Admit card is on file. Sit the paper, then mark Appeared.";

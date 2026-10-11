@@ -98,7 +98,7 @@ Dashboard list (title + days), desk detail stacked (next-step banner, download, 
 | --- | --- |
 | Disclaimer bar | All desk / mock / account pages |
 | Status chip | watching / applied / admit_ready / appeared / result_in / done |
-| Kind chip | Calendar / Job applied / Custom |
+| Kind chip | Calendar / Job / Custom |
 | Days-left block | Large number + caption |
 | Next-step banner | Saffron soft, one sentence |
 | File tile | Label, filename or “Upload”, Download/Replace |

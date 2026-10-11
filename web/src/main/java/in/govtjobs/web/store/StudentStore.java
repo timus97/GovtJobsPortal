@@ -217,23 +217,35 @@ public class StudentStore {
     }
 
     public Map<String, Object> listItems(String studentId, String status) {
-        List<Object> args = new ArrayList<>();
-        args.add(studentId);
-        String sql = "SELECT * FROM desk_items WHERE student_id = ?";
-        if (status != null && !status.isBlank()) {
-            if (!DeskGuidance.STATUSES.contains(status)) {
-                throw new StoreException("VALIDATION", "invalid status");
-            }
-            sql += " AND status = ?";
-            args.add(status);
+        String filter = status == null || status.isBlank() ? null : status;
+        if (filter != null && !DeskGuidance.STATUSES.contains(filter)) {
+            throw new StoreException("VALIDATION", "invalid status");
         }
-        List<Map<String, Object>> items = jdbc.query(sql, ITEM, args.toArray());
+        List<Map<String, Object>> items = jdbc.query(
+                "SELECT * FROM desk_items WHERE student_id = ?", ITEM, studentId);
         Map<String, List<Map<String, Object>>> filesByItem = filesForStudent(studentId);
-        List<Map<String, Object>> decorated = new ArrayList<>();
+        List<Map<String, Object>> all = new ArrayList<>();
         for (Map<String, Object> item : items) {
-            decorated.add(decorate(item, filesByItem.getOrDefault(String.valueOf(item.get("id")), List.of())));
+            all.add(decorate(item, filesByItem.getOrDefault(String.valueOf(item.get("id")), List.of())));
         }
-        decorated.sort(Comparator.comparingInt(StudentStore::sortKey));
+        all.sort(Comparator.comparingInt(StudentStore::sortKey));
+        List<Map<String, Object>> shown = new ArrayList<>();
+        for (Map<String, Object> item : all) {
+            if (filter == null || filter.equals(item.get("status"))) {
+                shown.add(item);
+            }
+        }
+        Map<String, Long> counts = new LinkedHashMap<>();
+        counts.put("all", (long) all.size());
+        for (String code : DeskGuidance.STATUSES) {
+            long n = 0;
+            for (Map<String, Object> item : all) {
+                if (code.equals(item.get("status"))) {
+                    n++;
+                }
+            }
+            counts.put(code, n);
+        }
         Long mocks = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM mock_attempts WHERE student_id = ? AND submitted_at IS NOT NULL",
                 Long.class,
@@ -241,15 +253,15 @@ public class StudentStore {
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put(
                 "upcoming",
-                decorated.stream()
+                all.stream()
                         .filter(i -> i.get("daysLeft") instanceof Number n && n.intValue() >= 0)
                         .count());
         stats.put(
                 "admitPending",
-                decorated.stream()
+                all.stream()
                         .filter(i -> "applied".equals(i.get("status")) && !Boolean.TRUE.equals(i.get("hasAdmit")))
                         .count());
-        Object nearest = decorated.stream()
+        Object nearest = all.stream()
                 .map(i -> i.get("daysLeft"))
                 .filter(Number.class::isInstance)
                 .map(n -> ((Number) n).intValue())
@@ -259,8 +271,9 @@ public class StudentStore {
         stats.put("nearestDays", nearest);
         stats.put("mocksCompleted", mocks == null ? 0 : mocks);
         Map<String, Object> out = new LinkedHashMap<>();
-        out.put("items", decorated);
-        out.put("total", decorated.size());
+        out.put("items", shown);
+        out.put("total", shown.size());
+        out.put("counts", counts);
         out.put("stats", stats);
         return out;
     }
@@ -303,7 +316,8 @@ public class StudentStore {
             }
             Map<String, Object> existing = findByRef(studentId, kind, refId);
             if (existing != null) {
-                if (!status.equals(existing.get("status"))) {
+                boolean changed = !status.equals(existing.get("status"));
+                if (changed) {
                     jdbc.update(
                             "UPDATE desk_items SET status = ?, updated_at = ? WHERE id = ?",
                             status,
@@ -311,7 +325,10 @@ public class StudentStore {
                             existing.get("id"));
                     existing.put("status", status);
                 }
-                return decorate(existing, filesForItem(String.valueOf(existing.get("id"))));
+                Map<String, Object> again = decorate(existing, filesForItem(String.valueOf(existing.get("id"))));
+                again.put("repeated", true);
+                again.put("statusChanged", changed);
+                return again;
             }
         }
         String title = trimToNull(body.get("title"));
@@ -360,7 +377,12 @@ public class StudentStore {
                 Timestamp.from(now),
                 Timestamp.from(now));
         log.info("desk.item_created id={} kind={} student={}", id, kind, studentId);
-        return getItem(studentId, id);
+        Map<String, Object> created = getItem(studentId, id);
+        if (created != null) {
+            created.put("repeated", false);
+            created.put("statusChanged", false);
+        }
+        return created;
     }
 
     public Map<String, Object> patchItem(String studentId, String id, Map<String, Object> patch) {
@@ -456,7 +478,10 @@ public class StudentStore {
         Files.createDirectories(dest.getParent());
         unlinkKindFiles(studentId, itemId, kind);
         Files.write(dest, bytes);
-        StudentFilePaths.restrictOwnerReadWrite(dest);
+        boolean ownerOnly = StudentFilePaths.restrictOwnerReadWrite(dest);
+        if (!ownerOnly) {
+            log.warn("desk.file_not_owner_only item={} kind={}", itemId, kind);
+        }
         Instant now = Instant.now();
         String fileId = UUID.randomUUID().toString();
         String name = sanitizeName(originalName, kind, ext);

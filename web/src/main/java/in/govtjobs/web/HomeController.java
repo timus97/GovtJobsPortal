@@ -1,6 +1,7 @@
 package in.govtjobs.web;
 
 import in.govtjobs.web.config.FeatureFlags;
+import in.govtjobs.web.security.ReturnTo;
 import in.govtjobs.web.security.SessionCookies;
 import in.govtjobs.web.store.PasswordResetService;
 import in.govtjobs.web.store.StoreException;
@@ -44,7 +45,7 @@ public class HomeController {
             Model model) {
         boolean register = "register".equalsIgnoreCase(tab);
         model.addAttribute("register", register);
-        model.addAttribute("next", next);
+        model.addAttribute("next", ReturnTo.sanitize(next));
         model.addAttribute("notice", error != null ? "Email or password is not correct." : null);
         return "auth/landing";
     }
@@ -75,15 +76,18 @@ public class HomeController {
     public String login(
             @RequestParam String email,
             @RequestParam String password,
+            @RequestParam(required = false) String next,
             HttpServletResponse response,
             Model model) {
         if (!flags.isStudent()) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             return "error";
         }
+        String back = ReturnTo.sanitize(next);
         var student = students.verify(email, password);
         if (student == null) {
             model.addAttribute("register", false);
+            model.addAttribute("next", back);
             model.addAttribute("notice", "Email or password is not correct.");
             return "auth/landing";
         }
@@ -92,7 +96,7 @@ public class HomeController {
                 String.valueOf(student.get("id")),
                 String.valueOf(student.get("email")),
                 students.sessionEpoch(String.valueOf(student.get("id"))));
-        return "redirect:/match";
+        return back == null ? "redirect:/match" : "redirect:" + back;
     }
 
     @PostMapping("/account/logout")

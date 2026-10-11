@@ -21,7 +21,7 @@
           <label class="field">
             <span>Status</span>
             <select name="status">
-              <option th:each="st : ${ {'watching','applied','admit_ready','appeared','result_in','done'} }" th:value="${st}" th:text="${st}" th:selected="${item.status == st}"></option>
+              <option th:each="st : ${deskStatuses}" th:value="${st}" th:text="${deskStatusLabel.get(st)}" th:selected="${item.status == st}"></option>
             </select>
           </label>
           <label class="field"><span>Exam date</span><input type="date" name="examDate" th:value="${item.examDate}" /></label>
@@ -33,10 +33,11 @@
         <div class="desk-file-grid">
           <form class="panel desk-file" method="post" th:action="@{/desk/{id}/files/admit(id=${item.id})}" enctype="multipart/form-data">
             <h2>Admit card</h2>
+            <p class="field-hint">PDF, JPEG, or PNG. 5 MB at most.</p>
             <p th:if="${item.hasAdmit}">
               <a th:href="@{/desk/{id}/files/admit(id=${item.id})}">Download admit card</a>
             </p>
-            <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required />
+            <label class="field"><span>Admit card</span><input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required /></label>
             <button class="btn btn-secondary" type="submit">Upload</button>
           </form>
           <form class="panel" method="post" th:if="${item.hasAdmit}" th:action="@{/desk/{id}/files/admit/delete(id=${item.id})}">
@@ -44,8 +45,9 @@
           </form>
           <form class="panel desk-file" method="post" th:action="@{/desk/{id}/files/result(id=${item.id})}" enctype="multipart/form-data">
             <h2>Result</h2>
+            <p class="field-hint">PDF, JPEG, or PNG. 5 MB at most.</p>
             <p th:if="${item.hasResult}"><a th:href="@{/desk/{id}/files/result(id=${item.id})}">Download result</a></p>
-            <input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required />
+            <label class="field"><span>Result</span><input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required /></label>
             <button class="btn btn-secondary" type="submit">Upload</button>
           </form>
           <form class="panel" method="post" th:if="${item.hasResult}" th:action="@{/desk/{id}/files/result/delete(id=${item.id})}">

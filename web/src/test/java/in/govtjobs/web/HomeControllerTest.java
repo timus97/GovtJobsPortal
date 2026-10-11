@@ -4,8 +4,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -47,6 +49,27 @@ class HomeControllerTest {
         mvc.perform(post("/account/register").with(csrf()).param("email", "not-an-email").param("password", "short"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Password")));
+    }
+
+    @Test
+    void loginReturnsToASafeJobPath() throws Exception {
+        String email = "return-" + UUID.randomUUID() + "@example.com";
+        mvc.perform(post("/account/register").with(csrf()).param("email", email).param("password", "password1234"))
+                .andExpect(status().is3xxRedirection());
+        mvc.perform(post("/account/login")
+                        .with(csrf())
+                        .param("email", email)
+                        .param("password", "password1234")
+                        .param("next", "/jobs/321c05e538ceea7a"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/jobs/321c05e538ceea7a"));
+        mvc.perform(post("/account/login")
+                        .with(csrf())
+                        .param("email", email)
+                        .param("password", "password1234")
+                        .param("next", "https://evil.example/jobs/a"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/match"));
     }
 
     @Test

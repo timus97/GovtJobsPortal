@@ -16,15 +16,17 @@
             <div class="panel desk-stat"><strong th:text="${desk.stats.nearestDays} ?: '—'">—</strong><span>Nearest days</span></div>
           </div>
           <div class="desk-filters">
-            <a class="chip" href="/dashboard">All</a>
-            <a class="chip" href="/dashboard?status=watching">Watching</a>
-            <a class="chip" href="/dashboard?status=applied">Applied</a>
-            <a class="chip" href="/dashboard?status=admit_ready">Admit ready</a>
-            <a class="chip" href="/dashboard?status=appeared">Appeared</a>
-            <a class="chip" href="/dashboard?status=result_in">Result in</a>
-            <a class="chip" href="/dashboard?status=done">Done</a>
+            <a th:href="@{/dashboard}" th:class="${status == ''} ? 'chip chip-selected' : 'chip'" th:attr="aria-current=${status == ''} ? 'page' : null">All <span th:text="${desk.counts.get('all')}">0</span></a>
+            <a
+              th:each="st : ${deskStatuses}"
+              th:href="@{/dashboard(status=${st})}"
+              th:class="${status == st} ? 'chip chip-selected' : 'chip'"
+              th:attr="aria-current=${status == st} ? 'page' : null"
+              ><span th:text="${deskStatusLabel.get(st)}">Watching</span> <span th:text="${desk.counts.get(st)}">0</span></a
+            >
           </div>
-          <p class="empty panel" th:if="${desk.total == 0}">Nothing on the desk yet. Track a job or calendar, or add a custom exam.</p>
+          <p class="empty panel" th:if="${desk.total == 0 and status == ''}">Nothing on the desk yet. Track a job or calendar, or add a custom exam.</p>
+          <p class="empty panel" th:if="${desk.total == 0 and status != ''}">None are in that state.</p>
           <div class="desk-list">
             <a class="panel desk-card" th:each="item : ${desk.items}" th:href="@{/desk/{id}(id=${item.id})}">
               <div>
