@@ -161,6 +161,10 @@ public final class EligibilityFacts {
         if (haveNorm == null || "experience".equals(haveNorm)) {
             return "unknown";
         }
+        // ITI matches only an ITI floor. It is not above or below any other rung.
+        if ("iti".equals(haveNorm) || "iti".equals(needNorm)) {
+            return haveNorm.equals(needNorm) ? "pass" : "unknown";
+        }
         return EDUCATION_ORDINAL.get(haveNorm) >= EDUCATION_ORDINAL.get(needNorm) ? "pass" : "fail";
     }
 
@@ -392,7 +396,7 @@ public final class EligibilityFacts {
             disciplineRequired = known != null ? known : String.valueOf(disciplineRaw);
         }
         String genderRequired = normalizeGender(opp.get("genderRequired"));
-        boolean domicileRequired = Boolean.TRUE.equals(boolOrNull(opp.get("domicileRequired")));
+        Boolean domicileRequired = boolOrNull(opp.get("domicileRequired"));
         List<String> domicileStates = asStringArray(opp.get("domicileStates"));
         Boolean pwbdAllowed = boolOrNull(opp.get("pwbdAllowed"));
         List<String> pwbdCategories = null;
@@ -478,7 +482,7 @@ public final class EligibilityFacts {
         out.put("minEducation", null);
         out.put("disciplineRequired", null);
         out.put("genderRequired", null);
-        out.put("domicileRequired", false);
+        out.put("domicileRequired", null);
         out.put("domicileStates", List.of());
         out.put("pwbdAllowed", null);
         out.put("pwbdCategories", null);

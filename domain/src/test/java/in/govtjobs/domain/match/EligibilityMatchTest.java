@@ -334,7 +334,7 @@ class EligibilityMatchTest {
                                 .orElseThrow(),
                         "category")
                 .get("outcome"))
-                .isEqualTo("pass");
+                .isEqualTo("unknown");
     }
 
     @Test

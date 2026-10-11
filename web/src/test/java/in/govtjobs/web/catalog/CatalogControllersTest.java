@@ -77,7 +77,7 @@ class CatalogControllersTest {
         when(students.getProfile("stu-1")).thenReturn(null);
         MatchController controller = new MatchController(students, jobs, new CurrentStudent(students));
         ExtendedModelMap incomplete = new ExtendedModelMap();
-        assertThat(controller.match(student(), incomplete)).isEqualTo("catalog/match");
+        assertThat(controller.match(student(), null, incomplete)).isEqualTo("catalog/match");
         assertThat(incomplete.getAttribute("complete")).isEqualTo(false);
 
         Map<String, Object> profile = new LinkedHashMap<>();
@@ -91,11 +91,52 @@ class CatalogControllersTest {
         opportunity.put("officialUrl", "https://ssc.gov.in/");
         when(jobs.getOpportunities()).thenReturn(List.of(opportunity));
         ExtendedModelMap scored = new ExtendedModelMap();
-        assertThat(controller.match(student(), scored)).isEqualTo("catalog/match");
+        assertThat(controller.match(student(), null, scored)).isEqualTo("catalog/match");
         assertThat(scored.getAttribute("complete")).isEqualTo(true);
         assertThat(scored.getAttribute("matches")).isNotNull();
         assertThat(scored.getAttribute("excluded")).isNotNull();
+        assertThat(scored.getAttribute("closedMatches")).isNotNull();
         assertThat(scored.getAttribute("verifyBadge")).isNotNull();
+    }
+
+    @Test
+    void matchSplitsClosedWindowsFromPersonalFails() {
+        StudentStore students = mock(StudentStore.class);
+        JobStore jobs = mock(JobStore.class);
+        when(students.findInternalById("stu-1")).thenReturn(Map.of("id", "stu-1"));
+        Map<String, Object> profile = new LinkedHashMap<>();
+        profile.put("reservationCategory", "UR");
+        profile.put("dob", "2000-01-01");
+        profile.put("highestEducation", "12th");
+        when(students.getProfile("stu-1")).thenReturn(profile);
+
+        Map<String, Object> past = new LinkedHashMap<>();
+        past.put("id", "past-1");
+        past.put("title", "Closed walk-in");
+        past.put("officialUrl", "https://ssc.gov.in/past");
+        past.put("lastDate", "2020-01-15");
+        past.put("minEducation", "graduate");
+
+        Map<String, Object> futureFail = new LinkedHashMap<>();
+        futureFail.put("id", "edu-1");
+        futureFail.put("title", "Graduate only");
+        futureFail.put("officialUrl", "https://ssc.gov.in/edu");
+        futureFail.put("lastDate", "2027-12-01");
+        futureFail.put("minEducation", "graduate");
+        when(jobs.getOpportunities()).thenReturn(List.of(past, futureFail));
+
+        MatchController controller = new MatchController(students, jobs, new CurrentStudent(students));
+        ExtendedModelMap model = new ExtendedModelMap();
+        assertThat(controller.match(student(), null, model)).isEqualTo("catalog/match");
+        assertThat(model.getAttribute("showClosed")).isEqualTo(false);
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> closedMatches =
+                (List<Map<String, Object>>) model.getAttribute("closedMatches");
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> excluded = (List<Map<String, Object>>) model.getAttribute("excluded");
+        assertThat(closedMatches).extracting(row -> row.get("id")).containsExactly("past-1");
+        assertThat(excluded).extracting(row -> row.get("id")).containsExactly("edu-1");
     }
 
     private static UsernamePasswordAuthenticationToken student() {
