@@ -39,7 +39,7 @@
                 <option value="">Not specified</option>
                 <option th:each="d : ${ {'any','engineering','commerce','arts','science','law','medical'} }" th:value="${d}" th:text="${d}" th:selected="${profile['educationDiscipline'] == d}"></option>
               </select>
-              <span class="field-hint">Leaving this blank means a notice that names a discipline is not checked.</span>
+              <span class="field-hint">Blank or Any means a notice that names a discipline is not checked.</span>
             </label>
             <label class="field">
               <span>Reservation category *</span>

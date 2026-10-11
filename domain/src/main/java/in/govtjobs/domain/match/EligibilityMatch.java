@@ -117,6 +117,9 @@ public final class EligibilityMatch {
                 reasons.add(reason("education", "pass", "Education meets typical " + minEducation + " floor"));
             } else if ("fail".equals(cmp)) {
                 reasons.add(reason("education", "fail", "Typical floor is " + minEducation));
+            } else if (itiVersusOtherRung(profile.get("highestEducation"), minEducation)) {
+                reasons.add(reason(
+                        "education", "unknown", itiUnknownDetail(profile.get("highestEducation"), minEducation)));
             } else {
                 reasons.add(reason(
                         "education",

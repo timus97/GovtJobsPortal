@@ -89,11 +89,11 @@
               </form>
             </aside>
             <div>
-              <p class="empty panel" th:if="${result.total == 0 and query.status() == null}">
+              <p class="empty panel" th:if="${result.total == 0 and query.status() == null and statusCounts['closed'] > 0}">
                 Closed notices are hidden.
                 <a th:href="@{/jobs(status='closed', q=${query.q()}, hasExam=${query.hasExam()}, orgType=${query.orgType()}, sector=${query.sector()}, qualification=${query.qualification()}, selectionProcess=${query.selectionProcess()}, location=${query.location()}, sort=${query.sort()})}">Show closed</a>
               </p>
-              <p class="empty panel" th:if="${result.total == 0 and query.status() != null}">No jobs match these filters.</p>
+              <p class="empty panel" th:if="${result.total == 0 and (query.status() != null or statusCounts['closed'] == 0)}">No jobs match these filters.</p>
               <div class="job-grid">
                 <article class="job-card" th:each="job : ${result.items}">
                   <div class="job-card-top">
