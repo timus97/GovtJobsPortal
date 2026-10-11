@@ -39,6 +39,7 @@
                 <option value="">Not specified</option>
                 <option th:each="d : ${ {'any','engineering','commerce','arts','science','law','medical'} }" th:value="${d}" th:text="${d}" th:selected="${profile['educationDiscipline'] == d}"></option>
               </select>
+              <span class="field-hint">Leaving this blank means a notice that names a discipline is not checked.</span>
             </label>
             <label class="field">
               <span>Reservation category *</span>
@@ -74,6 +75,7 @@
                 <option value="female" th:selected="${profile['gender'] == 'female'}">Female</option>
                 <option value="other" th:selected="${profile['gender'] == 'other'}">Other</option>
               </select>
+              <span class="field-hint">Leaving this blank means a notice that names a gender is not checked.</span>
             </label>
             <label class="field">
               <span>PwBD</span>

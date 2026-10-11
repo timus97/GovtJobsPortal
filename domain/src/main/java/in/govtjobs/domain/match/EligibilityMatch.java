@@ -99,7 +99,8 @@ public final class EligibilityMatch {
         row.put("confidence", confidence);
         row.put("reasons", reasons);
         row.put("fails", fails);
-        row.put("lowConfidence", fails == 0 && confidence < LOW_CONFIDENCE);
+        boolean anyUnknown = reasons.stream().anyMatch(r -> "unknown".equals(r.get("outcome")));
+        row.put("lowConfidence", fails == 0 && anyUnknown);
         row.put("_closeSortKey", closeSortKey(extracted));
         return row;
     }
@@ -221,6 +222,9 @@ public final class EligibilityMatch {
         Object have = EligibilityFacts.normalizeQualification(profile.get("highestEducation"));
         if (have == null) have = profile.get("highestEducation");
         if ("unknown".equals(outcome)) {
+            if (itiVersusOtherRung(profile.get("highestEducation"), required)) {
+                return reason("education", "unknown", itiUnknownDetail(profile.get("highestEducation"), required));
+            }
             return reason("education", "unknown", "Education requirement not parsed — verify on official site");
         }
         if ("pass".equals(outcome)) {
@@ -231,26 +235,40 @@ public final class EligibilityMatch {
 
     static Map<String, Object> evaluateDiscipline(Map<String, Object> profile, Map<String, Object> extracted) {
         Object required = extracted.get("disciplineRequired");
-        if (required == null || "".equals(required) || "any".equals(required)) {
+        String requiredText = required == null ? "" : String.valueOf(required).trim();
+        if (requiredText.isEmpty()) {
+            return reason("discipline", "unknown", "Discipline not listed — verify on official site");
+        }
+        String known = EligibilityFacts.normalizeDiscipline(requiredText);
+        if ("any".equals(known)) {
             return reason("discipline", "pass", "No discipline requirement");
         }
-        String known = EligibilityFacts.normalizeDiscipline(required);
         if (known == null) {
             return reason("discipline", "unknown", "Discipline requirement not parsed — verify on official site");
         }
         String have = EligibilityFacts.normalizeDiscipline(profile.get("educationDiscipline"));
-        if ("any".equals(have) || known.equals(have)) {
-            return reason("discipline", "pass", (have == null ? "any" : have) + " matches " + known);
+        if (have == null || "any".equals(have)) {
+            return reason(
+                    "discipline",
+                    "unknown",
+                    "Profile did not name " + known + " — verify on official site");
         }
-        if (have == null) {
-            return reason("discipline", "fail", "Required " + known + "; profile discipline missing");
+        if (known.equals(have)) {
+            return reason("discipline", "pass", have + " matches " + known);
         }
         return reason("discipline", "fail", "Required " + known + "; profile has " + have);
     }
 
     static Map<String, Object> evaluateDomicile(Map<String, Object> profile, Map<String, Object> extracted) {
-        if (!Boolean.TRUE.equals(extracted.get("domicileRequired"))) {
+        Object flag = extracted.get("domicileRequired");
+        if (flag == null) {
+            return reason("domicile", "unknown", "Domicile not listed — verify on official site");
+        }
+        if (Boolean.FALSE.equals(flag)) {
             return reason("domicile", "pass", "No domicile restriction");
+        }
+        if (!Boolean.TRUE.equals(flag)) {
+            return reason("domicile", "unknown", "Domicile not listed — verify on official site");
         }
         List<String> required = EligibilityFacts.asStringArray(extracted.get("domicileStates")).stream()
                 .map(s -> s.toUpperCase(Locale.ROOT))
@@ -285,14 +303,17 @@ public final class EligibilityMatch {
     static Map<String, Object> evaluateGender(Map<String, Object> profile, Map<String, Object> extracted) {
         String required = EligibilityFacts.normalizeGender(extracted.get("genderRequired"));
         if (required == null) {
-            return reason("gender", "pass", "No gender restriction");
+            return reason("gender", "unknown", "Gender restriction not listed — verify on official site");
         }
         String have = EligibilityFacts.normalizeGender(profile.get("gender"));
+        if (have == null) {
+            return reason(
+                    "gender",
+                    "unknown",
+                    "This post requires " + required + "; profile gender is not listed — verify on official site");
+        }
         if (required.equals(have)) {
             return reason("gender", "pass", "Matches " + required + "-only requirement");
-        }
-        if (have == null) {
-            return reason("gender", "fail", "This post requires " + required + "; profile gender is missing");
         }
         return reason("gender", "fail", "This post requires " + required + "; profile gender is " + have);
     }
@@ -357,19 +378,41 @@ public final class EligibilityMatch {
         List<String> listed = extracted.get("openToCategories") instanceof List<?> l
                 ? l.stream().map(String::valueOf).toList()
                 : null;
-        if (listed == null && !Boolean.TRUE.equals(extracted.get("reservedOnly"))) {
+        Object reservedFlag = extracted.get("reservedOnly");
+        if (listed == null && reservedFlag == null) {
+            return reason("category", "unknown", "Category restriction not listed — verify on official site");
+        }
+        if (listed == null && Boolean.FALSE.equals(reservedFlag)) {
             return reason("category", "pass", "No reserved-only restriction listed");
         }
-        if (Boolean.TRUE.equals(extracted.get("reservedOnly")) && listed == null) {
+        if (listed == null && Boolean.TRUE.equals(reservedFlag)) {
             return reason("category", "unknown", "Reserved-only listed without categories — verify on official site");
         }
-        if (listed != null && listed.contains(have)) {
+        if (listed == null) {
+            return reason("category", "unknown", "Category restriction not listed — verify on official site");
+        }
+        if (listed.contains(have)) {
             return reason("category", "pass", have + " is in the listed categories");
         }
         return reason(
                 "category",
                 "fail",
-                "Open to " + (listed == null ? "" : String.join(", ", listed)) + " only; profile is " + have);
+                "Open to " + String.join(", ", listed) + " only; profile is " + have);
+    }
+
+    private static boolean itiVersusOtherRung(Object have, Object need) {
+        String haveNorm = EligibilityFacts.normalizeQualification(have);
+        String needNorm = EligibilityFacts.normalizeQualification(need);
+        if (haveNorm == null || needNorm == null || "experience".equals(haveNorm) || "experience".equals(needNorm)) {
+            return false;
+        }
+        return "iti".equals(haveNorm) != "iti".equals(needNorm);
+    }
+
+    private static String itiUnknownDetail(Object have, Object need) {
+        String haveNorm = EligibilityFacts.normalizeQualification(have);
+        String needNorm = EligibilityFacts.normalizeQualification(need);
+        return haveNorm + " is not compared to " + needNorm + " — verify on official site";
     }
 
     private static Boolean postAllowsPwbd(Map<String, Object> post, String category) {

@@ -7,9 +7,10 @@
     <main class="main">
       <div class="section">
         <div class="container">
+          <p class="match-banner" th:if="${error}" th:text="${error}"></p>
           <div class="match-banner panel" th:unless="${complete}">
             <h1>Complete your profile to match</h1>
-            <p class="muted">Date of birth, highest education, reservation category, and states are required. This is not an official eligibility decision.</p>
+            <p class="muted">Date of birth, highest education, and reservation category are required. This is not an official eligibility decision.</p>
             <a class="btn btn-primary" href="/profile">Open profile</a>
           </div>
           <th:block th:if="${complete}">
@@ -17,10 +18,13 @@
               <div>
                 <h1>Matches from your profile</h1>
                 <p class="muted">Not an official eligibility decision. Unknown facts lower confidence; they do not fail a row.</p>
+                <p class="muted" th:if="${ageNotChecked}">Age was not checked. These notices have no age band on file.</p>
+                <p class="muted">A pass means a printed rule matched; unknown means that fact was not listed; unknown does not remove the row.</p>
               </div>
             </div>
             <h2>Ranked open windows</h2>
-            <div class="job-grid">
+            <p class="empty panel" th:if="${#lists.isEmpty(matches)}">No open windows matched. <a href="/jobs">Search jobs</a>.</p>
+            <div class="job-grid" th:unless="${#lists.isEmpty(matches)}">
               <article class="job-card match-card" th:each="row : ${matches}">
                 <div class="badge-row">
                   <span class="badge badge-warn" th:if="${row.lowConfidence}" th:text="${verifyBadge}">verify</span>
@@ -37,16 +41,43 @@
                 </div>
               </article>
             </div>
-            <h2 style="margin-top:2rem">Did not match</h2>
-            <div class="job-grid">
-              <article class="job-card match-card" th:each="row : ${excluded}">
-                <span class="badge badge-muted">Did not match</span>
-                <h3 class="job-title" th:text="${row.title}">Title</h3>
-                <div class="chip-row">
-                  <span th:each="r : ${row.reasons}" th:class="'chip chip-' + ${r.outcome}" th:text="${r.detail}"></span>
-                </div>
-              </article>
-            </div>
+            <th:block th:if="${excluded != null and !#lists.isEmpty(excluded)}">
+              <h2 style="margin-top:2rem">Did not match</h2>
+              <div class="job-grid">
+                <article class="job-card match-card" th:each="row : ${excluded}">
+                  <span class="badge badge-muted">Did not match</span>
+                  <h3 class="job-title"><a th:href="@{/jobs/{id}(id=${row.id})}" th:text="${row.title}">Title</a></h3>
+                  <div class="chip-row">
+                    <span th:each="r : ${row.reasons}" th:class="'chip chip-' + ${r.outcome}" th:text="${r.detail}"></span>
+                  </div>
+                  <div class="job-card-actions">
+                    <a class="btn btn-secondary" th:href="@{/jobs/{id}(id=${row.id})}">View details</a>
+                    <a class="btn btn-primary" th:if="${row.officialUrl != null and #strings.startsWith(#strings.toLowerCase(row.officialUrl), 'https://')}" th:href="${row.officialUrl}" target="_blank" rel="noopener noreferrer">Official site</a>
+                  </div>
+                </article>
+              </div>
+            </th:block>
+            <th:block th:if="${closedMatches != null and !#lists.isEmpty(closedMatches)}">
+              <h2 style="margin-top:2rem" th:if="${showClosed}">Closed</h2>
+              <p class="muted" th:unless="${showClosed}">
+                <span th:text="${#lists.size(closedMatches)}">0</span> closed.
+                <a th:href="@{/match(closed=1)}">Show closed</a>
+              </p>
+              <div class="job-grid" th:if="${showClosed}">
+                <article class="job-card match-card" th:each="row : ${closedMatches}">
+                  <h3 class="job-title"><a th:href="@{/jobs/{id}(id=${row.id})}" th:text="${row.title}">Title</a></h3>
+                  <div class="chip-row">
+                    <th:block th:each="r : ${row.reasons}">
+                      <span th:if="${r.rule == 'status'}" th:class="'chip chip-' + ${r.outcome}" th:text="${r.detail}"></span>
+                    </th:block>
+                  </div>
+                  <div class="job-card-actions">
+                    <a class="btn btn-secondary" th:href="@{/jobs/{id}(id=${row.id})}">View details</a>
+                    <a class="btn btn-primary" th:if="${row.officialUrl != null and #strings.startsWith(#strings.toLowerCase(row.officialUrl), 'https://')}" th:href="${row.officialUrl}" target="_blank" rel="noopener noreferrer">Official site</a>
+                  </div>
+                </article>
+              </div>
+            </th:block>
           </th:block>
         </div>
       </div>
