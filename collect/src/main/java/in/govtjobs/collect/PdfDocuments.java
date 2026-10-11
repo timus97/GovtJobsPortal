@@ -25,10 +25,6 @@ public final class PdfDocuments {
     private static final Pattern VACANCY_RE = Pattern.compile(
             "(?:no\\.?\\s*of\\s*posts?|number of posts?|vacancies|vacancy)\\s*[:\\-]?\\s*(\\d{1,5})",
             Pattern.CASE_INSENSITIVE);
-    private static final Pattern NOTICE_LINE = Pattern.compile(
-            "recruitment|vacancy|vacancies|walk[\\s-]?in|apprentice|notification|advertisement|advt\\.?\\s*no|engagement|consultant",
-            Pattern.CASE_INSENSITIVE);
-
     public static String text(byte[] pdf) throws IOException {
         if (pdf == null || pdf.length == 0) {
             return "";
@@ -48,12 +44,22 @@ public final class PdfDocuments {
             title = titled.group(1).trim();
         }
         if (title == null) {
+            String loose = null;
             for (String line : raw.split("\\R")) {
                 String trimmed = line.trim();
-                if (NOTICE_LINE.matcher(trimmed).find() && trimmed.length() > 12 && trimmed.length() < 180) {
+                if (trimmed.length() <= 12 || trimmed.length() >= 180) {
+                    continue;
+                }
+                if (JobLinkQuality.matchesNoticeText(trimmed)) {
                     title = trimmed;
                     break;
                 }
+                if (loose == null && trimmed.length() < 160) {
+                    loose = trimmed;
+                }
+            }
+            if (title == null) {
+                title = loose;
             }
         }
         Integer vacancies = null;
@@ -79,6 +85,20 @@ public final class PdfDocuments {
             Files.write(file, pdf);
         }
         return file;
+    }
+
+    /** Plain text beside the cached PDF. A second write leaves the first extract in place. */
+    public static void storeText(Path root, byte[] pdf, String text) throws IOException {
+        if (text == null || text.isBlank()) {
+            return;
+        }
+        String hash = sha256(pdf);
+        Path dir = root.resolve("data").resolve("raw").resolve("pdfs");
+        Files.createDirectories(dir);
+        Path file = dir.resolve(hash.toLowerCase(Locale.ROOT) + ".txt");
+        if (!Files.exists(file)) {
+            Files.writeString(file, text);
+        }
     }
 
     public static String sha256(byte[] pdf) {

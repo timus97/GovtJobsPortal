@@ -38,6 +38,8 @@ class CollectOrchestratorProgressTest {
                 });
         assertThat(seen).containsExactly("start:demo_board", "done:demo_board");
         assertThat(outcome.sources()).hasSize(1);
+        assertThat(outcome.sources().get(0).kind()).isEqualTo(SourceRunKind.EMPTY);
         assertThat(outcome.usable()).isFalse();
+        assertThat(Files.isDirectory(root.resolve("data/staging/demo_board"))).isFalse();
     }
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Date hints from notice text. Same labels as {@code scripts/collect/lib/dates.js}. */
+/** Date hints from notice text. Labeled last-date phrases only. */
 public final class NoticeDates {
 
     private NoticeDates() {}

@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Map;
 
-/** Display labels mirrored from client/src/utils/labels.js. */
+/** Display labels for organisation type, selection, and status. */
 public final class Labels {
 
     private Labels() {}

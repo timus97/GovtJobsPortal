@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import in.govtjobs.domain.RepoPaths;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.Path;
@@ -18,7 +17,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -29,17 +27,13 @@ class BuildJobsTest {
     private final String closing = LocalDate.now().plusDays(3).toString();
 
     @Test
-    void javaAndNodeAgreeOnAFrozenStagingSet(@TempDir Path root) throws Exception {
-        Path javaRoot = root.resolve("java");
-        Path nodeRoot = root.resolve("node");
-        scaffold(javaRoot);
-        scaffold(nodeRoot);
+    void frozenStagingSetPublishesTheCatalogRules(@TempDir Path root) throws Exception {
+        scaffold(root);
         Map<String, byte[]> live = snapshotLive();
         try {
-            runNode(nodeRoot, false);
-            BuildJobs.run(javaRoot, new BuildJobs.Options(false));
-            assertSameCatalog(javaRoot, nodeRoot);
-            assertFrozenRules(javaRoot);
+            BuildJobs.run(root, new BuildJobs.Options(false));
+            assertFrozenRules(root);
+            assertNoTemp(root);
         } finally {
             restoreIfChanged(live);
         }
@@ -47,16 +41,12 @@ class BuildJobsTest {
 
     @Test
     void replacePublishedDropsKeptRows(@TempDir Path root) throws Exception {
-        Path javaRoot = root.resolve("java");
-        Path nodeRoot = root.resolve("node");
-        scaffoldReplace(javaRoot);
-        scaffoldReplace(nodeRoot);
+        scaffoldReplace(root);
         Map<String, byte[]> live = snapshotLive();
         try {
-            runNode(nodeRoot, true);
-            BuildJobs.run(javaRoot, new BuildJobs.Options(true));
-            assertSameCatalog(javaRoot, nodeRoot);
-            assertThat(ids(read(javaRoot, "jobs.json"))).containsExactly("new-one");
+            BuildJobs.run(root, new BuildJobs.Options(true));
+            assertThat(ids(read(root, "jobs.json"))).containsExactly("new-one");
+            assertNoTemp(root);
         } finally {
             restoreIfChanged(live);
         }
@@ -87,15 +77,12 @@ class BuildJobsTest {
     @Test
     void corruptSeedIsIgnoredAndABrokenJsonFileFails(@TempDir Path root) throws Exception {
         Path javaRoot = root.resolve("java");
-        Path nodeRoot = root.resolve("node");
         scaffoldCorruptSeed(javaRoot);
-        scaffoldCorruptSeed(nodeRoot);
         Map<String, byte[]> live = snapshotLive();
         try {
-            runNode(nodeRoot, false);
             BuildJobs.run(javaRoot, new BuildJobs.Options(false));
-            assertSameCatalog(javaRoot, nodeRoot);
             assertThat(ids(read(javaRoot, "jobs.json"))).containsExactly("from-staging");
+            assertNoTemp(javaRoot);
         } finally {
             restoreIfChanged(live);
         }
@@ -109,6 +96,96 @@ class BuildJobsTest {
                 .isInstanceOf(Exception.class);
         assertThat(Files.readString(broken.resolve("data").resolve("processed").resolve("jobs.json")))
                 .isEqualTo("STAY");
+    }
+
+    @Test
+    void emptyNewestSnapshotFallsThroughToTheOlderNotices(@TempDir Path root) throws Exception {
+        Map<String, Object> arrayJob = curated(
+                "array-old", "Array keeper advt no 2", "Demo Board", "https://example.gov.in/advt/array-old", "2099-03-01");
+        arrayJob.put("sourceId", "array_board");
+        Map<String, Object> wrappedJob = curated(
+                "wrapped-old",
+                "Wrapped keeper advt no 3",
+                "Demo Board",
+                "https://example.gov.in/advt/wrapped-old",
+                "2099-03-02");
+        wrappedJob.put("sourceId", "wrapped_board");
+        Path arrayOlder = root.resolve("data/staging/array_board/older.json");
+        Path wrappedOlder = root.resolve("data/staging/wrapped_board/older.json");
+        writeJson(arrayOlder, List.of(arrayJob));
+        writeJson(wrappedOlder, List.of(wrappedJob));
+        Path arrayNewer = arrayOlder.resolveSibling("newer.json");
+        Path wrappedNewer = wrappedOlder.resolveSibling("newer.json");
+        Files.writeString(arrayNewer, "[]");
+        Files.writeString(wrappedNewer, "{\"records\":[]}");
+        Files.setLastModifiedTime(arrayOlder, FileTime.fromMillis(1_000));
+        Files.setLastModifiedTime(arrayNewer, FileTime.fromMillis(5_000));
+        Files.setLastModifiedTime(wrappedOlder, FileTime.fromMillis(1_000));
+        Files.setLastModifiedTime(wrappedNewer, FileTime.fromMillis(5_000));
+
+        BuildJobs.run(root, new BuildJobs.Options(false));
+        assertThat(ids(read(root, "jobs.json"))).contains("array-old", "wrapped-old");
+    }
+
+    @Test
+    void corruptNewestSnapshotStillFailsWhenAnOlderFileIsGood(@TempDir Path root) throws Exception {
+        Path processed = root.resolve("data/processed");
+        Files.createDirectories(processed);
+        Files.writeString(processed.resolve("jobs.json"), "STAY");
+        Map<String, Object> job = curated(
+                "still-there", "Still there advt no 4", "Demo Board", "https://example.gov.in/advt/still-there", "2099-04-01");
+        job.put("sourceId", "demo_board");
+        Path older = root.resolve("data/staging/demo_board/older.json");
+        writeJson(older, List.of(job));
+        Path newer = older.resolveSibling("newer.json");
+        Files.writeString(newer, "{");
+        Files.setLastModifiedTime(older, FileTime.fromMillis(1_000));
+        Files.setLastModifiedTime(newer, FileTime.fromMillis(5_000));
+
+        assertThatThrownBy(() -> BuildJobs.run(root, new BuildJobs.Options(false))).isInstanceOf(Exception.class);
+        assertThat(Files.readString(processed.resolve("jobs.json"))).isEqualTo("STAY");
+    }
+
+    @Test
+    void quarantinedSnapshotDoesNotDropPreviousPublishedJobs(@TempDir Path root) throws Exception {
+        Map<String, Object> keep = curated(
+                "keep-board", "Board keeper advt no 2", "Demo Board", "https://example.gov.in/advt/keep-board", "2099-01-01");
+        keep.put("sourceId", "demo_board");
+        keep.put("status", "open");
+        Map<String, Object> also = curated(
+                "also-board", "Board second advt no 3", "Demo Board", "https://example.gov.in/advt/also-board", "2099-02-01");
+        also.put("sourceId", "demo_board");
+        also.put("status", "open");
+        writeJson(root.resolve("data/processed/jobs.json"), List.of(keep, also));
+        Map<String, Object> dateless = curated(
+                "dateless-new", "Field surveyor advt no 11", "Demo Board", "https://example.gov.in/advt/surveyor-11", null);
+        dateless.put("collectorVersion", "html-scrape-v1");
+        dateless.put("sourceId", "demo_board");
+        dateless.put("sourceUrl", dateless.get("officialUrl"));
+        writeJson(root.resolve("data/staging/demo_board/new.json"), List.of(dateless));
+
+        BuildJobs.run(root, new BuildJobs.Options(false));
+        assertThat(ids(read(root, "jobs.json"))).contains("keep-board", "also-board").doesNotContain("dateless-new");
+    }
+
+    @Test
+    void publishedSnapshotStillReplacesThatSourcesPreviousJobs(@TempDir Path root) throws Exception {
+        Map<String, Object> keep = curated(
+                "keep-board", "Board keeper advt no 2", "Demo Board", "https://example.gov.in/advt/keep-board", "2099-01-01");
+        keep.put("sourceId", "demo_board");
+        keep.put("status", "open");
+        Map<String, Object> also = curated(
+                "also-board", "Board second advt no 3", "Demo Board", "https://example.gov.in/advt/also-board", "2099-02-01");
+        also.put("sourceId", "demo_board");
+        also.put("status", "open");
+        writeJson(root.resolve("data/processed/jobs.json"), List.of(keep, also));
+        Map<String, Object> fresh = curated(
+                "fresh-board", "Fresh recruitment advt no 8", "Demo Board", "https://example.gov.in/advt/fresh-board", "2099-06-01");
+        fresh.put("sourceId", "demo_board");
+        writeJson(root.resolve("data/staging/demo_board/new.json"), List.of(fresh));
+
+        BuildJobs.run(root, new BuildJobs.Options(false));
+        assertThat(ids(read(root, "jobs.json"))).contains("fresh-board").doesNotContain("keep-board", "also-board");
     }
 
     @Test
@@ -195,68 +272,6 @@ class BuildJobsTest {
         assertThat(report.get("droppedExam").asInt()).isEqualTo(2);
         assertThat(report.get("skippedCalendar").asInt()).isEqualTo(2);
         assertThat(report.get("deduped").asInt()).isEqualTo(2);
-    }
-
-    private void assertSameCatalog(Path javaRoot, Path nodeRoot) throws IOException {
-        JsonNode javaJobs = read(javaRoot, "jobs.json");
-        JsonNode nodeJobs = read(nodeRoot, "jobs.json");
-        assertThat(ids(javaJobs)).as("published ids").isEqualTo(ids(nodeJobs));
-        for (JsonNode job : javaJobs) {
-            JsonNode other = job(nodeJobs, job.get("id").asText());
-            for (String key : List.of(
-                    "status",
-                    "title",
-                    "organization",
-                    "orgType",
-                    "sector",
-                    "hasExam",
-                    "selectionProcess",
-                    "examSeriesId",
-                    "officialUrl",
-                    "sourceId")) {
-                assertThat(field(job, key)).as(job.get("id").asText() + " " + key).isEqualTo(field(other, key));
-            }
-        }
-
-        assertThat(quarantineKeys(read(javaRoot, "quarantine.json")))
-                .isEqualTo(quarantineKeys(read(nodeRoot, "quarantine.json")));
-        assertThat(ids(read(javaRoot, "exam_series.json")))
-                .isEqualTo(ids(read(nodeRoot, "exam_series.json")));
-        for (JsonNode series : read(javaRoot, "exam_series.json")) {
-            JsonNode other = job(read(nodeRoot, "exam_series.json"), series.get("id").asText());
-            for (String key : List.of("name", "board", "applyNever", "expectedExam", "minEducation", "officialUrl")) {
-                assertThat(field(series, key)).as(series.get("id").asText() + " " + key).isEqualTo(field(other, key));
-            }
-            assertThat(strings(series.get("linkedOpportunityIds")))
-                    .isEqualTo(strings(other.get("linkedOpportunityIds")));
-        }
-        for (String key : List.of(
-                "published",
-                "quarantine",
-                "droppedExam",
-                "skippedCalendar",
-                "keptPublished",
-                "examSeries",
-                "deduped",
-                "inputSeed",
-                "inputStaging",
-                "inputTotal",
-                "sourcesMonitored")) {
-            assertThat(read(javaRoot, "run-report.json").get(key).asInt())
-                    .as(key)
-                    .isEqualTo(read(nodeRoot, "run-report.json").get(key).asInt());
-        }
-        JsonNode javaStats = read(javaRoot, "stats.json");
-        JsonNode nodeStats = read(nodeRoot, "stats.json");
-        for (String key : List.of("total", "open", "closingSoon", "closed")) {
-            assertThat(javaStats.get(key).asInt()).as(key).isEqualTo(nodeStats.get(key).asInt());
-        }
-        for (String key : List.of("byOrgType", "bySector", "byStatus", "bySource", "bySelection")) {
-            assertThat(intMap(javaStats.get(key))).as(key).isEqualTo(intMap(nodeStats.get(key)));
-        }
-        assertThat(ids(read(javaRoot, "opportunities.json"))).isEqualTo(ids(javaJobs));
-        assertNoTemp(javaRoot);
-        assertNoTemp(nodeRoot);
     }
 
     private void scaffold(Path root) throws IOException {
@@ -600,24 +615,6 @@ class BuildJobsTest {
         mapper.writeValue(file.toFile(), value);
     }
 
-    private void runNode(Path dataRoot, boolean replace) throws Exception {
-        ProcessBuilder builder = new ProcessBuilder("node", "scripts/process/buildJobs.js");
-        builder.directory(RepoPaths.root().toFile());
-        builder.environment().put("BUILD_JOBS_DATA_ROOT", dataRoot.toAbsolutePath().toString());
-        if (replace) {
-            builder.environment().put("REPLACE_PUBLISHED", "1");
-        } else {
-            builder.environment().remove("REPLACE_PUBLISHED");
-        }
-        builder.redirectErrorStream(true);
-        Process process = builder.start();
-        String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-        int code = process.waitFor();
-        if (code != 0) {
-            throw new AssertionError("node buildJobs exited " + code + "\n" + output);
-        }
-    }
-
     private JsonNode read(Path root, String name) throws IOException {
         return mapper.readTree(root.resolve("data/processed").resolve(name).toFile());
     }
@@ -664,19 +661,6 @@ class BuildJobsTest {
         return "";
     }
 
-    private static List<String> quarantineKeys(JsonNode rows) {
-        List<String> keys = new ArrayList<>();
-        rows.forEach(row -> keys.add(row.path("reason").asText()
-                + "|"
-                + row.path("job").path("id").asText()
-                + "|"
-                + row.path("job").path("status").asText()
-                + "|"
-                + row.path("job").path("needsReview").asText()));
-        keys.sort(String::compareTo);
-        return keys;
-    }
-
     private static String field(JsonNode node, String name) {
         if (node == null) {
             return "";
@@ -697,14 +681,6 @@ class BuildJobsTest {
             node.forEach(item -> out.add(item.asText()));
         }
         out.sort(String::compareTo);
-        return out;
-    }
-
-    private static Map<String, Integer> intMap(JsonNode node) {
-        Map<String, Integer> out = new TreeMap<>();
-        if (node != null) {
-            node.fields().forEachRemaining(entry -> out.put(entry.getKey(), entry.getValue().asInt()));
-        }
         return out;
     }
 

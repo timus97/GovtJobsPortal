@@ -13,9 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class CatalogCollectService {
     public record Start(boolean started, String notice) {}
 
     private static final TypeReference<Map<String, Object>> MAP = new TypeReference<>() {};
+    private static final Set<String> OUTCOMES = Set.of("complete", "partial", "empty", "failed", "not_finished");
 
     private final CatalogCollectCommands commands;
     private final Runnable refreshCatalog;
@@ -181,11 +184,16 @@ public class CatalogCollectService {
     private void runDaily() {
         try {
             CollectOrchestrator.RunOutcome outcome = commands.daily(progress());
+            String note = commands.dailyNote();
             if (outcome.usable()) {
                 refreshCatalog.run();
-                remember("Enabled sources were fetched and the student catalog was rebuilt.");
+                remember(note == null || note.isBlank()
+                        ? "Enabled sources were fetched and the student catalog was rebuilt."
+                        : note);
             } else {
-                remember("No source succeeded, so the student catalog was left as it was.");
+                remember(note == null || note.isBlank()
+                        ? "No source returned notices, so the student catalog was left as it was."
+                        : note);
             }
         } catch (IOException ex) {
             remember(messageOf(ex));
@@ -194,11 +202,39 @@ public class CatalogCollectService {
 
     private void runSource(String id) {
         try {
-            commands.source(id, progress());
-            remember("Staging updated for " + id + ". Rebuild the catalog when you want students to see it.");
+            CollectOrchestrator.RunOutcome outcome = commands.source(id, progress());
+            if (outcome.sources().isEmpty()) {
+                remember(sourceSummary(id, null, false));
+                return;
+            }
+            CollectOrchestrator.SourceOutcome row = outcome.sources().get(0);
+            boolean previous = !row.ok()
+                    && BuildJobs.hasNonEmptySnapshot(CollectOrchestrator.stagingDirectory(RepoPaths.root(), id));
+            remember(sourceSummary(id, row, previous));
         } catch (IOException ex) {
             remember(messageOf(ex));
         }
+    }
+
+    static String sourceSummary(String id, CollectOrchestrator.SourceOutcome row, boolean previousSnapshot) {
+        if (row == null || row.kind() == null) {
+            return previousSnapshot
+                    ? "Fetch failed for " + id + ". The previous staging snapshot was left in place."
+                    : "Fetch failed for " + id + ". Nothing was staged.";
+        }
+        String kept = previousSnapshot
+                ? "The previous staging snapshot was left in place."
+                : "Nothing was staged.";
+        return switch (row.kind()) {
+            case COMPLETE ->
+                    "Staging updated for " + id + ". Rebuild the catalog when you want students to see it.";
+            case PARTIAL ->
+                    "Partial staging saved for " + id + " (" + row.records()
+                            + " notices). The previous snapshot is still on disk. Rebuild the catalog when you want students to see it.";
+            case EMPTY -> "No notices for " + id + ". " + kept;
+            case FAILED -> "Fetch failed for " + id + ". " + kept;
+            case NOT_FINISHED -> "Fetch did not finish for " + id + ". " + kept;
+        };
     }
 
     private void runProcess() {
@@ -257,13 +293,30 @@ public class CatalogCollectService {
             if (report == null) {
                 return Map.of("sources", List.of());
             }
-            if (!(report.get("sources") instanceof List<?>)) {
-                report.put("sources", rowsFrom(report.get("results")));
-            }
-            return report;
+            return normalizeReport(report);
         } catch (IOException ex) {
             return Map.of("sources", List.of(), "message", "Could not read the last collect report.");
         }
+    }
+
+    /** Attach {@code outcome} to each source row. A Node {@code results} report is accepted as-is on disk. */
+    static Map<String, Object> normalizeReport(Map<String, Object> report) {
+        if (report == null) {
+            return Map.of("sources", List.of());
+        }
+        Map<String, Object> copy = new LinkedHashMap<>(report);
+        if (copy.get("sources") instanceof List<?> list) {
+            List<Map<String, Object>> rows = new ArrayList<>();
+            for (Object item : list) {
+                if (item instanceof Map<?, ?> raw) {
+                    rows.add(labelRow(stringKeyMap(raw)));
+                }
+            }
+            copy.put("sources", rows);
+        } else {
+            copy.put("sources", rowsFrom(copy.get("results")));
+        }
+        return copy;
     }
 
     private static List<Map<String, Object>> rowsFrom(Object results) {
@@ -281,9 +334,77 @@ public class CatalogCollectService {
             Object records = raw.get("records");
             row.put("records", records != null ? records : raw.get("written"));
             row.put("message", note(raw.get("message"), raw.get("errors")));
-            rows.add(row);
+            if (raw.get("errors") instanceof List<?>) {
+                row.put("errors", raw.get("errors"));
+            }
+            rows.add(labelRow(row));
         }
         return rows;
+    }
+
+    private static Map<String, Object> labelRow(Map<String, Object> row) {
+        Object existing = row.get("outcome");
+        if (existing != null && OUTCOMES.contains(String.valueOf(existing))) {
+            row.put("outcome", String.valueOf(existing));
+            return row;
+        }
+        String message = row.get("message") == null ? "" : String.valueOf(row.get("message")).trim();
+        if ("not finished".equals(message)) {
+            row.put("outcome", "not_finished");
+            return row;
+        }
+        int records = countOf(row.get("records"));
+        if (records == 0 && row.get("records") == null) {
+            records = countOf(row.get("written"));
+        }
+        if (records > 0 && hasErrors(row.get("errors"))) {
+            row.put("outcome", "partial");
+        } else if (records > 0) {
+            row.put("outcome", "complete");
+        } else if (truthyOk(row.get("ok"))) {
+            row.put("outcome", "empty");
+        } else {
+            row.put("outcome", "failed");
+        }
+        return row;
+    }
+
+    private static Map<String, Object> stringKeyMap(Map<?, ?> raw) {
+        Map<String, Object> row = new LinkedHashMap<>();
+        for (Map.Entry<?, ?> entry : raw.entrySet()) {
+            if (entry.getKey() != null) {
+                row.put(String.valueOf(entry.getKey()), entry.getValue());
+            }
+        }
+        return row;
+    }
+
+    private static int countOf(Object value) {
+        if (value instanceof Number number) {
+            return number.intValue();
+        }
+        if (value instanceof Collection<?> collection) {
+            return collection.size();
+        }
+        if (value instanceof String text && !text.isBlank()) {
+            try {
+                return Integer.parseInt(text.trim());
+            } catch (NumberFormatException ex) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    private static boolean hasErrors(Object errors) {
+        return errors instanceof Collection<?> collection && !collection.isEmpty();
+    }
+
+    private static boolean truthyOk(Object value) {
+        if (value instanceof Boolean flag) {
+            return flag;
+        }
+        return value != null && "true".equalsIgnoreCase(String.valueOf(value));
     }
 
     private static String note(Object message, Object errors) {

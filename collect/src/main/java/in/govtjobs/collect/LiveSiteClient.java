@@ -24,4 +24,16 @@ public final class LiveSiteClient implements SiteClient {
     public byte[] bytes(String url) throws IOException {
         return JsoupPages.fetchBytes(url, 4_000_000);
     }
+
+    @Override
+    public boolean documentPdf(String url) throws IOException {
+        if (url != null && url.matches("(?i).*\\.pdf(?:\\?|#|$).*")) {
+            return true;
+        }
+        if (!JobLinkQuality.looksLikeDocumentHref(url)) {
+            return false;
+        }
+        String type = JsoupPages.contentType(url);
+        return type != null && type.toLowerCase(java.util.Locale.ROOT).contains("pdf");
+    }
 }

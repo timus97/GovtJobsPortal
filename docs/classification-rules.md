@@ -2,6 +2,8 @@
 
 `hasExam` is a boolean filter, not a drop rule. Exam keywords classify onto a `selectionProcess` code (`cbt`, `written_multi_stage`, `interview_after_exam`, `physical`). Unknown selection still quarantines (`needsReview`).
 
+Java `JobSchema.SELECTION_PROCESSES` is this list: `walk_in`, `interview_only`, `merit`, `contract_interview`, `direct_recruitment`, `apprenticeship`, `cbt`, `written_multi_stage`, `interview_after_exam`, `physical`. The collector and `collect process` use that schema.
+
 ## Exam codes (classify, do not drop)
 
 | Code | Signals |

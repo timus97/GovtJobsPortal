@@ -1,6 +1,6 @@
 # Collector source research
 
-Date checked: 2026-09-27. Baseline: `data/sources/registry.json` (308 sources, 168 enabled, 140 disabled). This note does not change the registry, Java code, or the database.
+Date checked: 2026-09-27. Baseline: `data/sources/registry.json` (308 sources, 168 enabled, 140 disabled). This note does not change the registry, Java code, or the database. As of 2026-10-10 the collector that reads the registry is the Java daily job. This file was not re-fetched for that cutover.
 
 ## How sources were chosen
 

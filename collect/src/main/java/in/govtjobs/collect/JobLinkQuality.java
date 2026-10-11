@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Same link rejection rules as {@code scripts/collect/lib/jobLinkQuality.js}.
+ * Link rejection rules. A keepable link scores at least 2 and is not a homepage.
  * Process uses {@link #isGarbageJob} before a row can be published.
  */
 public final class JobLinkQuality {
@@ -203,6 +203,10 @@ public final class JobLinkQuality {
             return false;
         }
         return TENDER_RE.matcher(head).find() || REJECT_PDF_RE.matcher(head).find();
+    }
+
+    public static boolean matchesNoticeText(String text) {
+        return text != null && NOTICE_TEXT_RE.matcher(text).find();
     }
 
     public static boolean isRecruitmentPdfText(String text) {

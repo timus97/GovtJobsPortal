@@ -7,6 +7,8 @@
 
 Disclaimer bar on every signed-in desk / mock screen: *Aggregator only — not an official eligibility decision. Verify on the official website.*
 
+**Shipped on the Java host (2026-10-10):** sign in, register, forgot/reset, profile, dashboard, desk detail, admit and result files, Track, and I applied. Plan and mock routes still answer and are not linked. Coaching is out of scope. Do not extend those routes.
+
 ---
 
 ## Information architecture
@@ -120,8 +122,8 @@ Dashboard list (title + days), desk detail stacked (next-step banner, download, 
 | 01–02, 08 | PR11 (done) |
 | 03–04, 06–07, 09, days-left | PR12 (done) |
 | 05 files | PR13 (done) |
-| 10 | PR14 (done) |
-| 11–12 | PR15 (done) |
-| Brand / hosting | PR16 (done) |
+| 10 plan | PR14 route still answers. Out of scope. Not linked. |
+| 11–12 mock | PR15 route still answers. Out of scope. Not linked. |
+| Brand / hosting | PR16 Pages path is not the product. Hosting of the Java app is not started. |
 
 When Figma MCP quota resets, add frames 10–12 and mobile to the same file (`37BnL3aZ62LmXqnJu1PnZH`) — do not start a second file.

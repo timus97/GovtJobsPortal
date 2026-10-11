@@ -1,5 +1,8 @@
 name: Daily collect process alert
 
+# Java daily job: fetch, process when a source returned notices, schema-check,
+# alert, then snapshot. GitHub Pages is not the product host.
+
 on:
   schedule:
     # ~06:00 IST
@@ -12,31 +15,27 @@ permissions:
 jobs:
   pipeline:
     runs-on: ubuntu-latest
-    # 45 min is enough today. If a dry-run exceeds ~35 min, split calendar
-    # vs careers (second job or COLLECT_SOURCE=upsc_calendar|ssc_notices|…)
-    # instead of raising this.
     timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Temurin 21
+        uses: actions/setup-java@v4
         with:
-          node-version: '20'
-          cache: npm
+          distribution: temurin
+          java-version: "21"
+          cache: maven
 
-      - name: Install dependencies
-        run: npm install
+      - name: Package collect
+        run: ./mvnw -pl collect -am -DskipTests package
 
       - name: Install Playwright Chromium
-        run: npx playwright install chromium --with-deps
+        run: ./mvnw -pl collect -am -DskipTests exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium"
 
       - name: Run daily pipeline
         env:
-          COLLECT_HEADLESS: 'true'
-          PDF_MAX_PER_RUN: '25'
-          # COLLECT_SOURCE: optional single sourceId (upsc_calendar, ssc_notices, becil, …)
+          PDF_MAX_PER_RUN: "25"
           ALERT_ENABLED: ${{ secrets.ALERT_ENABLED }}
           ALERT_ON_FIRST_RUN: ${{ secrets.ALERT_ON_FIRST_RUN }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
@@ -46,7 +45,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
-        run: npm run pipeline:daily
+        run: ./mvnw -pl collect -am -DskipTests exec:java -Dexec.args="daily"
 
       - name: Commit data updates
         run: |

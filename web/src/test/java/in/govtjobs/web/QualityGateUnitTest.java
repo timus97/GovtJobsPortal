@@ -73,13 +73,15 @@ class QualityGateUnitTest {
         when(mailers.getIfAvailable()).thenReturn(null);
         StudentMailService mail = new StudentMailService(props, mailers);
         assertThat(mail.provider()).isEqualTo("dev");
-        assertThat(mail.allowDevLink()).isFalse();
+        assertThat(mail.allowDevLink("127.0.0.1")).isFalse();
+        assertThat(mail.visibleProvider("203.0.113.10")).isEqualTo("unconfigured");
         assertThat(mail.health()).containsEntry("provider", "dev");
         props.getSession().setCookieSecure(false);
-        assertThat(mail.allowDevLink()).isTrue();
+        assertThat(mail.allowDevLink("127.0.0.1")).isTrue();
+        assertThat(mail.allowDevLink("203.0.113.10")).isFalse();
         props.getMail().setResendApiKey("re_test");
         assertThat(mail.provider()).isEqualTo("resend");
-        assertThat(mail.allowDevLink()).isFalse();
+        assertThat(mail.allowDevLink("127.0.0.1")).isFalse();
 
         StudentDatabaseEnvironmentPostProcessor processor = new StudentDatabaseEnvironmentPostProcessor();
         SpringApplication app = new SpringApplication(QualityGateUnitTest.class);

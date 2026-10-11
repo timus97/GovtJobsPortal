@@ -1,206 +1,126 @@
-# Data storage, scrape status & running jobs
+# Data storage and the daily job
 
-This document explains **where data lives**, what **“Not scraped yet”** means on the Sources page, how to tell **scraped vs waiting**, and **what jobs/processes** exist.
+Status as of 2026-10-10. This document explains **where data lives**, how to tell whether a source was fetched, and how the Java daily job runs. The React client, the Express API, and the Node collectors are removed.
 
 ---
 
-## 1. Catalog store is git JSON (optional SQLite cache)
+## 1. Catalog store is git JSON
 
-The **catalog** store is **JSON files committed to git** (`data/processed/*.json`). The catalog does not use MySQL/Postgres. `better-sqlite3` may exist on the Express host as a **catalog-only read cache rebuilt from JSON on boot** — it is not the catalog source of record, is **not** used for student PII, and is not installed in GitHub Actions.
-
-Student accounts (not catalog) may use **Postgres** when `STUDENT_STORE=postgres` — see below.
+The **catalog** store is **JSON files committed to git** (`data/processed/*.json`). Students are not in that JSON. The product UI is the Java host on port **8090**. GitHub Pages is not the product.
 
 | Role | Path | Description |
 |------|------|-------------|
-| **Published jobs (durable SoR)** | `data/processed/jobs.json` | Exam + no-exam opportunities served by the API and website |
+| **Published jobs (durable SoR)** | `data/processed/jobs.json` | Exam and no-exam opportunities the host copies into Search |
+| Exam calendars | `data/processed/exam_series.json` | Prepare-for rows |
 | Stats | `data/processed/stats.json` | Counts by org type, sector, status, source |
-| Last process run | `data/processed/run-report.json` | How many jobs published/dropped last pipeline |
-| Last collect run | `data/processed/collect-report.json` | Per-source scrape results (rows written, errors) |
-| Quarantine | `data/processed/quarantine.json` | Ambiguous rows held for review |
-| Snapshot for email diff | `data/processed/jobs.prev.json` | Previous jobs set (alert system) |
-| Source registry | `data/sources/registry.json` | All gov/PSU portals we *intend* to scrape (URLs, enabled flag) |
-| PSU catalog (from Wikipedia) | `data/sources/psu_catalog.json` | Names parsed from Wikipedia |
-| Domain map | `data/sources/psu_domains.json` | Known official websites / career URLs |
-| Human seed jobs | `data/seed/jobs.json` | Curated listings always merged in |
-| Staging (per scrape) | `data/staging/{sourceId}/{runId}.json` | Raw-normalized scrape output before process |
-| Raw HTML/PDF cache | `data/raw/...` | Audit trail of downloaded pages/PDFs (local; usually not on GitHub) |
-| Public website copy | `client/public/data/*.json` | Snapshot copied for GitHub Pages static hosting |
-
-**Live public site** reads from:
-
-`https://timus97.github.io/GovtJobsPortal/data/jobs.json`  
-(and `stats.json`, `sources.json`, etc.)
-
-Local API reads the same logical data from `data/processed/` on your machine.
+| Last process run | `data/processed/run-report.json` | How many jobs published or dropped |
+| Last collect run | `data/processed/collect-report.json` | Per-source outcome, records, and errors. The desk reads this file. |
+| Progress while a run is going | `data/processed/collect-progress.json` | Sources done, current source, findings |
+| Quarantine | `data/processed/quarantine.json` | Rows held for review |
+| Snapshot for email diff | `data/processed/jobs.prev.json` | Previous jobs set |
+| Last alert | `data/processed/alert-report.json` | Whether the daily email sent |
+| Source registry | `data/sources/registry.json` | Portals, list URLs, enabled flag, collector |
+| Human seed jobs | `data/seed/jobs.json` | Curated listings merged on process |
+| Staging | `data/staging/{sourceId}/{epoch}.json` | Notices from a complete or partial run |
+| Raw HTML | `data/raw/{sourceId}/{runId}/` | Archived pages |
+| PDF cache | `data/raw/pdfs/` | PDF bytes and extracted text |
 
 ### Student PII and files are not git JSON
 
-Student accounts, profiles, tracker rows, mock scores, and admit/result files are **never** written to `data/processed/*.json` and are **never** copied to `client/public/data/`.
+Student accounts, profiles, tracker rows, and admit/result files are **never** written to `data/processed/*.json`.
 
 | Role | Path / env | Description |
 |------|------------|-------------|
-| Student SoR | `STUDENT_STORE=json` or `postgres` | JSON file or Docker/hosted Postgres. Configurable. |
-| Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card + result bytes. Gitignored. |
+| Student SoR | Postgres `govtjobs_students` | Flyway schema. `jdbc:postgresql://127.0.0.1:5432/govtjobs_students`, user `govtjobs`. |
+| Private files | `STUDENT_FILES_DIR` (default `data/student-files/`) | Admit card and result bytes. Gitignored. Owner-only PDF, JPEG, or PNG, at most 5 MB. |
 
-**Never** put student tables in `data/cache/portal.sqlite`. That cache is catalog-only and is discarded on rebuild / free-tier sleep. Production desk needs a persistent disk. Hosting is not set up yet.
-
----
-
-## 2. What “Not scraped yet” means
-
-On the **Sources** page, each source has a **status badge**:
-
-| Badge | Meaning |
-|-------|---------|
-| **Scraped · N rows** | Last collect run hit this URL and extracted **N** job-like links into staging |
-| **Reached · 0 job links** | Site was contacted, but **no** job-like links were found (or page empty / blocked soft) |
-| **Failed · …** | Hard error for that source (HTTP error, crash) |
-| **Paused** | `enabled: false` in registry (often **no known career URL** yet) |
-| **Manual only** | Human seed / CSV — not meant for automated scrape |
-| **Not in last report** | Source is in the registry but **missing from the last collect-report** (collect never finished for that id, or report is stale) |
-| **Has live jobs** | Even if last report is missing, `jobs.json` already has listings with this `sourceId` |
-
-### Important distinction
-
-- **Listed in Sources** = we *know about* the organisation (from Wikipedia + domain map).  
-- **Scraped** = the daily collector actually ran against its career URL(s) and wrote staging rows.  
-- **Live jobs** = after `npm run process`, jobs appear in `jobs.json` and on the site.
-
-A source can be:
-
-1. **In registry only** → shows until scraped  
-2. **Scraped with 0 rows** → site OK but no extractable vacancies that day  
-3. **Scraped with rows** → `hasExam` is a filter; exam posts are published, not dropped
-4. **Paused** → no automatic scrape until a career URL is added and `enabled: true`
-
-### Why many PSUs said “Not scraped yet”
-
-1. Wikipedia import added **~259 PSU names** to the registry.  
-2. Only sources with a known website are `enabled: true` for scraping.  
-3. Status comes from **`collect-report.json`**. If that file is from an **older short run** (or a long run **crashed before writing the report**), newer PSUs look like “not scraped” even when staging folders exist.  
-4. Fix: rebuild the report from staging (see below), re-run `collect:daily`, then `prepareStaticData` + deploy.
-
-```bash
-node scripts/process/rebuildCollectReport.js
-node scripts/prepareStaticData.js
-npm run process
-```
+**Never** put student tables in `data/cache/portal.sqlite`.
 
 ---
 
-## 3. How to know scraped vs in progress vs waiting
+## 2. How to tell whether a source was fetched
 
-### On the website (Sources page)
+`/ops/sources` lists the registry: id, name, priority, enabled, collector. It does not show the last scrape.
 
-- Use the **status badges** and the **legend** at the top of Sources.  
-- **“Jobs live”** count = how many published jobs currently use that `sourceId`.  
-- **Last collect** timestamp (from pipeline) shows when the scrape batch finished.
+`/ops/fetch` shows the last `collect-report.json` row, including `outcome`.
 
-### On disk (authoritative)
+| Outcome | Meaning |
+|---------|---------|
+| `complete` | Notices kept, no errors. Snapshot replaced older files. |
+| `partial` | Notices kept, and something was skipped or failed. The previous non-empty snapshot stays on disk. |
+| `empty` | The site was reached and nothing was kept. No snapshot was written. |
+| `failed` | No notices, and the run recorded an error, a block, or a manual CAPTCHA. No snapshot was written. |
+| `not_finished` | The source never started. Staging is untouched. |
+
+`ok` is true only for `complete` and `partial`.
+
+A source can be in the registry and still absent from an older report. The report on disk is whatever the last finished Java run wrote. There is no separate rebuild-report command. Run one source, or the daily job, to refresh it. Do not hand-edit `jobs.json`.
+
+Live jobs are rows in `jobs.json` after `process`. The daily job runs `process` only when at least one source returned notices. A day of empty and failed sources leaves `jobs.json` unread.
+
+---
+
+## 3. On disk
 
 ```text
-# Did we scrape this source?
 dir data\staging\psu_ntpc
-
-# What did the last collect say?
 type data\processed\collect-report.json
-
-# What is published on the site?
 type data\processed\jobs.json
 type data\processed\stats.json
 ```
 
-### In progress
+While a daily run is going, `data/processed/collect-progress.json` has `"running": true`. The desk still reads `collect-report.json` when the run finishes.
 
-There is **no always-on progress UI** for a scrape while it runs. While `npm run collect:daily` is running:
-
-- New folders appear under `data/staging/{sourceId}/`  
-- Console prints `→ sourceId` and `wrote N records`  
-- When finished, `collect-report.json` is written  
-
-**GitHub Actions** (daily collect / Pages deploy):  
-Repo → **Actions** tab → running/completed workflows.
+GitHub Actions: `.github/workflows/daily-collect.yml` (scheduled) and `.github/workflows/collect-java.yml` (tests only, no fetch).
 
 ---
 
-## 4. What “jobs” are running currently?
+## 4. Listings and the daily job
 
-“Jobs” can mean two different things:
-
-### A) Job listings (vacancies on the site)
-
-These are **not** background processes. They are **rows** in `jobs.json` with status:
-
-- `open` – last date not passed  
-- `closing_soon` – last date within 7 days  
-- `closed` – past last date  
-
-See them on the site: **Jobs** page, or `stats.json` (`open`, `closingSoon`, `closed`).
-
-### B) System processes / automation
+Published rows use `open`, `closing_soon`, and `closed`.
 
 | Process | How to start | What it does |
 |---------|----------------|--------------|
-| **Collect (scrape)** | `npm run collect:daily` | Visits registry URLs → staging |
-| **Process** | `npm run process` | staging + seed → `jobs.json` |
-| **Daily pipeline** | `npm run pipeline:daily` | collect → process → QA → email → snapshot |
-| **Static publish prep** | `node scripts/prepareStaticData.js` | Copies JSON into `client/public/data/` |
-| **API server** | `npm run server` | Serves API + optional SPA |
-| **Vite dev UI** | `npm run client` | Local React app |
-| **GitHub Pages deploy** | push to `main` / Actions | Builds and publishes public site |
-| **Daily collect Action** | `.github/workflows/daily-collect.yml` | Scheduled scrape (if enabled) |
+| **Daily job** | See `docs/collection-runbook.md` | Fetch, process when a source returned notices, schema-check, alert, snapshot |
+| **One source** | `source <id>` | Staging only when that source kept notices |
+| **Process** | `process` | Seed plus staging to `jobs.json` and `exam_series.json` |
+| **Product UI** | `.\scripts\start-web.ps1` | Thymeleaf host on port 8090 |
 
-**Currently running** only if you (or CI) started them. The public GitHub Pages site itself is **static** — no scraper runs in the browser.
+Commands are the Java CLI after `. .\scripts\java21.ps1`. Quote `-D` arguments in PowerShell. `qa` is the same rebuild as `process`, not the schema check.
 
 ---
 
-## 5. Data flow (end-to-end)
+## 5. Data flow
 
 ```text
-Wikipedia + domain map
-        ↓  npm run psu:import
 data/sources/registry.json
-        ↓  npm run collect:daily  (scrapers)
+        ↓  collect daily
 data/staging/{source}/…  +  data/raw/…
-        ↓  npm run process
-data/processed/jobs.json  (+ stats, reports)
-        ↓  prepareStaticData + git push
-GitHub Pages  →  public website
+        ↓  process, only when a source returned notices
+data/processed/jobs.json  (+ exam series, stats, reports)
+        ↓  host boot
+Postgres catalog schema  →  Search, Match, Prepare
 ```
+
+`data/staging/ops_paste/` is read on every process. Paste does not start the daily crawl.
 
 ---
 
-## 6. How to re-scrape everything
+## 6. Run the collector again
 
-```bash
-# Optional: refresh PSU list from Wikipedia
-npm run psu:import:fetch
+Follow `docs/collection-runbook.md`. A local run leaves files on disk and does not commit them. The scheduled workflow commits `data/processed`, `data/staging`, and `data/raw/pdfs` when those paths change.
 
-# Scrape all enabled sources (long run)
-npm run collect:daily
-
-# If collect crashed after writing staging:
-node scripts/process/rebuildCollectReport.js
-
-# Build published jobs
-npm run process
-npm run qa:schema
-
-# Update website data bundle
-node scripts/prepareStaticData.js
-git add data client/public/data
-git commit -m "chore(data): refresh scrapes"
-git push
-```
+Do not dispatch a crawl from the paste screen. An empty day must not replace `jobs.json`.
 
 ---
 
 ## 7. Related docs
 
-- `README.md` — how to run the Java host locally  
-- `docs/collection-runbook.md` — how to run collectors  
-- `docs/sources.md` — source tiers  
-- `docs/classification-rules.md` — no-exam filter  
+- `README.md` — how to run the Java host locally
+- `docs/collection-runbook.md` — daily job, alert, Playwright, quarantine
+- `docs/sources.md` — source tiers
+- `docs/collector-fix-log.md` — collector behaviour
+- `docs/classification-rules.md` — no-exam filter
 
 ---
 
@@ -208,9 +128,9 @@ git push
 
 | Question | Answer |
 |----------|--------|
-| Where is the catalog? | **`data/processed/jobs.json`** (git JSON). Optional sqlite is a catalog cache only. |
-| Where are student accounts/files? | `STUDENT_STORE=json` (`STUDENT_DATA_DIR`) or `postgres` (`STUDENT_DATABASE_URL`). Files in `STUDENT_FILES_DIR`. Not git, not Pages, not `portal.sqlite`. |
-| What does Not scraped yet mean? | No entry for that source in the **last collect-report** |
-| How do I see scraped sources? | Badge **Scraped · N rows**, or staging folder, or live job count |
-| What’s in progress? | Only while `collect:daily` / Actions is running — watch the terminal or Actions tab |
-| What’s on the public Pages site? | Catalog snapshot in `client/public/data/` — no student accounts |
+| Where is the catalog? | `data/processed/jobs.json` (git JSON). The host copies approved rows into Postgres `catalog`. |
+| Where are student accounts and files? | Postgres `govtjobs_students`. Files in `STUDENT_FILES_DIR`. Not git. |
+| What does a missing source in the report mean? | That id was not in the last `collect-report.json`. |
+| How do I see the last fetch? | `/ops/fetch`, or `collect-report.json`. Outcomes are `complete`, `partial`, `empty`, `failed`, `not_finished`. |
+| What is running now? | `collect-progress.json` while `running` is true, or the Actions tab for the scheduled job. |
+| What is the public site? | The Java host. GitHub Pages is not the product. |

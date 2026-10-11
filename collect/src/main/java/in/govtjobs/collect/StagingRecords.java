@@ -108,7 +108,16 @@ public final class StagingRecords {
         record.put("title", title.isBlank() ? "Untitled vacancy" : title);
         record.put("organization", organization);
         record.put("orgType", textOrNull(item.get("orgType")) == null ? source.orgType() : text(item.get("orgType")));
-        record.put("sector", textOrNull(item.get("sector")) == null ? "Other" : text(item.get("sector")));
+        String sector = textOrNull(item.get("sector"));
+        if ((sector == null || "Other".equals(sector)) && source.sector() != null && !source.sector().isBlank()) {
+            sector = source.sector();
+        }
+        record.put("sector", sector == null ? "Other" : sector);
+        if (item.get("opportunityType") != null && !String.valueOf(item.get("opportunityType")).isBlank()) {
+            record.put("opportunityType", item.get("opportunityType"));
+        } else if (source.opportunityType() != null && !source.opportunityType().isBlank()) {
+            record.put("opportunityType", source.opportunityType());
+        }
         record.put("location", textOrNull(item.get("location")) == null ? "All India" : text(item.get("location")));
         record.put("vacancies", item.get("vacancies"));
         record.put("qualification", item.get("qualification"));
@@ -135,6 +144,9 @@ public final class StagingRecords {
         record.put("notificationNo", textOrNull(item.get("notificationNo")) == null ? (notice.find() ? notice.group(1) : null) : item.get("notificationNo"));
         record.put("collectedAt", collectedAt);
         record.put("collectorVersion", collectorVersion == null ? "scrape-v1" : collectorVersion);
+        if (item.get("pdfHash") != null && !String.valueOf(item.get("pdfHash")).isBlank()) {
+            record.put("pdfHash", String.valueOf(item.get("pdfHash")));
+        }
         record.put("eligibilityParse", Map.of("complete", false));
         if (item.get("examDate") != null) {
             record.put("examDate", item.get("examDate"));

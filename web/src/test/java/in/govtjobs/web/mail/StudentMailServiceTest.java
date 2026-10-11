@@ -26,12 +26,19 @@ class StudentMailServiceTest {
         props.getMail().setResendApiKey("  ");
         StudentMailService mail = service(props, null);
         assertThat(mail.provider()).isEqualTo("dev");
-        assertThat(mail.allowDevLink()).isTrue();
+        assertThat(mail.allowDevLink("127.0.0.1")).isTrue();
+        assertThat(mail.allowDevLink("::1")).isTrue();
+        assertThat(mail.allowDevLink("203.0.113.10")).isFalse();
+        assertThat(mail.allowDevLink("localhost")).isFalse();
+        assertThat(mail.allowDevLink(null)).isFalse();
+        assertThat(mail.visibleProvider("127.0.0.1")).isEqualTo("dev");
+        assertThat(mail.visibleProvider("203.0.113.10")).isEqualTo("unconfigured");
         assertThat(mail.health()).containsEntry("provider", "dev");
 
         props.getSession().setCookieSecure(true);
         assertThat(mail.provider()).isEqualTo("dev");
-        assertThat(mail.allowDevLink()).isFalse();
+        assertThat(mail.allowDevLink("127.0.0.1")).isFalse();
+        assertThat(mail.visibleProvider("::1")).isEqualTo("dev");
     }
 
     @Test
@@ -57,7 +64,8 @@ class StudentMailServiceTest {
         props.getSession().setCookieSecure(false);
         StudentMailService mail = service(props, mock(JavaMailSender.class));
         assertThat(mail.provider()).isEqualTo("resend");
-        assertThat(mail.allowDevLink()).isFalse();
+        assertThat(mail.allowDevLink("127.0.0.1")).isFalse();
+        assertThat(mail.visibleProvider("203.0.113.10")).isEqualTo("resend");
         assertThat(mail.health().get("provider")).isEqualTo("resend");
 
         HttpResponse<String> ok = response(200);
@@ -103,7 +111,8 @@ class StudentMailServiceTest {
         when(sender.createMimeMessage()).thenReturn(message);
         StudentMailService mail = service(props, sender);
         assertThat(mail.provider()).isEqualTo("smtp");
-        assertThat(mail.allowDevLink()).isFalse();
+        assertThat(mail.allowDevLink("127.0.0.1")).isFalse();
+        assertThat(mail.visibleProvider("198.51.100.4")).isEqualTo("smtp");
         StudentMailService.SendResult sent =
                 mail.sendPasswordReset("to@example.com", "https://localhost/reset", "soon");
         assertThat(sent.sent()).isTrue();

@@ -3,6 +3,7 @@ package in.govtjobs.web;
 import in.govtjobs.web.mail.StudentMailService;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.StudentStore;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class HealthController {
     }
 
     @GetMapping("/health")
-    public Map<String, Object> health() {
+    public Map<String, Object> health(HttpServletRequest request) {
         Map<String, Object> catalog = jobs.catalogHealth();
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("ok", true);
@@ -32,7 +33,7 @@ public class HealthController {
         body.put("time", Instant.now().toString());
         body.put("catalog", catalog);
         body.put("studentStore", Map.of("backend", students.backend()));
-        body.put("mail", mail.provider());
+        body.put("mail", mail.visibleProvider(request.getRemoteAddr()));
         return body;
     }
 }

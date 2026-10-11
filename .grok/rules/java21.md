@@ -32,4 +32,4 @@ C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot
 
 ## Slice order
 
-Owner decision 2026-09-26: **UI and design first**. Coaching is out of scope. Do not deploy to GitHub Pages. After the UI is complete, migrate collectors from Node to Java, then cutover. Do not delete `client/`, `server/`, or `scripts/collect/` until cutover.
+Owner decision 2026-09-26: **UI and design first**. Coaching is out of scope. Do not deploy to GitHub Pages. Collectors and the daily job are Java as of 2026-10-10. Hosting still waits until the UI is complete. Do not add `client/`, `server/`, or `scripts/collect/` back.

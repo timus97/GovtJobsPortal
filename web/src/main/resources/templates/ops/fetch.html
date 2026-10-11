@@ -71,7 +71,7 @@
                 <tbody>
                   <tr th:each="row : ${status.report['sources']}">
                     <td th:text="${row['sourceId']}">id</td>
-                    <td th:text="${row['ok'] ? 'ok' : 'error'}">ok</td>
+                    <td th:text="${row['outcome']}">complete</td>
                     <td th:text="${row['records']}">0</td>
                     <td th:text="${row['message']}">note</td>
                   </tr>

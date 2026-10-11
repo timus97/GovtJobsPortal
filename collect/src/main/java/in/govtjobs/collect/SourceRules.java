@@ -2,6 +2,7 @@ package in.govtjobs.collect;
 
 import java.net.URI;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 
@@ -109,6 +110,25 @@ public final class SourceRules {
     public static boolean isBoardNoticeLink(String title, String href) {
         String blob = (title == null ? "" : title) + " " + (href == null ? "" : href);
         return BOARD_NOTICE.matcher(blob).find();
+    }
+
+    private static final Pattern PSC_NOTICE = Pattern.compile(
+            "notif|advert|advt|recruit|vacanc|exam|apply|calendar|corrigend|advertisement|commission|pcs|cce|combined",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern PSC_SKIP = Pattern.compile(
+            "login|result only|answer key|syllabus pdf|facebook|twitter|youtube|instagram|tender|rti act",
+            Pattern.CASE_INSENSITIVE);
+
+    public static boolean isPscNoticeLink(String title, String href, boolean pdf) {
+        String blob = (title == null ? "" : title) + " " + (href == null ? "" : href);
+        if (PSC_SKIP.matcher(blob).find()) {
+            return false;
+        }
+        if (!PSC_NOTICE.matcher(blob).find() && !pdf) {
+            return false;
+        }
+        return JobLinkQuality.isKeepableJobLink(Map.of("title", title == null ? "" : title, "href", href == null ? "" : href, "isPdf", pdf))
+                || (pdf && PSC_NOTICE.matcher(blob).find());
     }
 
     public static String host(String url) {

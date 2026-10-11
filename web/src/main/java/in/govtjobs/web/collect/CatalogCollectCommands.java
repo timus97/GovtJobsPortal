@@ -13,6 +13,11 @@ public interface CatalogCollectCommands {
 
     CollectOrchestrator.RunOutcome daily(CollectOrchestrator.Progress progress) throws IOException;
 
+    /** Desk sentence for the last daily run. Blank keeps the service's own wording. */
+    default String dailyNote() {
+        return "";
+    }
+
     CollectOrchestrator.RunOutcome source(String sourceId, CollectOrchestrator.Progress progress) throws IOException;
 
     BuildJobs.RunSummary process() throws IOException;

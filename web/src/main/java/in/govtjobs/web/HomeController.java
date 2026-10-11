@@ -5,6 +5,7 @@ import in.govtjobs.web.security.SessionCookies;
 import in.govtjobs.web.store.PasswordResetService;
 import in.govtjobs.web.store.StoreException;
 import in.govtjobs.web.store.StudentStore;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -107,8 +108,9 @@ public class HomeController {
     }
 
     @PostMapping("/account/forgot")
-    public String forgot(@RequestParam String email, Model model) {
-        Map<String, Object> result = resets.requestReset(email);
+    public String forgot(@RequestParam String email, HttpServletRequest request, Model model) {
+        // Socket address only. A client-supplied X-Forwarded-For must not unlock the dev reset link.
+        Map<String, Object> result = resets.requestReset(email, request.getRemoteAddr());
         model.addAttribute("sent", true);
         model.addAttribute("notice", result.get("message"));
         model.addAttribute("devResetUrl", result.get("devResetUrl"));

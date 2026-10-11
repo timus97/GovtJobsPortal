@@ -31,6 +31,40 @@ public final class JsoupPages {
         return fetchBytes(url, maxBytes, 0);
     }
 
+    /** Content type of a document href that does not end in {@code .pdf}. */
+    public static String contentType(String url) throws IOException {
+        return contentType(url, 0);
+    }
+
+    private static String contentType(String url, int redirects) throws IOException {
+        if (url == null || !url.regionMatches(true, 0, "https://", 0, 8)) {
+            throw new IOException("non-https link dropped: " + url);
+        }
+        if (redirects > 3) {
+            throw new IOException("too many redirects");
+        }
+        polite(url);
+        Connection.Response response = Jsoup.connect(url)
+                .method(Connection.Method.HEAD)
+                .timeout(10_000)
+                .followRedirects(false)
+                .userAgent(USER_AGENT)
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .execute();
+        int status = response.statusCode();
+        if (status >= 300 && status < 400) {
+            String location = response.header("Location");
+            if (location != null && !location.isBlank()) {
+                return contentType(redirectTarget(url, location), redirects + 1);
+            }
+        }
+        if (status >= 400) {
+            throw new IOException("HTTP " + status);
+        }
+        return response.contentType();
+    }
+
     private static byte[] fetchBytes(String url, int maxBytes, int redirects) throws IOException {
         if (url == null || !url.regionMatches(true, 0, "https://", 0, 8)) {
             throw new IOException("non-https link dropped: " + url);

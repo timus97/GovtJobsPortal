@@ -2,6 +2,7 @@ package in.govtjobs.web.collect;
 
 import in.govtjobs.collect.BuildJobs;
 import in.govtjobs.collect.CollectOrchestrator;
+import in.govtjobs.collect.DailyPipeline;
 import in.govtjobs.collect.LiveSiteClient;
 import in.govtjobs.collect.SourceSpec;
 import in.govtjobs.domain.RepoPaths;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JavaCatalogCollect implements CatalogCollectCommands {
 
+    private volatile String deskNote = "";
+
     @Override
     public List<SourceSpec> registry() throws IOException {
         return CollectOrchestrator.registry(root());
@@ -21,7 +24,15 @@ public class JavaCatalogCollect implements CatalogCollectCommands {
 
     @Override
     public CollectOrchestrator.RunOutcome daily(CollectOrchestrator.Progress progress) throws IOException {
-        return CollectOrchestrator.daily(root(), new LiveSiteClient(), progress);
+        deskNote = "";
+        DailyPipeline.Result result = DailyPipeline.run(root(), new LiveSiteClient(), progress);
+        deskNote = result.deskMessage() == null ? "" : result.deskMessage();
+        return result.collect();
+    }
+
+    @Override
+    public String dailyNote() {
+        return deskNote == null ? "" : deskNote;
     }
 
     @Override

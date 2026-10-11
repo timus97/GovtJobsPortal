@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -23,8 +24,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Seed plus newest staging file per source, then enrich, quarantine, dedupe, and exam series.
- * Matches {@code scripts/process/buildJobs.js}, including atomic replacement of the processed JSON.
+ * Seed plus the newest non-empty staging file per source, then enrich, quarantine, dedupe, and exam series.
+ * Writes the processed JSON by replacing a temp file.
  */
 public final class BuildJobs {
 
@@ -89,6 +90,13 @@ public final class BuildJobs {
         int skippedCalendar = 0;
         int deduped = 0;
         Map<String, Map<String, Object>> map = new LinkedHashMap<>();
+        IdentityHashMap<Map<String, Object>, Boolean> stagedRows = new IdentityHashMap<>();
+        for (Map<String, Object> row : staging) {
+            if (row != null) {
+                stagedRows.put(row, Boolean.TRUE);
+            }
+        }
+        LinkedHashSet<String> stagedCandidateIds = new LinkedHashSet<>();
 
         List<Map<String, Object>> incoming = new ArrayList<>(seed);
         incoming.addAll(staging);
@@ -128,6 +136,12 @@ public final class BuildJobs {
             if (containsId(forceInclude, job.get("id"))) {
                 job.put("needsReview", false);
             }
+            if (stagedRows.containsKey(raw)) {
+                String id = text(job.get("id"));
+                if (!id.isBlank()) {
+                    stagedCandidateIds.add(id);
+                }
+            }
 
             String key = dedupeKey(job);
             if (map.containsKey(key)) {
@@ -153,10 +167,14 @@ public final class BuildJobs {
         int keptPublished = 0;
         List<Map<String, Object>> previous = readArray(processedDir.resolve("jobs.json"));
         boolean replacePublished = opts.replacePublished();
+        // A quarantined snapshot must not erase previously published jobs for that source.
         LinkedHashSet<String> wroteThisRun = new LinkedHashSet<>();
-        for (Map<String, Object> row : staging) {
-            if (row != null && jsTruthy(row.get("sourceId"))) {
-                wroteThisRun.add(text(row.get("sourceId")));
+        for (Map<String, Object> job : published) {
+            if (job != null && stagedCandidateIds.contains(text(job.get("id")))) {
+                String sourceId = text(job.get("sourceId"));
+                if (jsTruthy(sourceId)) {
+                    wroteThisRun.add(sourceId);
+                }
             }
         }
         if (!replacePublished && previous.size() > published.size()) {
@@ -665,13 +683,70 @@ public final class BuildJobs {
                         records.addAll(parseStagingFile(file));
                     }
                 } else {
-                    records.addAll(parseStagingFile(files.get(0)));
+                    records.addAll(newestNonEmpty(files));
                 }
             } else if (name.endsWith(".json") || name.endsWith(".jsonl")) {
                 records.addAll(parseStagingFile(child));
             }
         }
         return records;
+    }
+
+    /**
+     * Records in one snapshot file. An empty list is a readable file with nothing to keep.
+     * A file that does not parse throws, and process fails rather than skipping it.
+     */
+    static List<Map<String, Object>> snapshotRecords(Path file) throws IOException {
+        return parseStagingFile(file);
+    }
+
+    /** True when the directory holds a snapshot that still contains notices. */
+    public static boolean hasNonEmptySnapshot(Path sourceDir) {
+        if (sourceDir == null || !Files.isDirectory(sourceDir)) {
+            return false;
+        }
+        try {
+            for (Path file : snapshotFiles(sourceDir)) {
+                try {
+                    if (!parseStagingFile(file).isEmpty()) {
+                        return true;
+                    }
+                } catch (IOException | RuntimeException ignored) {
+                    // An unreadable file is not a snapshot the desk can call the previous yield.
+                }
+            }
+        } catch (IOException ignored) {
+            return false;
+        }
+        return false;
+    }
+
+    private static List<Path> snapshotFiles(Path dir) throws IOException {
+        List<Path> files = new ArrayList<>();
+        for (Path candidate : listChildren(dir)) {
+            String fileName = candidate.getFileName().toString();
+            if (".gitkeep".equals(fileName)) {
+                continue;
+            }
+            if (fileName.endsWith(".json") || fileName.endsWith(".jsonl")) {
+                files.add(candidate);
+            }
+        }
+        files.sort(Comparator.comparingLong(BuildJobs::mtimeMillis)
+                .reversed()
+                .thenComparing(path -> path.getFileName().toString()));
+        return files;
+    }
+
+    /** Newest readable file that still has notices. An empty file is skipped. A broken file fails the run. */
+    private static List<Map<String, Object>> newestNonEmpty(List<Path> newestFirst) throws IOException {
+        for (Path file : newestFirst) {
+            List<Map<String, Object>> rows = parseStagingFile(file);
+            if (!rows.isEmpty()) {
+                return rows;
+            }
+        }
+        return List.of();
     }
 
     private static List<Map<String, Object>> parseStagingFile(Path full) throws IOException {

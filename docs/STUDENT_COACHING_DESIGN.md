@@ -1,13 +1,22 @@
 # Stage 7 — Student accounts, exam desk, and coaching
 
+This file is design history. Coaching stays out of scope. Student accounts are Postgres on the Java host, and the Node store and `tests/pr*.js` files are gone. Do not run the npm commands below.
+
 | Field | Value |
 | --- | --- |
 | Document | Design: student accounts + exam desk + unofficial coaching |
 | Product | GovtJobsPortal (exam preparation desk on top of the jobs catalog) |
-| Date | 2026-08-20 |
-| Status | **Implementation complete.** PR11–PR16 on `master`. Student store is `json` or `postgres` (`2f5d19a`). |
+| Date | 2026-08-20 (status updated 2026-10-10) |
+| Status | Desk accounts are on the Java host: Postgres, signed cookies, files on disk, and a loopback-only password reset when no mailer is set. Coaching is out of scope (2026-09-26). The JSON student store and the Node tests were removed 2026-10-10. |
 | Supersedes | v1 lock “no public candidate accounts / no server PII” — **reopened by owner** |
 | Catalog design | [ALL_GOVT_JOBS_DESIGN.md](ALL_GOVT_JOBS_DESIGN.md) (PR01–PR10 complete) |
+
+## Shipped since this design
+
+- Register, sign in, server profile, dashboard, desk detail, and private admit/result files are Thymeleaf routes. Student rows are Postgres. Flyway owns the schema.
+- Password reset exists. The one-time URL is shown only for a loopback request when no mailer is set and `COOKIE_SECURE` is false. That supersedes the 2026-08-20 answer “no password-reset in v1.”
+- Plan and mock routes still answer for the four packs and are not linked from the desk. Do not extend them.
+- The Express API, the JSON student store, and `tests/pr*.js` are removed. Golden fixtures remain under `tests/fixtures/`.
 
 Jobs, exam series, and the registry stay **git JSON**. Student PII, tracker rows, admit cards, results, and mock scores are **never** git JSON and **never** GitHub Pages.
 

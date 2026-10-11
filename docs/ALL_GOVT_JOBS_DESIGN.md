@@ -1,16 +1,29 @@
 # Expand NoExam Sarkari Jobs Portal to All Indian Government Jobs
 
+This file is the accepted design history. The product host and the daily job are Java as of 2026-10-10. Do not run the npm commands below. Use `docs/collection-runbook.md`.
+
 | Field | Value |
 | --- | --- |
 | Document | Design: All-India Govt Jobs + Eligibility Match + Operator Scraper Dashboard |
 | Product | NoExam Sarkari Jobs Portal |
 | Repo | `C:\Users\Timus97\Desktop\grokAnalysis\GovtJobsPortal` |
-| Date | 2026-08-18 (status updated 2026-08-20 after Stage 7) |
-| Status | Accepted. **Implementation complete:** PR01–PR08, PR09a, PR09b, PR09c, PR10 are on `master`. No further design-plan PRs. |
+| Date | 2026-08-18 (status updated 2026-10-10) |
+| Status | Accepted design. PR01–PR10 shipped on the earlier Node tree. The Java host replaced that tree on 2026-10-10. |
 | Author | Systems Architecture |
 | Audience | Engineers operating and extending the shipped v1 |
 | Horizon | Stages 0–6; v1 target 2,000–10,000 opportunities + ~200 exam series |
-| Next stage | Java host is the product UI. Next sprint is crawl, build, and publish. Coaching is out of scope. See [JAVA21_REWRITE.md](JAVA21_REWRITE.md). |
+| Next stage | Desk UI, then hosting. Collectors and the daily job are Java. Coaching is out of scope. See [JAVA21_REWRITE.md](JAVA21_REWRITE.md) and [FIX_PRIORITY.md](FIX_PRIORITY.md). |
+
+## Shipped on the Java host (2026-10-10)
+
+- Product UI is Spring Boot 4.1.1 + Thymeleaf on port 8090. The React client and the Express API are removed.
+- Catalog source of record remains git JSON. Students are Postgres. Flyway owns the schema.
+- Match uses the signed-in profile. Reservation category is required. Unknown facts do not fail a row. The product does not say “you are eligible.”
+- Collectors and the daily job are Java: fetch, process when a source returned notices, schema-check, alert, snapshot. See [collection-runbook.md](collection-runbook.md) and [collector-fix-log.md](collector-fix-log.md).
+- GitHub Pages is not a deploy target. The Pages workflow is removed.
+- Coaching packs for four exams remain on disk and are out of scope.
+
+The locked defaults below are the 2026-08-18 decisions. Later owner decisions replace the Express host, the localStorage-only profile, and “no public candidate accounts.”
 
 ---
 

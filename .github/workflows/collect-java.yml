@@ -1,8 +1,7 @@
 name: Java collect verify
 
-# Beside the Node daily cron. This job does not fetch sites and does not commit data.
-# The scheduled Node workflow stays until a live Java run publishes the same counts.
-# After that match, point the cron here and delete client/, server/, and scripts/collect/.
+# Compile and test domain and collect. This job does not fetch sites and does not commit data.
+# The scheduled crawl is daily-collect.yml (Temurin 21, the Java daily job).
 
 on:
   workflow_dispatch:

@@ -6,19 +6,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * {@code collect daily} and {@code collect source}. The report is written before the first fetch.
- * One source failure does not stop the run. Process runs only when at least one source succeeded,
- * so a failed run leaves yesterday's jobs.json in place.
+ * One source failure does not stop the run. Process runs only when at least one source returned
+ * notices. An empty or failed source leaves its previous staging snapshot in place.
  */
 public final class CollectOrchestrator {
 
@@ -30,7 +37,16 @@ public final class CollectOrchestrator {
     private CollectOrchestrator() {}
 
     public record SourceOutcome(
-            String sourceId, boolean ok, boolean attempted, int records, String message, List<String> errors) {}
+            String sourceId,
+            SourceRunKind kind,
+            boolean attempted,
+            int records,
+            String message,
+            List<String> errors) {
+        public boolean ok() {
+            return kind != null && kind.producedNotices();
+        }
+    }
 
     public record RunOutcome(boolean usable, List<SourceOutcome> sources) {}
 
@@ -64,6 +80,15 @@ public final class CollectOrchestrator {
         return run(root, List.of(spec), client, false, progress);
     }
 
+    /** One source with a short timeout. Production daily keeps {@link #TIMEOUT_SECONDS}. */
+    static RunOutcome sourceWithin(Path root, String sourceId, SiteClient client, Duration timeout) throws IOException {
+        SourceSpec spec = find(root, sourceId);
+        if (spec == null) {
+            throw new IllegalArgumentException("Unknown source: " + sourceId);
+        }
+        return run(root, List.of(spec), client, false, Progress.NONE, timeout, 200, 10);
+    }
+
     /** Every registry row, including paused ones. A daily fetch skips paused and manual rows. */
     public static List<SourceSpec> registry(Path root) throws IOException {
         List<SourceSpec> specs = new ArrayList<>();
@@ -79,13 +104,36 @@ public final class CollectOrchestrator {
     private static RunOutcome run(
             Path root, List<SourceSpec> sources, SiteClient client, boolean processOnSuccess, Progress progress)
             throws IOException {
+        return run(
+                root,
+                sources,
+                client,
+                processOnSuccess,
+                progress,
+                Duration.ofSeconds(TIMEOUT_SECONDS),
+                envInt("PDF_MAX_PER_RUN", 200),
+                envInt("PDF_MAX_PER_SOURCE", 10));
+    }
+
+    private static RunOutcome run(
+            Path root,
+            List<SourceSpec> sources,
+            SiteClient client,
+            boolean processOnSuccess,
+            Progress progress,
+            Duration timeout,
+            int runCap,
+            int sourceCap)
+            throws IOException {
         Progress listener = progress == null ? Progress.NONE : progress;
         Path processedDir = root.resolve("data").resolve("processed");
         Files.createDirectories(processedDir);
         String startedAt = Instant.now().toString();
+        String runId = startedAt.replace(":", "");
         writeReport(processedDir.resolve("collect-report.json"), startedAt, false, false, List.of());
-        List<SourceOutcome> outcomes = fetchAll(root, sources, client, listener);
-        boolean anyOk = outcomes.stream().anyMatch(outcome -> outcome.attempted() && outcome.ok());
+        List<SourceOutcome> outcomes =
+                fetchAll(root, sources, client, listener, timeout, runCap, sourceCap, runId, startedAt);
+        boolean anyOk = outcomes.stream().anyMatch(SourceOutcome::ok);
         boolean didProcess = false;
         if (processOnSuccess && anyOk) {
             BuildJobs.run(root, new BuildJobs.Options(false));
@@ -95,44 +143,127 @@ public final class CollectOrchestrator {
         return new RunOutcome(anyOk && didProcess, outcomes);
     }
 
+    private static int envInt(String name, int fallback) {
+        String raw = System.getenv(name);
+        if (raw == null || raw.isBlank()) {
+            return fallback;
+        }
+        try {
+            return Math.max(0, Integer.parseInt(raw.trim()));
+        } catch (NumberFormatException ex) {
+            return fallback;
+        }
+    }
+
+    /**
+     * At most four sources fetch at once. Each one has its own timeout. Cancelling a source does
+     * not stop a blocked HTTP read, so the abandoned flag is what skips the staging write.
+     */
     private static List<SourceOutcome> fetchAll(
-            Path root, List<SourceSpec> sources, SiteClient client, Progress listener) {
-        SourceOutcome[] slots = new SourceOutcome[sources.size()];
-        int workers = Math.min(4, Math.max(1, sources.size()));
-        ExecutorService pool = Executors.newFixedThreadPool(workers, runnable -> {
+            Path root,
+            List<SourceSpec> sources,
+            SiteClient client,
+            Progress listener,
+            Duration timeout,
+            int runCap,
+            int sourceCap,
+            String runId,
+            String startedAt) {
+        int count = sources.size();
+        SourceOutcome[] slots = new SourceOutcome[count];
+        AtomicBoolean[] reported = new AtomicBoolean[count];
+        AtomicBoolean[] abandoned = new AtomicBoolean[count];
+        AtomicBoolean[] released = new AtomicBoolean[count];
+        for (int i = 0; i < count; i++) {
+            reported[i] = new AtomicBoolean();
+            abandoned[i] = new AtomicBoolean();
+            released[i] = new AtomicBoolean();
+        }
+        AtomicInteger runLeft = new AtomicInteger(Math.max(0, runCap));
+        CollectProgress progress = new CollectProgress(root, runId, startedAt);
+        progress.start(count);
+        int workers = Math.min(4, Math.max(1, count));
+        Semaphore gate = new Semaphore(workers);
+        ExecutorService pool = Executors.newCachedThreadPool(runnable -> {
             Thread thread = new Thread(runnable, "collect-source");
             thread.setDaemon(true);
             return thread;
         });
         try {
             List<Future<?>> tasks = new ArrayList<>();
-            for (int i = 0; i < sources.size(); i++) {
+            for (int i = 0; i < count; i++) {
                 int index = i;
                 SourceSpec source = sources.get(i);
                 tasks.add(pool.submit(() -> {
-                    listener.sourceStarted(source.sourceId());
-                    SourceOutcome outcome = safely(root, source, client);
-                    slots[index] = outcome;
-                    listener.sourceFinished(outcome);
+                    boolean acquired = false;
+                    try {
+                        gate.acquire();
+                        acquired = true;
+                        if (abandoned[index].get()) {
+                            return;
+                        }
+                        listener.sourceStarted(source.sourceId());
+                        progress.current(source.sourceId());
+                        SiteClient archived = new RawArchive(client, root, source.sourceId(), runId);
+                        PdfBudget budget = PdfBudget.shared(Math.max(0, sourceCap), runLeft);
+                        SourceOutcome outcome = safely(root, source, archived, abandoned[index], budget);
+                        if (abandoned[index].get() || Thread.currentThread().isInterrupted()) {
+                            return;
+                        }
+                        if (reported[index].compareAndSet(false, true)) {
+                            slots[index] = outcome;
+                            progress.finished(outcome);
+                            listener.sourceFinished(outcome);
+                        }
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    } finally {
+                        if (acquired && released[index].compareAndSet(false, true)) {
+                            gate.release();
+                        }
+                    }
                 }));
             }
-            for (Future<?> task : tasks) {
-                task.get();
+            long millis = Math.max(1, timeout == null ? TimeUnit.SECONDS.toMillis(TIMEOUT_SECONDS) : timeout.toMillis());
+            for (int i = 0; i < tasks.size(); i++) {
+                Future<?> task = tasks.get(i);
+                try {
+                    task.get(millis, TimeUnit.MILLISECONDS);
+                } catch (TimeoutException ex) {
+                    abandoned[i].set(true);
+                    task.cancel(true);
+                    if (reported[i].compareAndSet(false, true)) {
+                        SourceOutcome timed = timeoutOutcome(sources.get(i));
+                        slots[i] = timed;
+                        progress.finished(timed);
+                        listener.sourceFinished(timed);
+                    }
+                    if (released[i].compareAndSet(false, true)) {
+                        gate.release();
+                    }
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (java.util.concurrent.ExecutionException ex) {
+                    if (reported[i].compareAndSet(false, true)) {
+                        SourceOutcome crashed = timeoutOutcome(sources.get(i));
+                        slots[i] = crashed;
+                        progress.finished(crashed);
+                        listener.sourceFinished(crashed);
+                    }
+                }
             }
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            pool.shutdownNow();
-        } catch (java.util.concurrent.ExecutionException ex) {
-            pool.shutdownNow();
         } finally {
-            pool.shutdown();
+            pool.shutdownNow();
+            progress.finish();
         }
         List<SourceOutcome> outcomes = new ArrayList<>();
         for (int i = 0; i < slots.length; i++) {
             SourceOutcome outcome = slots[i];
             if (outcome == null) {
                 SourceSpec source = sources.get(i);
-                outcomes.add(new SourceOutcome(source.sourceId(), false, false, 0, "not finished", List.of("not finished")));
+                outcomes.add(new SourceOutcome(
+                        source.sourceId(), SourceRunKind.NOT_FINISHED, false, 0, "not finished", List.of("not finished")));
             } else {
                 outcomes.add(outcome);
             }
@@ -140,12 +271,18 @@ public final class CollectOrchestrator {
         return outcomes;
     }
 
-    private static SourceOutcome safely(Path root, SourceSpec source, SiteClient client) {
+    private static SourceOutcome timeoutOutcome(SourceSpec source) {
+        String message = "source worker crashed or timed out";
+        return new SourceOutcome(source.sourceId(), SourceRunKind.FAILED, true, 0, message, List.of(message));
+    }
+
+    private static SourceOutcome safely(
+            Path root, SourceSpec source, SiteClient client, AtomicBoolean abandoned, PdfBudget budget) {
         try {
-            return one(root, source, client);
+            return one(root, source, client, abandoned, budget);
         } catch (Exception ex) {
             String message = ex.getMessage() == null || ex.getMessage().isBlank() ? ex.toString() : ex.getMessage();
-            return new SourceOutcome(source.sourceId(), false, true, 0, message, List.of(message));
+            return new SourceOutcome(source.sourceId(), SourceRunKind.FAILED, true, 0, message, List.of(message));
         }
     }
 
@@ -168,23 +305,103 @@ public final class CollectOrchestrator {
         }
     }
 
-    private static SourceOutcome one(Path root, SourceSpec source, SiteClient client) throws IOException {
-        if (source.defence() || source.manual()) {
-            return new SourceOutcome(source.sourceId(), false, true, 0, SourceRules.CAPTCHA, List.of(SourceRules.CAPTCHA));
+    private static boolean stopped(AtomicBoolean abandoned) {
+        return (abandoned != null && abandoned.get()) || Thread.currentThread().isInterrupted();
+    }
+
+    private static SourceOutcome one(
+            Path root, SourceSpec source, SiteClient client, AtomicBoolean abandoned, PdfBudget budget)
+            throws IOException {
+        if (stopped(abandoned)) {
+            return timeoutOutcome(source);
         }
-        SourceCollect.Result result = SourceCollect.collect(source, client);
-        Path dir = root.resolve("data").resolve("staging").resolve(safe(source.sourceId()));
+        if (source.defence() || source.manual()) {
+            return new SourceOutcome(
+                    source.sourceId(), SourceRunKind.FAILED, true, 0, SourceRules.CAPTCHA, List.of(SourceRules.CAPTCHA));
+        }
+        SourceCollect.Result result = SourceCollect.collect(source, client, Instant.now().toString(), budget);
+        if (stopped(abandoned)) {
+            return timeoutOutcome(source);
+        }
+        if (result.kind() != SourceRunKind.COMPLETE && result.kind() != SourceRunKind.PARTIAL) {
+            return fromResult(source.sourceId(), result);
+        }
+        if (stopped(abandoned)) {
+            return timeoutOutcome(source);
+        }
+        Path dir = stagingDirectory(root, source.sourceId());
         Files.createDirectories(dir);
         Path written = dir.resolve(System.currentTimeMillis() + ".json");
         BuildJobs.writeAtomic(written, result.records());
-        pruneOlderSnapshots(dir, written);
-        return new SourceOutcome(
-                source.sourceId(),
-                result.ok(),
-                true,
-                result.records().size(),
-                result.message(),
-                result.errors());
+        if (result.kind() == SourceRunKind.COMPLETE) {
+            pruneOlderSnapshots(dir, written);
+        } else {
+            retainPreviousSnapshot(dir, written);
+        }
+        return fromResult(source.sourceId(), result);
+    }
+
+    /** Staging directory for one registry source. Paste files live under {@code ops_paste} and are not written here. */
+    public static Path stagingDirectory(Path root, String sourceId) {
+        return root.resolve("data").resolve("staging").resolve(safe(sourceId));
+    }
+
+    private static SourceOutcome fromResult(String sourceId, SourceCollect.Result result) {
+        String message = result.message();
+        if ((message == null || message.isBlank())
+                && result.kind() == SourceRunKind.PARTIAL
+                && !result.errors().isEmpty()) {
+            message = result.errors().get(0);
+        }
+        return new SourceOutcome(sourceId, result.kind(), true, result.records().size(), message, result.errors());
+    }
+
+    /**
+     * A partial yield replaces the catalog input, and one previous non-empty snapshot stays on disk.
+     * Empty files are removed. A file that does not parse is left for a later complete run.
+     */
+    private static void retainPreviousSnapshot(Path dir, Path written) {
+        List<Path> keepers = new ArrayList<>();
+        try (var children = Files.list(dir)) {
+            for (Path path : children.toList()) {
+                if (path.getFileName().equals(written.getFileName())) {
+                    continue;
+                }
+                String name = path.getFileName().toString();
+                if (!name.endsWith(".json") && !name.endsWith(".jsonl")) {
+                    continue;
+                }
+                try {
+                    if (BuildJobs.snapshotRecords(path).isEmpty()) {
+                        Files.deleteIfExists(path);
+                    } else {
+                        keepers.add(path);
+                    }
+                } catch (IOException | RuntimeException ignored) {
+                    // An unreadable file stays until a complete run replaces the directory.
+                }
+            }
+        } catch (IOException ignored) {
+            return;
+        }
+        keepers.sort(Comparator.comparingLong(CollectOrchestrator::mtimeMillis)
+                .reversed()
+                .thenComparing(path -> path.getFileName().toString()));
+        for (int i = 1; i < keepers.size(); i++) {
+            try {
+                Files.deleteIfExists(keepers.get(i));
+            } catch (IOException ignored) {
+                // The newest previous file is the recovery copy.
+            }
+        }
+    }
+
+    private static long mtimeMillis(Path path) {
+        try {
+            return Files.getLastModifiedTime(path).toMillis();
+        } catch (IOException ex) {
+            return 0L;
+        }
     }
 
     private static void writeReport(
@@ -200,6 +417,7 @@ public final class CollectOrchestrator {
         for (SourceOutcome outcome : outcomes) {
             Map<String, Object> row = new LinkedHashMap<>();
             row.put("sourceId", outcome.sourceId());
+            row.put("outcome", outcome.kind().label());
             row.put("ok", outcome.ok());
             row.put("records", outcome.records());
             row.put("message", outcome.message());

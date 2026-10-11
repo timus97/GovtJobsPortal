@@ -6,12 +6,12 @@ Human-readable map of data sources. Machine config: `data/sources/registry.json`
 
 | sourceId | Name | Cadence | Method |
 |----------|------|---------|--------|
-| seed_manual | Manual curator seed | Continuous | Manual / CSV |
+| seed_manual | Manual curator seed | Continuous | `data/seed/jobs.json`, then `process` |
 | ncs_gov | National Career Service | Daily | Playwright (`browser_scrape`) |
 | employment_news | Employment News | Daily | HTML + PDF extract |
 | becil | BECIL Careers | Daily | HTML + PDF extract |
 
-Daily command: `npm run collect:daily` or `npm run pipeline:daily`.
+Daily command: collect daily. See `docs/collection-runbook.md`.
 
 ## P1 — major PSU careers
 

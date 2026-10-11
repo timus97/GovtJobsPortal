@@ -14,7 +14,21 @@ public record SourceSpec(
         String render,
         String orgType,
         List<String> listUrls,
-        boolean enabled) {
+        boolean enabled,
+        String sector,
+        String opportunityType) {
+
+    public SourceSpec(
+            String sourceId,
+            String name,
+            String collector,
+            String method,
+            String render,
+            String orgType,
+            List<String> listUrls,
+            boolean enabled) {
+        this(sourceId, name, collector, method, render, orgType, listUrls, enabled, "", "");
+    }
 
     public static SourceSpec from(Map<String, ?> row) {
         String sourceId = text(row.get("sourceId"));
@@ -46,7 +60,9 @@ public record SourceSpec(
                 text(row.get("render")),
                 org,
                 List.copyOf(urls),
-                Boolean.TRUE.equals(row.get("enabled")));
+                Boolean.TRUE.equals(row.get("enabled")),
+                text(row.get("sector")),
+                text(row.get("opportunityType")));
     }
 
     public boolean browser() {
@@ -75,6 +91,18 @@ public record SourceSpec(
 
     public boolean ssc() {
         return "ssc".equals(collector) || sourceId.startsWith("ssc");
+    }
+
+    public boolean sbi() {
+        return "sbi".equals(collector) || "sbi".equals(sourceId) || sourceId.startsWith("sbi_");
+    }
+
+    public boolean psc() {
+        return "genericPsc".equals(collector) || sourceId.startsWith("psc");
+    }
+
+    public boolean board() {
+        return "genericBoard".equals(collector);
     }
 
     public boolean calendar() {

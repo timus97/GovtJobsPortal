@@ -1,5 +1,7 @@
 # Collector verified URLs — 30 Sep 2026
 
+These checks are the 30 Sep 2026 pass. The Java daily job reads the registry as of 2026-10-10. This file was not re-fetched, and the registry was not edited, for that cutover.
+
 Fetch method: HTTPS only, browser User-Agent `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36`, default certificate checks left on. No TLS bypass. Radware `validate.perfdrive.com` was not followed. Playwright was used only where a same-site JavaScript cookie wall hid a page that a browser then loaded.
 
 Registry edits are `listUrls` and `baseUrl` only. `enabled` and `method` were not changed. Sources not listed as verified-update were left unchanged.

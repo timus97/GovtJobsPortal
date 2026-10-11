@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class CollectPhasesTest {
+
+    private static final String NOTICE_HTML = """
+            <a href="https://example.gov.in/recruitment/advt-9">Direct recruitment of Junior Engineer advt no 9. Last date to apply: 01-06-2099</a>
+            """;
 
     private static final String FIXTURE_HTML = """
             <a href="/login">Login</a>
@@ -47,7 +52,7 @@ class CollectPhasesTest {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    void htmlFixtureKeepsTheSameLinksAndDropsTheSameTitles(@TempDir Path dir) throws Exception {
+    void htmlFixtureKeepsTheRecruitmentLinkAndDropsNavTitles() {
         List<Map<String, Object>> links =
                 HtmlLinks.extractLinks(FIXTURE_HTML, "https://example.gov.in/careers", true, 20);
         List<String> hrefs = JobLinkQuality.filterJobLinks(links).stream()
@@ -80,11 +85,17 @@ class CollectPhasesTest {
                 dropped.add(sample.get("title"));
             }
         }
-        JsonNode node = mapper.readTree(nodeQuality(dir, samples));
-        assertThat(hrefs).containsExactlyElementsOf(stringList(node.get("hrefs")));
-        assertThat(dropped).containsExactlyElementsOf(stringList(node.get("dropped")));
         assertThat(hrefs).containsExactly("https://example.gov.in/recruitment/advt-42-2026.pdf");
-        assertThat(dropped).contains("Login", "Skip to main content", "हिंदी", "Updated On 20-12-2023");
+        assertThat(dropped)
+                .containsExactly(
+                        "Login",
+                        "Post New Jobs",
+                        "Tender Notification",
+                        "Working at BHEL",
+                        "Ingots",
+                        "Skip to main content",
+                        "हिंदी",
+                        "Updated On 20-12-2023");
         assertThat(JobLinkQuality.isKeepableJobLink(Map.of(
                         "title",
                         "Click Here to Read the Detailed Advertisement - [14/08/2026]",
@@ -127,8 +138,6 @@ class CollectPhasesTest {
         assertThat(JsoupPages.sameHost("https://www.bhel.com/a", "https://careers.bhel.in/b")).isFalse();
         assertThat(JsoupPages.sameHost("https://example.gov.in/a", "http://127.0.0.1/b")).isFalse();
         assertThat(JsoupPages.sameHost("http://127.0.0.1/a", "http://127.0.0.2/b")).isFalse();
-        assertThat(node.get("updated").isNull()).isTrue();
-        assertThat(node.get("labeled").asText()).isEqualTo("2023-12-20");
         assertThat(StagingRecords.cleanTitle("Engagement of Technician ( | PDF | 1.1 KB | English)"))
                 .doesNotContain("PDF")
                 .doesNotContain("1.1 KB");
@@ -165,7 +174,7 @@ class CollectPhasesTest {
         }
         assertThat(match).isNotNull();
         assertThat(match.path("board").asText()).isEqualTo("IBPS");
-        assertThat(match.path("expectedExam").asText()).isEqualTo("May 2026");
+        assertThat(match.path("expectedExam").asText()).isEqualTo("2026-05");
         assertThat(match.path("minEducation").isNull()).isTrue();
         JsonNode jobs = mapper.readTree(root.resolve("data/processed/jobs.json").toFile());
         assertThat(jobs.findValuesAsText("title")).doesNotContain("CRP PO MT XVI");
@@ -195,6 +204,9 @@ class CollectPhasesTest {
                 <a href="https://grse.in/career/PDFs/Detailed_Advt_Expert_2025_03.pdf">GRSE Employment Notification No. 2025/03(E) (Detailed Notification)</a>
                 """;
         RecordingClient client = new RecordingClient(Map.of("https://example.gov.in/careers", html));
+        client.file(
+                "https://grse.in/career/PDFs/Detailed_Advt_Expert_2025_03.pdf",
+                pdf("Advertisement for engagement of experts. Applications are invited. No. of posts: 4. Last date to apply: 01-06-2099"));
         SourceCollect.Result collected = SourceCollect.collect(
                 spec("demo_board", "Demo", "generic", "html_scrape", "", List.of("https://example.gov.in/careers")),
                 client,
@@ -202,6 +214,9 @@ class CollectPhasesTest {
         assertThat(collected.records()).extracting(row -> row.get("title"))
                 .contains("GRSE Employment Notification No. 2025/03(E) (Detailed Notification)")
                 .doesNotContain("BEML Journey", "Organogram");
+        assertThat(collected.records())
+                .anyMatch(row -> "pdf-v1".equals(row.get("collectorVersion"))
+                        && "2099-06-01".equals(row.get("lastDate")));
         assertThat(JobLinkQuality.rejectedDocument("Notice Inviting Tender for furniture")).isTrue();
         assertThat(JobLinkQuality.rejectedDocument("Advertisement for engagement of Consultant. Applications are invited.")).isFalse();
     }
@@ -260,7 +275,8 @@ class CollectPhasesTest {
                         List.of("https://ncs.gov.in/job-listing?isGovernmentJob=true")),
                 emptyNcs,
                 "2026-09-30T00:00:00Z");
-        assertThat(emptyList.ok()).isTrue();
+        assertThat(emptyList.ok()).isFalse();
+        assertThat(emptyList.kind()).isEqualTo(SourceRunKind.EMPTY);
         assertThat(emptyList.records()).isEmpty();
         assertThat(emptyList.message()).contains("0 Job Posts and 0 Vacancies");
         assertThat(emptyList.message()).contains("NcsNewWebsite");
@@ -429,17 +445,173 @@ class CollectPhasesTest {
                                 true,
                                 "listUrls",
                                 List.of(page)))));
+        Files.createDirectories(clean.resolve("data/processed"));
+        Files.writeString(clean.resolve("data/processed/jobs.json"), "STAY");
         CollectOrchestrator.RunOutcome zero = CollectOrchestrator.daily(
                 clean, url -> new SiteClient.PageBody(url, "<a href=\"https://example.gov.in/login\">Login</a>"));
-        assertThat(zero.sources().get(0).ok()).isTrue();
+        assertThat(zero.usable()).isFalse();
+        assertThat(zero.sources().get(0).ok()).isFalse();
+        assertThat(zero.sources().get(0).kind()).isEqualTo(SourceRunKind.EMPTY);
         assertThat(zero.sources().get(0).message()).isEqualTo(SourceRules.NO_KEEPABLE);
         assertThat(zero.sources().get(0).records()).isZero();
-        assertThat(mapper.readTree(clean.resolve("data/processed/collect-report.json").toFile())
+        assertThat(Files.readString(clean.resolve("data/processed/jobs.json"))).isEqualTo("STAY");
+        assertThat(Files.isDirectory(clean.resolve("data/staging/demo_board"))).isFalse();
+        JsonNode zeroReport = mapper.readTree(clean.resolve("data/processed/collect-report.json").toFile());
+        assertThat(zeroReport.path("usable").asBoolean()).isFalse();
+        assertThat(zeroReport.path("processed").asBoolean()).isFalse();
+        assertThat(zeroReport.path("sources").get(0).path("message").asText()).isEqualTo("no keepable notices");
+        assertThat(zeroReport.path("sources").get(0).path("outcome").asText()).isEqualTo("empty");
+        assertThat(zeroReport.path("sources").get(0).path("ok").asBoolean()).isFalse();
+    }
+
+    @Test
+    void emptyAndFailedRunsLeaveThePreviousSnapshot(@TempDir Path root) throws Exception {
+        String page = "https://example.gov.in/jobs";
+        writeRegistry(root, "demo_board", "html_scrape", List.of(page));
+        Path previous = plantSnapshot(root, "demo_board", "1000.json", List.of(Map.of(
+                "title", "Old board recruitment advt",
+                "officialUrl", "https://example.gov.in/advt/old")), 1_000L);
+        byte[] before = Files.readAllBytes(previous);
+
+        CollectOrchestrator.RunOutcome empty = CollectOrchestrator.source(
+                root, "demo_board", url -> new SiteClient.PageBody(url, "<a href=\"https://example.gov.in/login\">Login</a>"));
+        assertThat(empty.sources().get(0).kind()).isEqualTo(SourceRunKind.EMPTY);
+        assertThat(empty.sources().get(0).ok()).isFalse();
+        assertThat(jsonFiles(previous.getParent())).containsExactly(previous.getFileName().toString());
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+        assertThat(reportOutcome(root)).isEqualTo("empty");
+
+        CollectOrchestrator.RunOutcome blocked = CollectOrchestrator.source(
+                root,
+                "demo_board",
+                url -> new SiteClient.PageBody(url, "<html><div class=\"g-recaptcha\"></div>verify you are human</html>"));
+        assertThat(blocked.sources().get(0).kind()).isEqualTo(SourceRunKind.FAILED);
+        assertThat(blocked.sources().get(0).message()).isEqualTo(SourceRules.CAPTCHA);
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+        assertThat(jsonFiles(previous.getParent())).containsExactly("1000.json");
+
+        CollectOrchestrator.RunOutcome thrown = CollectOrchestrator.source(
+                root, "demo_board", url -> {
+                    throw new IOException("socket closed");
+                });
+        assertThat(thrown.sources().get(0).kind()).isEqualTo(SourceRunKind.FAILED);
+        assertThat(thrown.sources().get(0).message()).contains("socket closed");
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+
+        writeRegistry(root, "defence_army", "html_scrape", List.of("https://joinindianarmy.nic.in/"));
+        CollectOrchestrator.RunOutcome defence = CollectOrchestrator.source(
+                root, "defence_army", url -> new SiteClient.PageBody(url, "<html>Recruitment of officers</html>"));
+        assertThat(defence.sources().get(0).kind()).isEqualTo(SourceRunKind.FAILED);
+        assertThat(defence.sources().get(0).message()).isEqualTo(SourceRules.CAPTCHA);
+        assertThat(Files.exists(root.resolve("data/staging/defence_army"))).isFalse();
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+    }
+
+    @Test
+    void timedOutAndRejectedFetchesLeaveThePreviousSnapshot(@TempDir Path root) throws Exception {
+        String page = "https://example.gov.in/jobs";
+        writeRegistry(root, "demo_board", "html_scrape", List.of(page));
+        Path previous = plantSnapshot(root, "demo_board", "1000.json", List.of(Map.of(
+                "title", "Old board recruitment advt",
+                "officialUrl", "https://example.gov.in/advt/old")), 1_000L);
+        byte[] before = Files.readAllBytes(previous);
+
+        CollectOrchestrator.RunOutcome timedOut = CollectOrchestrator.source(root, "demo_board", url -> {
+            throw new IOException("Read timed out");
+        });
+        assertThat(timedOut.sources().get(0).kind()).isEqualTo(SourceRunKind.FAILED);
+        assertThat(timedOut.sources().get(0).ok()).isFalse();
+        assertThat(timedOut.sources().get(0).records()).isZero();
+        assertThat(timedOut.sources().get(0).message()).contains("timed out");
+        assertThat(reportOutcome(root)).isEqualTo("failed");
+        assertThat(jsonFiles(previous.getParent())).containsExactly("1000.json");
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+
+        CollectOrchestrator.RunOutcome rejected = CollectOrchestrator.source(root, "demo_board", url -> {
+            throw new IOException("HTTP 404");
+        });
+        assertThat(rejected.sources().get(0).kind()).isEqualTo(SourceRunKind.FAILED);
+        assertThat(rejected.sources().get(0).message()).contains("HTTP 404");
+        assertThat(rejected.sources().get(0).records()).isZero();
+        assertThat(reportOutcome(root)).isEqualTo("failed");
+        assertThat(jsonFiles(previous.getParent())).containsExactly("1000.json");
+        assertThat(Files.readAllBytes(previous)).isEqualTo(before);
+    }
+
+    @Test
+    void partialRunKeepsOnePreviousSnapshotAndBecomesTheCatalogInput(@TempDir Path root) throws Exception {
+        writeRegistry(root, "demo_board", "html_scrape", List.of(
+                "https://example.gov.in/jobs", "http://example.gov.in/plain"));
+        Path older = plantSnapshot(root, "demo_board", "older-a.json", List.of(Map.of(
+                "title", "Old board recruitment advt",
+                "officialUrl", "https://example.gov.in/advt/older")), 1_000L);
+        Path previous = plantSnapshot(root, "demo_board", "older-b.json", List.of(Map.of(
+                "title", "Previous board recruitment advt",
+                "officialUrl", "https://example.gov.in/advt/previous")), 2_000L);
+        Path empty = plantSnapshot(root, "demo_board", "empty.json", "[]", 3_000L);
+        byte[] previousBytes = Files.readAllBytes(previous);
+
+        CollectOrchestrator.RunOutcome partial = CollectOrchestrator.source(
+                root, "demo_board", url -> new SiteClient.PageBody(url, NOTICE_HTML));
+        assertThat(partial.sources().get(0).kind()).isEqualTo(SourceRunKind.PARTIAL);
+        assertThat(partial.sources().get(0).ok()).isTrue();
+        assertThat(partial.sources().get(0).records()).isEqualTo(1);
+        assertThat(partial.sources().get(0).message()).contains("non-https");
+        assertThat(reportOutcome(root)).isEqualTo("partial");
+        assertThat(Files.readAllBytes(previous)).isEqualTo(previousBytes);
+        assertThat(Files.exists(older)).isFalse();
+        assertThat(Files.exists(empty)).isFalse();
+        assertThat(jsonFiles(previous.getParent())).contains("older-b.json").hasSize(2);
+
+        BuildJobs.run(root, new BuildJobs.Options(false));
+        String processed = Files.readString(root.resolve("data/processed/jobs.json"))
+                + Files.readString(root.resolve("data/processed/quarantine.json"));
+        assertThat(processed).contains("Junior Engineer");
+        assertThat(processed).doesNotContain("Previous board recruitment");
+        assertThat(processed).doesNotContain("Old board recruitment");
+    }
+
+    @Test
+    void completeRunPrunesOlderSnapshotsAndADailyYieldRebuilds(@TempDir Path root) throws Exception {
+        writeRegistry(root, "demo_board", "html_scrape", List.of("https://example.gov.in/jobs"));
+        Path older = plantSnapshot(root, "demo_board", "older-a.json", List.of(Map.of(
+                "title", "Old board recruitment advt")), 1_000L);
+        Path previous = plantSnapshot(root, "demo_board", "older-b.json", List.of(Map.of(
+                "title", "Previous board recruitment advt")), 2_000L);
+        Path empty = plantSnapshot(root, "demo_board", "empty.json", "[]", 3_000L);
+
+        CollectOrchestrator.RunOutcome complete = CollectOrchestrator.source(
+                root, "demo_board", url -> new SiteClient.PageBody(url, NOTICE_HTML));
+        assertThat(complete.sources().get(0).kind()).isEqualTo(SourceRunKind.COMPLETE);
+        assertThat(complete.sources().get(0).ok()).isTrue();
+        assertThat(complete.sources().get(0).records()).isEqualTo(1);
+        assertThat(reportOutcome(root)).isEqualTo("complete");
+        assertThat(mapper.readTree(root.resolve("data/processed/collect-report.json").toFile())
                         .path("sources")
                         .get(0)
-                        .path("message")
-                        .asText())
-                .isEqualTo("no keepable notices");
+                        .path("ok")
+                        .asBoolean())
+                .isTrue();
+        assertThat(Files.exists(older)).isFalse();
+        assertThat(Files.exists(previous)).isFalse();
+        assertThat(Files.exists(empty)).isFalse();
+        List<String> left = jsonFiles(root.resolve("data/staging/demo_board"));
+        assertThat(left).hasSize(1);
+        assertThat(Files.readString(root.resolve("data/staging/demo_board").resolve(left.get(0))))
+                .contains("Junior Engineer");
+
+        Path daily = root.resolve("daily");
+        writeRegistry(daily, "demo_board", "html_scrape", List.of("https://example.gov.in/jobs"));
+        Files.createDirectories(daily.resolve("data/processed"));
+        Files.writeString(daily.resolve("data/processed/jobs.json"), "STAY");
+        CollectOrchestrator.RunOutcome rebuilt = CollectOrchestrator.daily(
+                daily, url -> new SiteClient.PageBody(url, NOTICE_HTML));
+        assertThat(rebuilt.usable()).isTrue();
+        assertThat(rebuilt.sources().get(0).kind()).isEqualTo(SourceRunKind.COMPLETE);
+        JsonNode report = mapper.readTree(daily.resolve("data/processed/collect-report.json").toFile());
+        assertThat(report.path("usable").asBoolean()).isTrue();
+        assertThat(report.path("processed").asBoolean()).isTrue();
+        assertThat(Files.readString(daily.resolve("data/processed/jobs.json"))).startsWith("[");
     }
 
     @Test
@@ -564,7 +736,7 @@ class CollectPhasesTest {
     @Test
     void currentOpeningsHopIsFetchedWhenTheIndexItselfIsNotANotice() {
         String index = "<a href=\"https://example.gov.in/careers/current-openings\">Current Openings</a>";
-        String listing = "<a href=\"https://example.gov.in/recruitment/advt-9.pdf\">Recruitment of Junior Engineer advt no 9</a>";
+        String listing = "<a href=\"https://example.gov.in/recruitment/advt-9\">Recruitment of Junior Engineer advt no 9</a>";
         RecordingClient client = new RecordingClient(Map.of(
                 "https://example.gov.in/careers", index,
                 "https://example.gov.in/careers/current-openings", listing));
@@ -619,6 +791,11 @@ class CollectPhasesTest {
                         urls.get(0),
                         "<a href=\"https://iocl.com/admin/img/UploadedFiles/LatestJobOpening/Files/DetailedAd14082026.pdf\">Click Here to Read the Detailed Advertisement - [14/08/2026]</a>"));
             }
+
+            @Override
+            public byte[] bytes(String url) throws IOException {
+                return pdf("Advertisement for recruitment of officers. Applications are invited. Last date to apply: 14-08-2026");
+            }
         };
         SourceCollect.Result collected = SourceCollect.collect(
                 spec("psu_iocl", "Indian Oil", "generic", "html_scrape", "", List.of("https://iocl.com/latest-job-opening")),
@@ -649,10 +826,13 @@ class CollectPhasesTest {
     }
 
     @Test
-    void spaShellUsesTheBrowserHtmlWhenTheHttpBodyHasNoAnchors() {
+    void spaShellUsesTheBrowserHtmlWhenTheHttpBodyHasNoAnchors() throws Exception {
         RecordingClient client = new RecordingClient(Map.of(
                 "https://hal-india.co.in/careers", "<html><title>HAL</title><app-root></app-root></html>"));
         client.browserHtml = "<a href=\"https://hal-india.co.in/recruitment/advt-engineer.pdf\">Recruitment of Engineer advt no 12</a>";
+        client.file(
+                "https://hal-india.co.in/recruitment/advt-engineer.pdf",
+                pdf("Advertisement for recruitment of Engineer. Applications are invited."));
         SourceCollect.Result collected = SourceCollect.collect(
                 spec("psu_hal", "Hindustan Aeronautics Limited", "generic", "html_scrape", "", List.of("https://hal-india.co.in/careers")),
                 client,
@@ -660,51 +840,6 @@ class CollectPhasesTest {
         assertThat(collected.records())
                 .anyMatch(row -> String.valueOf(row.get("title")).contains("Engineer"));
         assertThat(client.pages).isEqualTo(1);
-    }
-
-    private String nodeQuality(Path dir, List<Map<String, String>> samples) throws Exception {
-        Path html = dir.resolve("fixture.html");
-        Path samplesFile = dir.resolve("samples.json");
-        Path script = dir.resolve("compare.js");
-        Files.writeString(html, FIXTURE_HTML);
-        Files.writeString(samplesFile, mapper.writeValueAsString(samples));
-        Files.writeString(
-                script,
-                """
-                const fs = require('fs');
-                const { extractLinks } = require(process.argv[2]);
-                const { filterJobLinks, isKeepableJobLink } = require(process.argv[3]);
-                const { findLastDateHint } = require(process.argv[4]);
-                const html = fs.readFileSync(process.argv[5], 'utf8');
-                const links = extractLinks(html, 'https://example.gov.in/careers', { jobLikeOnly: true, limit: 20 });
-                const hrefs = filterJobLinks(links).map((link) => link.href);
-                const samples = JSON.parse(fs.readFileSync(process.argv[6], 'utf8'));
-                const dropped = samples.filter((link) => !isKeepableJobLink(link)).map((link) => link.title);
-                console.log(JSON.stringify({
-                  hrefs,
-                  dropped,
-                  updated: findLastDateHint('Updated On 20-12-2023'),
-                  labeled: findLastDateHint('Last date to apply: 20-12-2023')
-                }));
-                """);
-        Path repo = RepoPaths.root();
-        ProcessBuilder builder = new ProcessBuilder(
-                "node",
-                script.toString(),
-                repo.resolve("scripts/collect/lib/htmlLinks.js").toString(),
-                repo.resolve("scripts/collect/lib/jobLinkQuality.js").toString(),
-                repo.resolve("scripts/collect/lib/dates.js").toString(),
-                html.toString(),
-                samplesFile.toString());
-        builder.directory(repo.toFile());
-        builder.redirectErrorStream(true);
-        Process process = builder.start();
-        String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-        int code = process.waitFor();
-        if (code != 0) {
-            throw new AssertionError("node link compare exited " + code + "\n" + output);
-        }
-        return output;
     }
 
     private static SourceSpec spec(
@@ -721,15 +856,53 @@ class CollectPhasesTest {
         return null;
     }
 
-    private static List<String> stringList(JsonNode node) {
-        List<String> out = new ArrayList<>();
-        node.forEach(item -> out.add(item.isNull() ? null : item.asText()));
-        return out;
-    }
-
     private void writeJson(Path file, Object value) throws IOException {
         Files.createDirectories(file.getParent());
         mapper.writerWithDefaultPrettyPrinter().writeValue(file.toFile(), value);
+    }
+
+    private void writeRegistry(Path root, String sourceId, String method, List<String> urls) throws IOException {
+        writeJson(
+                root.resolve("data/sources/registry.json"),
+                Map.of(
+                        "sources",
+                        List.of(Map.of(
+                                "sourceId", sourceId,
+                                "name", "Demo Board",
+                                "method", method,
+                                "enabled", true,
+                                "orgTypeDefault", "central",
+                                "listUrls", urls))));
+    }
+
+    private Path plantSnapshot(Path root, String sourceId, String fileName, Object body, long mtime) throws IOException {
+        Path file = root.resolve("data/staging").resolve(sourceId).resolve(fileName);
+        if (body instanceof String text) {
+            Files.createDirectories(file.getParent());
+            Files.writeString(file, text);
+        } else {
+            writeJson(file, body);
+        }
+        Files.setLastModifiedTime(file, FileTime.fromMillis(mtime));
+        return file;
+    }
+
+    private static List<String> jsonFiles(Path dir) throws IOException {
+        try (var stream = Files.list(dir)) {
+            return stream
+                    .map(path -> path.getFileName().toString())
+                    .filter(name -> name.endsWith(".json") || name.endsWith(".jsonl"))
+                    .sorted()
+                    .toList();
+        }
+    }
+
+    private String reportOutcome(Path root) throws IOException {
+        return mapper.readTree(root.resolve("data/processed/collect-report.json").toFile())
+                .path("sources")
+                .get(0)
+                .path("outcome")
+                .asText();
     }
 
     private static byte[] pdf(String text) throws IOException {
@@ -751,11 +924,25 @@ class CollectPhasesTest {
 
     private static final class RecordingClient implements SiteClient {
         private final Map<String, String> pagesByUrl;
+        private final Map<String, byte[]> files = new java.util.LinkedHashMap<>();
         private int pages;
         private String browserHtml = "";
 
         private RecordingClient(Map<String, String> pagesByUrl) {
             this.pagesByUrl = pagesByUrl;
+        }
+
+        private void file(String url, byte[] body) {
+            files.put(url, body);
+        }
+
+        @Override
+        public byte[] bytes(String url) throws IOException {
+            byte[] body = files.get(url);
+            if (body != null) {
+                return body;
+            }
+            return SiteClient.super.bytes(url);
         }
 
         @Override

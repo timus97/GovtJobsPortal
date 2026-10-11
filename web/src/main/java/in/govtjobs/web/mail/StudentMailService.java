@@ -1,6 +1,7 @@
 package in.govtjobs.web.mail;
 
 import in.govtjobs.web.config.GovtJobsProperties;
+import in.govtjobs.web.security.ClientAddress;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -41,8 +42,19 @@ public class StudentMailService {
         return "dev";
     }
 
-    public boolean allowDevLink() {
-        return !props.getSession().isCookieSecure() && "dev".equals(provider());
+    public boolean allowDevLink(String remoteAddress) {
+        return !props.getSession().isCookieSecure()
+                && "dev".equals(provider())
+                && ClientAddress.isLoopback(remoteAddress);
+    }
+
+    /** Provider name safe to put on public {@code /health}. {@code dev} stays on loopback only. */
+    public String visibleProvider(String remoteAddress) {
+        String name = provider();
+        if ("dev".equals(name) && !ClientAddress.isLoopback(remoteAddress)) {
+            return "unconfigured";
+        }
+        return name;
     }
 
     public SendResult sendPasswordReset(String to, String url, String expiresAt) {
@@ -56,7 +68,7 @@ public class StudentMailService {
                 sendSmtp(to, bodies);
                 return new SendResult(true, "smtp", null);
             }
-            log.info("mail.dev_reset issued provider=dev (link shown only on local host)");
+            log.info("mail.dev_reset issued provider=dev");
             return new SendResult(false, "dev", "no_mailer");
         } catch (Exception e) {
             log.warn("mail.reset_failed err={}", e.toString());

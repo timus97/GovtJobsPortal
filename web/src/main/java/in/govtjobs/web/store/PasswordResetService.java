@@ -37,7 +37,7 @@ public class PasswordResetService {
         this.props = props;
     }
 
-    public Map<String, Object> requestReset(String email) {
+    public Map<String, Object> requestReset(String email, String remoteAddress) {
         Map<String, Object> generic = new LinkedHashMap<>();
         generic.put("ok", true);
         generic.put("message", "If that email is registered, we sent a reset link.");
@@ -66,8 +66,9 @@ public class PasswordResetService {
         String url = publicSite() + "/account/reset?token=" + token;
         StudentMailService.SendResult mailed =
                 mail.sendPasswordReset(String.valueOf(student.get("email")), url, expires.toString());
-        log.info("student.reset_requested id={} mailed={}", student.get("id"), mailed.sent());
-        if (mail.allowDevLink()) {
+        boolean devLink = mail.allowDevLink(remoteAddress);
+        log.info("student.reset_requested id={} mailed={} devLink={}", student.get("id"), mailed.sent(), devLink);
+        if (devLink) {
             generic.put("devResetUrl", url);
             if (!mailed.sent()) {
                 generic.put(

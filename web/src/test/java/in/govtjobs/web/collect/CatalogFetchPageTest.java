@@ -65,6 +65,32 @@ class CatalogFetchPageTest {
     }
 
     @Test
+    void reportTableShowsEmptyPartialAndFailed() throws Exception {
+        when(collect.status()).thenReturn(Map.of(
+                "running", false,
+                "completed", 5,
+                "total", 5,
+                "currentSource", "",
+                "startedBy", "ada",
+                "lastSummary", "done",
+                "report", Map.of(
+                        "startedAt", "2026-08-21T15:20:22.704Z",
+                        "sources", List.of(
+                                Map.of("sourceId", "full", "outcome", "complete", "records", 2, "message", ""),
+                                Map.of("sourceId", "part", "outcome", "partial", "records", 1, "message", "pdf skipped"),
+                                Map.of("sourceId", "zero", "outcome", "empty", "records", 0, "message", "no keepable notices"),
+                                Map.of("sourceId", "bad", "outcome", "failed", "records", 0, "message", "HTTP 404"),
+                                Map.of("sourceId", "stopped", "outcome", "not_finished", "records", 0, "message", "not finished")))));
+        mvc.perform(get("/ops/fetch").with(user("ada").roles("OPS")))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">complete<")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">partial<")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">empty<")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">failed<")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">not_finished<")));
+    }
+
+    @Test
     void sourcesPageRendersTheRegistry() throws Exception {
         mvc.perform(get("/ops/sources").with(user("ada").roles("OPS")))
                 .andExpect(status().isOk())

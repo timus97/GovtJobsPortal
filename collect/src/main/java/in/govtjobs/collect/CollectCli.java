@@ -23,8 +23,8 @@ public final class CollectCli {
                     """
                     GovtJobsPortal collect CLI
                     Usage:
-                      daily                  fetch enabled sources, then process if one succeeded
-                      source <id>            fetch one source and write its staging file
+                      daily                  fetch, process when a source returned notices, schema-check, alert, snapshot
+                      source <id>            fetch one source; write a snapshot only when it returned notices
                       approve <id> <reason>  keep a quarantine row for the next process
                       process                build jobs, series, and quarantine JSON from seed + staging
                       qa                     same as process
@@ -66,9 +66,13 @@ public final class CollectCli {
 
     private static int collect(String cmd, String[] args) throws Exception {
         if ("daily".equals(cmd)) {
-            CollectOrchestrator.RunOutcome outcome = CollectOrchestrator.daily(RepoPaths.root(), new LiveSiteClient());
-            System.out.println(outcome.usable() ? "Daily collect usable" : "Daily collect left the previous catalog");
-            return 0;
+            DailyPipeline.Result result = DailyPipeline.run(RepoPaths.root(), new LiveSiteClient());
+            boolean usable = result.collect() != null && result.collect().usable();
+            System.out.println(usable ? "Daily collect usable" : "Daily collect left the previous catalog");
+            if (result.message() != null && !result.message().isBlank() && result.exitCode() != 0) {
+                System.out.println(result.message());
+            }
+            return result.exitCode();
         }
         if ("source".equals(cmd)) {
             if (args.length < 2 || args[1].isBlank()) {
@@ -78,7 +82,7 @@ public final class CollectCli {
             CollectOrchestrator.RunOutcome outcome =
                     CollectOrchestrator.source(RepoPaths.root(), args[1], new LiveSiteClient());
             CollectOrchestrator.SourceOutcome row = outcome.sources().get(0);
-            System.out.println(row.sourceId() + " " + (row.ok() ? "ok" : "error") + " records=" + row.records());
+            System.out.println(row.sourceId() + " " + row.kind().label() + " records=" + row.records());
             if (row.message() != null) {
                 System.out.println(row.message());
             }

@@ -17,10 +17,24 @@ public interface SiteClient {
         return pages;
     }
 
-    /** Notice PDF bytes. Tests leave this unimplemented so a fixture never downloads. */
+    /**
+     * Notice or calendar PDF bytes. The default fails closed: a fixture that does not
+     * supply bytes does not publish the anchor without evidence.
+     */
     default byte[] bytes(String url) throws IOException {
         throw new IOException("pdf download not available");
     }
+
+    /**
+     * A {@code .pdf} href is a PDF. Other document hrefs are a PDF only when a live client
+     * reads a PDF content type. Fixtures stay on the extension.
+     */
+    default boolean documentPdf(String url) throws IOException {
+        return url != null && url.matches("(?i).*\\.pdf(?:\\?|#|$).*");
+    }
+
+    /** Cache a downloaded PDF. The default keeps nothing; the daily run stores bytes and text. */
+    default void rememberPdf(byte[] pdf, String text) {}
 
     record PageBody(String url, String html) {}
 }

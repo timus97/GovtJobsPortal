@@ -13,7 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-/** Anchor extraction with the same keep and drop rules as {@code scripts/collect/lib/htmlLinks.js}. */
+/** Anchor extraction. Keep a recruitment link. Drop nav, tender, and chrome titles. */
 public final class HtmlLinks {
 
     private HtmlLinks() {}
