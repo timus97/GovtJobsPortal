@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Official links are https and private files are not tracked
         run: python3 scripts/ci_guard.py
@@ -37,14 +37,17 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Temurin 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
           cache: maven
+
+      - name: Make the Maven wrapper executable
+        run: chmod +x mvnw
 
       - name: Schema-check the committed catalog
         run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests exec:java -Dexec.args=schema-check
@@ -54,7 +57,7 @@ jobs:
 
       - name: Upload coverage reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: jacoco-domain-collect
           if-no-files-found: ignore
@@ -87,14 +90,17 @@ jobs:
       STUDENT_DATABASE_PASSWORD: govtjobs
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Temurin 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
           cache: maven
+
+      - name: Make the Maven wrapper executable
+        run: chmod +x mvnw
 
       - name: Test web
         run: ./mvnw -B --no-transfer-progress -pl web -am test
@@ -106,7 +112,7 @@ jobs:
 
       - name: Upload test reports
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: web-surefire
           retention-days: 7
@@ -116,7 +122,7 @@ jobs:
             collect/target/surefire-reports/
 
       - name: Upload boot jar
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: web-jar
           if-no-files-found: error
@@ -130,9 +136,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Review dependency changes
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5.0.0
         with:
           fail-on-severity: high
