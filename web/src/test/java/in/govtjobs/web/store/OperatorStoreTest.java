@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -19,25 +18,16 @@ class OperatorStoreTest {
     @TempDir
     Path tmp;
 
-    private String previousPath;
-    private String previousPassword;
-
-    @BeforeEach
-    void rememberEnv() {
-        previousPath = System.getenv("OPERATOR_STORE_PATH");
-        previousPassword = System.getenv("OPERATOR_PASSWORD");
-    }
-
     @AfterEach
-    void restoreEnv() {
-        TestProcessEnv.set("OPERATOR_STORE_PATH", previousPath);
-        TestProcessEnv.set("OPERATOR_PASSWORD", previousPassword);
+    void clearOverrides() {
+        System.clearProperty("govtjobs.operator-store");
+        System.clearProperty("govtjobs.operator-password");
     }
 
     @Test
     void createChecksUsernamePasswordAndOperatorRole() {
-        TestProcessEnv.set("OPERATOR_STORE_PATH", tmp.resolve("operators.json").toString());
-        TestProcessEnv.set("OPERATOR_PASSWORD", null);
+        storeAt(tmp.resolve("operators.json"));
+        password(null);
         GovtJobsProperties props = new GovtJobsProperties();
         props.getStudent().setPasswordMin(12);
         OperatorStore store = new OperatorStore(new ObjectMapper(), new PasswordService(), props);
@@ -73,13 +63,13 @@ class OperatorStoreTest {
 
     @Test
     void emptyStoreBootstrapsAdminOnlyWhenOperatorPasswordIsSet() {
-        TestProcessEnv.set("OPERATOR_STORE_PATH", tmp.resolve("boot.json").toString());
-        TestProcessEnv.set("OPERATOR_PASSWORD", null);
+        storeAt(tmp.resolve("boot.json"));
+        password(null);
         OperatorStore empty = new OperatorStore(new ObjectMapper(), new PasswordService(), new GovtJobsProperties());
         assertThat(empty.operators()).isEmpty();
 
-        TestProcessEnv.set("OPERATOR_PASSWORD", "bootstrap-pass");
-        TestProcessEnv.set("OPERATOR_STORE_PATH", tmp.resolve("admin.json").toString());
+        password("bootstrap-pass");
+        storeAt(tmp.resolve("admin.json"));
         OperatorStore store = new OperatorStore(new ObjectMapper(), new PasswordService(), null);
         assertThat(store.findByUsername("Admin").get("role")).isEqualTo("admin");
         assertThat(store.verify("admin", "bootstrap-pass")).isTrue();
@@ -90,8 +80,8 @@ class OperatorStoreTest {
     @Test
     void zeroPasswordMinFallsBackAndCorruptOrUnwritableStoreFails() throws Exception {
         Path file = tmp.resolve("rules.json");
-        TestProcessEnv.set("OPERATOR_STORE_PATH", file.toString());
-        TestProcessEnv.set("OPERATOR_PASSWORD", null);
+        storeAt(file);
+        password(null);
         GovtJobsProperties props = new GovtJobsProperties();
         props.getStudent().setPasswordMin(0);
         OperatorStore store = new OperatorStore(new ObjectMapper(), new PasswordService(), props);
@@ -109,7 +99,7 @@ class OperatorStoreTest {
         Path dir = tmp.resolve("not-a-file");
         Files.createDirectory(dir);
         Files.writeString(dir.resolve("ignored.json"), "{\"operators\":{}}");
-        TestProcessEnv.set("OPERATOR_STORE_PATH", dir.toString());
+        storeAt(dir);
         OperatorStore blocked = new OperatorStore(new ObjectMapper(), new PasswordService(), props);
         assertThatThrownBy(() -> blocked.create("diruser", "password1234"))
                 .isInstanceOf(StoreException.class);
@@ -119,10 +109,18 @@ class OperatorStoreTest {
     void missingOperatorsKeyAndNonListAreTreatedAsEmpty() throws Exception {
         Path file = tmp.resolve("shape.json");
         Files.writeString(file, "{\"operators\":\"nope\"}");
-        TestProcessEnv.set("OPERATOR_STORE_PATH", file.toString());
-        TestProcessEnv.set("OPERATOR_PASSWORD", null);
+        storeAt(file);
+        password(null);
         OperatorStore store = new OperatorStore(new ObjectMapper(), new PasswordService(), new GovtJobsProperties());
         assertThat(store.operators()).isEmpty();
         assertThat(store.create("shape.user_1", "password1234").get("username")).isEqualTo("shape.user_1");
+    }
+
+    private static void storeAt(Path path) {
+        System.setProperty("govtjobs.operator-store", path.toString());
+    }
+
+    private static void password(String value) {
+        System.setProperty("govtjobs.operator-password", value == null ? "" : value);
     }
 }

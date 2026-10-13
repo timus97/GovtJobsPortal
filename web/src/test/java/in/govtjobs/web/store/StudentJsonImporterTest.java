@@ -29,11 +29,9 @@ class StudentJsonImporterTest {
     private StudentJsonImporter importer;
     private GovtJobsProperties props;
     private String schema;
-    private String previousDataDir;
 
     @BeforeEach
     void setUp() {
-        previousDataDir = System.getenv("STUDENT_DATA_DIR");
         schema = "cov_imp_" + UUID.randomUUID().toString().replace("-", "");
         DriverManagerDataSource adminDs = dataSource("jdbc:postgresql://127.0.0.1:5432/govtjobs_students");
         admin = new JdbcTemplate(adminDs);
@@ -88,12 +86,12 @@ class StudentJsonImporterTest {
         students = new StudentStore(
                 mapper, new PasswordService(), new JobStore(mapper), props, jdbc, tmp.resolve("files"));
         importer = new StudentJsonImporter(jdbc, mapper, students, props);
-        TestProcessEnv.set("STUDENT_DATA_DIR", tmp.toString());
+        System.setProperty("govtjobs.student-data-dir", tmp.toString());
     }
 
     @AfterEach
     void tearDown() {
-        TestProcessEnv.set("STUDENT_DATA_DIR", previousDataDir);
+        System.clearProperty("govtjobs.student-data-dir");
         admin.execute("DROP SCHEMA " + schema + " CASCADE");
     }
 

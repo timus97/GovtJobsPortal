@@ -112,8 +112,11 @@ public class StudentJsonImporter {
     }
 
     private static Path jsonFile() {
-        String env = System.getenv("STUDENT_DATA_DIR");
-        Path dir = env == null || env.isBlank() ? RepoPaths.data().resolve("students") : Path.of(env);
+        String propertyValue = System.getProperty("govtjobs.student-data-dir");
+        String configured = propertyValue != null ? propertyValue : System.getenv("STUDENT_DATA_DIR");
+        Path dir = configured == null || configured.isBlank()
+                ? RepoPaths.data().resolve("students")
+                : Path.of(configured);
         return dir.resolve("students.json");
     }
 

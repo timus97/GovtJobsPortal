@@ -111,7 +111,7 @@ public class OperatorStore {
         synchronized (lock) {
             Map<String, Object> data = load();
             if (!operatorsOf(data).isEmpty()) return;
-            String pwd = System.getenv("OPERATOR_PASSWORD");
+            String pwd = configured("govtjobs.operator-password", "OPERATOR_PASSWORD");
             if (pwd == null || pwd.isBlank()) return;
             Map<String, Object> row = new LinkedHashMap<>();
             row.put("id", UUID.randomUUID().toString());
@@ -128,10 +128,19 @@ public class OperatorStore {
     }
 
     private Path path() {
-        String env = System.getenv("OPERATOR_STORE_PATH");
-        return env == null || env.isBlank()
+        String configured = configured("govtjobs.operator-store", "OPERATOR_STORE_PATH");
+        return configured == null || configured.isBlank()
                 ? RepoPaths.data().resolve("ops").resolve("operators.json")
-                : Path.of(env);
+                : Path.of(configured);
+    }
+
+    /** A system property wins so a test can point at a temp file. The env name stays the operator setting. */
+    private static String configured(String property, String envName) {
+        String propertyValue = System.getProperty(property);
+        if (propertyValue != null) {
+            return propertyValue;
+        }
+        return System.getenv(envName);
     }
 
     private int passwordMin() {
