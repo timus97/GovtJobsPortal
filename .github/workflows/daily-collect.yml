@@ -28,10 +28,10 @@ jobs:
           cache: maven
 
       - name: Package collect
-        run: ./mvnw -pl collect -am -DskipTests package
+        run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests package
 
       - name: Install Playwright Chromium
-        run: ./mvnw -pl collect -am -DskipTests exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium"
+        run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps chromium"
 
       - name: Run daily pipeline
         env:
@@ -45,7 +45,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
-        run: ./mvnw -pl collect -am -DskipTests exec:java -Dexec.args="daily"
+        run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests exec:java -Dexec.args=daily
 
       - name: Commit data updates
         run: |

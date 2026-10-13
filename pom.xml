@@ -42,6 +42,17 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <!-- exec:java is a CLI goal, so -pl collect -am runs it on every module.
+           Skip it except in collect, which turns skip back off. -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+          <skip>true</skip>
+          <mainClass>in.govtjobs.collect.CollectCli</mainClass>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>

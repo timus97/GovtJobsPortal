@@ -240,6 +240,18 @@ Or paste an official URL in `/ops` after signing in.
 
 Quote `-Dtest=...` in PowerShell. Golden fixtures stay at `tests/fixtures/golden-opportunities.json`.
 
+GitHub Actions [`.github/workflows/ci.yml`](.github/workflows/ci.yml) is the merge gate on pull requests and on pushes to `master` and `phase-a-one-catalog`. It does not crawl and it does not deploy.
+
+| Stage | Gate |
+| --- | --- |
+| Catalog and tree guard | Live catalog official URLs are `https://`. Student files, operator records, and the removed Node trees are not tracked. |
+| Domain and collect | `schema-check` on `data/processed`, then `./mvnw -pl domain,collect -am verify`. The 80% line-coverage gate stays on these two modules. |
+| Web | Postgres 16, `./mvnw -pl web -am test`, then the Spring Boot jar is packaged and kept as an artifact. |
+| Dependency review | A pull request that adds a high-severity advisory fails. |
+| CodeQL | Java analysis in [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml). |
+
+Dependabot opens weekly Maven and Actions updates. The daily crawl remains [`.github/workflows/daily-collect.yml`](.github/workflows/daily-collect.yml). Paste commits remain [`.github/workflows/ops-ingest.yml`](.github/workflows/ops-ingest.yml).
+
 ---
 
 ## Hosting

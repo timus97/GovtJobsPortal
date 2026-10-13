@@ -71,7 +71,7 @@ type data\processed\stats.json
 
 While a daily run is going, `data/processed/collect-progress.json` has `"running": true`. The desk still reads `collect-report.json` when the run finishes.
 
-GitHub Actions: `.github/workflows/daily-collect.yml` (scheduled) and `.github/workflows/collect-java.yml` (tests only, no fetch).
+GitHub Actions: `.github/workflows/ci.yml` is the merge gate (catalog guard, domain and collect verify, web tests on Postgres 16, boot jar). `.github/workflows/daily-collect.yml` is the scheduled crawl. `.github/workflows/codeql.yml` is Java analysis. None of these deploy the host.
 
 ---
 

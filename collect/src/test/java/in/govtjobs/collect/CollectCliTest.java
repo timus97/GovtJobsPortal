@@ -20,13 +20,29 @@ class CollectCliTest {
         try {
             assertThat(CollectCli.run(new String[0])).isZero();
             assertThat(CollectCli.run(new String[] {"--help"})).isZero();
-            assertThat(out.toString(StandardCharsets.UTF_8)).contains("process").contains("approve");
+            assertThat(out.toString(StandardCharsets.UTF_8))
+                    .contains("process")
+                    .contains("approve")
+                    .contains("schema-check");
             assertThat(CollectCli.run(new String[] {"source"})).isEqualTo(2);
             assertThat(CollectCli.run(new String[] {"approve", "only-id"})).isEqualTo(2);
             assertThat(CollectCli.run(new String[] {"nope"})).isEqualTo(2);
             CollectCli.main(new String[] {"help"});
         } finally {
             System.setOut(previous);
+        }
+    }
+
+    @Test
+    void schemaCheckFailsWhenTheCatalogFileIsMissing(@TempDir Path root) throws Exception {
+        Files.createDirectories(root.resolve("data"));
+        Files.writeString(root.resolve("pom.xml"), "<project/>");
+        String previous = System.getProperty("user.dir");
+        System.setProperty("user.dir", root.toString());
+        try {
+            assertThat(CollectCli.run(new String[] {"schema-check"})).isEqualTo(1);
+        } finally {
+            System.setProperty("user.dir", previous);
         }
     }
 

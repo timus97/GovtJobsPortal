@@ -28,6 +28,7 @@ public final class CollectCli {
                       approve <id> <reason>  keep a quarantine row for the next process
                       process                build jobs, series, and quarantine JSON from seed + staging
                       qa                     same as process
+                      schema-check           check data/processed jobs and exam series; do not fetch or rewrite
                       help
                     Repo root: %s
                     """
@@ -42,6 +43,10 @@ public final class CollectCli {
                 System.err.println(message == null || message.isBlank() ? e.toString() : message);
                 return 1;
             }
+        }
+        if ("schema-check".equals(cmd)) {
+            SchemaCheck.Report report = SchemaCheck.check(RepoPaths.root());
+            return report.ok() ? 0 : 1;
         }
         if ("process".equals(cmd) || "qa".equals(cmd)) {
             try {

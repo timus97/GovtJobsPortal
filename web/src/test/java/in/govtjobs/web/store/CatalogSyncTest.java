@@ -2,6 +2,7 @@ package in.govtjobs.web.store;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.domain.RepoPaths;
 import in.govtjobs.web.config.GovtJobsProperties;
@@ -21,7 +22,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 class CatalogSyncTest {
 
     private static final String FIXTURE_ID = "a567e4b783a647af";
-    private static final String HTTP_JOB_ID = "17396a3ae7db4aa6";
 
     private JdbcTemplate jdbc;
     private GovtJobsProperties props;
@@ -57,7 +57,7 @@ class CatalogSyncTest {
     }
 
     @Test
-    void postgresSyncLoadsGitCatalogAndKeepsSamplesOutOfThePublicList() {
+    void postgresSyncLoadsGitCatalogAndKeepsSamplesOutOfThePublicList() throws Exception {
         String marker = prefix + "-marker";
         String sampleId = prefix + "-sample";
         String seriesMarker = prefix + "-series";
@@ -92,9 +92,12 @@ class CatalogSyncTest {
             assertThat(countJobs(sampleId)).isEqualTo(1);
 
             List<Map<String, Object>> jobs = store.approvedJobs();
-            assertThat(jobs).hasSize(27);
+            // Ids follow the committed file, so a new published row still has to sync.
+            assertThat(jobs).extracting(row -> String.valueOf(row.get("id")))
+                    .containsExactlyInAnyOrderElementsOf(publishedIds("jobs.json"));
             assertThat(jobs).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
-            assertThat(jobs).extracting(row -> row.get("id")).contains(FIXTURE_ID, HTTP_JOB_ID).doesNotContain(sampleId);
+            assertThat(jobs).allMatch(row -> String.valueOf(row.get("officialUrl")).startsWith("https://"));
+            assertThat(jobs).extracting(row -> row.get("id")).doesNotContain(sampleId);
             Map<String, Object> fixture = jobs.stream().filter(row -> FIXTURE_ID.equals(row.get("id"))).findFirst().orElseThrow();
             assertThat(fixture.get("title")).isEqualTo("Combined Graduate Level Examination (fixture)");
             assertThat(fixture.get("sourceId")).isEqualTo("seed_manual");
@@ -102,13 +105,13 @@ class CatalogSyncTest {
             assertThat(fixture.get("notificationDate")).isEqualTo("2026-08-01");
             assertThat(fixture.get("officialUrl")).isEqualTo("https://ssc.gov.in/apply/cgl-2026");
             assertThat(fixture.get("sample")).isEqualTo(false);
-            Map<String, Object> httpJob = jobs.stream().filter(row -> HTTP_JOB_ID.equals(row.get("id"))).findFirst().orElseThrow();
-            assertThat(String.valueOf(httpJob.get("officialUrl"))).startsWith("http://");
             assertThat(store.sampleMode()).isFalse();
 
             List<Map<String, Object>> series = store.approvedSeries();
-            assertThat(series).hasSize(25);
+            assertThat(series).extracting(row -> String.valueOf(row.get("id")))
+                    .containsExactlyInAnyOrderElementsOf(publishedIds("exam_series.json"));
             assertThat(series).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
+            assertThat(series).allMatch(row -> String.valueOf(row.get("officialUrl")).startsWith("https://"));
             Map<String, Object> ctet = series.stream().filter(row -> "ctet".equals(row.get("id"))).findFirst().orElseThrow();
             assertThat(ctet.get("applyNever")).isEqualTo(true);
             assertThat(ctet.get("minEducation")).isEqualTo("12th");
@@ -243,6 +246,13 @@ class CatalogSyncTest {
         Integer n = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM catalog.exam_series WHERE id = ?", Integer.class, id);
         return n == null ? 0 : n;
+    }
+
+    private static List<String> publishedIds(String fileName) throws java.io.IOException {
+        List<Map<String, Object>> rows = new ObjectMapper().readValue(
+                RepoPaths.data().resolve("processed").resolve(fileName).toFile(),
+                new TypeReference<List<Map<String, Object>>>() {});
+        return rows.stream().map(row -> String.valueOf(row.get("id"))).toList();
     }
 
     private static byte[] readIfExists(Path path) throws java.io.IOException {
