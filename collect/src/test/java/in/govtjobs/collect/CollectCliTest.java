@@ -2,6 +2,7 @@ package in.govtjobs.collect;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import in.govtjobs.domain.RepoPaths;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +32,11 @@ class CollectCliTest {
         } finally {
             System.setOut(previous);
         }
+    }
+
+    @Test
+    void schemaCheckAcceptsTheCommittedCatalog() {
+        assertThat(SchemaCheck.check(RepoPaths.root()).ok()).isTrue();
     }
 
     @Test

@@ -49,8 +49,10 @@ jobs:
       - name: Make the Maven wrapper executable
         run: chmod +x mvnw
 
+      # install and exec run in one reactor build. A later exec:java process
+      # cannot see a domain jar that was only packaged into target/.
       - name: Schema-check the committed catalog
-        run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests exec:java -Dexec.args=schema-check
+        run: ./mvnw -B --no-transfer-progress -pl collect -am -DskipTests install exec:java -Dexec.args=schema-check
 
       - name: Verify domain and collect
         run: ./mvnw -B --no-transfer-progress -pl domain,collect -am verify
