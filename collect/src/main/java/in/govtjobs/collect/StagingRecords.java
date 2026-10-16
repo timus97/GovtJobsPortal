@@ -84,7 +84,6 @@ public final class StagingRecords {
             if (selectionProcess == null) {
                 selectionProcess = "interview_only";
             }
-            hasExam = false;
         }
         String lastDate = textOrNull(item.get("lastDate"));
         if (lastDate == null) {
@@ -118,13 +117,14 @@ public final class StagingRecords {
         } else if (source.opportunityType() != null && !source.opportunityType().isBlank()) {
             record.put("opportunityType", source.opportunityType());
         }
-        record.put("location", textOrNull(item.get("location")) == null ? "All India" : text(item.get("location")));
+        String location = textOrNull(item.get("location"));
+        record.put("location", location == null ? "" : location);
         record.put("vacancies", item.get("vacancies"));
         record.put("qualification", item.get("qualification"));
         record.put("experience", item.get("experience"));
         record.put("salary", item.get("salary"));
         record.put("selectionProcess", selectionProcess);
-        record.put("hasExam", Boolean.TRUE.equals(hasExam));
+        record.put("hasExam", hasExam);
         record.put("applicationMode", blob.matches("(?i).*walk[\\s-]?in.*") ? "walk_in" : "online");
         record.put("notificationDate", item.get("notificationDate"));
         record.put("lastDate", lastDate);
@@ -135,7 +135,7 @@ public final class StagingRecords {
         record.put("sourceUrl", textOrNull(item.get("sourceUrl")) == null ? officialUrl : text(item.get("sourceUrl")));
         record.put("summary", summary.isBlank() ? "Scraped vacancy from " + source.name() + ". Verify selection process on the official page." : summary);
         record.put("eligibility", item.get("eligibility") instanceof List<?> list ? list : List.of());
-        record.put("processSteps", steps(item, Boolean.TRUE.equals(hasExam)));
+        record.put("processSteps", steps(item));
         record.put("documentsRequired", item.get("documentsRequired") instanceof List<?> docs ? docs : List.of());
         record.put("needsReview", needsReview || lastDate == null);
         record.put(
@@ -171,7 +171,7 @@ public final class StagingRecords {
         return new ArrayList<>(map.values());
     }
 
-    private static List<String> steps(Map<String, ?> item, boolean exam) {
+    private static List<String> steps(Map<String, ?> item) {
         if (item.get("processSteps") instanceof List<?> list) {
             List<String> out = new ArrayList<>();
             for (Object step : list) {
@@ -181,16 +181,7 @@ public final class StagingRecords {
             }
             return out;
         }
-        if (exam) {
-            return List.of(
-                    "Open the official notification link",
-                    "Confirm eligibility on the official advertisement",
-                    "Apply only through the official channel before the last date");
-        }
-        return List.of(
-                "Open the official notification link",
-                "Confirm eligibility and that selection has no written exam/CBT",
-                "Apply only through the official channel before the last date");
+        return List.of();
     }
 
     private static String first(Object... values) {

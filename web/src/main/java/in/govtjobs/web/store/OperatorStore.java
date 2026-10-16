@@ -49,6 +49,12 @@ public class OperatorStore {
         return row != null && passwords.verify(password, String.valueOf(row.get("passwordHash")));
     }
 
+    /** Missing epoch means 0, so a cookie issued before this field existed still matches. */
+    public long sessionEpoch(String username) {
+        Map<String, Object> row = findByUsername(username);
+        return row == null ? 0L : epochOf(row);
+    }
+
     public void setPassword(String username, String password) {
         int min = passwordMin();
         if (password == null || password.length() < min) {
@@ -65,6 +71,7 @@ public class OperatorStore {
                 throw new StoreException("NOT_FOUND", "Operator not found");
             }
             row.put("passwordHash", passwords.hash(password));
+            row.put("sessionEpoch", epochOf(row) + 1);
             save(data);
             log.info("ops.password_reset username={}", row.get("username"));
         }
@@ -141,6 +148,14 @@ public class OperatorStore {
             return propertyValue;
         }
         return System.getenv(envName);
+    }
+
+    private static long epochOf(Map<String, Object> row) {
+        Object value = row.get("sessionEpoch");
+        if (value instanceof Number number) {
+            return number.longValue();
+        }
+        return 0L;
     }
 
     private int passwordMin() {

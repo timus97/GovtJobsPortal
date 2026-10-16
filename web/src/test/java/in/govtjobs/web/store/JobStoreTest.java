@@ -108,6 +108,33 @@ class JobStoreTest {
     }
 
     @Test
+    void nullExamFlagMatchesNeitherExamFilter() {
+        JobStore store = new JobStore(mapper);
+        Map<String, Object> unknown = new LinkedHashMap<>();
+        unknown.put("id", "null-exam");
+        unknown.put("hasExam", null);
+        unknown.put("title", "Unknown exam");
+        unknown.put("status", "open");
+        Map<String, Object> noExam = new LinkedHashMap<>();
+        noExam.put("id", "no-exam");
+        noExam.put("hasExam", Boolean.FALSE);
+        noExam.put("title", "No exam");
+        noExam.put("status", "open");
+        Map<String, Object> yesExam = new LinkedHashMap<>();
+        yesExam.put("id", "yes-exam");
+        yesExam.put("hasExam", Boolean.TRUE);
+        yesExam.put("title", "Yes exam");
+        yesExam.put("status", "open");
+        List<Map<String, Object>> jobs = List.of(unknown, noExam, yesExam);
+        JobStore.JobQuery no = JobStore.JobQuery.from(
+                null, null, null, null, null, "open", null, "no", null, null, 1, 20);
+        assertThat(store.applyFilters(jobs, no)).extracting(row -> row.get("id")).containsExactly("no-exam");
+        JobStore.JobQuery yes = JobStore.JobQuery.from(
+                null, null, null, null, null, "open", null, "yes", null, null, 1, 20);
+        assertThat(store.applyFilters(jobs, yes)).extracting(row -> row.get("id")).containsExactly("yes-exam");
+    }
+
+    @Test
     void postgresCatalogFiltersSearchAndDecoratesSeries() {
         props.getCatalog().setSource("POSTGRES");
         JobStore store = new JobStore(mapper, catalog, props);

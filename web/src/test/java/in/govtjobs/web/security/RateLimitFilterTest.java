@@ -45,9 +45,15 @@ class RateLimitFilterTest {
         filter.doFilter(request("POST", "/ops/collect", "10.0.0.8"), blocked, chain);
         assertThat(blocked.getStatus()).isEqualTo(429);
         assertThat(blocked.getHeader("Retry-After")).isEqualTo("9");
-        assertThat(blocked.getContentAsString()).contains("Too many attempts");
+        assertThat(blocked.getForwardedUrl()).isEqualTo("/error/rate-limit");
         verify(chain, never()).doFilter(org.mockito.ArgumentMatchers.argThat(req -> req instanceof MockHttpServletRequest r
                 && "/ops/collect".equals(r.getRequestURI())), org.mockito.ArgumentMatchers.any());
+
+        MockHttpServletRequest spoofed = request("POST", "/account/login", "203.0.113.9");
+        spoofed.addHeader("X-Forwarded-For", "127.0.0.1");
+        filter.doFilter(spoofed, new MockHttpServletResponse(), chain);
+        verify(limiter).allow(eq("/account/login|203.0.113.9"), eq(5), eq(60_000L), anyLong());
+        verify(limiter, never()).allow(eq("/account/login|127.0.0.1"), eq(5), eq(60_000L), anyLong());
 
         props.getRateLimit().setLoginMax(0);
         MockHttpServletResponse skipped = new MockHttpServletResponse();

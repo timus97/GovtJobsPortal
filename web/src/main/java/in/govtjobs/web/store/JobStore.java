@@ -243,7 +243,7 @@ public class JobStore {
         }
     }
 
-    private List<Map<String, Object>> applyFilters(List<Map<String, Object>> jobs, JobQuery query) {
+    List<Map<String, Object>> applyFilters(List<Map<String, Object>> jobs, JobQuery query) {
         List<Map<String, Object>> next = new ArrayList<>(jobs);
         if (query.q() != null) {
             String term = query.q().toLowerCase(Locale.ROOT);

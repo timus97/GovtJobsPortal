@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -32,13 +33,15 @@ public class CatalogStore {
     private static final TypeReference<List<Map<String, Object>>> LIST_MAP = new TypeReference<>() {};
     private static final String OPPORTUNITIES = "catalog.opportunities";
     private static final String SERIES = "catalog.exam_series";
+    /** Git fixtures the collector still reads. They stay in the table and stay off the student list. */
+    private static final Set<String> SAMPLE_SEED_IDS = Set.of("a567e4b783a647af", "9f00ebbcb5f9f38e");
 
     private static final String JOB_UPSERT = """
             INSERT INTO catalog.opportunities
               (id, title, organization, org_type, sector, location, qualification, selection_process,
                has_exam, last_date, official_url, source_name, source_id, source_url, vacancies,
                notification_date, review_status, summary, sample)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,FALSE)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             ON CONFLICT (id) DO UPDATE SET
               title = EXCLUDED.title,
               organization = EXCLUDED.organization,
@@ -57,7 +60,7 @@ public class CatalogStore {
               notification_date = EXCLUDED.notification_date,
               review_status = EXCLUDED.review_status,
               summary = EXCLUDED.summary,
-              sample = FALSE
+              sample = EXCLUDED.sample
             """;
 
     private static final String SERIES_UPSERT = """
@@ -224,6 +227,8 @@ public class CatalogStore {
                        source_url, vacancies, notification_date, summary, sample
                 FROM catalog.opportunities
                 WHERE review_status = 'approved'
+                  AND last_date IS NOT NULL
+                  AND lower(official_url) LIKE 'https://%'
                   AND (sample = FALSE OR NOT EXISTS (
                         SELECT 1 FROM catalog.opportunities real_row
                         WHERE real_row.sample = FALSE AND real_row.review_status = 'approved'))
@@ -244,7 +249,7 @@ public class CatalogStore {
                     row.put("location", rs.getString("location"));
                     row.put("qualification", rs.getString("qualification"));
                     row.put("selectionProcess", rs.getString("selection_process"));
-                    row.put("hasExam", rs.getBoolean("has_exam"));
+                    row.put("hasExam", rs.getObject("has_exam", Boolean.class));
                     row.put("lastDate", lastDate);
                     row.put("officialUrl", rs.getString("official_url"));
                     row.put("sourceName", rs.getString("source_name"));
@@ -357,7 +362,7 @@ public class CatalogStore {
                     text(row.get("location")),
                     text(row.get("qualification")),
                     text(row.get("selectionProcess")),
-                    flag(row.get("hasExam")),
+                    examFlag(row.get("hasExam")),
                     parseDate(row.get("lastDate")),
                     url,
                     text(row.get("sourceName")),
@@ -366,7 +371,8 @@ public class CatalogStore {
                     text(row.get("vacancies")),
                     parseDate(row.get("notificationDate")),
                     flag(row.get("needsReview")) ? "needs_review" : "approved",
-                    text(row.get("summary"))));
+                    text(row.get("summary")),
+                    SAMPLE_SEED_IDS.contains(id)));
         }
         return jobs;
     }
@@ -413,7 +419,11 @@ public class CatalogStore {
                 ps.setString(6, job.location());
                 ps.setString(7, job.qualification());
                 ps.setString(8, job.selectionProcess());
-                ps.setBoolean(9, job.hasExam());
+                if (job.hasExam() == null) {
+                    ps.setNull(9, Types.BOOLEAN);
+                } else {
+                    ps.setBoolean(9, job.hasExam());
+                }
                 setDate(ps, 10, job.lastDate());
                 ps.setString(11, job.officialUrl());
                 ps.setString(12, job.sourceName());
@@ -423,6 +433,7 @@ public class CatalogStore {
                 setDate(ps, 16, job.notificationDate());
                 ps.setString(17, job.reviewStatus());
                 ps.setString(18, job.summary());
+                ps.setBoolean(19, job.sample());
             }
 
             @Override
@@ -507,6 +518,17 @@ public class CatalogStore {
         return "";
     }
 
+    private static Boolean examFlag(Object value) {
+        if (value instanceof Boolean bool) {
+            return bool;
+        }
+        String raw = text(value);
+        if (raw.isBlank()) {
+            return null;
+        }
+        return "true".equalsIgnoreCase(raw);
+    }
+
     private static boolean flag(Object value) {
         if (value instanceof Boolean bool) {
             return bool;
@@ -581,7 +603,7 @@ public class CatalogStore {
             String location,
             String qualification,
             String selectionProcess,
-            boolean hasExam,
+            Boolean hasExam,
             Date lastDate,
             String officialUrl,
             String sourceName,
@@ -590,7 +612,8 @@ public class CatalogStore {
             String vacancies,
             Date notificationDate,
             String reviewStatus,
-            String summary) {}
+            String summary,
+            boolean sample) {}
 
     private record LiveSeries(
             String id,

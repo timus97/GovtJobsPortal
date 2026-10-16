@@ -46,9 +46,19 @@ class HomeControllerTest {
 
     @Test
     void registerValidationShowsNotice() throws Exception {
-        mvc.perform(post("/account/register").with(csrf()).param("email", "not-an-email").param("password", "short"))
+        mvc.perform(post("/account/register")
+                        .with(csrf())
+                        .param("email", "short-" + UUID.randomUUID() + "@example.com")
+                        .param("password", "short"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Password")));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Password must be at least 10 characters")));
+        mvc.perform(post("/account/register")
+                        .with(csrf())
+                        .param("email", "not-an-email")
+                        .param("password", "password1234"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("The email is not valid.")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("registered"))));
     }
 
     @Test

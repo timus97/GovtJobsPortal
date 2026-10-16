@@ -56,7 +56,8 @@ class StudentStoreMoreTest {
                 .isInstanceOf(StoreException.class)
                 .hasMessageContaining("email");
         assertThatThrownBy(() -> store.register("not-an-email", "password1234"))
-                .isInstanceOf(StoreException.class);
+                .isInstanceOf(StoreException.class)
+                .hasMessage("The email is not valid.");
         assertThatThrownBy(() -> store.register(email(), null))
                 .isInstanceOf(StoreException.class)
                 .hasMessageContaining("10");

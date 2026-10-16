@@ -86,7 +86,7 @@ public class StudentStore {
         String raw = email == null ? "" : email.trim();
         String norm = raw.toLowerCase(Locale.ROOT);
         if (raw.isBlank() || !EMAIL.matcher(norm).matches()) {
-            throw new StoreException("VALIDATION", "A valid email is required");
+            throw new StoreException("VALIDATION", "The email is not valid.");
         }
         int min = passwordMin();
         if (password == null || password.length() < min) {
@@ -113,7 +113,9 @@ public class StudentStore {
                     Timestamp.from(Instant.parse(now)),
                     Timestamp.from(Instant.parse(now)));
         } catch (DuplicateKeyException e) {
-            throw new StoreException("VALIDATION", "A valid email is required");
+            throw new StoreException(
+                    "VALIDATION",
+                    "The account could not be created. Check the email, or sign in if you already have one.");
         }
         log.info("student.registered id={}", student.get("id"));
         return publicStudent(student);
@@ -155,6 +157,18 @@ public class StudentStore {
         Map<String, Object> row = findInternalById(id);
         Object epoch = row == null ? null : row.get("sessionEpoch");
         return epoch instanceof Number n ? n.longValue() : 0L;
+    }
+
+    /** Ends every copy of this student's cookie. The email and the token are not logged. */
+    public void endSession(String studentId) {
+        if (studentId == null || studentId.isBlank()) {
+            return;
+        }
+        int updated = jdbc.update(
+                "UPDATE students SET session_epoch = session_epoch + 1 WHERE id = ?", studentId);
+        if (updated > 0) {
+            log.info("student.session_ended id={}", studentId);
+        }
     }
 
     public Map<String, Object> findById(String id) {

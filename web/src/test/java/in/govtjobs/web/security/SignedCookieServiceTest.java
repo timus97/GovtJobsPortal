@@ -33,6 +33,12 @@ class SignedCookieServiceTest {
         assertThat(service.parseStudent("not-a-token")).isNull();
         assertThat(service.parseStudent("")).isNull();
         assertThat(service.parseStudent(token + "x")).isNull();
+
+        String ops = service.signOps("op-1", "ada", "operator", 4);
+        SignedCookieService.Payload opsPayload = service.parseOps(ops);
+        assertThat(opsPayload).isNotNull();
+        assertThat(opsPayload.epoch()).isEqualTo(4);
+        assertThat(service.parseStudent(ops)).isNull();
     }
 
     @Test

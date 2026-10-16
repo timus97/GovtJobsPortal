@@ -177,7 +177,7 @@ public final class JobSchema {
             errors.add("invalid selectionProcess");
         }
         Object hasExam = job.get("hasExam");
-        if (!(hasExam instanceof Boolean)) {
+        if (hasExam != null && !(hasExam instanceof Boolean)) {
             errors.add("hasExam must be boolean");
         }
         String officialUrl = str(job.get("officialUrl"));

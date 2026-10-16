@@ -169,6 +169,46 @@ class BuildJobsTest {
     }
 
     @Test
+    void blankLocationStaysBlankAndACrossedOrganisationIsQuarantined(@TempDir Path root) throws Exception {
+        Map<String, Object> blank = curated(
+                "blank-loc", "Clerk advt no 40", "Some Board", "https://example.gov.in/advt/clerk-40", "2099-08-01");
+        blank.put("location", "");
+        Map<String, Object> stated = curated(
+                "stated-loc", "Clerk advt no 44", "Some Board", "https://example.gov.in/advt/clerk-44", "2099-08-04");
+        stated.put("location", "All India");
+        Map<String, Object> crossed = curated(
+                "nicl-cross",
+                "Officer advt no 41",
+                "Krishnapatnam Railway Company Limited (NICL)",
+                "https://nationalinsurance.nic.co.in/advt/officer-41",
+                "2099-08-02");
+        Map<String, Object> insurance = curated(
+                "nic-real",
+                "Officer advt no 42",
+                "National Insurance Company Limited",
+                "https://nationalinsurance.nic.co.in/advt/officer-42",
+                "2099-08-03");
+        insurance.put("location", "Mumbai");
+        Map<String, Object> unknownExam = curated(
+                "null-exam", "Clerk advt no 43", "Some Board", "https://example.gov.in/advt/clerk-43", "2099-08-05");
+        unknownExam.remove("hasExam");
+        unknownExam.put("summary", "See the notice");
+        writeJson(root.resolve("data/staging/slice8/new.json"), List.of(blank, stated, crossed, insurance, unknownExam));
+
+        BuildJobs.run(root, new BuildJobs.Options(false));
+
+        JsonNode jobs = read(root, "jobs.json");
+        assertThat(ids(jobs)).contains("blank-loc", "stated-loc", "nic-real").doesNotContain("nicl-cross", "null-exam");
+        assertThat(field(job(jobs, "blank-loc"), "location")).isEmpty();
+        assertThat(field(job(jobs, "stated-loc"), "location")).isEqualTo("All India");
+        assertThat(field(job(jobs, "nic-real"), "location")).isEqualTo("Mumbai");
+        assertThat(Files.readString(root.resolve("data/processed/jobs.json"))).doesNotContain("no written exam");
+        JsonNode quarantine = read(root, "quarantine.json");
+        assertThat(reason(quarantine, "nicl-cross")).isEqualTo("org_host_mismatch");
+        assertThat(reason(quarantine, "null-exam")).isEqualTo("needs_review");
+    }
+
+    @Test
     void publishedSnapshotStillReplacesThatSourcesPreviousJobs(@TempDir Path root) throws Exception {
         Map<String, Object> keep = curated(
                 "keep-board", "Board keeper advt no 2", "Demo Board", "https://example.gov.in/advt/keep-board", "2099-01-01");

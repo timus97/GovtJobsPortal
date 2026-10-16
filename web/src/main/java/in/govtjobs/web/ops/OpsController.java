@@ -68,7 +68,8 @@ public class OpsController {
                 response,
                 String.valueOf(row.get("id")),
                 String.valueOf(row.get("username")),
-                String.valueOf(row.getOrDefault("role", "operator")));
+                String.valueOf(row.getOrDefault("role", "operator")),
+                operators.sessionEpoch(String.valueOf(row.get("username"))));
         logs.info("ops", "Operator signed in " + username);
         log.info("ops.login_ok username={}", safeUsername(username));
         return "redirect:/ops";

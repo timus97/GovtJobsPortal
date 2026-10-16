@@ -3,6 +3,7 @@ package in.govtjobs.web;
 import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.security.ReturnTo;
 import in.govtjobs.web.security.SessionCookies;
+import in.govtjobs.web.security.SignedCookieService;
 import in.govtjobs.web.store.PasswordResetService;
 import in.govtjobs.web.store.StoreException;
 import in.govtjobs.web.store.StudentStore;
@@ -23,13 +24,19 @@ public class HomeController {
     private final FeatureFlags flags;
     private final SessionCookies cookies;
     private final PasswordResetService resets;
+    private final SignedCookieService tokens;
 
     public HomeController(
-            StudentStore students, FeatureFlags flags, SessionCookies cookies, PasswordResetService resets) {
+            StudentStore students,
+            FeatureFlags flags,
+            SessionCookies cookies,
+            PasswordResetService resets,
+            SignedCookieService tokens) {
         this.students = students;
         this.flags = flags;
         this.cookies = cookies;
         this.resets = resets;
+        this.tokens = tokens;
     }
 
     @GetMapping("/favicon.ico")
@@ -100,7 +107,12 @@ public class HomeController {
     }
 
     @PostMapping("/account/logout")
-    public String logout(HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        SignedCookieService.Payload payload =
+                tokens.parseStudent(cookies.read(request, SignedCookieService.STUDENT_COOKIE));
+        if (payload != null && students.sessionEpoch(payload.uid()) == payload.epoch()) {
+            students.endSession(payload.uid());
+        }
         cookies.clearStudent(response);
         return "redirect:/";
     }
@@ -146,7 +158,8 @@ public class HomeController {
             return "redirect:/profile";
         } catch (StoreException e) {
             model.addAttribute("token", token);
-            model.addAttribute("valid", false);
+            // A short password throws before the token is used. Keep the form.
+            model.addAttribute("valid", !"EXPIRED".equals(e.code()));
             model.addAttribute("notice", e.getMessage());
             return "auth/reset";
         }

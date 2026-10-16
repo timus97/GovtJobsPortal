@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/public :: layout(~{::title}, ~{::main})}"
+  lang="en"
+>
+  <head>
+    <title>Wait and try again | Sarkari Desk</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="container">
+        <div class="auth-stage">
+          <section class="auth-intro">
+            <p class="eyebrow">Student desk</p>
+            <h1>Wait and try again</h1>
+            <p class="lead">Too many attempts. Wait a few minutes, then try again.</p>
+          </section>
+          <section class="panel auth-card">
+            <h2>Too many attempts</h2>
+            <p>Wait a few minutes, then try signing in again.</p>
+            <p><a class="btn btn-primary" href="/account/login">Back to sign in</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

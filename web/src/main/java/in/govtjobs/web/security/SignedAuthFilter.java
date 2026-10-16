@@ -43,7 +43,7 @@ public class SignedAuthFilter extends OncePerRequestFilter {
             SignedCookieService.Payload payload = tokens.parseOps(cookies.read(request, SignedCookieService.OPS_COOKIE));
             if (payload != null) {
                 Map<String, Object> row = operators.findByUsername(payload.sub());
-                if (row != null) {
+                if (row != null && operators.sessionEpoch(payload.sub()) == payload.epoch()) {
                     String role = String.valueOf(row.get("role"));
                     List<SimpleGrantedAuthority> roles = new ArrayList<>();
                     roles.add(new SimpleGrantedAuthority("ROLE_OPS"));

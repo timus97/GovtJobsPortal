@@ -85,6 +85,13 @@ class JobSchemaTest {
         assertThat(errors.stream().anyMatch(e -> e.toLowerCase().contains("title"))).isTrue();
 
         assertThat(JobSchema.SELECTION_PROCESSES).contains("cbt");
+
+        Map<String, Object> unknownExam = new LinkedHashMap<>(job);
+        unknownExam.remove("hasExam");
+        assertThat(JobSchema.isValidJob(unknownExam)).isEmpty();
+        Map<String, Object> textExam = new LinkedHashMap<>(job);
+        textExam.put("hasExam", "yes");
+        assertThat(JobSchema.isValidJob(textExam)).anyMatch(error -> error.contains("hasExam"));
     }
 
     private static Map<String, Object> validJob() {

@@ -131,7 +131,9 @@ public final class BuildJobs {
                 job = new LinkedHashMap<>(job);
                 job.putAll(fix);
                 job.put("updatedAt", startedAt);
-                job.put("hasExam", Boolean.TRUE.equals(job.get("hasExam")));
+                if (job.get("hasExam") != null) {
+                    job.put("hasExam", Boolean.TRUE.equals(job.get("hasExam")));
+                }
             }
             if (containsId(forceInclude, job.get("id"))) {
                 job.put("needsReview", false);
@@ -315,10 +317,9 @@ public final class BuildJobs {
                     selectionProcess = selectionProcess == null || selectionProcess.isBlank()
                             ? "interview_only"
                             : selectionProcess;
-                    hasExam = false;
                 }
-            } else if (!Boolean.TRUE.equals(hasExam)) {
-                hasExam = false;
+            } else if (hasExam == null) {
+                needsReview = true;
             }
         }
 
@@ -355,13 +356,13 @@ public final class BuildJobs {
         job.put("organization", organization);
         job.put("orgType", orgType);
         job.put("sector", sector);
-        job.put("location", jsTruthy(raw.get("location")) ? text(raw.get("location")) : "All India");
+        job.put("location", text(raw.get("location")).trim());
         job.put("vacancies", raw.containsKey("vacancies") ? raw.get("vacancies") : null);
         job.put("qualification", jsTruthy(raw.get("qualification")) ? raw.get("qualification") : null);
         job.put("experience", jsTruthy(raw.get("experience")) ? raw.get("experience") : null);
         job.put("salary", jsTruthy(raw.get("salary")) ? raw.get("salary") : null);
         job.put("selectionProcess", selectionProcess);
-        job.put("hasExam", Boolean.TRUE.equals(hasExam));
+        job.put("hasExam", hasExam);
         job.put("applicationMode", jsTruthy(raw.get("applicationMode")) ? raw.get("applicationMode") : null);
         job.put("notificationDate", jsTruthy(raw.get("notificationDate")) ? raw.get("notificationDate") : null);
         job.put("lastDate", lastDate);
@@ -424,7 +425,29 @@ public final class BuildJobs {
         if (!errors.isEmpty()) {
             return new EnrichResult(true, String.join("; ", errors), job);
         }
+        if (organisationHostConflict(job)) {
+            return new EnrichResult(true, "org_host_mismatch", job);
+        }
         return new EnrichResult(false, null, job);
+    }
+
+    /** A focused host and organisation clash. A broad name-versus-domain check would drop good rows. */
+    private static boolean organisationHostConflict(Map<String, Object> job) {
+        String host = hostOf(text(job.get("officialUrl")));
+        if (!host.contains("nationalinsurance")) {
+            return false;
+        }
+        String org = text(job.get("organization")).toLowerCase(Locale.ROOT);
+        return org.contains("krishnapatnam") || org.contains("railway");
+    }
+
+    private static String hostOf(String url) {
+        try {
+            String host = java.net.URI.create(url).getHost();
+            return host == null ? "" : host.toLowerCase(Locale.ROOT);
+        } catch (IllegalArgumentException ex) {
+            return "";
+        }
     }
 
     private static List<Map<String, Object>> buildExamSeries(

@@ -62,6 +62,24 @@ class OperatorStoreTest {
     }
 
     @Test
+    void setPasswordBumpsSessionEpochFromZeroWhenTheFieldIsMissing() {
+        storeAt(tmp.resolve("epoch.json"));
+        password(null);
+        OperatorStore store = new OperatorStore(new ObjectMapper(), new PasswordService(), new GovtJobsProperties());
+        String username = "ep" + UUID.randomUUID().toString().substring(0, 8);
+        store.create(username, "password1234");
+        assertThat(store.sessionEpoch(username)).isZero();
+        assertThat(store.sessionEpoch("missing")).isZero();
+        store.setPassword(username, "password5678");
+        assertThat(store.sessionEpoch(username)).isEqualTo(1);
+        assertThat(store.verify(username, "password1234")).isFalse();
+        assertThat(store.verify(username, "password5678")).isTrue();
+        store.setPassword(username, "password9012");
+        assertThat(store.sessionEpoch(username)).isEqualTo(2);
+        assertThat(store.verify(username, "password9012")).isTrue();
+    }
+
+    @Test
     void emptyStoreBootstrapsAdminOnlyWhenOperatorPasswordIsSet() {
         storeAt(tmp.resolve("boot.json"));
         password(null);

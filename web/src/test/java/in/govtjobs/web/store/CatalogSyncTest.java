@@ -8,9 +8,12 @@ import in.govtjobs.domain.RepoPaths;
 import in.govtjobs.web.config.GovtJobsProperties;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
@@ -22,6 +25,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 class CatalogSyncTest {
 
     private static final String FIXTURE_ID = "a567e4b783a647af";
+    private static final String CLOSED_SAMPLE_ID = "9f00ebbcb5f9f38e";
+    private static final Set<String> SAMPLE_SEED_IDS = Set.of(FIXTURE_ID, CLOSED_SAMPLE_ID);
 
     private JdbcTemplate jdbc;
     private GovtJobsProperties props;
@@ -92,19 +97,30 @@ class CatalogSyncTest {
             assertThat(countJobs(sampleId)).isEqualTo(1);
 
             List<Map<String, Object>> jobs = store.approvedJobs();
-            // Ids follow the committed file, so a new published row still has to sync.
+            // Publishable file rows sync. Sample seeds, a bad date, and a non-https URL do not.
             assertThat(jobs).extracting(row -> String.valueOf(row.get("id")))
-                    .containsExactlyInAnyOrderElementsOf(publishedIds("jobs.json"));
+                    .containsExactlyInAnyOrderElementsOf(publishableJobIds())
+                    .contains("321c05e538ceea7a")
+                    .doesNotContain(FIXTURE_ID, CLOSED_SAMPLE_ID, sampleId);
             assertThat(jobs).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
-            assertThat(jobs).allMatch(row -> String.valueOf(row.get("officialUrl")).startsWith("https://"));
-            assertThat(jobs).extracting(row -> row.get("id")).doesNotContain(sampleId);
-            Map<String, Object> fixture = jobs.stream().filter(row -> FIXTURE_ID.equals(row.get("id"))).findFirst().orElseThrow();
+            assertThat(jobs).allMatch(row -> String.valueOf(row.get("officialUrl")).toLowerCase(Locale.ROOT).startsWith("https://"));
+            assertThat(jobs).noneMatch(row -> String.valueOf(row.get("lastDate")).isBlank() && "open".equals(row.get("status")));
+            Map<String, Object> fixture = jdbc.queryForMap(
+                    """
+                    SELECT title, source_id, vacancies, to_char(notification_date, 'YYYY-MM-DD') AS notified,
+                           official_url, sample
+                    FROM catalog.opportunities WHERE id = ?
+                    """,
+                    FIXTURE_ID);
             assertThat(fixture.get("title")).isEqualTo("Combined Graduate Level Examination (fixture)");
-            assertThat(fixture.get("sourceId")).isEqualTo("seed_manual");
+            assertThat(fixture.get("source_id")).isEqualTo("seed_manual");
             assertThat(fixture.get("vacancies")).isEqualTo("7000");
-            assertThat(fixture.get("notificationDate")).isEqualTo("2026-08-01");
-            assertThat(fixture.get("officialUrl")).isEqualTo("https://ssc.gov.in/apply/cgl-2026");
-            assertThat(fixture.get("sample")).isEqualTo(false);
+            assertThat(fixture.get("notified")).isEqualTo("2026-08-01");
+            assertThat(fixture.get("official_url")).isEqualTo("https://ssc.gov.in/apply/cgl-2026");
+            assertThat(fixture.get("sample")).isEqualTo(true);
+            assertThat(jdbc.queryForObject(
+                    "SELECT sample FROM catalog.opportunities WHERE id = ?", Boolean.class, CLOSED_SAMPLE_ID))
+                    .isTrue();
             assertThat(store.sampleMode()).isFalse();
 
             List<Map<String, Object>> series = store.approvedSeries();
@@ -149,12 +165,57 @@ class CatalogSyncTest {
             badDate.put("officialUrl", "https://ssc.gov.in/phase-a-baddate");
             badDate.put("lastDate", "not-a-date");
             store.upsertLiveJob(badDate);
-            Map<String, Object> parsed = store.approvedJobs().stream()
-                    .filter(row -> badDateId.equals(row.get("id")))
+            String missingDateId = prefix + "-nodate";
+            Map<String, Object> missingDate = new LinkedHashMap<>();
+            missingDate.put("id", missingDateId);
+            missingDate.put("title", "Phase A missing date");
+            missingDate.put("organization", "Staff Selection Commission");
+            missingDate.put("officialUrl", "https://ssc.gov.in/phase-a-nodate");
+            store.upsertLiveJob(missingDate);
+            String httpId = prefix + "-http";
+            Map<String, Object> http = new LinkedHashMap<>();
+            http.put("id", httpId);
+            http.put("title", "Phase A plain http");
+            http.put("organization", "Staff Selection Commission");
+            http.put("officialUrl", "http://ssc.gov.in/phase-a-http");
+            http.put("lastDate", "2030-01-15");
+            store.upsertLiveJob(http);
+            String pastId = prefix + "-past";
+            Map<String, Object> past = new LinkedHashMap<>();
+            past.put("id", pastId);
+            past.put("title", "Phase A past date");
+            past.put("organization", "Staff Selection Commission");
+            past.put("officialUrl", "https://ssc.gov.in/phase-a-past");
+            past.put("lastDate", "2020-01-02");
+            store.upsertLiveJob(past);
+            List<Map<String, Object>> afterRules = store.approvedJobs();
+            assertThat(afterRules).extracting(row -> row.get("id"))
+                    .doesNotContain(badDateId, missingDateId, httpId)
+                    .contains(pastId);
+            Map<String, Object> closed = afterRules.stream()
+                    .filter(row -> pastId.equals(row.get("id")))
                     .findFirst()
                     .orElseThrow();
-            assertThat(parsed.get("lastDate")).isEqualTo("");
-            assertThat(parsed.get("status")).isEqualTo("open");
+            assertThat(closed.get("status")).isEqualTo("closed");
+            assertThat(afterRules).allMatch(row -> String.valueOf(row.get("officialUrl")).toLowerCase(Locale.ROOT).startsWith("https://"));
+
+            String unknownExamId = prefix + "-nullexam";
+            Map<String, Object> unknownExam = new LinkedHashMap<>();
+            unknownExam.put("id", unknownExamId);
+            unknownExam.put("title", "Phase A unknown exam");
+            unknownExam.put("organization", "Staff Selection Commission");
+            unknownExam.put("officialUrl", "https://ssc.gov.in/phase-a-nullexam");
+            unknownExam.put("lastDate", "2030-04-01");
+            store.upsertLiveJob(unknownExam);
+            Map<String, Object> unknownRow = store.approvedJobs().stream()
+                    .filter(row -> unknownExamId.equals(row.get("id")))
+                    .findFirst()
+                    .orElseThrow();
+            assertThat(unknownRow.get("hasExam")).isNull();
+            JobStore reader = new JobStore(new ObjectMapper());
+            JobStore.JobQuery noExam = JobStore.JobQuery.from(
+                    null, null, null, null, null, "open", null, "no", null, null, 1, 20);
+            assertThat(reader.applyFilters(List.of(unknownRow), noExam)).isEmpty();
 
             store.upsertLiveJob(null);
             store.upsertLiveJob(Map.of("id", prefix + "-blank", "title", "missing url"));
@@ -253,6 +314,31 @@ class CatalogSyncTest {
                 RepoPaths.data().resolve("processed").resolve(fileName).toFile(),
                 new TypeReference<List<Map<String, Object>>>() {});
         return rows.stream().map(row -> String.valueOf(row.get("id"))).toList();
+    }
+
+    private static List<String> publishableJobIds() throws java.io.IOException {
+        List<Map<String, Object>> rows = new ObjectMapper().readValue(
+                RepoPaths.data().resolve("processed").resolve("jobs.json").toFile(),
+                new TypeReference<List<Map<String, Object>>>() {});
+        return rows.stream()
+                .filter(row -> !SAMPLE_SEED_IDS.contains(String.valueOf(row.get("id"))))
+                .filter(row -> String.valueOf(row.get("officialUrl")).toLowerCase(Locale.ROOT).startsWith("https://"))
+                .filter(row -> publishableDate(row.get("lastDate")))
+                .map(row -> String.valueOf(row.get("id")))
+                .toList();
+    }
+
+    private static boolean publishableDate(Object value) {
+        String raw = value == null ? "" : String.valueOf(value).trim();
+        if (raw.length() != 10 || raw.charAt(4) != '-' || raw.charAt(7) != '-') {
+            return false;
+        }
+        try {
+            LocalDate.parse(raw);
+            return true;
+        } catch (RuntimeException ex) {
+            return false;
+        }
     }
 
     private static byte[] readIfExists(Path path) throws java.io.IOException {

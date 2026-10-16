@@ -113,7 +113,9 @@ class StudentStoreFileTest {
         store.register(email, "password1234");
         assertThatThrownBy(() -> store.register(email, "password1234"))
                 .isInstanceOf(StoreException.class)
-                .hasMessage("A valid email is required")
+                .hasMessage("The account could not be created. Check the email, or sign in if you already have one.")
+                .hasMessageNotContaining("registered")
+                .hasMessageNotContaining("not valid")
                 .hasMessageNotContaining("already exists");
     }
 }

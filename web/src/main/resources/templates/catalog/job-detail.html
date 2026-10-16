@@ -55,7 +55,7 @@
             <section class="panel">
               <h2>Key details</h2>
               <dl class="detail-dl">
-                <div><dt>Location</dt><dd th:text="${job.location} ?: '—'">—</dd></div>
+                <div><dt>Location</dt><dd th:text="${job.location != null and !#strings.isEmpty(#strings.trim(job.location))} ? ${job.location} : 'Not listed.'">Not listed.</dd></div>
                 <div><dt>Sector</dt><dd th:text="${job.sector} ?: '—'">—</dd></div>
                 <div><dt>Vacancies</dt><dd th:text="${job.vacancies} ?: 'Not specified'">—</dd></div>
                 <div><dt>Qualification</dt><dd th:text="${job.qualification == null or #strings.isEmpty(job.qualification)} ? '—' : (${qualLabel[job.qualification] ?: job.qualification})">—</dd></div>

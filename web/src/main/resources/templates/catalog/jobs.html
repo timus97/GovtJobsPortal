@@ -108,7 +108,7 @@
                     <p class="job-org" th:text="${job.organization}">Org</p>
                   </div>
                   <dl class="job-meta">
-                    <div><dt>Location</dt><dd th:text="${job.location} ?: '—'">—</dd></div>
+                    <div><dt>Location</dt><dd th:text="${job.location != null and !#strings.isEmpty(#strings.trim(job.location))} ? ${job.location} : 'Not listed.'">Not listed.</dd></div>
                     <div><dt>Last date</dt><dd th:text="${job.lastDate} ?: '—'">—</dd></div>
                     <div><dt>Sector</dt><dd th:text="${job.sector} ?: '—'">—</dd></div>
                   </dl>

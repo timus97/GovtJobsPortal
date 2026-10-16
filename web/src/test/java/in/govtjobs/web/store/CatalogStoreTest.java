@@ -75,7 +75,7 @@ class CatalogStoreTest {
     }
 
     @Test
-    void approvedListsHideNeedsReviewAndKeepMissingDatesAndBlankLinks() {
+    void approvedListsHideNeedsReviewAndAMissingLastDate() {
         insertJob(prefix + "-open", "Coverage open post", "Open Board", "central", "CovSector", "Pune", "graduate",
                 "written_multi_stage", true, "2030-06-01", "approved", false);
         insertJob(prefix + "-sample-only", "Coverage sample only", "Sample Board", "central", "CovSector", "Pune",
@@ -114,8 +114,8 @@ class CatalogStoreTest {
 
         List<Map<String, Object>> jobs = store.approvedJobs();
         assertThat(jobs).extracting(row -> row.get("id"))
-                .contains(prefix + "-open", prefix + "-soon", prefix + "-closed", prefix + "-nodate")
-                .doesNotContain(prefix + "-review", prefix + "-sample-only");
+                .contains(prefix + "-open", prefix + "-soon", prefix + "-closed")
+                .doesNotContain(prefix + "-review", prefix + "-sample-only", prefix + "-nodate");
         assertThat(jobs).noneMatch(row -> Boolean.TRUE.equals(row.get("sample")));
         assertThat(store.sampleMode()).isFalse();
         Map<String, Object> open = jobs.stream().filter(row -> (prefix + "-open").equals(row.get("id"))).findFirst().orElseThrow();
@@ -125,9 +125,7 @@ class CatalogStoreTest {
         assertThat(open.get("status")).isEqualTo("open");
         assertThat(open.get("sourceId")).isEqualTo("sample");
         assertThat(open.get("sample")).isEqualTo(false);
-        Map<String, Object> nodate = jobs.stream().filter(row -> (prefix + "-nodate").equals(row.get("id"))).findFirst().orElseThrow();
-        assertThat(nodate.get("lastDate")).isEqualTo("");
-        assertThat(nodate.get("status")).isEqualTo("open");
+        assertThat(jobs).noneMatch(row -> String.valueOf(row.get("lastDate")).isBlank() && "open".equals(row.get("status")));
 
         List<Map<String, Object>> series = store.approvedSeries();
         assertThat(series).extracting(row -> row.get("id"))

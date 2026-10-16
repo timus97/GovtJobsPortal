@@ -24,8 +24,13 @@ public class SessionCookies {
         clear(response, SignedCookieService.OPS_COOKIE);
     }
 
-    public void setOps(HttpServletResponse response, String operatorId, String username, String role) {
-        write(response, SignedCookieService.OPS_COOKIE, tokens.signOps(operatorId, username, role), tokens.opsTtl());
+    public void setOps(
+            HttpServletResponse response, String operatorId, String username, String role, long sessionEpoch) {
+        write(
+                response,
+                SignedCookieService.OPS_COOKIE,
+                tokens.signOps(operatorId, username, role, sessionEpoch),
+                tokens.opsTtl());
         clear(response, SignedCookieService.STUDENT_COOKIE);
     }
 
@@ -55,7 +60,7 @@ public class SessionCookies {
         write(
                 response,
                 SignedCookieService.OPS_COOKIE,
-                tokens.signOps(payload.uid(), payload.sub(), payload.role()),
+                tokens.signOps(payload.uid(), payload.sub(), payload.role(), payload.epoch()),
                 tokens.opsTtl());
     }
 

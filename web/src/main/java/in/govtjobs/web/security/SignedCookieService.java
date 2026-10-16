@@ -71,8 +71,8 @@ public class SignedCookieService {
         return sign(STUDENT_AUD, studentId, email, "student", studentTtl(), sessionEpoch);
     }
 
-    public String signOps(String operatorId, String username, String role) {
-        return sign(OPS_AUD, operatorId, username, role == null ? "operator" : role, opsTtl(), 0);
+    public String signOps(String operatorId, String username, String role, long sessionEpoch) {
+        return sign(OPS_AUD, operatorId, username, role == null ? "operator" : role, opsTtl(), sessionEpoch);
     }
 
     public Payload parseStudent(String token) {

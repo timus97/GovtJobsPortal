@@ -45,9 +45,15 @@ public class RateLimitFilter extends OncePerRequestFilter {
             long retry = limiter.retryAfterSeconds(key, now);
             response.setStatus(429);
             response.setHeader("Retry-After", String.valueOf(retry));
-            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-            response.setContentType(MediaType.TEXT_PLAIN_VALUE);
-            response.getWriter().write("Too many attempts. Try again later.");
+            request.setAttribute("retryAfterSeconds", retry);
+            var dispatcher = request.getRequestDispatcher("/error/rate-limit");
+            if (dispatcher == null) {
+                response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+                response.setContentType(MediaType.TEXT_PLAIN_VALUE);
+                response.getWriter().write("Too many attempts. Try again later.");
+                return;
+            }
+            dispatcher.forward(request, response);
             return;
         }
         chain.doFilter(request, response);
