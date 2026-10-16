@@ -15,7 +15,7 @@
           <button class="btn btn-primary" type="submit">Queue for review</button>
         </form>
         <div class="collect-progress-card panel" data-progress-url="/ops/collect-progress">
-          <p class="muted">Daily collect progress (Java CLI / Node pipeline). This page does not start pipeline:daily.</p>
+          <p class="muted">Daily collect progress from the Java collector. This page does not run it. Students see a source run only after Rebuild catalog on Fetch.</p>
           <pre class="ops-json" th:text="${progress}">{}</pre>
         </div>
         <h2>Recent paste jobs</h2>

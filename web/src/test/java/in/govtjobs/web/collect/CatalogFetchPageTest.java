@@ -57,6 +57,10 @@ class CatalogFetchPageTest {
         mvc.perform(get("/ops/fetch").with(user("ada").roles("OPS")))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Run enabled sources")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Students see a source run only after Rebuild catalog")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Java collector")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("pipeline:daily"))))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Node"))))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("demo — Demo board")));
         mvc.perform(post("/ops/fetch/daily").with(csrf()).with(user("ada").roles("OPS")))
                 .andExpect(status().is3xxRedirection())

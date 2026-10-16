@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: layout(~{::title}, ~{::main})}" lang="en">
-  <head><title>Review queue | Sarkari Desk</title></head>
+  <head><title>Crawl review | Sarkari Desk</title></head>
   <body>
     <main class="main">
       <div class="section container desk-grid">
         <aside class="desk-rail">
           <strong>Sarkari Desk</strong>
           <a href="/ops/pipeline">Pipeline</a>
-          <a href="/ops/pipeline/review" class="active">Review queue</a>
+          <a href="/ops/pipeline/review" class="active">Crawl review</a>
           <a href="/ops/pipeline/priority">Crawl priority</a>
           <a href="/ops/fetch">Fetch</a>
         </aside>
         <section>
-          <h1>Review queue</h1>
+          <h1>Crawl review</h1>
           <p class="muted">Nothing here is on the student Search, Match, or Prepare screens.</p>
           <p>
             <a th:href="@{/ops/pipeline/review(status=waiting)}">Waiting</a>

@@ -8,7 +8,7 @@
           <strong>Sarkari Desk</strong>
           <p class="muted">Collect</p>
           <a href="/ops/pipeline">Pipeline</a>
-          <a href="/ops/pipeline/review">Review queue</a>
+          <a href="/ops/pipeline/review">Crawl review</a>
           <a href="/ops/pipeline/priority">Crawl priority</a>
           <a href="/ops/fetch" class="active">Fetch</a>
         </aside>
@@ -19,10 +19,10 @@
         >
           <h1>Fetch sources</h1>
           <p class="muted">
-            This runs the Java collector on the registry. It does not start the Node daily pipeline.
+            This runs the Java collector on the registry.
             <span th:text="${enabledCount}">0</span> sources are enabled.
             A full run fetches each enabled source, then rebuilds the student catalog only when at least one source succeeds.
-            One source writes staging only. Rebuild catalog is the step that students see.
+            One source writes staging only. Students see a source run only after Rebuild catalog.
           </p>
           <p class="error-box" th:if="${notice}" th:text="${notice}">notice</p>
           <div class="desk-stats">

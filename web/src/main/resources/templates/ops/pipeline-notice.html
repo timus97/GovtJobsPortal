@@ -6,10 +6,10 @@
       <div class="section container desk-grid">
         <aside class="desk-rail">
           <strong>Sarkari Desk</strong>
-          <a href="/ops/pipeline/review" class="active">Review queue</a>
+          <a href="/ops/pipeline/review" class="active">Crawl review</a>
         </aside>
         <section>
-          <p><a href="/ops/pipeline/review">Back to queue</a></p>
+          <p><a href="/ops/pipeline/review">Back to Crawl review</a></p>
           <p class="error-box" th:if="${decisionError}" th:text="${decisionError}"></p>
           <h1 th:text="${notice.title}">Title</h1>
           <p class="muted" th:text="|${notice.organization} · ${notice.reviewStatus}|">org</p>
@@ -25,7 +25,10 @@
               <p class="muted">Exam</p>
               <p th:text="${notice.hasExam} ? 'Yes, as read from the notice' : 'Not marked as an exam'">exam</p>
               <p class="muted">Official link</p>
-              <p><a th:href="${notice.officialUrl}" th:text="${notice.officialUrl}" rel="noopener">url</a></p>
+              <p th:if="${notice.officialUrl != null and #strings.startsWith(#strings.toLowerCase(#strings.trim(notice.officialUrl)), 'https://')}">
+                <a th:href="${notice.officialUrl}" th:text="${notice.officialUrl}" target="_blank" rel="noopener noreferrer">url</a>
+              </p>
+              <p th:if="${notice.officialUrl != null and !#strings.isEmpty(#strings.trim(notice.officialUrl)) and !#strings.startsWith(#strings.toLowerCase(#strings.trim(notice.officialUrl)), 'https://')}" th:text="${notice.officialUrl}">url</p>
               <p class="muted">Approving records the notice on this desk. It does not add a vacancy to Search, Match, or Prepare.</p>
               <form class="desk-actions" method="post" th:action="@{/ops/pipeline/notices/{id}(id=${notice.id})}" th:if="${notice.reviewStatus != 'approved'}">
                 <button class="btn btn-primary" name="decision" value="approved" type="submit">Approve</button>
