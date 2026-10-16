@@ -13,6 +13,7 @@ import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.security.PasswordService;
 import in.govtjobs.web.security.SessionCookies;
+import in.govtjobs.web.security.SignedCookieService;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.OperatorStore;
 import in.govtjobs.web.store.StoreException;
@@ -102,7 +103,8 @@ class OpsPublishTest {
                     .containsEntry("lastDate", "2099-09-01")
                     .containsEntry("selectionProcess", "cbt")
                     .containsEntry("summary", "Revised summary")
-                    .containsEntry("hasExam", false);
+                    .containsEntry("orgType", "central")
+                    .containsEntry("hasExam", null);
             assertThat(harness.jobs.getJobById(revisedId))
                     .containsEntry("title", "Junior Engineer revised")
                     .containsEntry("organization", "Staff Selection Commission")
@@ -110,7 +112,8 @@ class OpsPublishTest {
                     .containsEntry("lastDate", "2099-09-01")
                     .containsEntry("selectionProcess", "cbt")
                     .containsEntry("summary", "Revised summary")
-                    .containsEntry("hasExam", false)
+                    .containsEntry("orgType", "central")
+                    .containsEntry("hasExam", null)
                     .containsEntry("status", JobSchema.computeStatus("2099-09-01"));
             assertThat(harness.jobs.getJobs()).hasSize(1);
         });
@@ -276,6 +279,7 @@ class OpsPublishTest {
                     "",
                     "walk_in",
                     "Saved summary",
+                    "psu",
                     "on",
                     "not a reason",
                     saved);
@@ -290,6 +294,7 @@ class OpsPublishTest {
                     .containsEntry("lastDate", "")
                     .containsEntry("selectionProcess", "walk_in")
                     .containsEntry("summary", "Saved summary")
+                    .containsEntry("orgType", "psu")
                     .containsEntry("hasExam", true);
             assertThat(harness.jobs.getJobs()).isEmpty();
 
@@ -303,6 +308,7 @@ class OpsPublishTest {
                     "2099-08-20",
                     "cbt",
                     "Rejected summary",
+                    null,
                     "on",
                     "duplicate notice",
                     rejected);
@@ -339,6 +345,7 @@ class OpsPublishTest {
                     "",
                     "cbt",
                     "nope",
+                    null,
                     "on",
                     "pull it",
                     unpublished);
@@ -416,6 +423,7 @@ class OpsPublishTest {
                     "2026-10-20",
                     "direct_recruitment",
                     "A pasted notice",
+                    null,
                     "on",
                     null,
                     new RedirectAttributesModelMap());
@@ -468,6 +476,77 @@ class OpsPublishTest {
     }
 
     @Test
+    void blankOrgTypeAndExamStayUnstatedAndAnUnknownTypeIsRejected(@TempDir Path root) {
+        withRoot(root, () -> {
+            Harness harness = harness();
+            writeJobs(root, List.of(reviewItem("facts-1")));
+            RedirectAttributesModelMap redirect = new RedirectAttributesModelMap();
+            String view = publish(
+                    harness,
+                    "facts-1",
+                    "Clerk",
+                    "SSC",
+                    "https://ssc.gov.in/facts",
+                    "2099-08-20",
+                    "direct_recruitment",
+                    "summary",
+                    null,
+                    "",
+                    redirect);
+            assertThat(view).isEqualTo("redirect:/ops/runs/facts-1");
+            assertThat(redirect.getFlashAttributes()).isEmpty();
+            Map<String, Object> job = harness.queue.get("facts-1");
+            assertThat(extracted(job)).containsEntry("orgType", "").containsEntry("hasExam", null);
+            Map<String, Object> row = harness.jobs.getJobById(String.valueOf(job.get("opportunityId")));
+            assertThat(row).containsEntry("orgType", "").containsEntry("hasExam", null);
+            assertThat(row).doesNotContainEntry("orgType", "central");
+            assertThat(PastePublishFacts.canCheck(extracted(job)).toString())
+                    .contains("Not stated")
+                    .doesNotContain("No exam is marked");
+            assertThat(PastePublishFacts.leftBlank(extracted(job))).contains("exam", "organisation type");
+
+            RedirectAttributesModelMap bad = new RedirectAttributesModelMap();
+            String rejected = publish(
+                    harness,
+                    "facts-1",
+                    "Clerk",
+                    "SSC",
+                    "https://ssc.gov.in/facts",
+                    "2099-08-20",
+                    "direct_recruitment",
+                    "summary",
+                    "no",
+                    "municipality",
+                    bad);
+            assertThat(rejected).isEqualTo("redirect:/ops/runs/facts-1");
+            assertThat(bad.getFlashAttributes().get("notice")).isEqualTo(PastePublishFacts.ORG_TYPE_REQUIRED);
+            assertThat(extracted(harness.queue.get("facts-1"))).containsEntry("hasExam", null);
+
+            publish(
+                    harness,
+                    "facts-1",
+                    "Clerk",
+                    "SSC",
+                    "https://ssc.gov.in/facts",
+                    "2099-08-20",
+                    "direct_recruitment",
+                    "summary",
+                    "no",
+                    "psu",
+                    new RedirectAttributesModelMap());
+            assertThat(extracted(harness.queue.get("facts-1")))
+                    .containsEntry("hasExam", false)
+                    .containsEntry("orgType", "psu");
+            assertThat(harness.jobs.getJobById(String.valueOf(harness.queue.get("facts-1").get("opportunityId"))))
+                    .containsEntry("hasExam", false)
+                    .containsEntry("orgType", "psu");
+            assertThat(PastePublishFacts.canCheck(extracted(harness.queue.get("facts-1"))).toString())
+                    .contains("No written exam")
+                    .contains("PSU");
+        });
+    }
+
+    @Test
     void duplicateOperatorStaysOnPaste(@TempDir Path root) {
         System.setProperty("govtjobs.operator-store", root.resolve("operators.json").toString());
         System.setProperty("govtjobs.operator-password", "");
@@ -480,7 +559,8 @@ class OpsPublishTest {
                     store,
                     new OpsLog(),
                     new FeatureFlags(),
-                    mock(SessionCookies.class));
+                    mock(SessionCookies.class),
+                    mock(SignedCookieService.class));
             Principal principal = () -> "admin";
             RedirectAttributesModelMap redirect = new RedirectAttributesModelMap();
             String view = controller.addOperator("Ada", "password1234", principal, redirect);
@@ -504,6 +584,32 @@ class OpsPublishTest {
             String summary,
             String hasExam,
             RedirectAttributesModelMap redirect) {
+        return publish(
+                harness,
+                id,
+                title,
+                organization,
+                officialUrl,
+                lastDate,
+                selectionProcess,
+                summary,
+                hasExam,
+                "central",
+                redirect);
+    }
+
+    private static String publish(
+            Harness harness,
+            String id,
+            String title,
+            String organization,
+            String officialUrl,
+            String lastDate,
+            String selectionProcess,
+            String summary,
+            String hasExam,
+            String orgType,
+            RedirectAttributesModelMap redirect) {
         return harness.controller.runAction(
                 id,
                 "publish",
@@ -513,6 +619,7 @@ class OpsPublishTest {
                 lastDate,
                 selectionProcess,
                 summary,
+                orgType,
                 hasExam,
                 "ignore this reason",
                 redirect);
@@ -527,7 +634,8 @@ class OpsPublishTest {
                 mock(OperatorStore.class),
                 new OpsLog(),
                 new FeatureFlags(),
-                mock(SessionCookies.class));
+                mock(SessionCookies.class),
+                mock(SignedCookieService.class));
         return new Harness(queue, jobs, controller);
     }
 

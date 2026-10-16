@@ -327,6 +327,7 @@ public final class BuildJobs {
         String organization = aliasHit != null && jsTruthy(aliasHit.get("name"))
                 ? text(aliasHit.get("name"))
                 : text(raw.get("organization"));
+        organization = StagingRecords.organisationName(organization);
         String orgType = firstNonBlank(
                 jsTruthy(raw.get("orgType")) ? text(raw.get("orgType")) : null,
                 aliasHit == null ? null : text(aliasHit.get("orgType")),
@@ -369,7 +370,10 @@ public final class BuildJobs {
         job.put("walkInDate", jsTruthy(raw.get("walkInDate")) ? raw.get("walkInDate") : null);
         job.put("officialUrl", officialUrl);
         job.put("sourceId", jsTruthy(raw.get("sourceId")) ? text(raw.get("sourceId")) : "seed_manual");
-        job.put("sourceName", jsTruthy(raw.get("sourceName")) ? text(raw.get("sourceName")) : "Manual curator seed");
+        job.put(
+                "sourceName",
+                StagingRecords.withoutEmptyParentheses(
+                        jsTruthy(raw.get("sourceName")) ? text(raw.get("sourceName")) : "Manual curator seed"));
         job.put(
                 "sourceUrl",
                 jsTruthy(raw.get("sourceUrl"))

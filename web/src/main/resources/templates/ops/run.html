@@ -49,7 +49,32 @@
             </select>
           </label>
           <label class="field"><span>Summary</span><textarea name="summary" th:text="${job.extracted?.get('summary')}"></textarea></label>
-          <label class="check-inline"><input type="checkbox" name="hasExam" th:checked="${job.extracted?.get('hasExam')}" /> Has exam</label>
+          <label class="field">
+            <span>Organisation type</span>
+            <select name="orgType">
+              <option value="" th:selected="${#strings.isEmpty(job.extracted?.get('orgType'))}">Not stated</option>
+              <option
+                th:each="code : ${orgTypeCodes}"
+                th:value="${code}"
+                th:text="${orgTypeLabel.get(code)}"
+                th:selected="${code == job.extracted?.get('orgType')}"
+              ></option>
+              <option
+                th:if="${!#strings.isEmpty(unknownOrgType)}"
+                th:value="${unknownOrgType}"
+                th:text="${unknownOrgType}"
+                selected
+              ></option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Exam</span>
+            <select name="hasExam">
+              <option value="">Not stated</option>
+              <option value="yes" th:selected="${job.extracted?.get('hasExam') == true}">Has an exam</option>
+              <option value="no" th:selected="${job.extracted?.get('hasExam') == false}">No written exam</option>
+            </select>
+          </label>
           <button class="btn btn-secondary" name="action" value="save" type="submit">Save facts</button>
           <button class="btn btn-primary" name="action" value="publish" type="submit">Publish locally</button>
           <button class="btn btn-secondary" name="action" value="unpublish" type="submit" th:if="${flags.unpublish}">Unpublish</button>

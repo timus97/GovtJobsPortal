@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.security.SessionCookies;
+import in.govtjobs.web.security.SignedCookieService;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.OperatorStore;
 import java.util.Map;
@@ -27,7 +28,8 @@ class OpsLoginFailureTest {
                 operators,
                 new OpsLog(),
                 new FeatureFlags(),
-                mock(SessionCookies.class));
+                mock(SessionCookies.class),
+                mock(SignedCookieService.class));
         MockHttpServletResponse response = new MockHttpServletResponse();
         String view = controller.login("admin", "wrong-password", response, new ConcurrentModel());
         assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
@@ -45,7 +47,8 @@ class OpsLoginFailureTest {
                 operators,
                 new OpsLog(),
                 new FeatureFlags(),
-                mock(SessionCookies.class));
+                mock(SessionCookies.class),
+                mock(SignedCookieService.class));
         MockHttpServletResponse response = new MockHttpServletResponse();
         controller.login("nobody", "wrong-password", response, new ConcurrentModel());
         assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());

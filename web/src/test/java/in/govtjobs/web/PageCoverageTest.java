@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -60,7 +63,11 @@ class PageCoverageTest {
     void signedInStudentCanSaveProfileMatchAndDesk() throws Exception {
         String email = "pages-" + UUID.randomUUID() + "@example.com";
         Cookie session = register(email);
-        mvc.perform(get("/profile").cookie(session)).andExpect(status().isOk());
+        mvc.perform(get("/profile").cookie(session))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(email)))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("href=\"/account/forgot\"")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Change your password")));
         mvc.perform(post("/profile")
                         .with(csrf())
                         .cookie(session)
@@ -86,7 +93,25 @@ class PageCoverageTest {
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> items = (List<Map<String, Object>>) students.listItems(sid, null).get("items");
         String itemId = String.valueOf(items.get(0).get("id"));
+        mvc.perform(get("/desk/" + itemId).cookie(session))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("confirm=remove")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(
+                        org.hamcrest.Matchers.containsString("Remove this from your desk?"))));
+        MockMultipartFile admit = new MockMultipartFile(
+                "file", "admit.pdf", "application/pdf", new byte[] {0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x34});
+        mvc.perform(multipart("/desk/" + itemId + "/files/admit").file(admit).with(csrf()).cookie(session))
+                .andExpect(status().is3xxRedirection());
+        mvc.perform(get("/desk/" + itemId).param("confirm", "remove").cookie(session))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Remove this from your desk?")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(">Cancel<")));
+        mvc.perform(get("/desk/" + itemId + "/files/admit").cookie(session)).andExpect(status().isOk());
         mvc.perform(get("/desk/" + itemId).cookie(session)).andExpect(status().isOk());
+        mvc.perform(post("/desk/" + itemId).with(csrf()).cookie(session).param("action", "delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/dashboard"));
+        mvc.perform(get("/desk/" + itemId + "/files/admit").cookie(session)).andExpect(status().isNotFound());
         mvc.perform(post("/desk/" + itemId).with(csrf()).cookie(session).param("status", "applied").param("notes", "form filled"))
                 .andExpect(status().is3xxRedirection());
         mvc.perform(get("/desk/" + itemId + "/plan").cookie(session)).andExpect(status().is3xxRedirection());

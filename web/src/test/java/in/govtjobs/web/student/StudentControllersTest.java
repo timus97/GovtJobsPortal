@@ -108,9 +108,10 @@ class StudentControllersTest {
                 .isEqualTo("redirect:/desk/item-1");
         assertThat(again.getFlashAttributes().get("notice"))
                 .isEqualTo("Already on your desk. The status was updated.");
-        assertThat(controller.detail(student(), "missing", new ExtendedModelMap())).isEqualTo("redirect:/dashboard");
+        assertThat(controller.detail(student(), "missing", null, new ExtendedModelMap())).isEqualTo("redirect:/dashboard");
         ExtendedModelMap detail = new ExtendedModelMap();
-        assertThat(controller.detail(student(), "item-1", detail)).isEqualTo("desk/detail");
+        assertThat(controller.detail(student(), "item-1", "remove", detail)).isEqualTo("desk/detail");
+        assertThat(detail.getAttribute("confirmRemove")).isEqualTo(true);
         assertThat(detail.getAttribute("item")).isNotNull();
 
         RedirectAttributesModelMap updated = new RedirectAttributesModelMap();

@@ -75,6 +75,24 @@ class BuildJobsTest {
     }
 
     @Test
+    void emptyParenthesesAreRemovedFromTheOrganisation(@TempDir Path root) throws Exception {
+        Files.createDirectories(root.resolve("data/staging/ops_paste"));
+        Map<String, Object> job = curated(
+                "paren-org",
+                "Refinery recruitment advt",
+                "Chennai Petroleum Corporation Limited ()",
+                "https://example.gov.in/cpcl",
+                closing);
+        job.put("sourceName", "Chennai Petroleum Corporation Limited () Careers");
+        writeJson(root.resolve("data/staging/ops_paste/paren.json"), List.of(job));
+        BuildJobs.run(root, new BuildJobs.Options(false));
+        assertThat(field(job(read(root, "jobs.json"), "paren-org"), "organization"))
+                .isEqualTo("Chennai Petroleum Corporation Limited");
+        assertThat(field(job(read(root, "jobs.json"), "paren-org"), "sourceName"))
+                .isEqualTo("Chennai Petroleum Corporation Limited Careers");
+    }
+
+    @Test
     void corruptSeedIsIgnoredAndABrokenJsonFileFails(@TempDir Path root) throws Exception {
         Path javaRoot = root.resolve("java");
         scaffoldCorruptSeed(javaRoot);

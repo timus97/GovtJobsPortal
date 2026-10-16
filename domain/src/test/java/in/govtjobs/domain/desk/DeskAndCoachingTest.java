@@ -3,6 +3,7 @@ package in.govtjobs.domain.desk;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,6 +156,7 @@ class DeskAndCoachingTest {
     void deskGuidance_daysLeftAndNextStep() {
         LocalDate today = LocalDate.of(2026, 1, 1);
         assertThat(DeskGuidance.daysLeft("2026-01-08", today)).isEqualTo(7);
+        assertThat(DeskGuidance.daysLeft(LocalDate.now(ZoneId.systemDefault()).toString())).isEqualTo(0);
         assertThat(DeskGuidance.daysLeftLabel(7))
                 .containsEntry("number", "7")
                 .containsEntry("caption", "days left");

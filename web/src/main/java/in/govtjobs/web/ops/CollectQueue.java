@@ -209,9 +209,14 @@ public class CollectQueue {
                 "officialUrl", officialUrl)));
         row.put("title", publishedTitle);
         row.put("organization", organization);
-        row.put("orgType", extracted.getOrDefault("orgType", "central"));
+        String orgType = present(extracted.get("orgType"));
+        if (orgType != null && !JobSchema.ORG_TYPES.contains(orgType)) {
+            throw new StoreException("VALIDATION", PastePublishFacts.ORG_TYPE_REQUIRED);
+        }
+        row.put("orgType", orgType == null ? "" : orgType);
         row.put("selectionProcess", extracted.get("selectionProcess"));
-        row.put("hasExam", Boolean.TRUE.equals(extracted.get("hasExam")));
+        Object exam = extracted.get("hasExam");
+        row.put("hasExam", exam instanceof Boolean ? exam : null);
         row.put("officialUrl", officialUrl);
         row.put("sourceId", "ops_paste");
         row.put("sourceName", job.getOrDefault("sourceLabel", "Ops paste"));

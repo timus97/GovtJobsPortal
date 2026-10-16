@@ -3,9 +3,11 @@ package in.govtjobs.web.ops;
 import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.security.SessionCookies;
+import in.govtjobs.web.security.SignedCookieService;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.OperatorStore;
 import in.govtjobs.web.store.StoreException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.LinkedHashMap;
@@ -34,6 +36,7 @@ public class OpsController {
     private final OpsLog logs;
     private final FeatureFlags flags;
     private final SessionCookies cookies;
+    private final SignedCookieService tokens;
 
     public OpsController(
             CollectQueue queue,
@@ -41,13 +44,15 @@ public class OpsController {
             OperatorStore operators,
             OpsLog logs,
             FeatureFlags flags,
-            SessionCookies cookies) {
+            SessionCookies cookies,
+            SignedCookieService tokens) {
         this.queue = queue;
         this.jobs = jobs;
         this.operators = operators;
         this.logs = logs;
         this.flags = flags;
         this.cookies = cookies;
+        this.tokens = tokens;
     }
 
     @PostMapping("/ops/login")
@@ -84,7 +89,12 @@ public class OpsController {
     }
 
     @PostMapping("/ops/logout")
-    public String logout(HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        SignedCookieService.Payload payload =
+                tokens.parseOps(cookies.read(request, SignedCookieService.OPS_COOKIE));
+        if (payload != null && operators.sessionEpoch(payload.sub()) == payload.epoch()) {
+            operators.endSession(payload.sub());
+        }
         cookies.clearOps(response);
         return "redirect:/ops/login";
     }
@@ -152,10 +162,18 @@ public class OpsController {
         model.addAttribute("leftBlank", PastePublishFacts.leftBlank(extracted));
         model.addAttribute("cannotCheck", PastePublishFacts.CANNOT_CHECK);
         model.addAttribute("selectionCodes", JobSchema.SELECTION_PROCESSES);
+        model.addAttribute("orgTypeCodes", JobSchema.ORG_TYPES);
         String selection = String.valueOf(extracted.getOrDefault("selectionProcess", "")).trim();
         model.addAttribute(
                 "unknownSelection",
                 selection.isEmpty() || JobSchema.SELECTION_PROCESSES.contains(selection) ? "" : selection);
+        String orgType = String.valueOf(extracted.getOrDefault("orgType", "")).trim();
+        if ("null".equals(orgType)) {
+            orgType = "";
+        }
+        model.addAttribute(
+                "unknownOrgType",
+                orgType.isEmpty() || JobSchema.ORG_TYPES.contains(orgType) ? "" : orgType);
         return "ops/run";
     }
 
@@ -177,6 +195,7 @@ public class OpsController {
             @RequestParam(required = false) String lastDate,
             @RequestParam(required = false) String selectionProcess,
             @RequestParam(required = false) String summary,
+            @RequestParam(required = false) String orgType,
             @RequestParam(required = false) String hasExam,
             @RequestParam(required = false) String reason,
             RedirectAttributes redirect) {
@@ -187,10 +206,10 @@ public class OpsController {
         try {
             if ("save".equals(action)) {
                 queue.patchExtracted(id, submittedFacts(
-                        title, organization, officialUrl, lastDate, selectionProcess, summary, hasExam));
+                        title, organization, officialUrl, lastDate, selectionProcess, summary, orgType, hasExam));
             } else if ("publish".equals(action)) {
                 queue.publishSubmitted(id, submittedFacts(
-                        title, organization, officialUrl, lastDate, selectionProcess, summary, hasExam));
+                        title, organization, officialUrl, lastDate, selectionProcess, summary, orgType, hasExam));
             } else if ("unpublish".equals(action)) {
                 if (!flags.isUnpublish()) {
                     throw new StoreException("FEATURE", "Unpublish is disabled");
@@ -221,6 +240,7 @@ public class OpsController {
             String lastDate,
             String selectionProcess,
             String summary,
+            String orgType,
             String hasExam) {
         Map<String, Object> extracted = new LinkedHashMap<>();
         extracted.put("title", title);
@@ -229,8 +249,34 @@ public class OpsController {
         extracted.put("lastDate", lastDate);
         extracted.put("selectionProcess", selectionProcess);
         extracted.put("summary", summary);
-        extracted.put("hasExam", "on".equals(hasExam) || "true".equals(hasExam));
+        extracted.put("orgType", submittedOrgType(orgType));
+        extracted.put("hasExam", examFact(hasExam));
         return extracted;
+    }
+
+    private static String submittedOrgType(String orgType) {
+        if (orgType == null || orgType.isBlank()) {
+            return "";
+        }
+        String cleaned = orgType.trim();
+        if (!JobSchema.ORG_TYPES.contains(cleaned)) {
+            throw new StoreException("VALIDATION", PastePublishFacts.ORG_TYPE_REQUIRED);
+        }
+        return cleaned;
+    }
+
+    /** A missing answer stays unknown. It is not stored as “no exam”. */
+    private static Boolean examFact(String hasExam) {
+        if (hasExam == null || hasExam.isBlank()) {
+            return null;
+        }
+        if ("on".equals(hasExam) || "true".equals(hasExam) || "yes".equals(hasExam)) {
+            return Boolean.TRUE;
+        }
+        if ("false".equals(hasExam) || "no".equals(hasExam)) {
+            return Boolean.FALSE;
+        }
+        return null;
     }
 
     @GetMapping("/ops/sources")

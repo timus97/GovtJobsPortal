@@ -13,7 +13,7 @@
   "applyNever" : true,
   "aliases" : [ "central teacher eligibility test" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ibps-csa",
   "kind" : "series",
@@ -29,7 +29,7 @@
   "applyNever" : false,
   "aliases" : [ "ibps clerk", "csa", "crp-csa" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ibps-po",
   "kind" : "series",
@@ -45,7 +45,7 @@
   "applyNever" : false,
   "aliases" : [ "ibps po", "po/mt", "crp-po" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ibps-rrb",
   "kind" : "series",
@@ -61,7 +61,7 @@
   "applyNever" : false,
   "aliases" : [ "ibps rrb" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ibps-so",
   "kind" : "series",
@@ -77,7 +77,7 @@
   "applyNever" : false,
   "aliases" : [ "ibps so", "spl", "crp-spl" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "gate",
   "kind" : "series",
@@ -93,7 +93,23 @@
   "applyNever" : true,
   "aliases" : [ "graduate aptitude test in engineering" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "36579b32c5b79292",
+  "kind" : "series",
+  "board" : "NTA",
+  "name" : "Extension of last date for submission of online application form for UGC – NET June 2025.",
+  "cycle" : null,
+  "sourceId" : "nta_ugc_net_calendar",
+  "officialUrl" : "https://ugcnet.nta.ac.in/images/public-notice-for-extension-of-dates-for-ugc-net-june-2025.pdf",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : null,
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ugc-net",
   "kind" : "series",
@@ -109,7 +125,7 @@
   "applyNever" : true,
   "aliases" : [ "nta net", "national eligibility test" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "rrb-alp",
   "kind" : "series",
@@ -125,7 +141,7 @@
   "applyNever" : false,
   "aliases" : [ "alp" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "rrb-group-d",
   "kind" : "series",
@@ -141,7 +157,7 @@
   "applyNever" : false,
   "aliases" : [ "group d", "cen 09", "level 1" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "rrb-je",
   "kind" : "series",
@@ -157,7 +173,7 @@
   "applyNever" : false,
   "aliases" : [ "rrb je" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "rrb-ntpc",
   "kind" : "series",
@@ -173,7 +189,7 @@
   "applyNever" : false,
   "aliases" : [ "non technical popular categories" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "rrb-technician",
   "kind" : "series",
@@ -189,7 +205,7 @@
   "applyNever" : false,
   "aliases" : [ "rrb technician" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "sbi-ja",
   "kind" : "series",
@@ -205,7 +221,7 @@
   "applyNever" : false,
   "aliases" : [ "sbi clerk", "junior associate" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "sbi-po",
   "kind" : "series",
@@ -221,23 +237,39 @@
   "applyNever" : false,
   "aliases" : [ "sbi po" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ssc-cgl",
   "kind" : "series",
   "board" : "SSC",
-  "name" : "Combined Graduate Level Examination",
+  "name" : "Combined Graduate Level Examination, 2026",
   "cycle" : "2026",
   "sourceId" : "ssc_calendar",
   "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
   "expectedNotify" : null,
   "expectedApply" : null,
-  "expectedExam" : null,
+  "expectedExam" : "2026-05",
   "minEducation" : "graduate",
   "applyNever" : false,
   "aliases" : [ "cgl" ],
-  "linkedOpportunityIds" : [ "a567e4b783a647af" ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "e762e0594db687d3",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Combined Higher Secondary (10+2) Level Examination, 2026",
+  "cycle" : null,
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-07",
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ssc-chsl",
   "kind" : "series",
@@ -253,7 +285,23 @@
   "applyNever" : false,
   "aliases" : [ "chsl" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "86aca0e4d4be0463",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Combined Hindi Translators Examination, 2026",
+  "cycle" : null,
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-08",
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ssc-gd",
   "kind" : "series",
@@ -269,55 +317,103 @@
   "applyNever" : false,
   "aliases" : [ "gd constable", "constable gd" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
-  "id" : "ssc-steno",
+  "id" : "daf43664a0930e88",
   "kind" : "series",
   "board" : "SSC",
-  "name" : "Grade 'C' Stenographer Limited Departmental Competitive Examination, 2023-2024",
-  "cycle" : "2026",
-  "sourceId" : "ssc_calendar",
-  "officialUrl" : "https://ssc.gov.in/home/ssc-calendar",
-  "expectedNotify" : null,
-  "expectedApply" : null,
-  "expectedExam" : "April-May,2024",
-  "minEducation" : "12th",
-  "applyNever" : false,
-  "aliases" : [ "steno" ],
-  "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
-}, {
-  "id" : "fc2aa5cee5133e67",
-  "kind" : "series",
-  "board" : "SSC",
-  "name" : "JSA / LDC Grade Limited Departmental Competitive Examination, 2025 (for DoPT only)",
+  "name" : "Constables (GD) in Central Armed Police Forces (CAPFs), NIA, SSF and Rifleman (GD) in Assam Rifles Examination, 2027",
   "cycle" : null,
   "sourceId" : "ssc_calendar",
   "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
   "expectedNotify" : null,
   "expectedApply" : null,
-  "expectedExam" : "May 2026",
+  "expectedExam" : "2027-01",
   "minEducation" : null,
   "applyNever" : false,
   "aliases" : [ ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "772f13be73ba4596",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Junior Engineer (Civil, Mechanical & Electrical) Examination, 2026",
+  "cycle" : null,
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-05",
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ssc-mts",
   "kind" : "series",
   "board" : "SSC",
-  "name" : "Multi Tasking (Non-Technical) Staff Examination",
+  "name" : "Multi-Tasking (Non-Technical) Staff & Havaldar (CBIC & CBN) Examination, 2026",
   "cycle" : "2026",
   "sourceId" : "ssc_calendar",
   "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
   "expectedNotify" : null,
   "expectedApply" : null,
-  "expectedExam" : null,
+  "expectedExam" : "2026-09",
   "minEducation" : "10th",
   "applyNever" : false,
   "aliases" : [ "mts" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "dfa1f66cb94c13b3",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Selection Post Examination, Phase-XIV, 2026",
+  "cycle" : null,
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-05",
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "ssc-steno",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Stenographer Grade ‘C’ & ‘D’ Examination, 2026",
+  "cycle" : "2026",
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-08",
+  "minEducation" : "12th",
+  "applyNever" : false,
+  "aliases" : [ "steno" ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
+}, {
+  "id" : "d67cefc914a8e991",
+  "kind" : "series",
+  "board" : "SSC",
+  "name" : "Sub-Inspector in Delhi Police & Central Armed Police Forces Examination, 2026",
+  "cycle" : null,
+  "sourceId" : "ssc_calendar",
+  "officialUrl" : "https://ssc.gov.in/for-candidates/examination-calendar",
+  "expectedNotify" : null,
+  "expectedApply" : null,
+  "expectedExam" : "2026-10",
+  "minEducation" : null,
+  "applyNever" : false,
+  "aliases" : [ ],
+  "linkedOpportunityIds" : [ ],
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "ssc-cpo",
   "kind" : "series",
@@ -333,7 +429,7 @@
   "applyNever" : false,
   "aliases" : [ "cpo" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "upsc-capf",
   "kind" : "series",
@@ -349,7 +445,7 @@
   "applyNever" : false,
   "aliases" : [ "capf" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "upsc-cse",
   "kind" : "series",
@@ -365,7 +461,7 @@
   "applyNever" : false,
   "aliases" : [ "cse", "civil services preliminary", "ias" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "upsc-cds",
   "kind" : "series",
@@ -381,7 +477,7 @@
   "applyNever" : false,
   "aliases" : [ "cds" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "upsc-ese",
   "kind" : "series",
@@ -397,7 +493,7 @@
   "applyNever" : false,
   "aliases" : [ "ese", "ies" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 }, {
   "id" : "upsc-nda",
   "kind" : "series",
@@ -413,5 +509,5 @@
   "applyNever" : false,
   "aliases" : [ "nda", "national defence academy" ],
   "linkedOpportunityIds" : [ ],
-  "updatedAt" : "2026-09-30T16:01:09.314943900Z"
+  "updatedAt" : "2026-10-16T16:32:59.941665600Z"
 } ]

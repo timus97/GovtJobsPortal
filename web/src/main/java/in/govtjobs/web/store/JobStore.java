@@ -8,6 +8,7 @@ import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.domain.labels.Labels;
 import in.govtjobs.web.config.GovtJobsProperties;
 import in.govtjobs.web.support.JsonFiles;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -111,17 +112,55 @@ public class JobStore {
             throw new StoreException("VALIDATION", "Catalog row id is not safe");
         }
         synchronized (lock) {
-            Path jobsPath = processed("jobs.json");
-            List<Map<String, Object>> jobs = new ArrayList<>(readList(jobsPath));
-            jobs.removeIf(j -> id.equals(String.valueOf(j.get("id"))));
-            jobs.add(0, row);
-            JsonFiles.writeAtomic(jobsPath, jobs, mapper, log);
-            writePasteStaging(id, row);
-            snapshot = null;
-            if (postgresCatalog()) {
+            boolean live = postgresCatalog();
+            if (live) {
                 catalog.upsertLiveJob(row);
             }
+            Path jobsPath = processed("jobs.json");
+            byte[] previousJobs = readBytesIfRegular(jobsPath);
+            boolean wroteJobs = false;
+            try {
+                List<Map<String, Object>> jobs = new ArrayList<>(readList(jobsPath));
+                jobs.removeIf(j -> id.equals(String.valueOf(j.get("id"))));
+                jobs.add(0, row);
+                JsonFiles.writeAtomic(jobsPath, jobs, mapper, log);
+                wroteJobs = true;
+                writePasteStaging(id, row);
+            } catch (RuntimeException ex) {
+                if (wroteJobs) {
+                    restoreJobsFile(jobsPath, previousJobs);
+                }
+                if (live) {
+                    try {
+                        catalog.removeLiveJob(id);
+                    } catch (RuntimeException rollback) {
+                        ex.addSuppressed(rollback);
+                    }
+                }
+                throw ex;
+            }
+            snapshot = null;
             return row;
+        }
+    }
+
+    private static byte[] readBytesIfRegular(Path path) {
+        try {
+            return Files.isRegularFile(path) ? Files.readAllBytes(path) : null;
+        } catch (IOException ex) {
+            throw new IllegalStateException("Failed to read " + path, ex);
+        }
+    }
+
+    private static void restoreJobsFile(Path path, byte[] previous) {
+        try {
+            if (previous == null) {
+                Files.deleteIfExists(path);
+                return;
+            }
+            Files.write(path, previous);
+        } catch (IOException ex) {
+            log.warn("catalog.rollback_failed err={}", ex.toString());
         }
     }
 

@@ -28,8 +28,16 @@
           <label class="field"><span>Last / apply date</span><input type="date" name="lastDate" th:value="${item.lastDate}" /></label>
           <label class="field"><span>Notes</span><textarea name="notes" th:text="${item.notes}"></textarea></label>
           <button class="btn btn-primary" type="submit">Save</button>
-          <button class="btn btn-secondary" type="submit" name="action" value="delete">Remove from desk</button>
         </form>
+        <section class="panel" th:if="${confirmRemove}">
+          <h2>Remove this from your desk?</h2>
+          <p>This deletes the desk item and its admit card and result files.</p>
+          <form method="post" th:action="@{/desk/{id}(id=${item.id})}">
+            <button class="btn btn-primary" type="submit" name="action" value="delete">Remove from desk</button>
+          </form>
+          <p><a class="btn btn-secondary" th:href="@{/desk/{id}(id=${item.id})}">Cancel</a></p>
+        </section>
+        <p th:unless="${confirmRemove}"><a th:href="@{/desk/{id}(id=${item.id}, confirm='remove')}">Remove from desk</a></p>
         <div class="desk-file-grid">
           <form class="panel desk-file" method="post" th:action="@{/desk/{id}/files/admit(id=${item.id})}" enctype="multipart/form-data">
             <h2>Admit card</h2>

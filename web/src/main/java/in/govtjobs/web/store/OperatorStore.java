@@ -77,6 +77,26 @@ public class OperatorStore {
         }
     }
 
+    /** Ends every copy of this operator session. A missing username is a no-op. */
+    public void endSession(String username) {
+        if (username == null || username.isBlank()) {
+            return;
+        }
+        synchronized (lock) {
+            Map<String, Object> data = load();
+            Map<String, Object> row = operatorsOf(data).stream()
+                    .filter(o -> username.equalsIgnoreCase(String.valueOf(o.get("username"))))
+                    .findFirst()
+                    .orElse(null);
+            if (row == null) {
+                return;
+            }
+            row.put("sessionEpoch", epochOf(row) + 1);
+            save(data);
+            log.info("ops.session_ended id={} username={}", row.get("id"), row.get("username"));
+        }
+    }
+
     public Map<String, Object> create(String username, String password) {
         if (username == null || !username.matches("^[A-Za-z0-9._-]{3,32}$")) {
             throw new StoreException("VALIDATION", "Username must be 3–32 letters, digits, dot, underscore or hyphen");

@@ -77,6 +77,12 @@ class OperatorStoreTest {
         store.setPassword(username, "password9012");
         assertThat(store.sessionEpoch(username)).isEqualTo(2);
         assertThat(store.verify(username, "password9012")).isTrue();
+        store.endSession(username);
+        assertThat(store.sessionEpoch(username)).isEqualTo(3);
+        store.endSession("missing");
+        store.endSession(null);
+        store.endSession("  ");
+        assertThat(store.sessionEpoch(username)).isEqualTo(3);
     }
 
     @Test

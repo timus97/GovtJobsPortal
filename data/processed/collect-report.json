@@ -1,201 +1,1177 @@
 {
-  "startedAt": "2026-08-21T15:20:22.704Z",
-  "finishedAt": "2026-08-21T15:20:37.108Z",
-  "abortedAt": null,
-  "abortedSourceId": null,
-  "runId": "2026-08-21T15-20-22-704Z",
-  "pdfsProcessed": 0,
-  "pdfsSkipped": 0,
-  "pdfMax": 200,
-  "sourcesAttempted": 5,
-  "sourcesOk": 5,
-  "sourcesFailed": 0,
-  "sourcesZero": 3,
-  "totalWritten": 4,
-  "results": [
-    {
-      "sourceId": "ncs_gov",
-      "name": "National Career Service",
-      "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "url": "browser",
-          "message": "browserType.launch: Executable doesn't exist at C:\\Users\\Timus97\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
-        },
-        {
-          "url": "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true",
-          "message": "Playwright returned no keepable NCS notices; HTTP homepage scrape skipped"
-        }
-      ],
-      "metrics": {
-        "method": "playwright-failed",
-        "links": 0,
-        "kept": 0,
-        "written": 0
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\grokAnalysis\\GovtJobsPortal\\data\\staging\\ncs_gov\\2026-08-21T15-20-22-704Z.json",
-      "durationMs": 578,
-      "findings": []
-    },
-    {
-      "sourceId": "employment_news",
-      "name": "Employment News",
-      "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "message": "no keepable notices"
-        }
-      ],
-      "metrics": {
-        "listUrls": 2,
-        "pages": 2,
-        "highlightTables": 0,
-        "written": 0,
-        "pdfs": 0
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\grokAnalysis\\GovtJobsPortal\\data\\staging\\employment_news\\2026-08-21T15-20-22-704Z.json",
-      "durationMs": 2172,
-      "findings": []
-    },
-    {
-      "sourceId": "becil",
-      "name": "BECIL Careers",
-      "ok": true,
-      "written": 2,
-      "errors": [
-        {
-          "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
-          "message": "pdf_not_recruitment"
-        }
-      ],
-      "metrics": {
-        "listUrls": 2,
-        "links": 3,
-        "kept": 3,
-        "written": 2
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\grokAnalysis\\GovtJobsPortal\\data\\staging\\becil\\2026-08-21T15-20-22-704Z.json",
-      "durationMs": 3753,
-      "findings": [
-        {
-          "at": "2026-08-21T15:20:29.201Z",
-          "sourceId": "becil",
-          "sourceName": "BECIL Careers",
-          "pageUrl": "https://www.becil.com/careers",
-          "url": "http://www.becil.com/Vacancies",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Vacancies",
-          "organization": "BECIL",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "interview_only",
-          "excerpt": "Vacancies"
-        },
-        {
-          "at": "2026-08-21T15:20:29.201Z",
-          "sourceId": "becil",
-          "sourceName": "BECIL Careers",
-          "pageUrl": "https://www.becil.com/careers",
-          "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
-          "kind": "pdf",
-          "status": "kept",
-          "reason": null,
-          "title": "Engagement Of Graduate Apprentice Trainee for the year 2023-24",
-          "organization": "BECIL",
-          "lastDate": "2024-04-16",
-          "vacancies": null,
-          "selectionProcess": "apprenticeship",
-          "excerpt": "1.ry qmffirr arrd-eu,ym.,m G2@ (qq-fl v{ qww qerdq d qfi-r-qrrd \\T.6n 6r s{q) (ftli rd -6q{) iClN - U32301UPt995G01017i41} ---!l ISO 900'l : 2015 BROADCAST ENGINEERING CONSULTANTS INDIA LIMITED .<A - (A Govemment of lndi"
-        }
-      ]
-    },
-    {
-      "sourceId": "apprenticeship_india",
-      "name": "Apprenticeship India",
-      "ok": true,
-      "written": 0,
-      "errors": [
-        {
-          "message": "no keepable notices"
-        }
-      ],
-      "metrics": {
-        "links": 0,
-        "kept": 0,
-        "written": 0
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\grokAnalysis\\GovtJobsPortal\\data\\staging\\apprenticeship_india\\2026-08-21T15-20-22-704Z.json",
-      "durationMs": 1151,
-      "findings": []
-    },
-    {
-      "sourceId": "psu_ongc",
-      "name": "Oil and Natural Gas Corporation () Careers",
-      "ok": true,
-      "written": 2,
-      "errors": [
-        {
-          "url": "https://www.ongcindia.com/careers",
-          "message": "HTTP 404 for https://www.ongcindia.com/careers"
-        },
-        {
-          "url": "https://www.ongcindia.com/career",
-          "message": "HTTP 404 for https://www.ongcindia.com/career"
-        },
-        {
-          "url": "https://www.ongcindia.com/recruitment",
-          "message": "HTTP 404 for https://www.ongcindia.com/recruitment"
-        },
-        {
-          "url": "https://www.ongcindia.com/en/careers",
-          "message": "HTTP 404 for https://www.ongcindia.com/en/careers"
-        }
-      ],
-      "metrics": {
-        "links": 2,
-        "kept": 2,
-        "written": 2
-      },
-      "stagingPath": "C:\\Users\\Timus97\\Desktop\\grokAnalysis\\GovtJobsPortal\\data\\staging\\psu_ongc\\2026-08-21T15-20-22-704Z.json",
-      "durationMs": 6718,
-      "findings": [
-        {
-          "at": "2026-08-21T15:20:37.081Z",
-          "sourceId": "psu_ongc",
-          "sourceName": "Oil and Natural Gas Corporation () Careers",
-          "pageUrl": "https://ongcindia.com/",
-          "url": "https://ongcindia.com/web/eng/career/recruitment-notice",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Recruitment Notices",
-          "organization": "Oil and Natural Gas Corporation ()",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "interview_only",
-          "excerpt": "Recruitment Notices"
-        },
-        {
-          "at": "2026-08-21T15:20:37.081Z",
-          "sourceId": "psu_ongc",
-          "sourceName": "Oil and Natural Gas Corporation () Careers",
-          "pageUrl": "https://ongcindia.com/",
-          "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Apprenticeship Opportunities",
-          "organization": "Oil and Natural Gas Corporation ()",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "apprenticeship",
-          "excerpt": "Apprenticeship Opportunities"
-        }
-      ]
-    }
-  ]
+  "startedAt" : "2026-10-16T15:51:41.700864Z",
+  "finishedAt" : "2026-10-16T16:06:06.259454700Z",
+  "usable" : true,
+  "processed" : true,
+  "timeoutSeconds" : 120,
+  "sources" : [ {
+    "sourceId" : "ncs_gov",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices: NcsNewWebsite — NcsNewWebsite Government of India English Assamese (অসমীয়া) Bengali (বাংলা) Bodo (बड़ो) Dogri (डोगरी) Goan Konkani (गोवा कोंकणी) Gujarati (ગુજરાતી) Hindi (हिन्दी) Kannada (ಕನ್ನಡ)",
+    "errors" : [ "Playwright returned no keepable NCS notices; HTTP homepage scrape skipped" ]
+  }, {
+    "sourceId" : "employment_news",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 12,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "becil",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "apprenticeship_india",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ongc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 6,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_bhel",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_bpcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_cil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_gail",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 6,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_hpcl",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_iocl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 15,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "javascript redirect", "javascript redirect", "javascript redirect", "javascript redirect", "javascript redirect", "javascript redirect", "javascript redirect" ]
+  }, {
+    "sourceId" : "psu_ntpc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 32,
+    "message" : "Connection refused: getsockopt",
+    "errors" : [ "Connection refused: getsockopt" ]
+  }, {
+    "sourceId" : "psu_pgcil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 53,
+    "message" : "Connect timed out",
+    "errors" : [ "Connect timed out" ]
+  }, {
+    "sourceId" : "psu_pfc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "(protocol_version) Received fatal alert: protocol_version",
+    "errors" : [ "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/careers\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/careers\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/careers\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "browser unavailable: Error {\n  message='net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/career\n  name='Error\n  stack='Error: net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/career\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version" ]
+  }, {
+    "sourceId" : "psu_rec",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "redirect left the allowed host", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "HTTP 404", "HTTP 404", "HTTP 404", "redirect left the allowed host" ]
+  }, {
+    "sourceId" : "psu_sail",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 8,
+    "message" : "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_oil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "source worker crashed or timed out",
+    "errors" : [ "source worker crashed or timed out" ]
+  }, {
+    "sourceId" : "psu_hal",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Read timed out",
+    "errors" : [ "Read timed out", "Read timed out", "Read timed out", "Read timed out", "Read timed out", "Read timed out", "Read timed out", "Read timed out", "Read timed out" ]
+  }, {
+    "sourceId" : "psu_bel",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_concor",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_eil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment" ]
+  }, {
+    "sourceId" : "psu_mtnl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed" ]
+  }, {
+    "sourceId" : "psu_nalco",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_nbcc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment" ]
+  }, {
+    "sourceId" : "psu_nmdc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment" ]
+  }, {
+    "sourceId" : "psu_nlc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_rinl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_sci",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_rvnl",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ovl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_rcf",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "HTTP 500",
+    "errors" : [ "HTTP 500", "HTTP 500", "HTTP 500" ]
+  }, {
+    "sourceId" : "psu_ircon",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_rites",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "pdf skipped: (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_nfl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 6,
+    "message" : "blocked or CAPTCHA page; not solved",
+    "errors" : [ "blocked or CAPTCHA page; not solved", "blocked or CAPTCHA page; not solved", "blocked or CAPTCHA page; not solved", "HTTP 404", "pdf skipped: pdf_not_recruitment", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_hudco",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 8,
+    "message" : "pdf skipped: pdf larger than 4000000",
+    "errors" : [ "pdf skipped: pdf larger than 4000000", "pdf skipped: pdf larger than 4000000", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_ireda",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 8,
+    "message" : "pdf skipped: HTTP 404",
+    "errors" : [ "pdf skipped: HTTP 404", "pdf skipped: HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_cwc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='Timeout 25000ms exceeded.\n  name='TimeoutError\n  stack='TimeoutError: Timeout 25000ms exceeded.\n    at ProgressController.run (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\progress.js:75:26)\n    at Frame.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:521:23)\n    at FrameDispatcher.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\frameDispatcher.js:82:119)\n    at FrameDispatcher._handleCommand (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:94:40)\n    at DispatcherConnection.dispatch (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:361:39)\n}\nCall log:\n-   - navigating to \"https://cewacor.nic.in/Index/career\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='Timeout 25000ms exceeded.\n  name='TimeoutError\n  stack='TimeoutError: Timeout 25000ms exceeded.\n    at ProgressController.run (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\progress.js:75:26)\n    at Frame.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:521:23)\n    at FrameDispatcher.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\frameDispatcher.js:82:119)\n    at FrameDispatcher._handleCommand (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:94:40)\n    at DispatcherConnection.dispatch (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:361:39)\n}\nCall log:\n-   - navigating to \"https://cewacor.nic.in/Index/career\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "browser unavailable: Error {\n  message='Timeout 25000ms exceeded.\n  name='TimeoutError\n  stack='TimeoutError: Timeout 25000ms exceeded.\n    at ProgressController.run (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\progress.js:75:26)\n    at Frame.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:521:23)\n    at FrameDispatcher.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\frameDispatcher.js:82:119)\n    at FrameDispatcher._handleCommand (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:94:40)\n    at DispatcherConnection.dispatch (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:361:39)\n}\nCall log:\n-   - navigating to \"https://cewacor.nic.in/\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_mdl",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_rcil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_sjvn",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_nhpc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment" ]
+  }, {
+    "sourceId" : "psu_seci",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 500", "HTTP 500", "HTTP 500" ]
+  }, {
+    "sourceId" : "psu_irctc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "source worker crashed or timed out",
+    "errors" : [ "source worker crashed or timed out" ]
+  }, {
+    "sourceId" : "psu_irfc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "too many redirects",
+    "errors" : [ "too many redirects", "too many redirects", "too many redirects", "too many redirects", "too many redirects", "too many redirects", "too many redirects", "too many redirects", "too many redirects" ]
+  }, {
+    "sourceId" : "psu_nrl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment" ]
+  }, {
+    "sourceId" : "psu_cpcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_grse",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_aai",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 14,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_antrix",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+    "errors" : [ "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_balmer_lawrie",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "java.net.SocketTimeoutException: Read timeout",
+    "errors" : [ "java.net.SocketTimeoutException: Read timeout" ]
+  }, {
+    "sourceId" : "psu_bccl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf larger than 4000000", "pdf skipped: pdf larger than 4000000", "pdf skipped: pdf_not_recruitment", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_bdl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_beml",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_bsnl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf larger than 4000000", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_b_and_r",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_cel",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 4,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ccl",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_midhani",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 5,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "HTTP 404", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_csl",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ccil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "java.net.SocketTimeoutException: Read timeout",
+    "errors" : [ "java.net.SocketTimeoutException: Read timeout" ]
+  }, {
+    "sourceId" : "psu_gsl",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_hcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 6,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_hll",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 8,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_itdc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 4,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_ire",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_itpo",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_kiocl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_mcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_moil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n  name='Error\n  stack='Error: net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://moil.nic.in/career\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n  name='Error\n  stack='Error: net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://moil.nic.in/career\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "browser unavailable: Error {\n  message='net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/\n  name='Error\n  stack='Error: net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://moil.nic.in/\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found.", "(certificate_unknown) No subject alternative DNS name matching moil.nic.in found." ]
+  }, {
+    "sourceId" : "psu_mrpl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 503",
+    "errors" : [ "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503", "HTTP 503" ]
+  }, {
+    "sourceId" : "psu_mecl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "www.mecl.co.in",
+    "errors" : [ "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in", "www.mecl.co.in" ]
+  }, {
+    "sourceId" : "psu_mmtc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 400",
+    "errors" : [ "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400" ]
+  }, {
+    "sourceId" : "psu_mstc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_nsic",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_nsc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 500",
+    "errors" : [ "HTTP 500", "HTTP 404", "HTTP 500", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_ncl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://www.nclcil.in/\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://www.nclcil.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.nclcil.in/\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://www.nclcil.in/\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://www.nclcil.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.nclcil.in/\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://nclcil.in/career\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://nclcil.in/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://nclcil.in/career\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_neepcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_pawan_hans",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_pdil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_spmcil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_secl",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_tcil",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_thdc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_wcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_wapcos",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 6,
+    "message" : "pdf skipped: HTTP 404",
+    "errors" : [ "pdf skipped: HTTP 404", "pdf skipped: HTTP 404", "pdf skipped: HTTP 404", "pdf skipped: HTTP 404", "pdf skipped: HTTP 404", "pdf skipped: HTTP 404" ]
+  }, {
+    "sourceId" : "psu_becil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_epi",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_fci",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_fsnl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed" ]
+  }, {
+    "sourceId" : "psu_mecon",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "HTTP 400", "HTTP 400", "HTTP 400", "HTTP 400", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_nfdc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved",
+    "errors" : [ "blocked or CAPTCHA page; not solved", "blocked or CAPTCHA page; not solved", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_bbnl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Connect timed out",
+    "errors" : [ "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out", "Connect timed out" ]
+  }, {
+    "sourceId" : "psu_bcgcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_eml",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_kpl",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_bvfcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_brahmos",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_eesl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_cci_cement",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ciwtc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "(protocol_version) Received fatal alert: protocol_version",
+    "errors" : [ "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/career\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/career\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "browser unavailable: Error {\n  message='net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/recruitment\n  name='Error\n  stack='Error: net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/recruitment\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/recruitment\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version" ]
+  }, {
+    "sourceId" : "psu_dvc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "browser unavailable: Error {\n  message='Timeout 25000ms exceeded.\n  name='TimeoutError\n  stack='TimeoutError: Timeout 25000ms exceeded.\n    at ProgressController.run (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\progress.js:75:26)\n    at Frame.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:521:23)\n    at FrameDispatcher.goto (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\frameDispatcher.js:82:119)\n    at FrameDispatcher._handleCommand (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:94:40)\n    at DispatcherConnection.dispatch (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\dispatchers\\dispatcher.js:361:39)\n}\nCall log:\n-   - navigating to \"https://www.dvc.gov.in/recruitment\", waiting until \"domcontentloaded\"\n", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_dfccil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_dmrc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_ecgc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_dci",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_ecil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_hal_pharma",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.hindantibiotics.in/\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.hindantibiotics.in/\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "browser unavailable: Error {\n  message='net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/careers\n  name='Error\n  stack='Error: net::ERR_CERT_AUTHORITY_INVALID at https://www.hindantibiotics.in/careers\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.hindantibiotics.in/careers\", waiting until \"domcontentloaded\"\n", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_hfcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/Home/VS/77\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/Home/VS/77\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/Home/VS/77\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/Home/VS/77\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/Home/VS/77\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/Home/VS/77\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/\", waiting until \"domcontentloaded\"\n", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version", "Remote host terminated the handshake", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version", "(protocol_version) Received fatal alert: protocol_version", "Remote host terminated the handshake", "(protocol_version) Received fatal alert: protocol_version" ]
+  }, {
+    "sourceId" : "psu_hocl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Read timed out",
+    "errors" : [ "Read timed out", "Read timed out", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited" ]
+  }, {
+    "sourceId" : "psu_htl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Read timed out",
+    "errors" : [ "Read timed out", "Read timed out", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited", "page title belongs to a different organisation: HAL – Hindustan Aeronautics Limited" ]
+  }, {
+    "sourceId" : "psu_idrcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_iifcl",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psu_ihmcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 8,
+    "message" : "pdf skipped: pdf_not_recruitment",
+    "errors" : [ "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: pdf_not_recruitment", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_isprl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_icsil",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_nicl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_munpl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n",
+    "errors" : [ "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/\", waiting until \"domcontentloaded\"\n", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed", "(certificate_expired) PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed" ]
+  }, {
+    "sourceId" : "psu_nhidcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psu_nlmc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_npci",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved",
+    "errors" : [ "blocked or CAPTCHA page; not solved", "blocked or CAPTCHA page; not solved", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target", "(certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target" ]
+  }, {
+    "sourceId" : "psu_npcc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_prcl",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "Read timed out", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_remcl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404" ]
+  }, {
+    "sourceId" : "psu_rhpc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "Connect timed out" ]
+  }, {
+    "sourceId" : "psu_rxil",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "redirect left the allowed host", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "HTTP 404", "HTTP 404", "HTTP 404", "redirect left the allowed host" ]
+  }, {
+    "sourceId" : "psu_utiitsl",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404", "HTTP 404" ]
+  }, {
+    "sourceId" : "upsc_calendar",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved",
+    "errors" : [ "blocked or CAPTCHA page; not solved" ]
+  }, {
+    "sourceId" : "upsc_active",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved",
+    "errors" : [ "blocked or CAPTCHA page; not solved" ]
+  }, {
+    "sourceId" : "upsc_online",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "ssc_calendar",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 22,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "ssc_notices",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "ibps_home",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 10,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "ibps_calendar",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 11,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "sbi_openings",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 161,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "sbi_apply",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 160,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "rrb_apply",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "rrb_chennai",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 10,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psc_uppsc",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 31,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psc_bpsc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Connect timed out",
+    "errors" : [ "Connect timed out", "listUrls did not parse a notice list — leave disabled or use ops paste-URL" ]
+  }, {
+    "sourceId" : "psc_mpsc",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 10,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psc_tnpsc",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 2,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psc_wbpsc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psc_rpsc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psc_gpsc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 26,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "psc_kpsc",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Connect timed out",
+    "errors" : [ "Connect timed out", "listUrls did not parse a notice list — leave disabled or use ops paste-URL" ]
+  }, {
+    "sourceId" : "psc_kerala",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 1,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "psc_appsc",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "rbi_opportunities",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 11,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "nabard_careers",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "listUrls did not parse — use ops paste-URL" ]
+  }, {
+    "sourceId" : "sebi_vacancies",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 76,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "india_post",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 2,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "fci_recruitment",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "listUrls did not parse — use ops paste-URL",
+    "errors" : [ "listUrls did not parse — use ops paste-URL" ]
+  }, {
+    "sourceId" : "lic_careers",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 3,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "epfo_recruitment",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "listUrls did not parse — use ops paste-URL" ]
+  }, {
+    "sourceId" : "kvs_recruitment",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "redirect left the allowed host",
+    "errors" : [ "redirect left the allowed host" ]
+  }, {
+    "sourceId" : "nvs_recruitment",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "dsssb_recruitment",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 13,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "ctet_calendar",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "Read timed out",
+    "errors" : [ "Read timed out", "listUrls did not parse a notice list — leave disabled or use ops paste-URL" ]
+  }, {
+    "sourceId" : "aiims_recruitment",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 5,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "esic_recruitment",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 3,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "blocked or CAPTCHA page; not solved", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "nhm_recruitment",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  }, {
+    "sourceId" : "drdo_careers",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 26,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached" ]
+  }, {
+    "sourceId" : "isro_careers",
+    "outcome" : "partial",
+    "ok" : true,
+    "records" : 1,
+    "message" : "HTTP 404",
+    "errors" : [ "HTTP 404" ]
+  }, {
+    "sourceId" : "barc_careers",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 4,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "gate_calendar",
+    "outcome" : "complete",
+    "ok" : true,
+    "records" : 15,
+    "message" : null,
+    "errors" : [ ]
+  }, {
+    "sourceId" : "nta_ugc_net_calendar",
+    "outcome" : "failed",
+    "ok" : false,
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached",
+    "errors" : [ "pdf skipped: PDF cap reached", "pdf skipped: PDF cap reached", "listUrls did not parse a notice list — leave disabled or use ops paste-URL" ]
+  }, {
+    "sourceId" : "psu_edcil",
+    "outcome" : "empty",
+    "ok" : false,
+    "records" : 0,
+    "message" : "no keepable notices",
+    "errors" : [ ]
+  } ]
 }

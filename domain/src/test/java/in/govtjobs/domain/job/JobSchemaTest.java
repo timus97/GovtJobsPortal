@@ -92,6 +92,12 @@ class JobSchemaTest {
         Map<String, Object> textExam = new LinkedHashMap<>(job);
         textExam.put("hasExam", "yes");
         assertThat(JobSchema.isValidJob(textExam)).anyMatch(error -> error.contains("hasExam"));
+
+        Map<String, Object> blankType = new LinkedHashMap<>(job);
+        blankType.put("orgType", "");
+        assertThat(JobSchema.isValidJob(blankType)).isEmpty();
+        blankType.put("orgType", "municipality");
+        assertThat(JobSchema.isValidJob(blankType)).anyMatch(error -> error.contains("orgType"));
     }
 
     private static Map<String, Object> validJob() {

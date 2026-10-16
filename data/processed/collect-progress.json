@@ -1,317 +1,1015 @@
 {
-  "running": false,
-  "runId": "2026-08-21T15-20-22-704Z",
-  "startedAt": "2026-08-21T15:20:22.706Z",
-  "finishedAt": "2026-08-21T15:20:37.110Z",
-  "abortedAt": null,
-  "abortedSourceId": null,
-  "sourcesTotal": 5,
-  "sourcesDone": 5,
-  "sourcesOk": 5,
-  "sourcesFailed": 0,
-  "sourcesZero": 3,
-  "recordsWritten": 4,
-  "pdfsProcessed": 0,
-  "pdfsSkipped": 0,
-  "current": null,
-  "lastFinished": {
-    "sourceId": "psu_ongc",
-    "name": "Oil and Natural Gas Corporation () Careers",
-    "ok": true,
-    "written": 2,
-    "durationMs": 6718,
-    "url": "https://www.ongcindia.com/en/careers",
-    "kept": 2,
-    "skipped": 0,
-    "at": "2026-08-21T15:20:37.104Z"
-  },
-  "lastFinding": {
-    "at": "2026-08-21T15:20:37.081Z",
-    "sourceId": "psu_ongc",
-    "sourceName": "Oil and Natural Gas Corporation () Careers",
-    "pageUrl": "https://ongcindia.com/",
-    "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
-    "kind": "html",
-    "status": "kept",
-    "reason": null,
-    "title": "Apprenticeship Opportunities",
-    "organization": "Oil and Natural Gas Corporation ()",
-    "lastDate": null,
-    "vacancies": null,
-    "selectionProcess": "apprenticeship",
-    "excerpt": "Apprenticeship Opportunities"
-  },
-  "findings": [
-    {
-      "at": "2026-08-21T15:20:28.342Z",
-      "sourceId": "becil",
-      "sourceName": "BECIL Careers",
-      "pageUrl": "https://www.becil.com/careers",
-      "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
-      "kind": "pdf",
-      "status": "skipped",
-      "reason": "pdf_not_recruitment",
-      "title": "Engagement Of Apprentices under the Apprentices Act, 1961",
-      "organization": null,
-      "lastDate": null,
-      "vacancies": null,
-      "selectionProcess": null,
-      "excerpt": ""
-    },
-    {
-      "at": "2026-08-21T15:20:29.201Z",
-      "sourceId": "becil",
-      "sourceName": "BECIL Careers",
-      "pageUrl": "https://www.becil.com/careers",
-      "url": "http://www.becil.com/Vacancies",
-      "kind": "html",
-      "status": "kept",
-      "reason": null,
-      "title": "Vacancies",
-      "organization": "BECIL",
-      "lastDate": null,
-      "vacancies": null,
-      "selectionProcess": "interview_only",
-      "excerpt": "Vacancies"
-    },
-    {
-      "at": "2026-08-21T15:20:29.201Z",
-      "sourceId": "becil",
-      "sourceName": "BECIL Careers",
-      "pageUrl": "https://www.becil.com/careers",
-      "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
-      "kind": "pdf",
-      "status": "kept",
-      "reason": null,
-      "title": "Engagement Of Graduate Apprentice Trainee for the year 2023-24",
-      "organization": "BECIL",
-      "lastDate": "2024-04-16",
-      "vacancies": null,
-      "selectionProcess": "apprenticeship",
-      "excerpt": "1.ry qmffirr arrd-eu,ym.,m G2@ (qq-fl v{ qww qerdq d qfi-r-qrrd \\T.6n 6r s{q) (ftli rd -6q{) iClN - U32301UPt995G01017i41} ---!l ISO 900'l : 2015 BROADCAST ENGINEERING CONSULTANTS INDIA LIMITED .<A - (A Govemment of lndi"
-    },
-    {
-      "at": "2026-08-21T15:20:37.081Z",
-      "sourceId": "psu_ongc",
-      "sourceName": "Oil and Natural Gas Corporation () Careers",
-      "pageUrl": "https://ongcindia.com/",
-      "url": "https://ongcindia.com/web/eng/career/recruitment-notice",
-      "kind": "html",
-      "status": "kept",
-      "reason": null,
-      "title": "Recruitment Notices",
-      "organization": "Oil and Natural Gas Corporation ()",
-      "lastDate": null,
-      "vacancies": null,
-      "selectionProcess": "interview_only",
-      "excerpt": "Recruitment Notices"
-    },
-    {
-      "at": "2026-08-21T15:20:37.081Z",
-      "sourceId": "psu_ongc",
-      "sourceName": "Oil and Natural Gas Corporation () Careers",
-      "pageUrl": "https://ongcindia.com/",
-      "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
-      "kind": "html",
-      "status": "kept",
-      "reason": null,
-      "title": "Apprenticeship Opportunities",
-      "organization": "Oil and Natural Gas Corporation ()",
-      "lastDate": null,
-      "vacancies": null,
-      "selectionProcess": "apprenticeship",
-      "excerpt": "Apprenticeship Opportunities"
-    }
-  ],
-  "sourcesLog": [
-    {
-      "sourceId": "psu_ongc",
-      "name": "Oil and Natural Gas Corporation () Careers",
-      "ok": true,
-      "written": 2,
-      "durationMs": 6718,
-      "url": "https://www.ongcindia.com/en/careers",
-      "kept": 2,
-      "skipped": 0,
-      "at": "2026-08-21T15:20:37.104Z",
-      "errors": [
-        {
-          "url": "https://www.ongcindia.com/careers",
-          "message": "HTTP 404 for https://www.ongcindia.com/careers"
-        },
-        {
-          "url": "https://www.ongcindia.com/career",
-          "message": "HTTP 404 for https://www.ongcindia.com/career"
-        },
-        {
-          "url": "https://www.ongcindia.com/recruitment",
-          "message": "HTTP 404 for https://www.ongcindia.com/recruitment"
-        },
-        {
-          "url": "https://www.ongcindia.com/en/careers",
-          "message": "HTTP 404 for https://www.ongcindia.com/en/careers"
-        }
-      ],
-      "findings": [
-        {
-          "at": "2026-08-21T15:20:37.081Z",
-          "sourceId": "psu_ongc",
-          "sourceName": "Oil and Natural Gas Corporation () Careers",
-          "pageUrl": "https://ongcindia.com/",
-          "url": "https://ongcindia.com/web/eng/career/recruitment-notice",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Recruitment Notices",
-          "organization": "Oil and Natural Gas Corporation ()",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "interview_only",
-          "excerpt": "Recruitment Notices"
-        },
-        {
-          "at": "2026-08-21T15:20:37.081Z",
-          "sourceId": "psu_ongc",
-          "sourceName": "Oil and Natural Gas Corporation () Careers",
-          "pageUrl": "https://ongcindia.com/",
-          "url": "https://ongcindia.com/web/eng/career/apprenticeship-opportunities",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Apprenticeship Opportunities",
-          "organization": "Oil and Natural Gas Corporation ()",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "apprenticeship",
-          "excerpt": "Apprenticeship Opportunities"
-        }
-      ]
-    },
-    {
-      "sourceId": "apprenticeship_india",
-      "name": "Apprenticeship India",
-      "ok": true,
-      "written": 0,
-      "durationMs": 1151,
-      "url": "https://www.apprenticeshipindia.gov.in/",
-      "kept": 0,
-      "skipped": 0,
-      "at": "2026-08-21T15:20:30.380Z",
-      "errors": [
-        {
-          "url": null,
-          "message": "no keepable notices"
-        }
-      ],
-      "findings": []
-    },
-    {
-      "sourceId": "becil",
-      "name": "BECIL Careers",
-      "ok": true,
-      "written": 2,
-      "durationMs": 3753,
-      "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
-      "kept": 2,
-      "skipped": 1,
-      "at": "2026-08-21T15:20:29.223Z",
-      "errors": [
-        {
-          "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
-          "message": "pdf_not_recruitment"
-        }
-      ],
-      "findings": [
-        {
-          "at": "2026-08-21T15:20:28.342Z",
-          "sourceId": "becil",
-          "sourceName": "BECIL Careers",
-          "pageUrl": "https://www.becil.com/careers",
-          "url": "https://www.becil.com/uploads/topics/1757425732.pdf",
-          "kind": "pdf",
-          "status": "skipped",
-          "reason": "pdf_not_recruitment",
-          "title": "Engagement Of Apprentices under the Apprentices Act, 1961",
-          "organization": null,
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": null,
-          "excerpt": ""
-        },
-        {
-          "at": "2026-08-21T15:20:29.201Z",
-          "sourceId": "becil",
-          "sourceName": "BECIL Careers",
-          "pageUrl": "https://www.becil.com/careers",
-          "url": "http://www.becil.com/Vacancies",
-          "kind": "html",
-          "status": "kept",
-          "reason": null,
-          "title": "Vacancies",
-          "organization": "BECIL",
-          "lastDate": null,
-          "vacancies": null,
-          "selectionProcess": "interview_only",
-          "excerpt": "Vacancies"
-        },
-        {
-          "at": "2026-08-21T15:20:29.201Z",
-          "sourceId": "becil",
-          "sourceName": "BECIL Careers",
-          "pageUrl": "https://www.becil.com/careers",
-          "url": "http://becil.com/assets/frontend/media/Apprentices18March24pdf-dbf900d143217d2b6cf4d8d2a4ca2b9c.pdf",
-          "kind": "pdf",
-          "status": "kept",
-          "reason": null,
-          "title": "Engagement Of Graduate Apprentice Trainee for the year 2023-24",
-          "organization": "BECIL",
-          "lastDate": "2024-04-16",
-          "vacancies": null,
-          "selectionProcess": "apprenticeship",
-          "excerpt": "1.ry qmffirr arrd-eu,ym.,m G2@ (qq-fl v{ qww qerdq d qfi-r-qrrd \\T.6n 6r s{q) (ftli rd -6q{) iClN - U32301UPt995G01017i41} ---!l ISO 900'l : 2015 BROADCAST ENGINEERING CONSULTANTS INDIA LIMITED .<A - (A Govemment of lndi"
-        }
-      ]
-    },
-    {
-      "sourceId": "employment_news",
-      "name": "Employment News",
-      "ok": true,
-      "written": 0,
-      "durationMs": 2172,
-      "url": "https://employmentnews.gov.in/newemp/AllJobs.aspx?k=All",
-      "kept": 0,
-      "skipped": 0,
-      "at": "2026-08-21T15:20:25.465Z",
-      "errors": [
-        {
-          "url": null,
-          "message": "no keepable notices"
-        }
-      ],
-      "findings": []
-    },
-    {
-      "sourceId": "ncs_gov",
-      "name": "National Career Service",
-      "ok": true,
-      "written": 0,
-      "durationMs": 578,
-      "url": "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true",
-      "kept": 0,
-      "skipped": 0,
-      "at": "2026-08-21T15:20:23.288Z",
-      "errors": [
-        {
-          "url": "browser",
-          "message": "browserType.launch: Executable doesn't exist at C:\\Users\\Timus97\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
-        },
-        {
-          "url": "https://betacloud.ncs.gov.in/job-listing?isGovernmentJob=true",
-          "message": "Playwright returned no keepable NCS notices; HTTP homepage scrape skipped"
-        }
-      ],
-      "findings": []
-    }
-  ],
-  "pid": 16196
+  "running" : false,
+  "runId" : "2026-10-16T155141.700864Z",
+  "startedAt" : "2026-10-16T15:51:41.700864Z",
+  "finishedAt" : "2026-10-16T16:06:05.656688500Z",
+  "sourcesTotal" : 167,
+  "sourcesDone" : 167,
+  "sourcesOk" : 92,
+  "sourcesFailed" : 63,
+  "sourcesZero" : 12,
+  "recordsWritten" : 918,
+  "current" : null,
+  "findings" : [ {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bhel",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_ongc",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_cil",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_gail",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_bpcl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "ncs_gov",
+    "reason" : "Playwright returned no keepable NCS notices; HTTP homepage scrape skipped"
+  }, {
+    "sourceId" : "psu_pgcil",
+    "reason" : "Connect timed out"
+  }, {
+    "sourceId" : "psu_ntpc",
+    "reason" : "Connection refused: getsockopt"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "redirect left the allowed host"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_rec",
+    "reason" : "redirect left the allowed host"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "browser unavailable: Error {\n  message='net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/careers\n  name='Error\n  stack='Error: net::ERR_CONNECTION_CLOSED at https://www.pfcindia.com/careers\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/careers\", waiting until \"domcontentloaded\"\n"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "Remote host terminated the handshake"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "browser unavailable: Error {\n  message='net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/career\n  name='Error\n  stack='Error: net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH at https://www.pfcindia.com/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://www.pfcindia.com/career\", waiting until \"domcontentloaded\"\n"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "Remote host terminated the handshake"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "Remote host terminated the handshake"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_pfc",
+    "reason" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_iocl",
+    "reason" : "javascript redirect"
+  }, {
+    "sourceId" : "psu_nmdc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_nmdc",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  }, {
+    "sourceId" : "psu_eil",
+    "reason" : "pdf skipped: pdf_not_recruitment"
+  } ],
+  "sourcesLog" : [ {
+    "sourceId" : "psu_rxil",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_remcl",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_prcl",
+    "outcome" : "partial",
+    "records" : 1,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "psu_nsc",
+    "outcome" : "partial",
+    "records" : 1,
+    "message" : "HTTP 500"
+  }, {
+    "sourceId" : "psu_ciwtc",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "(protocol_version) Received fatal alert: protocol_version"
+  }, {
+    "sourceId" : "upsc_online",
+    "outcome" : "empty",
+    "records" : 0,
+    "message" : "no keepable notices"
+  }, {
+    "sourceId" : "psu_munpl",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n  name='Error\n  stack='Error: net::ERR_CERT_DATE_INVALID at https://mtnl.in/career.html\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://mtnl.in/career.html\", waiting until \"domcontentloaded\"\n"
+  }, {
+    "sourceId" : "psu_rhpc",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "ssc_calendar",
+    "outcome" : "partial",
+    "records" : 22,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_utiitsl",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "ssc_notices",
+    "outcome" : "empty",
+    "records" : 0,
+    "message" : "no keepable notices"
+  }, {
+    "sourceId" : "psu_moil",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "browser unavailable: Error {\n  message='net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n  name='Error\n  stack='Error: net::ERR_CERT_COMMON_NAME_INVALID at https://moil.nic.in/career\n    at FrameSession._navigate (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\chromium\\crPage.js:512:35)\n    at async Frame._gotoAction (C:\\Users\\Timus97\\AppData\\Local\\Temp\\playwright-java-3443989783449449174\\package\\lib\\server\\frames.js:540:28)\n}\nCall log:\n-   - navigating to \"https://moil.nic.in/career\", waiting until \"domcontentloaded\"\n"
+  }, {
+    "sourceId" : "sbi_openings",
+    "outcome" : "partial",
+    "records" : 161,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "upsc_active",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved"
+  }, {
+    "sourceId" : "rrb_chennai",
+    "outcome" : "complete",
+    "records" : 10,
+    "message" : null
+  }, {
+    "sourceId" : "ibps_home",
+    "outcome" : "partial",
+    "records" : 10,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psc_uppsc",
+    "outcome" : "complete",
+    "records" : 31,
+    "message" : null
+  }, {
+    "sourceId" : "sbi_apply",
+    "outcome" : "complete",
+    "records" : 160,
+    "message" : null
+  }, {
+    "sourceId" : "psc_bpsc",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "Connect timed out"
+  }, {
+    "sourceId" : "psc_tnpsc",
+    "outcome" : "complete",
+    "records" : 2,
+    "message" : null
+  }, {
+    "sourceId" : "psc_wbpsc",
+    "outcome" : "partial",
+    "records" : 3,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psc_rpsc",
+    "outcome" : "partial",
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psc_gpsc",
+    "outcome" : "partial",
+    "records" : 26,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psc_kerala",
+    "outcome" : "complete",
+    "records" : 1,
+    "message" : null
+  }, {
+    "sourceId" : "upsc_calendar",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "blocked or CAPTCHA page; not solved"
+  }, {
+    "sourceId" : "psc_kpsc",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "Connect timed out"
+  }, {
+    "sourceId" : "psc_appsc",
+    "outcome" : "partial",
+    "records" : 2,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "sebi_vacancies",
+    "outcome" : "complete",
+    "records" : 76,
+    "message" : null
+  }, {
+    "sourceId" : "india_post",
+    "outcome" : "partial",
+    "records" : 2,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "nabard_careers",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "fci_recruitment",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "listUrls did not parse — use ops paste-URL"
+  }, {
+    "sourceId" : "epfo_recruitment",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "kvs_recruitment",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "redirect left the allowed host"
+  }, {
+    "sourceId" : "lic_careers",
+    "outcome" : "complete",
+    "records" : 3,
+    "message" : null
+  }, {
+    "sourceId" : "dsssb_recruitment",
+    "outcome" : "complete",
+    "records" : 13,
+    "message" : null
+  }, {
+    "sourceId" : "ctet_calendar",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "Read timed out"
+  }, {
+    "sourceId" : "aiims_recruitment",
+    "outcome" : "complete",
+    "records" : 5,
+    "message" : null
+  }, {
+    "sourceId" : "ibps_calendar",
+    "outcome" : "partial",
+    "records" : 11,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "nhm_recruitment",
+    "outcome" : "empty",
+    "records" : 0,
+    "message" : "no keepable notices"
+  }, {
+    "sourceId" : "drdo_careers",
+    "outcome" : "partial",
+    "records" : 26,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "isro_careers",
+    "outcome" : "partial",
+    "records" : 1,
+    "message" : "HTTP 404"
+  }, {
+    "sourceId" : "gate_calendar",
+    "outcome" : "complete",
+    "records" : 15,
+    "message" : null
+  }, {
+    "sourceId" : "barc_careers",
+    "outcome" : "complete",
+    "records" : 4,
+    "message" : null
+  }, {
+    "sourceId" : "nta_ugc_net_calendar",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psu_edcil",
+    "outcome" : "empty",
+    "records" : 0,
+    "message" : "no keepable notices"
+  }, {
+    "sourceId" : "rrb_apply",
+    "outcome" : "failed",
+    "records" : 0,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "esic_recruitment",
+    "outcome" : "partial",
+    "records" : 3,
+    "message" : "pdf skipped: PDF cap reached"
+  }, {
+    "sourceId" : "psc_mpsc",
+    "outcome" : "complete",
+    "records" : 10,
+    "message" : null
+  }, {
+    "sourceId" : "nvs_recruitment",
+    "outcome" : "empty",
+    "records" : 0,
+    "message" : "no keepable notices"
+  }, {
+    "sourceId" : "rbi_opportunities",
+    "outcome" : "complete",
+    "records" : 11,
+    "message" : null
+  } ]
 }

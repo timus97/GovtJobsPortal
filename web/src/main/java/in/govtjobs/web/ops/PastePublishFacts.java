@@ -1,5 +1,7 @@
 package in.govtjobs.web.ops;
 
+import in.govtjobs.domain.job.JobSchema;
+import in.govtjobs.domain.labels.Labels;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ final class PastePublishFacts {
     static final String CANNOT_CHECK =
             "Match cannot check age. This form does not ask for location or vacancies, so those stay unknown.";
     static final String SELECTION_REQUIRED = "Selection must be one of the filters students can use.";
+    static final String ORG_TYPE_REQUIRED = "Organisation type must be one of the filters students can use.";
 
     private PastePublishFacts() {}
 
@@ -55,8 +58,9 @@ final class PastePublishFacts {
         List<String> lines = new ArrayList<>();
         lines.add("Title: " + stated(facts.get("title")));
         lines.add("Organisation: " + stated(facts.get("organization")));
+        lines.add("Organisation type: " + orgTypeWords(facts.get("orgType")));
         lines.add("Last date: " + stated(facts.get("lastDate")));
-        lines.add("Exam: " + (Boolean.TRUE.equals(facts.get("hasExam")) ? "Has an exam" : "No exam is marked"));
+        lines.add("Exam: " + examWords(facts.get("hasExam")));
         return lines;
     }
 
@@ -78,7 +82,31 @@ final class PastePublishFacts {
         if (text(facts.get("selectionProcess")).isEmpty()) {
             blank.add("selection");
         }
+        if (!JobSchema.ORG_TYPES.contains(text(facts.get("orgType")))) {
+            blank.add("organisation type");
+        }
+        if (!(facts.get("hasExam") instanceof Boolean)) {
+            blank.add("exam");
+        }
         return blank;
+    }
+
+    private static String examWords(Object value) {
+        if (Boolean.TRUE.equals(value)) {
+            return "Has an exam";
+        }
+        if (Boolean.FALSE.equals(value)) {
+            return "No written exam";
+        }
+        return "Not stated";
+    }
+
+    private static String orgTypeWords(Object value) {
+        String code = text(value);
+        if (code.isEmpty()) {
+            return "not stated";
+        }
+        return Labels.ORG_TYPE_LABELS.getOrDefault(code, code);
     }
 
     private static String stated(Object value) {

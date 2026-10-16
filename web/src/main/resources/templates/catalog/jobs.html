@@ -40,7 +40,7 @@
                   <span>Organisation type</span>
                   <select name="orgType">
                     <option value="">All</option>
-                    <option th:each="t : ${filters.orgTypes}" th:value="${t}" th:text="${orgTypeLabel[t] ?: t}" th:selected="${t == query.orgType()}"></option>
+                    <option th:each="t : ${filters.orgTypes}" th:value="${t}" th:text="${orgTypeLabel.get(t) ?: t}" th:selected="${t == query.orgType()}"></option>
                   </select>
                 </label>
                 <label class="field">
@@ -54,14 +54,14 @@
                   <span>Qualification</span>
                   <select name="qualification">
                     <option value="">All</option>
-                    <option th:each="q : ${filters.qualifications}" th:value="${q}" th:text="${qualLabel[q] ?: q}" th:selected="${q == query.qualification()}"></option>
+                    <option th:each="q : ${filters.qualifications}" th:value="${q}" th:text="${qualLabel.get(q) ?: q}" th:selected="${q == query.qualification()}"></option>
                   </select>
                 </label>
                 <label class="field">
                   <span>Selection</span>
                   <select name="selectionProcess">
                     <option value="">All selection types</option>
-                    <option th:each="s : ${filters.selectionProcesses}" th:value="${s}" th:text="${selectionLabel[s] ?: s}" th:selected="${s == query.selectionProcess()}"></option>
+                    <option th:each="s : ${filters.selectionProcesses}" th:value="${s}" th:text="${selectionLabel.get(s) ?: s}" th:selected="${s == query.selectionProcess()}"></option>
                   </select>
                 </label>
                 <label class="field">
@@ -98,7 +98,7 @@
                 <article class="job-card" th:each="job : ${result.items}">
                   <div class="job-card-top">
                     <div class="badge-row">
-                      <span class="badge" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}">Org</span>
+                      <span class="badge" th:if="${!#strings.isEmpty(job.orgType)}" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}">Org</span>
                       <span class="badge badge-soft" th:text="${selectionLabel[job.selectionProcess] ?: job.selectionProcess}">Sel</span>
                       <span class="badge badge-exam" th:if="${job.hasExam == true}">Exam</span>
                       <span class="badge badge-warn" th:if="${job.status == 'closing_soon'}">Closing Soon</span>

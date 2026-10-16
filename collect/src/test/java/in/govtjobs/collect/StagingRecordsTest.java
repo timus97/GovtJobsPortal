@@ -41,6 +41,32 @@ class StagingRecordsTest {
         assertThat(String.valueOf(record.get("processSteps"))).doesNotContain("no written exam");
     }
 
+    @Test
+    void emptyParenthesesAndACareersSuffixLeaveTheOrganisationName() {
+        SourceSpec careers = new SourceSpec(
+                "cpcl",
+                "Chennai Petroleum Corporation Limited () Careers",
+                "generic",
+                "html_scrape",
+                "",
+                "central",
+                List.of("https://cpcl.co.in/"),
+                true);
+        Map<String, Object> fromSource = StagingRecords.toStagingRecord(
+                notice("Refinery assistant", "Apply online"), careers, "2026-10-16T00:00:00Z", "html-scrape-v1");
+        assertThat(fromSource.get("organization")).isEqualTo("Chennai Petroleum Corporation Limited");
+        assertThat(fromSource.get("sourceName")).isEqualTo("Chennai Petroleum Corporation Limited Careers");
+
+        Map<String, Object> stated = notice("Shipyard associate", "Apply online");
+        stated.put("organization", "Cochin Shipyard ()");
+        assertThat(StagingRecords.toStagingRecord(stated, source, "2026-10-16T00:00:00Z", "html-scrape-v1").get("organization"))
+                .isEqualTo("Cochin Shipyard");
+        assertThat(StagingRecords.organisationName("Steel Authority of India Limited ()"))
+                .isEqualTo("Steel Authority of India Limited");
+        assertThat(StagingRecords.organisationName("GAIL (India) Limited (GAIL) Careers"))
+                .isEqualTo("GAIL (India) Limited (GAIL)");
+    }
+
     private static Map<String, Object> notice(String title, String summary) {
         Map<String, Object> item = new LinkedHashMap<>();
         item.put("title", title);

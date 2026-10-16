@@ -99,11 +99,16 @@ public class DeskController {
     }
 
     @GetMapping("/desk/{id}")
-    public String detail(Principal principal, @PathVariable String id, Model model) {
+    public String detail(
+            Principal principal,
+            @PathVariable String id,
+            @RequestParam(name = "confirm", required = false) String confirm,
+            Model model) {
         Map<String, Object> item = students.getItem(studentId(principal), id);
         if (item == null) return "redirect:/dashboard";
         model.addAttribute("nav", "desk");
         model.addAttribute("item", item);
+        model.addAttribute("confirmRemove", "remove".equals(confirm));
         model.addAttribute("deskStatuses", DeskGuidance.STATUSES);
         model.addAttribute("deskStatusLabel", DeskGuidance.STATUS_LABELS);
         return "desk/detail";

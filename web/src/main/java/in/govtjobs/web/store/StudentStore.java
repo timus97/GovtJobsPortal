@@ -460,11 +460,13 @@ public class StudentStore {
     }
 
     public boolean deleteItem(String studentId, String id) {
-        int n = jdbc.update("DELETE FROM desk_items WHERE id = ? AND student_id = ?", id, studentId);
-        if (n > 0) {
-            deleteTree(StudentFilePaths.itemDir(filesDir(), studentId, id));
+        if (getItem(studentId, id) == null) {
+            return false;
         }
-        return n > 0;
+        if (!deleteTree(StudentFilePaths.itemDir(filesDir(), studentId, id))) {
+            throw new StoreException("IO", "The desk item could not be removed because a file is still on disk.");
+        }
+        return jdbc.update("DELETE FROM desk_items WHERE id = ? AND student_id = ?", id, studentId) > 0;
     }
 
     public Map<String, Object> saveFile(String studentId, String itemId, String kind, String originalName, byte[] bytes)
@@ -489,12 +491,20 @@ public class StudentStore {
         if (stored == null || dest == null || !StudentFilePaths.isSafeStoredPath(studentId, itemId, stored)) {
             throw new StoreException("VALIDATION", "Invalid file path");
         }
-        Files.createDirectories(dest.getParent());
+        Path itemDir = dest.getParent();
+        Files.createDirectories(itemDir);
+        Path studentDir = itemDir.getParent();
+        if (!StudentFilePaths.restrictOwnerReadWrite(studentDir)
+                || !StudentFilePaths.restrictOwnerReadWrite(itemDir)) {
+            log.warn("desk.file_not_owner_only item={} kind={}", itemId, kind);
+            throw new StoreException("IO", "The file could not be stored for this account only.");
+        }
         unlinkKindFiles(studentId, itemId, kind);
         Files.write(dest, bytes);
-        boolean ownerOnly = StudentFilePaths.restrictOwnerReadWrite(dest);
-        if (!ownerOnly) {
+        if (!StudentFilePaths.restrictOwnerReadWrite(dest)) {
+            Files.deleteIfExists(dest);
             log.warn("desk.file_not_owner_only item={} kind={}", itemId, kind);
+            throw new StoreException("IO", "The file could not be stored for this account only.");
         }
         Instant now = Instant.now();
         String fileId = UUID.randomUUID().toString();
@@ -828,21 +838,23 @@ public class StudentStore {
         }
     }
 
-    private static void deleteTree(Path dir) {
+    private static boolean deleteTree(Path dir) {
         if (dir == null || !Files.exists(dir)) {
-            return;
+            return true;
         }
+        boolean removed = true;
         try (Stream<Path> walk = Files.walk(dir)) {
-            walk.sorted(Comparator.reverseOrder()).forEach(p -> {
+            for (Path path : walk.sorted(Comparator.reverseOrder()).toList()) {
                 try {
-                    Files.deleteIfExists(p);
-                } catch (IOException ignored) {
-                    // best-effort disk cleanup
+                    Files.deleteIfExists(path);
+                } catch (IOException ex) {
+                    removed = false;
                 }
-            });
-        } catch (IOException ignored) {
-            // best-effort disk cleanup
+            }
+        } catch (IOException ex) {
+            return false;
         }
+        return removed && !Files.exists(dir);
     }
 
     private int passwordMin() {

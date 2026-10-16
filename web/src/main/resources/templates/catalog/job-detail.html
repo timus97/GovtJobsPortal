@@ -14,7 +14,7 @@
           <p><a class="back-link" href="/jobs">← All jobs</a></p>
           <header class="detail-header panel">
             <div class="badge-row">
-              <span class="badge" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}"></span>
+              <span class="badge" th:if="${!#strings.isEmpty(job.orgType)}" th:classappend="${' org-' + job.orgType}" th:text="${orgTypeLabel[job.orgType] ?: job.orgType}"></span>
               <span class="badge badge-soft" th:text="${selectionLabel[job.selectionProcess] ?: job.selectionProcess}"></span>
               <span class="badge badge-exam" th:if="${job.hasExam == true}">Exam</span>
               <span class="badge" th:classappend="${job.status == 'closing_soon'} ? ' badge-warn' : ' badge-muted'" th:text="${statusLabel[job.status] ?: job.status}"></span>

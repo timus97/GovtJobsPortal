@@ -1,7 +1,7 @@
 package in.govtjobs.domain.desk;
 
 import java.time.LocalDate;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,30 +62,31 @@ public final class DeskGuidance {
     }
 
     /**
-     * Whole UTC days from today to anchor. Negative = days ago. Null if no date.
+     * Whole days from today to anchor, on the same JVM calendar Search uses. Negative = days ago.
      */
     public static Integer daysLeft(Object anchor, Object today) {
         LocalDate end = parseIsoDate(anchor);
         if (end == null) {
             return null;
         }
+        ZoneId zone = ZoneId.systemDefault();
         LocalDate now;
         if (today instanceof LocalDate ld) {
             now = ld;
         } else if (today instanceof java.util.Date util) {
-            now = util.toInstant().atZone(ZoneOffset.UTC).toLocalDate();
+            now = util.toInstant().atZone(zone).toLocalDate();
         } else if (today != null) {
             LocalDate parsed = parseIsoDate(today);
-            now = parsed != null ? parsed : LocalDate.now(ZoneOffset.UTC);
+            now = parsed != null ? parsed : LocalDate.now(zone);
         } else {
-            now = LocalDate.now(ZoneOffset.UTC);
+            now = LocalDate.now(zone);
         }
         long diff = end.toEpochDay() - now.toEpochDay();
         return Math.toIntExact(diff);
     }
 
     public static Integer daysLeft(Object anchor) {
-        return daysLeft(anchor, LocalDate.now(ZoneOffset.UTC));
+        return daysLeft(anchor, LocalDate.now(ZoneId.systemDefault()));
     }
 
     public static Object pickAnchor(Map<String, ?> item) {

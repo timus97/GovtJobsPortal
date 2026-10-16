@@ -122,6 +122,8 @@ class CollectQueueMoreTest {
             Map<String, Object> pasted = jobs.getJobById(String.valueOf(local.get("opportunityId")));
             assertThat(pasted).isNotNull();
             assertThat(pasted.get("title")).isEqualTo("Pasted opportunity");
+            assertThat(pasted.get("orgType")).isEqualTo("");
+            assertThat(pasted.get("hasExam")).isNull();
 
             Map<String, Object> unpublished = queue.setState("pub-2", "unpublished", "pull");
             assertThat(unpublished.get("state")).isEqualTo("unpublished");

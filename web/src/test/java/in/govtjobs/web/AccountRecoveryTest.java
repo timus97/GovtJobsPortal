@@ -170,6 +170,56 @@ class AccountRecoveryTest {
         }
     }
 
+    @Test
+    void operatorLogoutRejectsTheCapturedCookieAndANewLoginWorks() throws Exception {
+        Path file = RepoPaths.data().resolve("ops").resolve("operators.json");
+        byte[] before = Files.isRegularFile(file) ? Files.readAllBytes(file) : null;
+        String username = "s9" + UUID.randomUUID().toString().substring(0, 8);
+        try {
+            operators.create(username, "password1234");
+            MvcResult login = mvc.perform(post("/ops/login")
+                            .with(csrf())
+                            .param("username", username)
+                            .param("password", "password1234"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/ops"))
+                    .andReturn();
+            Cookie oldCookie = login.getResponse().getCookie("ops_session");
+            assertThat(oldCookie).isNotNull();
+            long epoch = operators.sessionEpoch(username);
+            mvc.perform(post("/ops/logout").with(csrf()).cookie(oldCookie))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/ops/login"));
+            assertThat(operators.sessionEpoch(username)).isEqualTo(epoch + 1);
+            mvc.perform(get("/ops").cookie(oldCookie))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/ops/login"));
+            mvc.perform(post("/ops/logout").with(csrf()).cookie(oldCookie))
+                    .andExpect(status().is3xxRedirection());
+            assertThat(operators.sessionEpoch(username)).isEqualTo(epoch + 1);
+
+            MvcResult fresh = mvc.perform(post("/ops/login")
+                            .with(csrf())
+                            .param("username", username)
+                            .param("password", "password1234"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/ops"))
+                    .andReturn();
+            Cookie current = fresh.getResponse().getCookie("ops_session");
+            assertThat(current).isNotNull();
+            mvc.perform(get("/ops").cookie(current)).andExpect(status().isOk());
+            mvc.perform(get("/ops").cookie(oldCookie))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/ops/login"));
+        } finally {
+            if (before == null) {
+                Files.deleteIfExists(file);
+            } else {
+                Files.write(file, before);
+            }
+        }
+    }
+
     private Cookie register(String email, String password) throws Exception {
         MvcResult result = mvc.perform(post("/account/register")
                         .with(csrf())

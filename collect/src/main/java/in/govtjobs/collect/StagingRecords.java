@@ -32,6 +32,22 @@ public final class StagingRecords {
         return title.trim();
     }
 
+    /** Drop empty parentheses. A real parenthetical stays. */
+    public static String withoutEmptyParentheses(String raw) {
+        if (raw == null) {
+            return "";
+        }
+        return raw.replaceAll("\\(\\s*\\)", "").replaceAll("\\s+", " ").trim();
+    }
+
+    /** Drop a trailing Careers label and empty parentheses. A real parenthetical stays. */
+    public static String organisationName(String raw) {
+        if (raw == null) {
+            return "";
+        }
+        return withoutEmptyParentheses(raw.replaceAll("(?i)\\s+Careers\\s*$", ""));
+    }
+
     public static Map<String, Object> toStagingRecord(Map<String, ?> item, SourceSpec source, String collectedAt, String collectorVersion) {
         String title = cleanTitle(text(item.get("title")));
         String officialUrl = first(item.get("href"), item.get("officialUrl"));
@@ -97,8 +113,9 @@ public final class StagingRecords {
         }
         String organization = textOrNull(item.get("organization"));
         if (organization == null) {
-            organization = source.name().replaceAll("(?i)\\s+Careers$", "").trim();
+            organization = source.name();
         }
+        organization = organisationName(organization);
         if (organization.isBlank()) {
             organization = source.sourceId();
         }
@@ -131,7 +148,7 @@ public final class StagingRecords {
         record.put("walkInDate", item.get("walkInDate"));
         record.put("officialUrl", officialUrl);
         record.put("sourceId", source.sourceId());
-        record.put("sourceName", source.name());
+        record.put("sourceName", withoutEmptyParentheses(source.name()));
         record.put("sourceUrl", textOrNull(item.get("sourceUrl")) == null ? officialUrl : text(item.get("sourceUrl")));
         record.put("summary", summary.isBlank() ? "Scraped vacancy from " + source.name() + ". Verify selection process on the official page." : summary);
         record.put("eligibility", item.get("eligibility") instanceof List<?> list ? list : List.of());

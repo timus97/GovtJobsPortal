@@ -9,6 +9,10 @@
         <div class="container profile-layout">
           <div>
             <h1>Eligibility profile</h1>
+            <p class="muted">
+              Signed in as <strong th:text="${currentEmail}">you@example.com</strong>.
+              <a href="/account/forgot">Change your password</a>.
+            </p>
             <p class="muted">Reservation category is required. Age uses the notification as-on date. Never treated as an official decision.</p>
             <p class="match-banner" th:if="${complete}">Profile is complete. <a href="/match">See matches</a>.</p>
             <p class="muted" th:unless="${complete}">Fill the required fields to enable matching.</p>

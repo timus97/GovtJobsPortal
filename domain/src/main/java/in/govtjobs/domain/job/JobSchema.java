@@ -169,7 +169,7 @@ public final class JobSchema {
             errors.add("organization required");
         }
         String orgType = str(job.get("orgType"));
-        if (!ORG_TYPES.contains(orgType)) {
+        if (!orgType.isEmpty() && !ORG_TYPES.contains(orgType)) {
             errors.add("invalid orgType");
         }
         String selectionProcess = str(job.get("selectionProcess"));

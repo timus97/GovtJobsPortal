@@ -2,6 +2,10 @@ package in.govtjobs.web.store;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.govtjobs.domain.RepoPaths;
@@ -17,6 +21,8 @@ import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.mockito.InOrder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -267,6 +273,49 @@ class JobStoreTest {
             restore(jobs, jobBytes);
             restore(opps, oppBytes);
             Files.deleteIfExists(paste);
+        }
+    }
+
+    @Test
+    void postgresWriteIsUndoneWhenTheCatalogFileOrPasteCopyFails(@TempDir Path root) throws Exception {
+        Files.createDirectories(root.resolve("data"));
+        Files.writeString(root.resolve("pom.xml"), "<project/>");
+        Path jobs = root.resolve("data").resolve("processed").resolve("jobs.json");
+        Files.createDirectories(jobs.getParent());
+        Files.writeString(jobs, "[]");
+        String previousDir = System.getProperty("user.dir");
+        CatalogStore live = mock(CatalogStore.class);
+        GovtJobsProperties catalogProps = new GovtJobsProperties();
+        catalogProps.getCatalog().setSource("postgres");
+        JobStore store = new JobStore(mapper, live, catalogProps);
+        String blockedId = "block-" + UUID.randomUUID().toString().substring(0, 8);
+        Map<String, Object> blocked = new LinkedHashMap<>();
+        blocked.put("id", blockedId);
+        blocked.put("title", "Blocked paste");
+        try {
+            System.setProperty("user.dir", root.toString());
+            assertThat(RepoPaths.root()).isEqualTo(root.toAbsolutePath().normalize());
+            doThrow(new IllegalStateException("db down")).when(live).upsertLiveJob(blocked);
+            assertThatThrownBy(() -> store.upsertPublishedJob(blocked))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessageContaining("db down");
+            assertThat(Files.readString(jobs)).isEqualTo("[]");
+
+            reset(live);
+            Path pasteDir = root.resolve("data").resolve("staging").resolve("ops_paste");
+            Files.createDirectories(pasteDir.getParent());
+            Files.writeString(pasteDir, "blocked");
+            String id = "roll-" + UUID.randomUUID().toString().substring(0, 8);
+            Map<String, Object> row = new LinkedHashMap<>();
+            row.put("id", id);
+            row.put("title", "Rollback");
+            assertThatThrownBy(() -> store.upsertPublishedJob(row)).isInstanceOf(IllegalStateException.class);
+            assertThat(Files.readString(jobs)).isEqualTo("[]");
+            InOrder order = inOrder(live);
+            order.verify(live).upsertLiveJob(row);
+            order.verify(live).removeLiveJob(id);
+        } finally {
+            System.setProperty("user.dir", previousDir);
         }
     }
 
