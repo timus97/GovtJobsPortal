@@ -21,6 +21,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.StudentStore;
 
 @SpringBootTest
@@ -33,9 +34,12 @@ class TrackPageTest {
     @Autowired
     private StudentStore students;
 
+    @Autowired
+    private JobStore jobs;
+
     @Test
     void signedOutJobAndPrepareDoNotPostTrack() throws Exception {
-        mvc.perform(get("/jobs/321c05e538ceea7a"))
+        mvc.perform(get("/jobs/" + liveJobId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Sign in to track")))
                 .andExpect(content().string(containsString("/account/login?next=")))
@@ -50,7 +54,7 @@ class TrackPageTest {
 
     @Test
     void signedInTrackPostsAndSaysItDoesNotApply() throws Exception {
-        mvc.perform(get("/jobs/321c05e538ceea7a").with(user("student@example.com").roles("STUDENT")))
+        mvc.perform(get("/jobs/" + liveJobId()).with(user("student@example.com").roles("STUDENT")))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("action=\"/desk/track\"")))
                 .andExpect(content().string(containsString(">I applied<")))
@@ -84,6 +88,10 @@ class TrackPageTest {
                 .andExpect(content().string(containsString(">Done</option>")))
                 .andExpect(content().string(not(containsString("/plan"))))
                 .andExpect(content().string(not(containsString("/mock"))));
+    }
+
+    private String liveJobId() {
+        return String.valueOf(jobs.getJobs().get(0).get("id"));
     }
 
     private org.springframework.test.web.servlet.ResultActions postDashboard(Cookie session) throws Exception {
