@@ -1,5 +1,6 @@
 package in.govtjobs.web.ops;
 
+import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.security.SessionCookies;
 import in.govtjobs.web.store.JobStore;
@@ -112,9 +113,20 @@ public class OpsController {
     }
 
     @PostMapping("/ops/operators")
-    public String addOperator(@RequestParam String username, @RequestParam String password, Principal principal) {
-        operators.create(username, password);
-        logs.info("ops", principal.getName() + " created operator " + username);
+    public String addOperator(
+            @RequestParam String username,
+            @RequestParam String password,
+            Principal principal,
+            RedirectAttributes redirect) {
+        try {
+            operators.create(username, password);
+        } catch (StoreException ex) {
+            redirect.addFlashAttribute(
+                    "notice",
+                    "DUPLICATE".equals(ex.code()) ? "The username is already in use." : ex.getMessage());
+            return "redirect:/ops";
+        }
+        logs.info("ops", principal.getName() + " created operator " + safeUsername(username));
         return "redirect:/ops";
     }
 
@@ -128,8 +140,30 @@ public class OpsController {
     @GetMapping("/ops/runs/{id}")
     public String run(@PathVariable String id, Model model) {
         model.addAttribute("nav", "review");
-        model.addAttribute("job", queue.get(id));
+        Map<String, Object> job = queue.get(id);
+        model.addAttribute("job", job);
+        Map<String, Object> extracted = extractedOf(job);
+        model.addAttribute("publishSentence", PastePublishFacts.sentence(job == null ? "" : job.get("state")));
+        model.addAttribute(
+                "searchPath",
+                job == null ? "" : PastePublishFacts.searchPath(job.get("state"), job.get("opportunityId")));
+        model.addAttribute("canCheck", PastePublishFacts.canCheck(extracted));
+        model.addAttribute("leftBlank", PastePublishFacts.leftBlank(extracted));
+        model.addAttribute("cannotCheck", PastePublishFacts.CANNOT_CHECK);
+        model.addAttribute("selectionCodes", JobSchema.SELECTION_PROCESSES);
+        String selection = String.valueOf(extracted.getOrDefault("selectionProcess", "")).trim();
+        model.addAttribute(
+                "unknownSelection",
+                selection.isEmpty() || JobSchema.SELECTION_PROCESSES.contains(selection) ? "" : selection);
         return "ops/run";
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> extractedOf(Map<String, Object> job) {
+        if (job == null || !(job.get("extracted") instanceof Map<?, ?> raw)) {
+            return Map.of();
+        }
+        return (Map<String, Object>) raw;
     }
 
     @PostMapping("/ops/runs/{id}")
@@ -145,6 +179,10 @@ public class OpsController {
             @RequestParam(required = false) String hasExam,
             @RequestParam(required = false) String reason,
             RedirectAttributes redirect) {
+        if (("save".equals(action) || "publish".equals(action)) && unknownSelection(selectionProcess)) {
+            redirect.addFlashAttribute("notice", PastePublishFacts.SELECTION_REQUIRED);
+            return "redirect:/ops/runs/" + id;
+        }
         try {
             if ("save".equals(action)) {
                 queue.patchExtracted(id, submittedFacts(
@@ -167,6 +205,12 @@ public class OpsController {
             redirect.addFlashAttribute("notice", ex.getMessage());
         }
         return "redirect:/ops/runs/" + id;
+    }
+
+    private static boolean unknownSelection(String selectionProcess) {
+        return selectionProcess != null
+                && !selectionProcess.isBlank()
+                && !JobSchema.SELECTION_PROCESSES.contains(selectionProcess);
     }
 
     private static Map<String, Object> submittedFacts(

@@ -24,7 +24,7 @@
             <thead><tr><th>State</th><th>URL</th><th>Updated</th></tr></thead>
             <tbody>
               <tr th:each="j : ${jobs}">
-                <td th:text="${j.state}"></td>
+                <td th:text="${pasteStateLabel.get(j.state) ?: 'Not on Search'}">Needs review</td>
                 <td><a th:href="@{/ops/runs/{id}(id=${j.id})}" th:text="${j.url}"></a></td>
                 <td th:text="${j.updatedAt}"></td>
               </tr>

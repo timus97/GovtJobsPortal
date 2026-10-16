@@ -187,6 +187,9 @@ public class CollectQueue {
         }
         extracted.put("officialUrl", url == null ? "" : url);
         String selection = present(extracted.get("selectionProcess"));
+        if (selection != null && !JobSchema.SELECTION_PROCESSES.contains(selection)) {
+            throw new StoreException("VALIDATION", PastePublishFacts.SELECTION_REQUIRED);
+        }
         extracted.put("selectionProcess", selection == null ? "direct_recruitment" : selection);
         String lastDate = requirePublishableLastDate(extracted.get("lastDate"));
         extracted.put("lastDate", lastDate);
@@ -287,6 +290,7 @@ public class CollectQueue {
             return;
         }
         jobs.removePublishedJob(String.valueOf(oppId));
+        job.remove("opportunityId");
         log.info("ops.unpublished_local id={} jobId={}", job.get("id"), oppId);
     }
 

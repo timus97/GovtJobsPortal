@@ -11,11 +11,13 @@ import in.govtjobs.domain.RepoPaths;
 import in.govtjobs.domain.job.JobSchema;
 import in.govtjobs.web.config.FeatureFlags;
 import in.govtjobs.web.config.GovtJobsProperties;
+import in.govtjobs.web.security.PasswordService;
 import in.govtjobs.web.security.SessionCookies;
 import in.govtjobs.web.store.JobStore;
 import in.govtjobs.web.store.OperatorStore;
 import in.govtjobs.web.store.StoreException;
 import java.net.URI;
+import java.security.Principal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 class OpsPublishTest {
@@ -342,6 +345,7 @@ class OpsPublishTest {
             assertThat(unpublished.getFlashAttributes()).isEmpty();
             Map<String, Object> afterUnpublish = harness.queue.get("live-1");
             assertThat(afterUnpublish.get("state")).isEqualTo("unpublished");
+            assertThat(afterUnpublish.get("opportunityId")).isNull();
             assertThat(afterUnpublish.get("reason")).isEqualTo("Unpublished");
             assertThat(extracted(afterUnpublish))
                     .containsEntry("title", "Live title")
@@ -354,6 +358,139 @@ class OpsPublishTest {
             assertThat(harness.jobs.getJobs()).isEmpty();
             assertThat(harness.queue.get("edit-1").get("state")).isEqualTo("rejected");
         });
+    }
+
+    @Test
+    void publishOn20OctoberIsVisibleOnSearchAndThePageLinksToIt(@TempDir Path root) {
+        withRoot(root, () -> {
+            Harness harness = harness();
+            writeJobs(root, List.of(reviewItem("proof-1")));
+            publish(
+                    harness,
+                    "proof-1",
+                    "Slice five notice",
+                    "Staff Selection Commission",
+                    "https://ssc.gov.in/slice-five",
+                    "2026-10-20",
+                    "direct_recruitment",
+                    "A pasted notice",
+                    "on",
+                    new RedirectAttributesModelMap());
+
+            Map<String, Object> job = harness.queue.get("proof-1");
+            String id = String.valueOf(job.get("opportunityId"));
+            String status = JobSchema.computeStatus("2026-10-20");
+            assertThat(harness.jobs.getJobById(id))
+                    .containsEntry("lastDate", "2026-10-20")
+                    .containsEntry("title", "Slice five notice")
+                    .containsEntry("status", status);
+
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> visible = (List<Map<String, Object>>) harness.jobs
+                    .listJobs(JobStore.JobQuery.from(
+                            null, null, null, null, null, null, null, null, null, null, 1, 12))
+                    .get("items");
+            if ("closed".equals(status)) {
+                assertThat(visible).isEmpty();
+            } else {
+                assertThat(visible).extracting(row -> row.get("id")).containsExactly(id);
+            }
+
+            ExtendedModelMap model = new ExtendedModelMap();
+            assertThat(harness.controller.run("proof-1", model)).isEqualTo("ops/run");
+            assertThat(model.getAttribute("publishSentence")).isEqualTo(PastePublishFacts.ON_SEARCH);
+            assertThat(model.getAttribute("searchPath")).isEqualTo("/jobs/" + id);
+            assertThat(model.getAttribute("cannotCheck").toString()).contains("age").contains("location");
+            assertThat(model.getAttribute("canCheck").toString())
+                    .contains("Slice five notice")
+                    .contains("2026-10-20")
+                    .contains("Has an exam");
+            assertThat(model.getAttribute("publishSentence").toString()).doesNotContain("published_local");
+
+            harness.controller.runAction(
+                    "proof-1",
+                    "unpublish",
+                    "Slice five notice",
+                    "Staff Selection Commission",
+                    "https://ssc.gov.in/slice-five",
+                    "2026-10-20",
+                    "direct_recruitment",
+                    "A pasted notice",
+                    "on",
+                    null,
+                    new RedirectAttributesModelMap());
+            ExtendedModelMap after = new ExtendedModelMap();
+            harness.controller.run("proof-1", after);
+            assertThat(after.getAttribute("publishSentence")).isEqualTo(PastePublishFacts.REMOVED);
+            assertThat(after.getAttribute("searchPath")).isEqualTo("");
+            assertThat(harness.jobs.getJobs()).isEmpty();
+        });
+    }
+
+    @Test
+    void blankSelectionPublishesAsDirectRecruitmentAndAnUnknownWordDoesNot(@TempDir Path root) {
+        withRoot(root, () -> {
+            Harness harness = harness();
+            writeJobs(root, List.of(reviewItem("sel-1")));
+            publish(
+                    harness,
+                    "sel-1",
+                    "Named post",
+                    "SSC",
+                    "https://ssc.gov.in/named",
+                    "2099-08-20",
+                    "",
+                    "summary",
+                    null,
+                    new RedirectAttributesModelMap());
+            Map<String, Object> job = harness.queue.get("sel-1");
+            assertThat(extracted(job)).containsEntry("selectionProcess", "direct_recruitment");
+            assertThat(harness.jobs.getJobById(String.valueOf(job.get("opportunityId"))))
+                    .containsEntry("selectionProcess", "direct_recruitment");
+
+            RedirectAttributesModelMap redirect = new RedirectAttributesModelMap();
+            String view = publish(
+                    harness,
+                    "sel-1",
+                    "Named post",
+                    "SSC",
+                    "https://ssc.gov.in/named",
+                    "2099-08-20",
+                    "typed-word",
+                    "summary",
+                    null,
+                    redirect);
+            assertThat(view).isEqualTo("redirect:/ops/runs/sel-1");
+            assertThat(redirect.getFlashAttributes().get("notice")).isEqualTo(PastePublishFacts.SELECTION_REQUIRED);
+            assertThat(extracted(harness.queue.get("sel-1"))).containsEntry("selectionProcess", "direct_recruitment");
+            assertThat(harness.jobs.getJobs()).hasSize(1);
+        });
+    }
+
+    @Test
+    void duplicateOperatorStaysOnPaste(@TempDir Path root) {
+        System.setProperty("govtjobs.operator-store", root.resolve("operators.json").toString());
+        System.setProperty("govtjobs.operator-password", "");
+        try {
+            OperatorStore store = new OperatorStore(mapper, new PasswordService(), new GovtJobsProperties());
+            store.create("ada", "password1234");
+            OpsController controller = new OpsController(
+                    mock(CollectQueue.class),
+                    mock(JobStore.class),
+                    store,
+                    new OpsLog(),
+                    new FeatureFlags(),
+                    mock(SessionCookies.class));
+            Principal principal = () -> "admin";
+            RedirectAttributesModelMap redirect = new RedirectAttributesModelMap();
+            String view = controller.addOperator("Ada", "password1234", principal, redirect);
+            assertThat(view).isEqualTo("redirect:/ops");
+            assertThat(redirect.getFlashAttributes().get("notice")).isEqualTo("The username is already in use.");
+            assertThat(store.operators()).hasSize(1);
+        } finally {
+            System.clearProperty("govtjobs.operator-store");
+            System.clearProperty("govtjobs.operator-password");
+        }
     }
 
     private static String publish(

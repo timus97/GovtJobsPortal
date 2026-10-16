@@ -30,7 +30,8 @@
             <a href="/ops/pipeline" th:class="${nav == 'pipeline'} ? 'nav-link active' : 'nav-link'">Pipeline</a>
             <a href="/ops/fetch" th:class="${nav == 'fetch'} ? 'nav-link active' : 'nav-link'">Fetch</a>
             <a href="/ops/sources" th:class="${nav == 'sources'} ? 'nav-link active' : 'nav-link'">Sources</a>
-            <a href="/ops/pipeline/review" th:class="${nav == 'collect-review'} ? 'nav-link active' : 'nav-link'">Review</a>
+            <a href="/ops/pipeline/review" th:class="${nav == 'collect-review'} ? 'nav-link active' : 'nav-link'">Crawl review</a>
+            <a href="/ops/review" th:class="${nav == 'review'} ? 'nav-link active' : 'nav-link'">Paste review</a>
             <a href="/ops/pipeline/priority" th:class="${nav == 'priority'} ? 'nav-link active' : 'nav-link'">Priority</a>
             <a href="/ops" th:class="${nav == 'ops'} ? 'nav-link active' : 'nav-link'">Paste</a>
             <a href="/jobs" class="nav-link">Jobs</a>

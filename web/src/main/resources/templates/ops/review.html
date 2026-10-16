@@ -7,16 +7,16 @@
     <main class="main">
       <div class="section container">
         <h1>Paste review</h1>
-        <p class="muted">Crawl notices are on the <a href="/ops/pipeline/review">pipeline review queue</a>. This page is only for pasted URLs.</p>
+        <p class="muted">Crawl notices are on <a href="/ops/pipeline/review">Crawl review</a>. This page is only for pasted URLs.</p>
         <p class="empty panel" th:if="${items.isEmpty()}">Nothing waiting for review.</p>
         <div class="table-wrap" th:unless="${items.isEmpty()}">
           <table class="data-table">
             <thead><tr><th>Title</th><th>Host</th><th>State</th></tr></thead>
             <tbody>
               <tr th:each="j : ${items}">
-                <td><a th:href="@{/ops/runs/{id}(id=${j.id})}" th:text="${j.extracted?.title ?: j.url}"></a></td>
+                <td><a th:href="@{/ops/runs/{id}(id=${j.id})}" th:text="${j.extracted?.get('title') ?: j.url}"></a></td>
                 <td th:text="${j.host}"></td>
-                <td th:text="${j.state}"></td>
+                <td th:text="${pasteStateLabel.get(j.state) ?: 'Not on Search'}">Needs review</td>
               </tr>
             </tbody>
           </table>
